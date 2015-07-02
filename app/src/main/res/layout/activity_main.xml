@@ -33,13 +33,10 @@
          android:layout_gravity="left" instead. -->
     <!-- The drawer is given a fixed width in dp and extends the full height of
          the container. -->
-    <fragment
+    <android.support.design.widget.NavigationView
         android:id="@+id/navigation_drawer"
-        android:name="com.github.lecho.mobilization.NavigationDrawerFragment"
-        android:layout_width="@dimen/navigation_drawer_width"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        tools:layout="@layout/fragment_navigation_drawer"/>
+        android:layout_gravity="start|left" />
 
 </android.support.v4.widget.DrawerLayout>
