@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".MainActivity">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/navi_item_1"
+            android:checkable="true"
+            android:title="Dashboard"/>
+
+        <item
+            android:id="@+id/navi_item_2"
+            android:checkable="true"
+            android:title="Favorite"/>
+
+        <item
+            android:id="@+id/navi_item_3"
+            android:checkable="true"
+            android:title="Card Travel"/>
+
+    </group>
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/navi_item_12"
+            android:checkable="true"
+            android:title="Shopping Cart">
+
+            <menu>
+                <item
+                    android:id="@+id/navi_item_4"
+                    android:checkable="true"
+                    android:title="Shopping Cart"/>
+
+                <item
+                    android:id="@+id/navi_item_5"
+                    android:checkable="true"
+                    android:checked="true"
+                    android:title="Payment"/>
+            </menu>
+
+        </item>
+    </group>
+
+</menu>
