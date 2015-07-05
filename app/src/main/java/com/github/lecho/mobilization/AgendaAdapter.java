@@ -36,8 +36,6 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
 
     public static class AgendaViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.text_view)
-        TextView textView;
 
         public AgendaViewHolder(View itemView) {
             super(itemView);
@@ -45,7 +43,6 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
         }
 
         public void bindView(String text) {
-            textView.setText(text);
         }
     }
 }

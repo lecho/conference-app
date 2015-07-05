@@ -23,7 +23,7 @@
             android:layout_alignParentTop="true"
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
-            app:title="ALA MA KOTA"/>
+            app:title="AGENDA"/>
 
         <FrameLayout
             android:layout_below="@id/toolbar"
