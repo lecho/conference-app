@@ -5,4 +5,12 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="CardViewStyle.Light" parent="CardView.Light">
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <style name="CardViewStyle.Dark" parent="CardView.Dark">
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+    </style>
+
 </resources>
