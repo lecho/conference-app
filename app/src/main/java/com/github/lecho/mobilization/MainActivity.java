@@ -25,7 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (null == savedInstanceState) {
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_container, AgendaFragment.newInstance()).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_container, AgendaFragment.newInstance
+                    (AgendaFragment.AgendaType.VENUE_SPECIFIC)).commit();
         }
     }
 

@@ -16,14 +16,17 @@ import butterknife.ButterKnife;
 
 public class AgendaFragment extends Fragment {
 
+    public static final String TAG = "AgendaFragment";
     public static final String[] DATASET = new String[]{"ALA", "OLA", "ELA", "EWA", "JULA"};
+    private static final String ARG_AGENDA_TYPE = "arg-agenda-type";
 
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    public static AgendaFragment newInstance() {
+    public static AgendaFragment newInstance(AgendaType agendaType) {
         AgendaFragment fragment = new AgendaFragment();
         Bundle args = new Bundle();
+        args.putSerializable(ARG_AGENDA_TYPE, agendaType);
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,5 +52,9 @@ public class AgendaFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+    }
+
+    public enum AgendaType{
+        VENUE_SPECIFIC, VENUE_GENERIC
     }
 }
