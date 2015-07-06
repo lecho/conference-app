@@ -45,6 +45,7 @@ public class AgendaFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(new AgendaAdapter(DATASET));
+        recyclerView.addItemDecoration(new AgendaItemDecorator(getActivity()));
 
         return rootView;
     }
@@ -54,7 +55,7 @@ public class AgendaFragment extends Fragment {
         super.onAttach(activity);
     }
 
-    public enum AgendaType{
+    public enum AgendaType {
         VENUE_SPECIFIC, VENUE_GENERIC
     }
 }
