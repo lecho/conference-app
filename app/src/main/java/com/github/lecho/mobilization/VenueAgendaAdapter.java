@@ -4,23 +4,24 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.rey.material.widget.FloatingActionButton;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaViewHolder> {
+public class VenueAgendaAdapter extends RecyclerView.Adapter<VenueAgendaAdapter.AgendaViewHolder> {
 
     private String[] dataset;
 
-    public AgendaAdapter(String[] dataset) {
+    public VenueAgendaAdapter(String[] dataset) {
         this.dataset = dataset;
     }
 
     @Override
-    public AgendaAdapter.AgendaViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_agenda, parent, false);
+    public VenueAgendaAdapter.AgendaViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_venue_agenda, parent, false);
         AgendaViewHolder viewHolder = new AgendaViewHolder(view);
         return viewHolder;
     }
@@ -42,7 +43,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
         View.OnClickListener addToMyAgendaClickListener;
 
         @Bind(R.id.button_add_to_my_agenda)
-        ImageButton addToMyAgenda;
+        FloatingActionButton addToMyAgenda;
 
         @Bind(R.id.text_time_slot)
         TextView timeSlot;
@@ -60,7 +61,16 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(addToMyAgendaClickListener);
-            addToMyAgenda.setOnClickListener(addToMyAgendaClickListener);
+            addToMyAgenda.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    if (v instanceof FloatingActionButton) {
+                        FloatingActionButton bt = (FloatingActionButton) v;
+                        bt.setLineMorphingState((bt.getLineMorphingState() + 1) % 2, true);
+                    }
+                }
+            });
         }
 
         public void bindView(String text) {
