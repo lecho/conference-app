@@ -22,15 +22,24 @@
             android:text="9:00 - 10:00"
             android:textStyle="bold"/>
 
-        <com.rey.material.widget.FloatingActionButton
-            android:id="@+id/button_add_to_my_agenda"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_radius="14dp"
-            app:fab_iconSize="16dp"
-            style="@style/FloatingColorActionButton"
+        <FrameLayout
+            android:id="@+id/button_add_to_my_agenda_layout"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"/>
+            android:layout_alignParentTop="true">
+            <!-- Because FAB doesn't handle padding well -->
+            <com.rey.material.widget.FloatingActionButton
+                android:id="@+id/button_add_to_my_agenda"
+                style="@style/FloatingColorActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="top|right"
+                app:fab_iconSize="16dp"
+                app:fab_radius="14dp"/>
+        </FrameLayout>
 
         <TextView
             android:id="@+id/text_title"
