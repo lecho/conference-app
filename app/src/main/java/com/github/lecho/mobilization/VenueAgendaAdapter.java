@@ -64,7 +64,7 @@ public class VenueAgendaAdapter extends RecyclerView.Adapter<VenueAgendaAdapter.
         public AgendaViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(addToMyAgendaClickListener);
+            itemView.setOnClickListener(agendaItemClickListener);
             addToMyAgendaLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -18,16 +18,12 @@ public class VenueAgendaFragment extends Fragment {
 
     public static final String TAG = "VenueAgendaFragment";
     public static final String[] DATASET = new String[]{"ALA", "OLA", "ELA", "EWA", "JULA"};
-    private static final String ARG_AGENDA_TYPE = "arg-agenda-type";
 
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    public static VenueAgendaFragment newInstance(AgendaType agendaType) {
+    public static VenueAgendaFragment newInstance() {
         VenueAgendaFragment fragment = new VenueAgendaFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(ARG_AGENDA_TYPE, agendaType);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -53,9 +49,5 @@ public class VenueAgendaFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-    }
-
-    public enum AgendaType {
-        VENUE_SPECIFIC, VENUE_GENERIC
     }
 }
