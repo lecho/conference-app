@@ -1,8 +1,6 @@
 package com.github.lecho.mobilization;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,34 +10,31 @@ import android.view.MenuItem;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-
-public class MainActivity extends AppCompatActivity {
+public class TalkActivity extends AppCompatActivity {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
-    @Bind(R.id.navigation_view)
-    NavigationView navigationView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_talk);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        Menu navigationViewMenu = navigationView.getMenu();
+        getSupportActionBar().setTitle("TALK");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (null == savedInstanceState) {
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_container, MyAgendaFragment.newInstance()).commit();
+            fragmentManager.beginTransaction().replace(R.id.content_container, TalkFragment.newInstance()).commit();
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return super.onCreateOptionsMenu(menu);
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_talk, menu);
+        return true;
     }
 
     @Override
@@ -51,12 +46,9 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, TalkActivity.class);
-            startActivity(intent);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
 }

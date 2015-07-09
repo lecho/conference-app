@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -82,6 +83,7 @@ public class MyAgendaFragment extends Fragment {
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
             //Remove swiped item from list and notify the RecyclerView
+            Toast.makeText(getActivity(), "trollo", Toast.LENGTH_SHORT).show();
             DATASET.remove(viewHolder.getAdapterPosition());
             adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
         }
