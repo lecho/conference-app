@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/primary"
+                android:orientation="vertical"
+                android:paddingBottom="48dp"
+                android:paddingLeft="48dp"
+                android:paddingRight="16dp"
+                android:paddingTop="?attr/actionBarSize">
+
+    <TextView
+        android:id="@+id/text_title"
+        style="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Testy bezpieczeństwa na przykładach"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="8dp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/text_time_slot"
+        style="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_title"
+        android:text="10:30 - 11:00"
+        android:textColor="@android:color/white"/>
+
+    <TextView
+        android:id="@+id/text_venue"
+        style="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_time_slot"
+        android:text="Transition Technologies"
+        android:textColor="@android:color/white"/>
+
+</RelativeLayout>
