@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    android:id="@+id/description_card_view"
+    style="@style/CardView.Light"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/horizontal_divider"/>
+
+        <TextView
+            android:id="@+id/text_venue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Na rzeczywistych przykĹadach pokaĹźÄ jak wyglÄda proces oceny bezpieczeĹstwa aplikacji mobilnych. Zobaczymy m.in. jak wykrywaÄ sĹaboĹci zwiÄzane z przechowywaniem danych na urzÄdzeniu, nieprawidĹowoĹci w transmisji, oraz najgroĹşniejsze - bĹÄdy w API po stronie serwera (np. bĹÄdy logiczne, kontroli dostÄpu, REST). JednoczeĹnie okaĹźe siÄ jakie techniki utrudniajÄ ataki, jaki jest faktyczny wpĹyw na ryzyko poszczegĂłlnych podatnoĹci, oraz jakie zabezpieczenia warto zastosowaÄ w rĂłĹźnych aplikacjach."
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

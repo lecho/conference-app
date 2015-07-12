@@ -5,8 +5,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -54,11 +53,11 @@
             android:textStyle="bold"/>
 
         <View
-            android:id="@+id/speakers_divider"
+            android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_below="@id/text_title"
-            android:background="@drawable/divider_speakers"/>
+            android:background="@drawable/horizontal_divider"/>
 
         <TextView
             android:id="@+id/text_language"
@@ -66,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@id/speakers_divider"
+            android:layout_below="@id/divider"
             android:layout_marginLeft="8dp"
             android:text="(EN)"/>
 
@@ -75,7 +74,7 @@
             android:id="@+id/text_speakers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/speakers_divider"
+            android:layout_below="@id/divider"
             android:layout_toLeftOf="@id/text_language"
             android:text="Adam Nowak"/>
 
