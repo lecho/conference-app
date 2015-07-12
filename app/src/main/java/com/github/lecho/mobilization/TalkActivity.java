@@ -28,10 +28,6 @@ public class TalkActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        collapsingToolbar.setTitle("10:30 - 11:00");
-        collapsingToolbar.setExpandedTitleColor(Color.TRANSPARENT);
-        collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
-
         if (null == savedInstanceState) {
             //FragmentManager fragmentManager = getSupportFragmentManager();
             //fragmentManager.beginTransaction().replace(R.id.content_container, TalkFragment.newInstance()).commit();

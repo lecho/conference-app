@@ -20,20 +20,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
-            app:collapsedTitleTextAppearance="?android:attr/textAppearanceMedium"
             app:contentScrim="@color/primary"
-            app:expandedTitleMarginStart="48dp"
-            app:expandedTitleTextAppearance="?android:attr/textAppearanceSmall"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <RelativeLayout
                 android:id="@+id/talk_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="48dp"
-                android:paddingLeft="48dp"
+                android:paddingBottom="24dp"
+                android:paddingLeft="64dp"
                 android:paddingRight="16dp"
-                android:paddingTop="?attr/actionBarSize"
+                android:paddingTop="8dp"
                 app:layout_collapseMode="parallax">
 
                 <TextView
