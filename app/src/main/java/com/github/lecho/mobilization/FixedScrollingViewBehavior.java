@@ -38,9 +38,9 @@ public class FixedScrollingViewBehavior extends AppBarLayout.ScrollingViewBehavi
                 }
 
                 int scrollRange = appBar.getTotalScrollRange();
-//                int height = parent.getHeight() - appBar.getMeasuredHeight() + Math.min(scrollRange, parent.getHeight
-//                        () - heightUsed);
-                int height = parent.getMeasuredHeight() - appBar.getMeasuredHeight() + scrollRange;
+                int height = parent.getHeight() - appBar.getMeasuredHeight() + Math.min(scrollRange, parent.getHeight
+                        () - heightUsed);
+                //int height = parent.getMeasuredHeight() - appBar.getMeasuredHeight() + scrollRange;
                 int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY);
                 parent.onMeasureChild(child, parentWidthMeasureSpec, widthUsed, heightMeasureSpec, heightUsed);
                 return true;
