@@ -59,7 +59,6 @@ public class MyAgendaFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new MyAgendaAdapter(DATASET);
         recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new AgendaItemDecorator(getActivity()));
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);

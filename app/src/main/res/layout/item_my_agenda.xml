@@ -17,7 +17,7 @@
 
         <TextView
             android:id="@+id/text_time_slot"
-            style="?android:attr/textAppearanceMedium"
+            style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -26,7 +26,7 @@
 
         <TextView
             android:id="@+id/text_venue"
-            style="?android:attr/textAppearanceSmall"
+            style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/text_time_slot"
@@ -34,14 +34,14 @@
 
         <TextView
             android:id="@+id/text_title"
-            style="?android:attr/textAppearanceSmall"
+            style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/text_venue"
             android:layout_marginBottom="12dp"
             android:layout_marginTop="8dp"
-            android:text="Tools and Techniques that help maintain a high quality code base"
-            android:textColor="@android:color/holo_blue_dark"
+            android:text="Projektowanie aplikacji iOS - wzorce i triki które każdy programista znać powinien"
+            android:textColor="@color/accent_extra_dark"
             android:textStyle="bold"/>
 
         <View
@@ -53,7 +53,7 @@
 
         <TextView
             android:id="@+id/text_language"
-            style="?android:attr/textAppearanceSmall"
+            style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -64,6 +64,7 @@
 
         <TextView
             android:id="@+id/text_speakers"
+            style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/divider"

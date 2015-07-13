@@ -30,7 +30,7 @@
             android:id="@+id/text_venue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Na rzeczywistych przykĹadach pokaĹźÄ jak wyglÄda proces oceny bezpieczeĹstwa aplikacji mobilnych. Zobaczymy m.in. jak wykrywaÄ sĹaboĹci zwiÄzane z przechowywaniem danych na urzÄdzeniu, nieprawidĹowoĹci w transmisji, oraz najgroĹşniejsze - bĹÄdy w API po stronie serwera (np. bĹÄdy logiczne, kontroli dostÄpu, REST). JednoczeĹnie okaĹźe siÄ jakie techniki utrudniajÄ ataki, jaki jest faktyczny wpĹyw na ryzyko poszczegĂłlnych podatnoĹci, oraz jakie zabezpieczenia warto zastosowaÄ w rĂłĹźnych aplikacjach."
+            android:text="Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektron"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
 
     </LinearLayout>
