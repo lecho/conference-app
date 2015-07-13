@@ -50,6 +50,5 @@
         android:layout_alignEnd="@id/toolbar"
         android:layout_alignRight="@id/toolbar"
         android:layout_marginBottom="-36dp"
-        android:layout_marginRight="24dp"
-        app:fab_radius="28dp"/>
+        android:layout_marginRight="24dp"/>
 </RelativeLayout>

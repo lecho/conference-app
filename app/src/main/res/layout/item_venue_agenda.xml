@@ -30,7 +30,7 @@
             <!-- Because FAB doesn't handle padding well -->
             <com.rey.material.widget.FloatingActionButton
                 android:id="@+id/button_add_to_my_agenda"
-                style="@style/FloatingColorActionButton"
+                style="@style/SmallActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

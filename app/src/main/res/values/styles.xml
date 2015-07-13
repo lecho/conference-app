@@ -14,36 +14,22 @@
     </style>
 
     <!-- FloatingActionButton Style -->
-
     <style name="FloatingActionButton" parent="Material.Drawable.Ripple.Touch.Light">
-        <item name="fab_backgroundColor">#FFDFDFDF</item>
+        <item name="rd_rippleColor">@color/accent_ripple</item>
+        <item name="fab_backgroundColor">@color/accent</item>
         <item name="fab_elevation">4dp</item>
-        <item name="fab_iconLineMorphing">@style/FloatingActionButtonIcon.Light</item>
+        <item name="fab_iconLineMorphing">@style/FloatingActionButtonIcon</item>
         <item name="rd_delayClick">none</item>
     </style>
 
-    <style name="FloatingWaveActionButton" parent="Material.Drawable.Ripple.Wave.Light">
-        <item name="fab_backgroundColor">#FFDFDFDF</item>
-        <item name="fab_elevation">4dp</item>
-        <item name="fab_iconLineMorphing">@style/FloatingActionButtonIcon.Light</item>
-        <item name="rd_delayClick">none</item>
-    </style>
-
-    <style name="FloatingColorActionButton" parent="Material.Drawable.Ripple.Touch.Light">
-        <item name="rd_rippleColor">#33000000</item>
-        <item name="fab_backgroundColor">#FF2196F3</item>
+    <style name="SmallActionButton" parent="Material.Drawable.Ripple.Touch.Light">
+        <item name="rd_rippleColor">@color/accent_ripple</item>
+        <item name="fab_backgroundColor">@color/accent</item>
         <item name="fab_elevation">0dp</item>
         <item name="fab_iconLineMorphing">@style/FloatingActionButtonIcon</item>
         <item name="rd_delayClick">none</item>
     </style>
 
-    <style name="FloatingWaveColorActionButton" parent="Material.Drawable.Ripple.Wave.Light">
-        <item name="rd_rippleColor">#33000000</item>
-        <item name="fab_backgroundColor">#FF2196F3</item>
-        <item name="fab_elevation">4dp</item>
-        <item name="fab_iconLineMorphing">@style/FloatingActionButtonIcon</item>
-        <item name="rd_delayClick">afterRelease</item>
-    </style>
 
     <style name="FloatingActionButtonIcon">
         <item name="lmd_state">@xml/fab_icon_states</item>
