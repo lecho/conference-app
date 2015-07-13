@@ -41,7 +41,6 @@ public class VenueAgendaFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(new VenueAgendaAdapter(DATASET));
-        recyclerView.addItemDecoration(new AgendaItemDecorator(getActivity()));
 
         return rootView;
     }

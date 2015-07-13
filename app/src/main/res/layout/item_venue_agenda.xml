@@ -5,12 +5,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginTop="8dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="4dp">
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/text_time_slot"
@@ -23,19 +27,21 @@
 
         <FrameLayout
             android:id="@+id/button_add_to_my_agenda_layout"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true">
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="-16dp"
+            android:layout_marginTop="-16dp">
             <!-- Because FAB doesn't handle padding well -->
             <com.rey.material.widget.FloatingActionButton
                 android:id="@+id/button_add_to_my_agenda"
                 style="@style/SmallActionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
                 android:layout_gravity="top|right"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
                 app:fab_iconSize="16dp"
                 app:fab_radius="14dp"/>
         </FrameLayout>
