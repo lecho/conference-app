@@ -16,8 +16,8 @@
 
     <TextView
         android:id="@+id/text_time_slot"
-        style="@style/TextAppearance.AppCompat.Medium"
-        android:layout_width="match_parent"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/text_title"
         android:text="10:30 - 11:00"
@@ -26,9 +26,11 @@
     <TextView
         android:id="@+id/text_venue"
         style="@style/TextAppearance.AppCompat.Small"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/text_time_slot"
+        android:layout_alignTop="@id/text_time_slot"
+        android:layout_marginLeft="8dp"
+        android:layout_toRightOf="@id/text_time_slot"
         android:text="Transition Technologies"
         android:textColor="@android:color/white"/>
 
