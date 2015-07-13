@@ -64,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_container, VenueAgendaFragment.newInstance()).commit();
             return true;
+        }else if (id == R.id.action_settings3) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_container, SponsorsFragment.newInstance()).commit();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

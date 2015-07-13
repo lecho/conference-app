@@ -4,7 +4,12 @@
     <color name="primary">#607D8B</color>
     <color name="primary_dark">#455A64</color>
     <color name="accent">#CDDC39</color>
-    <color name="accent_extra_dark">#827717</color>
     <color name="accent_ripple">#DCE775</color>
+
     <color name="window_background">#FFF5F5F5</color>
+
+    <color name="platinum">#E5E4E2</color>
+    <color name="gold">#D4AF37</color>
+    <color name="silver">#C0C0C0</color>
+    <color name="bronze">#CD7F32</color>
 </resources>
