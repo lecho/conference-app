@@ -1,13 +1,11 @@
 package com.github.lecho.mobilization;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-
-import com.rey.material.widget.FloatingActionButton;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -17,8 +15,8 @@ public class TalkActivity extends AppCompatActivity {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
-    @Bind(R.id.button_add_to_my_agenda)
-    FloatingActionButton addToMyAgenda;
+    //@Bind(R.id.button_add_to_my_agenda)
+    //FloatingActionButton addToMyAgenda;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +31,15 @@ public class TalkActivity extends AppCompatActivity {
             //fragmentManager.beginTransaction().replace(R.id.content_container, TalkFragment.newInstance()).commit();
         }
 
-        addToMyAgenda.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (v instanceof FloatingActionButton) {
-                    FloatingActionButton bt = (FloatingActionButton) v;
-                    bt.setLineMorphingState((bt.getLineMorphingState() + 1) % 2, true);
-                }
-            }
-        });
+//        addToMyAgenda.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (v instanceof FloatingActionButton) {
+//                    FloatingActionButton bt = (FloatingActionButton) v;
+//                    bt.setLineMorphingState((bt.getLineMorphingState() + 1) % 2, true);
+//                }
+//            }
+//        });
     }
 
     @Override
