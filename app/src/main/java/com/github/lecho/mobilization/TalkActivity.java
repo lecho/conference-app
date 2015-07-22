@@ -25,6 +25,7 @@ public class TalkActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(null);
 
         if (null == savedInstanceState) {
             //FragmentManager fragmentManager = getSupportFragmentManager();

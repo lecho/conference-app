@@ -7,5 +7,5 @@
          https://developer.android.com/design/patterns/navigation-drawer.html -->
     <dimen name="navigation_drawer_width">240dp</dimen>
     <dimen name="fab_compat_margin_right">16dp</dimen>
-    <dimen name="fab_compat_margin_bottom">-46dp</dimen>
+    <dimen name="fab_compat_margin_bottom">-60dp</dimen>
 </resources>

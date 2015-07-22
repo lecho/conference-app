@@ -3,16 +3,21 @@
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="Details"
         app:showAsAction="never"/>
     <item
         android:id="@+id/action_settings2"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="Agenda"
         app:showAsAction="never"/>
     <item
         android:id="@+id/action_settings3"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="Sponsors"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_settings4"
+        android:orderInCategory="100"
+        android:title="Speaker"
         app:showAsAction="never"/>
 </menu>

@@ -6,24 +6,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="?attr/colorPrimary"
-        android:paddingBottom="16dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-        <include layout="@layout/include_talk_header"/>
+        android:layout_height="?attr/actionBarSize">
     </android.support.v7.widget.Toolbar>
+
+    <include
+        android:id="@+id/talk_header"
+        layout="@layout/include_talk_header"/>
+
+    <View
+        android:id="@+id/header_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/talk_header"
+        android:background="@color/accent"/>
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar">
+        android:layout_below="@id/header_divider">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,21 +50,21 @@
     </ScrollView>
 
     <!--<com.rey.material.widget.FloatingActionButton-->
-    <!--android:id="@+id/button_add_to_my_agenda"-->
+    <!--android:id="@+id/button_add_to_my_agenda2"-->
     <!--style="@style/FloatingActionButton"-->
     <!--android:layout_width="wrap_content"-->
     <!--android:layout_height="wrap_content"-->
     <!--android:layout_alignBottom="@id/toolbar"-->
     <!--android:layout_alignEnd="@id/toolbar"-->
     <!--android:layout_alignRight="@id/toolbar"-->
-    <!--android:layout_marginBottom="-36dp"-->
+    <!--android:layout_marginBottom="-100dp"-->
     <!--android:layout_marginRight="24dp"/>-->
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/button_add_to_my_agenda"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/toolbar"
+        android:layout_alignBottom="@id/talk_header"
         android:layout_alignEnd="@id/toolbar"
         android:layout_alignRight="@id/toolbar"
         android:layout_marginBottom="@dimen/fab_compat_margin_bottom"
