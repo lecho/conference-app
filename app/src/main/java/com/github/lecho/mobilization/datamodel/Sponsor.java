@@ -1,4 +1,4 @@
-package com.github.lecho.mobilization.model;
+package com.github.lecho.mobilization.datamodel;
 
 /**
  * Created by Leszek on 2015-07-24.

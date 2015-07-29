@@ -1,4 +1,4 @@
-package com.github.lecho.mobilization;
+package com.github.lecho.mobilization.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.github.lecho.mobilization.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

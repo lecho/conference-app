@@ -1,4 +1,4 @@
-package com.github.lecho.mobilization.model;
+package com.github.lecho.mobilization.datamodel;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;

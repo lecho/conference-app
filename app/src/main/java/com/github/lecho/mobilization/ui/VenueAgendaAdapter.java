@@ -1,4 +1,4 @@
-package com.github.lecho.mobilization;
+package com.github.lecho.mobilization.ui;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.github.lecho.mobilization.R;
 import com.rey.material.widget.FloatingActionButton;
 
 import butterknife.Bind;

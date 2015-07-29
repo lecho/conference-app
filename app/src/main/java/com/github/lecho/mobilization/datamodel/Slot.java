@@ -1,4 +1,4 @@
-package com.github.lecho.mobilization.model;
+package com.github.lecho.mobilization.datamodel;
 
 
 import android.util.Log;

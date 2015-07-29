@@ -1,8 +1,10 @@
-package com.github.lecho.mobilization;
+package com.github.lecho.mobilization.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
+import com.github.lecho.mobilization.R;
 
 public class SpeakerActivity extends AppCompatActivity {
 

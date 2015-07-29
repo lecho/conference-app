@@ -1,4 +1,4 @@
-package com.github.lecho.mobilization;
+package com.github.lecho.mobilization.ui;
 
 import android.content.Context;
 import android.support.design.widget.AppBarLayout;
