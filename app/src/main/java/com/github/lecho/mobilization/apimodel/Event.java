@@ -9,16 +9,15 @@ import java.lang.reflect.Type;
 import java.util.Map;
 
 /**
- * Created by Leszek on 2015-08-04.
+ * Created by Leszek on 2015-07-24.
  */
-public class BaseApiModel {
+public class Event {
 
-    public static <T> Map<String, T> fromJson(String json) {
-        Type genericType = new TypeToken<Map<String, T>>() {
+    public static Map<String, Event> fromJson(String json) {
+        Type genericType = new TypeToken<Map<String, Event>>() {
         }.getType();
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
-        Map<String, T> talksMap = gson.fromJson(json, genericType);
-        return talksMap;
+        Map<String, Event> eventsMap = gson.fromJson(json, genericType);
+        return eventsMap;
     }
-
 }

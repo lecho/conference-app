@@ -11,15 +11,17 @@ import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * Created by Leszek on 2015-07-24.
  */
-public class Agenda extends BaseApiModel {
+public class AgendaItem {
+
+    public static final String BREAK_KEY = "break_key";
+    public String breakKey;
+    public Map<String, AgendaTalkItem> talks = new HashMap<>();
 
     public static Map<String, AgendaItem> fromJson(String json) {
         //JsonParser parser = new JsonParser();
@@ -37,7 +39,7 @@ public class Agenda extends BaseApiModel {
         public AgendaItem deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws
                 JsonParseException {
             if (!(json instanceof JsonObject)) {
-                throw new IllegalStateException("Could not deserialize AgendaItem, JsonElement is not instance of " +
+                throw new IllegalStateException("Could not deserialize AgendaItem2, JsonElement is not instance of " +
                         "JsonObject");
             }
             AgendaItem agendaItem;
@@ -45,10 +47,10 @@ public class Agenda extends BaseApiModel {
                     .create();
             JsonObject jsonObject = (JsonObject) json;
             if (jsonObject.has(AgendaItem.BREAK_KEY)) {
-                //Break item
+                //BreakRealm item
                 agendaItem = gson.fromJson(json, AgendaItem.class);
             } else {
-                //Talk items
+                //TalkRealm items
                 Type genericType = new TypeToken<Map<String, AgendaTalkItem>>() {
                 }.getType();
                 Map<String, AgendaTalkItem> talksMap = gson.fromJson(json, genericType);
@@ -59,20 +61,12 @@ public class Agenda extends BaseApiModel {
         }
     }
 
-    public static class AgendaItem {
-        public static final String BREAK_KEY = "break_key";
-        public String slotKey;
-        public String breakKey;
-        public Map<String, AgendaTalkItem> talks = new HashMap<>();
-
-        @Override
-        public String toString() {
-            return "AgendaItem{" +
-                    "slotKey='" + slotKey + '\'' +
-                    ", breakKey='" + breakKey + '\'' +
-                    ", talks=" + talks +
-                    '}';
-        }
+    @Override
+    public String toString() {
+        return "AgendaItem{" +
+                "breakKey='" + breakKey + '\'' +
+                ", talks=" + talks +
+                '}';
     }
 
     public static class AgendaTalkItem {

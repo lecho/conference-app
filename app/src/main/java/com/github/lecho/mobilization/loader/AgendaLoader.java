@@ -14,8 +14,9 @@ public class AgendaLoader extends AsyncTaskLoader<AgendaData> {
 
     private static final String TAG = AgendaLoader.class.getSimpleName();
     private AgendaData agendaData;
+    private AgendaLoaderType type;
 
-    public AgendaLoader(Context context) {
+    public AgendaLoader(Context context, AgendaLoaderType type) {
         super(context);
     }
 
@@ -119,6 +120,6 @@ public class AgendaLoader extends AsyncTaskLoader<AgendaData> {
     }
 
     public enum AgendaLoaderType {
-        MY_AGENDA, VENUE_AGENDA, ALL
+        MY_AGENDA, VENUE_AGENDA, WHOLE_AGENDA
     }
 }

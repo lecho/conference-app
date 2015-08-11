@@ -1,5 +1,6 @@
 package com.github.lecho.mobilization.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -11,6 +12,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.github.lecho.mobilization.R;
+import com.github.lecho.mobilization.apimodel.AgendaItem;
+import com.github.lecho.mobilization.apimodel.ApiData;
+import com.github.lecho.mobilization.apimodel.Break;
+import com.github.lecho.mobilization.apimodel.Slot;
+import com.github.lecho.mobilization.apimodel.Talk;
+import com.github.lecho.mobilization.realmmodel.RealmFacade;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -41,8 +53,56 @@ public class MainActivity extends AppCompatActivity {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_container, MyAgendaFragment.newInstance()).commit();
         }
+
+        String agendaApi = readFromfile("test-data/schedule.json", this);
+        String slotApi = readFromfile("test-data/slots.json", this);
+        String breaksApi = readFromfile("test-data/breaks.json", this);
+        String talkApi = readFromfile("test-data/talks.json", this);
+        Map<String, AgendaItem> agendaItemMap = AgendaItem.<AgendaItem>fromJson(agendaApi);
+        Map<String, Slot> slotMap = Slot.fromJson(slotApi);
+        Map<String, Break> breakMap = Break.fromJson(breaksApi);
+        Map<String, Talk> talkMap = Talk.fromJson(talkApi);
+
+        ApiData apiData = new ApiData();
+        apiData.agendaItems = agendaItemMap;
+        apiData.slots = slotMap;
+        apiData.breaks = breakMap;
+        apiData.talks = talkMap;
+
+        RealmFacade facade = new RealmFacade(this);
+        facade.saveApiData(apiData);
+
     }
 
+    public static String readFromfile(String fileName, Context context) {
+        StringBuilder returnString = new StringBuilder();
+        InputStream fIn = null;
+        InputStreamReader isr = null;
+        BufferedReader input = null;
+        try {
+            fIn = context.getAssets().open(fileName, Context.MODE_PRIVATE);
+            isr = new InputStreamReader(fIn);
+            input = new BufferedReader(isr);
+            String line = "";
+            while ((line = input.readLine()) != null) {
+                returnString.append(line);
+            }
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            try {
+                if (isr != null)
+                    isr.close();
+                if (fIn != null)
+                    fIn.close();
+                if (input != null)
+                    input.close();
+            } catch (Exception e2) {
+                e2.getMessage();
+            }
+        }
+        return returnString.toString();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

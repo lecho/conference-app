@@ -1,4 +1,4 @@
-package com.github.lecho.mobilization.datamodel;
+package com.github.lecho.mobilization.realmmodel;
 
 import com.github.lecho.mobilization.viewmodel.AgendaData;
 import com.github.lecho.mobilization.viewmodel.SpeakerData;
@@ -27,4 +27,6 @@ public interface DataFacade {
     SpeakerData loadSpeaker(String speakerKey);
 
     VenueData loadVenue(String venueKey);
+
+
 }
