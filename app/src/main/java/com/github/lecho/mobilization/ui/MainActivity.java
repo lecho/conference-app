@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.apimodel.AgendaItem;
 import com.github.lecho.mobilization.apimodel.ApiData;
+import com.github.lecho.mobilization.apimodel.ApiFacade;
 import com.github.lecho.mobilization.apimodel.BreakApiDto;
 import com.github.lecho.mobilization.apimodel.SlotApiDto;
 import com.github.lecho.mobilization.apimodel.TalkApiDto;
@@ -54,55 +55,42 @@ public class MainActivity extends AppCompatActivity {
             fragmentManager.beginTransaction().replace(R.id.content_container, MyAgendaFragment.newInstance()).commit();
         }
 
-        String agendaApi = readFromfile("test-data/schedule.json", this);
-        String slotApi = readFromfile("test-data/slots.json", this);
-        String breaksApi = readFromfile("test-data/breaks.json", this);
-        String talkApi = readFromfile("test-data/talks.json", this);
-        Map<String, AgendaItem> agendaItemMap = AgendaItem.fromJson(agendaApi, AgendaItem.class);
-        Map<String, SlotApiDto> slotMap = SlotApiDto.fromJson(slotApi, SlotApiDto.class);
-        Map<String, BreakApiDto> breakMap = BreakApiDto.fromJson(breaksApi, BreakApiDto.class);
-        Map<String, TalkApiDto> talkMap = TalkApiDto.fromJson(talkApi, TalkApiDto.class);
-
-        ApiData apiData = new ApiData();
-        apiData.agendaItems = agendaItemMap;
-        apiData.slots = slotMap;
-        apiData.breaks = breakMap;
-        apiData.talks = talkMap;
+        ApiData apiData = ApiFacade.parseJsonsFromAssets(this, "test-data");
 
         RealmFacade facade = new RealmFacade(this);
         facade.saveApiData(apiData);
 
     }
 
-    public static String readFromfile(String fileName, Context context) {
-        StringBuilder returnString = new StringBuilder();
-        InputStream fIn = null;
-        InputStreamReader isr = null;
-        BufferedReader input = null;
-        try {
-            fIn = context.getAssets().open(fileName, Context.MODE_PRIVATE);
-            isr = new InputStreamReader(fIn);
-            input = new BufferedReader(isr);
-            String line = "";
-            while ((line = input.readLine()) != null) {
-                returnString.append(line);
-            }
-        } catch (Exception e) {
-            e.getMessage();
-        } finally {
-            try {
-                if (isr != null)
-                    isr.close();
-                if (fIn != null)
-                    fIn.close();
-                if (input != null)
-                    input.close();
-            } catch (Exception e2) {
-                e2.getMessage();
-            }
-        }
-        return returnString.toString();
-    }
+//    public static String readFileFromAsstes(String fileName, Context context) {
+//        StringBuilder returnString = new StringBuilder();
+//        InputStream fIn = null;
+//        InputStreamReader isr = null;
+//        BufferedReader input = null;
+//        try {
+//            fIn = context.getAssets().open(fileName, Context.MODE_PRIVATE);
+//            isr = new InputStreamReader(fIn);
+//            input = new BufferedReader(isr);
+//            String line = "";
+//            while ((line = input.readLine()) != null) {
+//                returnString.append(line);
+//            }
+//        } catch (Exception e) {
+//            e.getMessage();
+//        } finally {
+//            try {
+//                if (isr != null)
+//                    isr.close();
+//                if (fIn != null)
+//                    fIn.close();
+//                if (input != null)
+//                    input.close();
+//            } catch (Exception e2) {
+//                e2.getMessage();
+//            }
+//        }
+//        return returnString.toString();
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
