@@ -14,9 +14,9 @@ import android.view.MenuItem;
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.apimodel.AgendaItem;
 import com.github.lecho.mobilization.apimodel.ApiData;
-import com.github.lecho.mobilization.apimodel.Break;
-import com.github.lecho.mobilization.apimodel.Slot;
-import com.github.lecho.mobilization.apimodel.Talk;
+import com.github.lecho.mobilization.apimodel.BreakApiDto;
+import com.github.lecho.mobilization.apimodel.SlotApiDto;
+import com.github.lecho.mobilization.apimodel.TalkApiDto;
 import com.github.lecho.mobilization.realmmodel.RealmFacade;
 
 import java.io.BufferedReader;
@@ -58,10 +58,10 @@ public class MainActivity extends AppCompatActivity {
         String slotApi = readFromfile("test-data/slots.json", this);
         String breaksApi = readFromfile("test-data/breaks.json", this);
         String talkApi = readFromfile("test-data/talks.json", this);
-        Map<String, AgendaItem> agendaItemMap = AgendaItem.<AgendaItem>fromJson(agendaApi);
-        Map<String, Slot> slotMap = Slot.fromJson(slotApi);
-        Map<String, Break> breakMap = Break.fromJson(breaksApi);
-        Map<String, Talk> talkMap = Talk.fromJson(talkApi);
+        Map<String, AgendaItem> agendaItemMap = AgendaItem.fromJson(agendaApi, AgendaItem.class);
+        Map<String, SlotApiDto> slotMap = SlotApiDto.fromJson(slotApi, SlotApiDto.class);
+        Map<String, BreakApiDto> breakMap = BreakApiDto.fromJson(breaksApi, BreakApiDto.class);
+        Map<String, TalkApiDto> talkMap = TalkApiDto.fromJson(talkApi, TalkApiDto.class);
 
         ApiData apiData = new ApiData();
         apiData.agendaItems = agendaItemMap;

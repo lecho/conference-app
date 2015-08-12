@@ -17,19 +17,16 @@ import java.util.Map;
 /**
  * Created by Leszek on 2015-07-24.
  */
-public class AgendaItem {
+public class AgendaItem extends BaseApiDto{
 
     public static final String BREAK_KEY = "break_key";
     public String breakKey;
     public Map<String, AgendaTalkItem> talks = new HashMap<>();
 
-    public static Map<String, AgendaItem> fromJson(String json) {
-        //JsonParser parser = new JsonParser();
-        Type genericType = new TypeToken<Map<String, AgendaItem>>() {
-        }.getType();
+    public static Map<String, AgendaItem> fromJson(String json, Class clazz) {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .registerTypeAdapter(AgendaItem.class, new AgendaItemDeserializer()).create();
-        Map<String, AgendaItem> objectsMap = gson.fromJson(json, genericType);
+        Map<String, AgendaItem> objectsMap = gson.fromJson(json, GENERIC_TYPES.get(clazz.getName()));
         return objectsMap;
     }
 

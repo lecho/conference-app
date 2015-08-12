@@ -5,11 +5,11 @@ import android.text.TextUtils;
 
 import com.github.lecho.mobilization.apimodel.AgendaItem;
 import com.github.lecho.mobilization.apimodel.ApiData;
-import com.github.lecho.mobilization.apimodel.Break;
-import com.github.lecho.mobilization.apimodel.Slot;
-import com.github.lecho.mobilization.apimodel.Speaker;
-import com.github.lecho.mobilization.apimodel.Talk;
-import com.github.lecho.mobilization.apimodel.Venue;
+import com.github.lecho.mobilization.apimodel.BreakApiDto;
+import com.github.lecho.mobilization.apimodel.SlotApiDto;
+import com.github.lecho.mobilization.apimodel.SpeakerApiDto;
+import com.github.lecho.mobilization.apimodel.TalkApiDto;
+import com.github.lecho.mobilization.apimodel.VenueApiDto;
 
 import java.util.Map;
 
@@ -37,14 +37,14 @@ public class RealmFacade {
 
     private void saveAgenda(final ApiData apiData) {
         Map<String, AgendaItem> agendaItems = apiData.agendaItems;
-        Map<String, Talk> talks = apiData.talks;
-        Map<String, Slot> slots = apiData.slots;
-        Map<String, Venue> venues = apiData.venues;
-        Map<String, Speaker> speakers = apiData.speakers;
-        Map<String, Break> breaks = apiData.breaks;
+        Map<String, TalkApiDto> talks = apiData.talks;
+        Map<String, SlotApiDto> slots = apiData.slots;
+        Map<String, VenueApiDto> venues = apiData.venues;
+        Map<String, SpeakerApiDto> speakers = apiData.speakers;
+        Map<String, BreakApiDto> breaks = apiData.breaks;
 
         for (Map.Entry<String, AgendaItem> entry : agendaItems.entrySet()) {
-            Slot slot = slots.get(entry.getKey());
+            SlotApiDto slot = slots.get(entry.getKey());
             SlotRealm slotRealm = new SlotRealm();
             slotRealm.setKey(entry.getKey());
             slotRealm.setFrom(slot.from);
@@ -56,7 +56,7 @@ public class RealmFacade {
                 //TODO: talks
                 //TODO: Save talks
             } else {
-                Break breakk = breaks.get(entry.getValue().breakKey);
+                BreakApiDto breakk = breaks.get(entry.getValue().breakKey);
                 BreakRealm breakRealm = new BreakRealm();
                 breakRealm.setKey(entry.getValue().breakKey);
                 breakRealm.setDescription(breakk.descriptionHtml);

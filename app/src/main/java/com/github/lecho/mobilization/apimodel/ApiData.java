@@ -8,10 +8,10 @@ import java.util.Map;
 public class ApiData {
 
     public Map<String, AgendaItem> agendaItems;
-    public Map<String, Break> breaks;
-    public Map<String, Slot> slots;
-    public Map<String, Speaker> speakers;
-    public Map<String, Sponsor> sponsors;
-    public Map<String, Talk> talks;
-    public Map<String, Venue> venues;
+    public Map<String, BreakApiDto> breaks;
+    public Map<String, SlotApiDto> slots;
+    public Map<String, SpeakerApiDto> speakers;
+    public Map<String, SponsorApiDto> sponsors;
+    public Map<String, TalkApiDto> talks;
+    public Map<String, VenueApiDto> venues;
 }
