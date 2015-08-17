@@ -36,7 +36,7 @@ public class AgendaItem extends BaseApiDto{
         public AgendaItem deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws
                 JsonParseException {
             if (!(json instanceof JsonObject)) {
-                throw new IllegalStateException("Could not deserialize AgendaItem2, JsonElement is not instance of " +
+                throw new IllegalStateException("Could not deserialize AgendaItem, JsonElement is not instance of " +
                         "JsonObject");
             }
             AgendaItem agendaItem;

@@ -23,7 +23,7 @@ public class RealmFacade {
     private Context context;
     private Realm realm;
 
-    public RealmFacade(Context context){
+    public RealmFacade(Context context) {
         this.context = context;
     }
 
@@ -43,25 +43,42 @@ public class RealmFacade {
         Map<String, SpeakerApiDto> speakers = apiData.speakers;
         Map<String, BreakApiDto> breaks = apiData.breaks;
 
-        for (Map.Entry<String, AgendaItem> entry : agendaItems.entrySet()) {
-            SlotApiDto slot = slots.get(entry.getKey());
-            SlotRealm slotRealm = new SlotRealm();
-            slotRealm.setKey(entry.getKey());
+        for (Map.Entry<String, AgendaItem> itemEntry : agendaItems.entrySet()) {
+            final String key = itemEntry.getKey();
+            final AgendaItem item = itemEntry.getValue();
+            final SlotApiDto slot = slots.get(key);
+            final SlotRealm slotRealm = new SlotRealm();
+            slotRealm.setKey(itemEntry.getKey());
             slotRealm.setFrom(slot.from);
             slotRealm.setTo(slot.to);
             SlotRealm.timeToMilliseconds(slotRealm);
             //TODO: create slot;
 
-            if (TextUtils.isEmpty(entry.getValue().breakKey)) {
-                //TODO: talks
-                //TODO: Save talks
+            if (TextUtils.isEmpty(item.breakKey)) {
+                for (Map.Entry<String, AgendaItem.AgendaTalkItem> talkEntry : item.talks.entrySet()) {
+                    final String talkKey = talkEntry.getKey();
+                    final AgendaItem.AgendaTalkItem agendaTalkItem = talkEntry.getValue();
+                    TalkApiDto talk = talks.get(talkKey);
+                    TalkRealm talkRealm = new TalkRealm();
+                    talkRealm.setKey(talkKey);
+                    talkRealm.setSlot(slotRealm);
+                    talkRealm.setDescription(talk.descriptionHtml);
+                    talkRealm.setLanguage(talk.language);
+                    talkRealm.setTitle(talk.title);
+                    for (String speaker : talk.speakersKeys) {
+                        //TODO speakers
+                    }
+                    
+                    //TODO venue
+                }
+                //TODO: Save talks or add to list
             } else {
-                BreakApiDto breakk = breaks.get(entry.getValue().breakKey);
+                BreakApiDto breakk = breaks.get(itemEntry.getValue().breakKey);
                 BreakRealm breakRealm = new BreakRealm();
-                breakRealm.setKey(entry.getValue().breakKey);
+                breakRealm.setKey(itemEntry.getValue().breakKey);
                 breakRealm.setDescription(breakk.descriptionHtml);
                 breakRealm.setSlot(slotRealm);
-                //TODO: Save break
+                //TODO: Save break or add to list
             }
         }
     }
