@@ -17,41 +17,41 @@ import java.util.Map;
 /**
  * Created by Leszek on 2015-07-24.
  */
-public class AgendaItem extends BaseApiDto{
+public class AgendaItemApiDto extends BaseApiDto{
 
     public static final String BREAK_KEY = "break_key";
     public String breakKey;
     public Map<String, AgendaTalkItem> talks = new HashMap<>();
 
-    public static Map<String, AgendaItem> fromJson(String json, Class clazz) {
+    public static Map<String, AgendaItemApiDto> fromJson(String json, Class clazz) {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .registerTypeAdapter(AgendaItem.class, new AgendaItemDeserializer()).create();
-        Map<String, AgendaItem> objectsMap = gson.fromJson(json, GENERIC_TYPES.get(clazz.getName()));
+                .registerTypeAdapter(AgendaItemApiDto.class, new AgendaItemDeserializer()).create();
+        Map<String, AgendaItemApiDto> objectsMap = gson.fromJson(json, GENERIC_TYPES.get(clazz.getName()));
         return objectsMap;
     }
 
-    private static class AgendaItemDeserializer implements JsonDeserializer<AgendaItem> {
+    private static class AgendaItemDeserializer implements JsonDeserializer<AgendaItemApiDto> {
 
         @Override
-        public AgendaItem deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws
+        public AgendaItemApiDto deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws
                 JsonParseException {
             if (!(json instanceof JsonObject)) {
-                throw new IllegalStateException("Could not deserialize AgendaItem, JsonElement is not instance of " +
+                throw new IllegalStateException("Could not deserialize AgendaItemApiDto, JsonElement is not instance of " +
                         "JsonObject");
             }
-            AgendaItem agendaItem;
+            AgendaItemApiDto agendaItem;
             Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                     .create();
             JsonObject jsonObject = (JsonObject) json;
-            if (jsonObject.has(AgendaItem.BREAK_KEY)) {
+            if (jsonObject.has(AgendaItemApiDto.BREAK_KEY)) {
                 //BreakRealm item
-                agendaItem = gson.fromJson(json, AgendaItem.class);
+                agendaItem = gson.fromJson(json, AgendaItemApiDto.class);
             } else {
                 //TalkRealm items
                 Type genericType = new TypeToken<Map<String, AgendaTalkItem>>() {
                 }.getType();
                 Map<String, AgendaTalkItem> talksMap = gson.fromJson(json, genericType);
-                agendaItem = new AgendaItem();
+                agendaItem = new AgendaItemApiDto();
                 agendaItem.talks = talksMap;
             }
             return agendaItem;
@@ -60,9 +60,9 @@ public class AgendaItem extends BaseApiDto{
 
     @Override
     public String toString() {
-        return "AgendaItem{" +
+        return "AgendaItemApiDto{" +
                 "breakKey='" + breakKey + '\'' +
-                ", talks=" + talks +
+                ", talkApiDtoMap=" + talks +
                 '}';
     }
 

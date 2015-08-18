@@ -3,7 +3,7 @@ package com.github.lecho.mobilization.apimodel;
 /**
  * Created by Leszek on 2015-07-24.
  */
-public class VenueApiDto {
+public class VenueApiDto extends BreakApiDto{
 
     public String key;
     public String title;

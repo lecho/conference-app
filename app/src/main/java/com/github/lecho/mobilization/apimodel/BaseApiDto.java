@@ -18,7 +18,7 @@ public abstract class BaseApiDto {
 
     //Static initialization is needed due to static nature of fromJson method.
     static {
-        GENERIC_TYPES.put(AgendaItem.class.getName(), new TypeToken<Map<String, AgendaItem>>() {
+        GENERIC_TYPES.put(AgendaItemApiDto.class.getName(), new TypeToken<Map<String, AgendaItemApiDto>>() {
         }.getType());
         GENERIC_TYPES.put(BreakApiDto.class.getName(), new TypeToken<Map<String, BreakApiDto>>() {
         }.getType());
@@ -36,7 +36,7 @@ public abstract class BaseApiDto {
         }.getType());
     }
 
-    public static <T> Map<String, T> fromJson(String json, Class<T> clazz) {
+    public static <T extends BaseApiDto> Map<String, T> fromJson(String json, Class<T> clazz) {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
         Map<String, T> objectsMap = gson.fromJson(json, GENERIC_TYPES.get(clazz.getName()));
         return objectsMap;

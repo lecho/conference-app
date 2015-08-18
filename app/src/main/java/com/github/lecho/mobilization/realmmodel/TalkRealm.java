@@ -1,5 +1,7 @@
 package com.github.lecho.mobilization.realmmodel;
 
+import com.github.lecho.mobilization.apimodel.TalkApiDto;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 
@@ -70,5 +72,18 @@ public class TalkRealm extends RealmObject {
 
     public void setSpeakers(RealmList<SpeakerRealm> speakers) {
         this.speakers = speakers;
+    }
+
+    public static class TalkConverter extends RealmFacade.RealmConverter<TalkRealm, TalkApiDto> {
+
+        @Override
+        public TalkRealm convert(String key, TalkApiDto apiDto) {
+            TalkRealm talkRealm = new TalkRealm();
+            talkRealm.setKey(key);
+            talkRealm.setDescription(apiDto.descriptionHtml);
+            talkRealm.setLanguage(apiDto.language);
+            talkRealm.setTitle(apiDto.title);
+            return talkRealm;
+        }
     }
 }

@@ -1,6 +1,5 @@
 package com.github.lecho.mobilization.ui;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -12,18 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.github.lecho.mobilization.R;
-import com.github.lecho.mobilization.apimodel.AgendaItem;
 import com.github.lecho.mobilization.apimodel.ApiData;
 import com.github.lecho.mobilization.apimodel.ApiFacade;
-import com.github.lecho.mobilization.apimodel.BreakApiDto;
-import com.github.lecho.mobilization.apimodel.SlotApiDto;
-import com.github.lecho.mobilization.apimodel.TalkApiDto;
 import com.github.lecho.mobilization.realmmodel.RealmFacade;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

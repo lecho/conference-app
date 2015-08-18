@@ -7,11 +7,11 @@ import java.util.Map;
  */
 public class ApiData {
 
-    public Map<String, AgendaItem> agendaItems;
-    public Map<String, BreakApiDto> breaks;
-    public Map<String, SlotApiDto> slots;
-    public Map<String, SpeakerApiDto> speakers;
+    public Map<String, AgendaItemApiDto> agendaItemApiDtoMap;
+    public Map<String, BreakApiDto> breakApiDtoMap;
+    public Map<String, SlotApiDto> slotApiDtoMap;
+    public Map<String, SpeakerApiDto> speakerApiDtoMap;
     public Map<String, SponsorApiDto> sponsors;
-    public Map<String, TalkApiDto> talks;
-    public Map<String, VenueApiDto> venues;
+    public Map<String, TalkApiDto> talkApiDtoMap;
+    public Map<String, VenueApiDto> venueApiDtoMap;
 }

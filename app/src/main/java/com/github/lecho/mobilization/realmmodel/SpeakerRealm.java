@@ -1,5 +1,6 @@
 package com.github.lecho.mobilization.realmmodel;
 
+import com.github.lecho.mobilization.apimodel.SpeakerApiDto;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -79,5 +80,22 @@ public class SpeakerRealm extends RealmObject {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public static class SpeakerConverter extends RealmFacade.RealmConverter<SpeakerRealm, SpeakerApiDto> {
+
+        @Override
+        public SpeakerRealm convert(String key, SpeakerApiDto apiDto) {
+            SpeakerRealm speakerRealm = new SpeakerRealm();
+            speakerRealm.setKey(key);
+            speakerRealm.setBiography(apiDto.bioHtml);
+            speakerRealm.setFirstName(apiDto.firstname);
+            speakerRealm.setLastName(apiDto.lastname);
+            //TODO parse photo name
+            speakerRealm.setPhoto(apiDto.photoUrl);
+            speakerRealm.setTwitterProfile(apiDto.twitter);
+            speakerRealm.setWebPage(apiDto.www);
+            return speakerRealm;
+        }
     }
 }

@@ -3,6 +3,8 @@ package com.github.lecho.mobilization.realmmodel;
 
 import android.util.Log;
 
+import com.github.lecho.mobilization.apimodel.SlotApiDto;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,22 +16,11 @@ import io.realm.RealmObject;
  */
 public class SlotRealm extends RealmObject {
 
-    private static final String TAG = SlotRealm.class.getSimpleName();
     private String key;
     private String from;
     private String to;
     private long fromInMilliseconds;
     private long toInMilliseconds;
-    private static final DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-
-    public static void timeToMilliseconds(SlotRealm slotRealm) {
-        try {
-            slotRealm.setFromInMilliseconds(dateFormat.parse(slotRealm.getFrom()).getTime());
-            slotRealm.setToInMilliseconds(dateFormat.parse(slotRealm.getTo()).getTime());
-        } catch (ParseException e) {
-            Log.e(TAG, "Could not parse Slots From and To values", e);
-        }
-    }
 
     public String getKey() {
         return key;
@@ -69,5 +60,29 @@ public class SlotRealm extends RealmObject {
 
     public void setToInMilliseconds(long toInMilliseconds) {
         this.toInMilliseconds = toInMilliseconds;
+    }
+
+    public static class SlotConverter extends RealmFacade.RealmConverter<SlotRealm, SlotApiDto> {
+        private static final String TAG = SlotConverter.class.getSimpleName();
+        private static final DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+
+        @Override
+        public SlotRealm convert(String key, SlotApiDto apiDto) {
+            SlotRealm slotRealm = new SlotRealm();
+            slotRealm.setKey(key);
+            slotRealm.setFrom(apiDto.from);
+            slotRealm.setTo(apiDto.to);
+            timeToMilliseconds(slotRealm);
+            return slotRealm;
+        }
+
+        public void timeToMilliseconds(SlotRealm slotRealm) {
+            try {
+                slotRealm.setFromInMilliseconds(dateFormat.parse(slotRealm.getFrom()).getTime());
+                slotRealm.setToInMilliseconds(dateFormat.parse(slotRealm.getTo()).getTime());
+            } catch (ParseException e) {
+                Log.e(TAG, "Could not parse Slots From and To values", e);
+            }
+        }
     }
 }
