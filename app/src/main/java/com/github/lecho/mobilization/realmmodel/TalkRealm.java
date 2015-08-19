@@ -4,19 +4,21 @@ import com.github.lecho.mobilization.apimodel.TalkApiDto;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by Leszek on 2015-07-24.
  */
 public class TalkRealm extends RealmObject {
 
+    @PrimaryKey
     private String key;
     private String title;
     private String description;
     private String language;
     private SlotRealm slot;
     private VenueRealm venue;
-    private RealmList<SpeakerRealm> speakers;
+    private RealmList<SpeakerRealm> speakers = new RealmList<>();
 
     public String getKey() {
         return key;

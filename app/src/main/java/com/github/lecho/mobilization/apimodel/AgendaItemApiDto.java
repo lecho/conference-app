@@ -21,7 +21,7 @@ public class AgendaItemApiDto extends BaseApiDto{
 
     public static final String BREAK_KEY = "break_key";
     public String breakKey;
-    public Map<String, AgendaTalkItem> talks = new HashMap<>();
+    public Map<String, TalkItemApiDto> talks = new HashMap<>();
 
     public static Map<String, AgendaItemApiDto> fromJson(String json, Class clazz) {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
@@ -48,9 +48,9 @@ public class AgendaItemApiDto extends BaseApiDto{
                 agendaItem = gson.fromJson(json, AgendaItemApiDto.class);
             } else {
                 //TalkRealm items
-                Type genericType = new TypeToken<Map<String, AgendaTalkItem>>() {
+                Type genericType = new TypeToken<Map<String, TalkItemApiDto>>() {
                 }.getType();
-                Map<String, AgendaTalkItem> talksMap = gson.fromJson(json, genericType);
+                Map<String, TalkItemApiDto> talksMap = gson.fromJson(json, genericType);
                 agendaItem = new AgendaItemApiDto();
                 agendaItem.talks = talksMap;
             }
@@ -62,16 +62,16 @@ public class AgendaItemApiDto extends BaseApiDto{
     public String toString() {
         return "AgendaItemApiDto{" +
                 "breakKey='" + breakKey + '\'' +
-                ", talkApiDtoMap=" + talks +
+                ", talksMap=" + talks +
                 '}';
     }
 
-    public static class AgendaTalkItem {
+    public static class TalkItemApiDto {
         public String talkKey;
 
         @Override
         public String toString() {
-            return "AgendaTalkItem{" +
+            return "TalkItemApiDto{" +
                     "talkKey='" + talkKey + '\'' +
                     '}';
         }

@@ -10,12 +10,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by Leszek on 2015-07-24.
  */
 public class SlotRealm extends RealmObject {
 
+    @PrimaryKey
     private String key;
     private String from;
     private String to;

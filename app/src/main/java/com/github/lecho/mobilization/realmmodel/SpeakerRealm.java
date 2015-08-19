@@ -12,12 +12,14 @@ import java.util.List;
 import java.util.Map;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by Leszek on 2015-07-24.
  */
 public class SpeakerRealm extends RealmObject {
 
+    @PrimaryKey
     private String key;
     private String firstName;
     private String lastName;

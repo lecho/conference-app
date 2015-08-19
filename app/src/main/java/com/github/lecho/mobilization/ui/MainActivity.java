@@ -45,42 +45,12 @@ public class MainActivity extends AppCompatActivity {
             fragmentManager.beginTransaction().replace(R.id.content_container, MyAgendaFragment.newInstance()).commit();
         }
 
-        ApiData apiData = ApiFacade.parseJsonsFromAssets(this, "test-data");
+        ApiData apiData = ApiFacade.parseJsonFilesFromAssets(this, "test-data");
 
         RealmFacade facade = new RealmFacade(this);
         facade.saveApiData(apiData);
 
     }
-
-//    public static String readFileFromAsstes(String fileName, Context context) {
-//        StringBuilder returnString = new StringBuilder();
-//        InputStream fIn = null;
-//        InputStreamReader isr = null;
-//        BufferedReader input = null;
-//        try {
-//            fIn = context.getAssets().open(fileName, Context.MODE_PRIVATE);
-//            isr = new InputStreamReader(fIn);
-//            input = new BufferedReader(isr);
-//            String line = "";
-//            while ((line = input.readLine()) != null) {
-//                returnString.append(line);
-//            }
-//        } catch (Exception e) {
-//            e.getMessage();
-//        } finally {
-//            try {
-//                if (isr != null)
-//                    isr.close();
-//                if (fIn != null)
-//                    fIn.close();
-//                if (input != null)
-//                    input.close();
-//            } catch (Exception e2) {
-//                e2.getMessage();
-//            }
-//        }
-//        return returnString.toString();
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -3,12 +3,14 @@ package com.github.lecho.mobilization.realmmodel;
 import com.github.lecho.mobilization.apimodel.VenueApiDto;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by Leszek on 2015-07-24.
  */
 public class VenueRealm extends RealmObject {
 
+    @PrimaryKey
     private String key;
     private String title;
 
