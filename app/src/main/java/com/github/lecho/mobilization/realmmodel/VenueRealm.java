@@ -30,7 +30,7 @@ public class VenueRealm extends RealmObject {
         this.title = title;
     }
 
-    public static class VenueConverter extends RealmFacade.RealmConverter<VenueRealm, VenueApiDto> {
+    public static class VenueApiConverter extends RealmFacade.ApiToRealmConverter<VenueRealm, VenueApiDto> {
 
         @Override
         public VenueRealm convert(String key, VenueApiDto apiDto) {

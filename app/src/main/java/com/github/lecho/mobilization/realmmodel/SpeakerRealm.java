@@ -1,15 +1,6 @@
 package com.github.lecho.mobilization.realmmodel;
 
 import com.github.lecho.mobilization.apimodel.SpeakerApiDto;
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -84,7 +75,7 @@ public class SpeakerRealm extends RealmObject {
         this.photo = photo;
     }
 
-    public static class SpeakerConverter extends RealmFacade.RealmConverter<SpeakerRealm, SpeakerApiDto> {
+    public static class SpeakerApiConverter extends RealmFacade.ApiToRealmConverter<SpeakerRealm, SpeakerApiDto> {
 
         @Override
         public SpeakerRealm convert(String key, SpeakerApiDto apiDto) {

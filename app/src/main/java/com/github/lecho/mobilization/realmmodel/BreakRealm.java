@@ -48,7 +48,7 @@ public class BreakRealm extends RealmObject {
         this.slot = slot;
     }
 
-    public static class BreakConverter extends RealmFacade.RealmConverter<BreakRealm, BreakApiDto> {
+    public static class BreakApiConverter extends RealmFacade.ApiToRealmConverter<BreakRealm, BreakApiDto> {
         @Override
         public BreakRealm convert(String key, BreakApiDto apiDto) {
             BreakRealm breakRealm = new BreakRealm();

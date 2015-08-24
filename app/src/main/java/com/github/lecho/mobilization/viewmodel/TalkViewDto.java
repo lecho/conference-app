@@ -6,12 +6,13 @@ import java.util.List;
 /**
  * Created by Leszek on 2015-07-29.
  */
-public class TalkData {
+public class TalkViewDto {
 
     public String key;
     public String title;
     public String description;
     public String language;
-    public VenueData venue;
-    public List<SpeakerData> speakers = new ArrayList<>();
+    public SlotViewDto slot;
+    public VenueViewDto venue;
+    public List<SpeakerViewDto> speakers = new ArrayList<>();
 }

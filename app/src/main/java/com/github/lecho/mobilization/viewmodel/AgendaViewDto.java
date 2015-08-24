@@ -6,7 +6,8 @@ import java.util.List;
 /**
  * Created by Leszek on 2015-07-29.
  */
-public class AgendaData {
+public class AgendaViewDto {
 
-    List<SlotData> slots = new ArrayList<>();
+    public List<AgendaItemViewDto> agendaItems = new ArrayList<>();
+
 }

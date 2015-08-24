@@ -7,7 +7,6 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Map;
 
 /**
  * Created by Leszek on 2015-08-12.
@@ -40,6 +39,10 @@ public class ApiFacade {
         apiData.talksMap = TalkApiDto.fromJson(talkJson, TalkApiDto.class);
         apiData.speakersMap = SpeakerApiDto.fromJson(speakersJson, SpeakerApiDto.class);
         return apiData;
+    }
+
+    public static ApiData parseJsonFromIntenalStorage(Context context, String folderName) {
+        return null;
     }
 
     private static String readFileFromAsstes(Context context, String folderName, String fileName) {

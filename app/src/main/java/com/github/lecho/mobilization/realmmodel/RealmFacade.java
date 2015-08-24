@@ -8,12 +8,14 @@ import com.github.lecho.mobilization.apimodel.AgendaItemApiDto;
 import com.github.lecho.mobilization.apimodel.ApiData;
 import com.github.lecho.mobilization.apimodel.BaseApiDto;
 import com.github.lecho.mobilization.apimodel.TalkApiDto;
+import com.github.lecho.mobilization.viewmodel.AgendaViewDto;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import io.realm.Realm;
 import io.realm.RealmObject;
+import io.realm.RealmResults;
 
 /**
  * Created by Leszek on 2015-08-04.
@@ -50,18 +52,36 @@ public class RealmFacade {
             }
             Log.e(TAG, "Could not save api data to realm", e);
         } finally {
-            if (realm != null) {
-                realm.close();
-            }
+            closeRealm();
+        }
+    }
+
+    public AgendaViewDto loadAgenda() {
+        try {
+            realm = Realm.getInstance(context);
+            RealmResults<TalkRealm> talksRealms = realm.allObjects(TalkRealm.class);
+            RealmResults<BreakRealm> breaksRealms = realm.allObjects(BreakRealm.class);
+        }finally {
+            closeRealm();
+        }
+        AgendaViewDto agendaViewDto = new AgendaViewDto();
+
+        return agendaViewDto;
+    }
+
+    private void closeRealm(){
+        if (realm != null) {
+            realm.close();
+            realm = null;
         }
     }
 
     private void convertApiDataToRealm(final ApiData apiData) {
-        slotRealmsMap = convertApiDtoToRealm(apiData.slotsMap, new SlotRealm.SlotConverter());
-        breakRealmsMap = convertApiDtoToRealm(apiData.breaksMap, new BreakRealm.BreakConverter());
-        talkRealmsMap = convertApiDtoToRealm(apiData.talksMap, new TalkRealm.TalkConverter());
-        venueRealmsMap = convertApiDtoToRealm(apiData.venuesMap, new VenueRealm.VenueConverter());
-        speakerRealmsMap = convertApiDtoToRealm(apiData.speakersMap, new SpeakerRealm.SpeakerConverter());
+        slotRealmsMap = convertApiDtoToRealm(apiData.slotsMap, new SlotRealm.SlotApiConverter());
+        breakRealmsMap = convertApiDtoToRealm(apiData.breaksMap, new BreakRealm.BreakApiConverter());
+        talkRealmsMap = convertApiDtoToRealm(apiData.talksMap, new TalkRealm.TalkApiConverter());
+        venueRealmsMap = convertApiDtoToRealm(apiData.venuesMap, new VenueRealm.VenueApiConverter());
+        speakerRealmsMap = convertApiDtoToRealm(apiData.speakersMap, new SpeakerRealm.SpeakerApiConverter());
 
         createTalkSpeakerRelation(apiData);
         createAgendaRelations(apiData);
@@ -111,9 +131,9 @@ public class RealmFacade {
         }
     }
 
-    public <R extends RealmObject, A extends BaseApiDto> Map<String, R> convertApiDtoToRealm(Map<String, A>
+    private <R extends RealmObject, A extends BaseApiDto> Map<String, R> convertApiDtoToRealm(Map<String, A>
                                                                                                      apiDtoMap,
-                                                                                             RealmConverter<R, A>
+                                                                                             ApiToRealmConverter<R, A>
                                                                                                      converter) {
         Map<String, R> resultMap = new HashMap<>(apiDtoMap.size());
         for (Map.Entry<String, A> entry : apiDtoMap.entrySet()) {
@@ -123,7 +143,15 @@ public class RealmFacade {
         return resultMap;
     }
 
-    public static abstract class RealmConverter<R extends RealmObject, A extends BaseApiDto> {
+    private <R extends RealmObject, V> V convertRealmToViewDto(R realmObject, RealmToViewConverter<R, V> converter) {
+        return null;
+    }
+
+    public static abstract class ApiToRealmConverter<R extends RealmObject, A extends BaseApiDto> {
         public abstract R convert(String key, A apiDto);
+    }
+
+    public static abstract class RealmToViewConverter<R extends RealmObject, V> {
+        public abstract V convert(R realmObject);
     }
 }

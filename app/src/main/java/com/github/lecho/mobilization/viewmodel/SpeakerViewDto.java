@@ -3,7 +3,7 @@ package com.github.lecho.mobilization.viewmodel;
 /**
  * Created by Leszek on 2015-07-29.
  */
-public class SpeakerData {
+public class SpeakerViewDto {
 
     public String key;
     public String firstName;

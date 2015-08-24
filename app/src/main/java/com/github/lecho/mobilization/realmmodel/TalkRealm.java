@@ -76,7 +76,7 @@ public class TalkRealm extends RealmObject {
         this.speakers = speakers;
     }
 
-    public static class TalkConverter extends RealmFacade.RealmConverter<TalkRealm, TalkApiDto> {
+    public static class TalkApiConverter extends RealmFacade.ApiToRealmConverter<TalkRealm, TalkApiDto> {
 
         @Override
         public TalkRealm convert(String key, TalkApiDto apiDto) {

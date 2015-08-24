@@ -1,9 +1,9 @@
 package com.github.lecho.mobilization.realmmodel;
 
-import com.github.lecho.mobilization.viewmodel.AgendaData;
-import com.github.lecho.mobilization.viewmodel.SpeakerData;
-import com.github.lecho.mobilization.viewmodel.TalkData;
-import com.github.lecho.mobilization.viewmodel.VenueData;
+import com.github.lecho.mobilization.viewmodel.AgendaViewDto;
+import com.github.lecho.mobilization.viewmodel.SpeakerViewDto;
+import com.github.lecho.mobilization.viewmodel.TalkViewDto;
+import com.github.lecho.mobilization.viewmodel.VenueViewDto;
 
 import java.util.List;
 
@@ -12,21 +12,21 @@ import java.util.List;
  */
 public interface DataFacade {
 
-    AgendaData loadMyAgenda();
+    AgendaViewDto loadMyAgenda();
 
-    AgendaData loadAgendaForVenue();
+    AgendaViewDto loadAgendaForVenue();
 
-    AgendaData loadWholeAgenda();
+    AgendaViewDto loadWholeAgenda();
 
-    List<TalkData> loadAllTalks();
+    List<TalkViewDto> loadAllTalks();
 
-    List<TalkData> loadTalksForVenue(String venueKey);
+    List<TalkViewDto> loadTalksForVenue(String venueKey);
 
-    TalkData loadTalk(String talkKey);
+    TalkViewDto loadTalk(String talkKey);
 
-    SpeakerData loadSpeaker(String speakerKey);
+    SpeakerViewDto loadSpeaker(String speakerKey);
 
-    VenueData loadVenue(String venueKey);
+    VenueViewDto loadVenue(String venueKey);
 
 
 }

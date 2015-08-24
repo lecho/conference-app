@@ -64,8 +64,8 @@ public class SlotRealm extends RealmObject {
         this.toInMilliseconds = toInMilliseconds;
     }
 
-    public static class SlotConverter extends RealmFacade.RealmConverter<SlotRealm, SlotApiDto> {
-        private static final String TAG = SlotConverter.class.getSimpleName();
+    public static class SlotApiConverter extends RealmFacade.ApiToRealmConverter<SlotRealm, SlotApiDto> {
+        private static final String TAG = SlotApiConverter.class.getSimpleName();
         private static final DateFormat dateFormat = new SimpleDateFormat("HH:mm");
 
         @Override

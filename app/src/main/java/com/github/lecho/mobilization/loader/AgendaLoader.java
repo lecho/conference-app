@@ -5,15 +5,15 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
 import com.github.lecho.mobilization.BuildConfig;
-import com.github.lecho.mobilization.viewmodel.AgendaData;
+import com.github.lecho.mobilization.viewmodel.AgendaViewDto;
 
 /**
  * Created by Leszek on 2015-07-29.
  */
-public class AgendaLoader extends AsyncTaskLoader<AgendaData> {
+public class AgendaLoader extends AsyncTaskLoader<AgendaViewDto> {
 
     private static final String TAG = AgendaLoader.class.getSimpleName();
-    private AgendaData agendaData;
+    private AgendaViewDto agendaData;
     private AgendaLoaderType type;
 
     public AgendaLoader(Context context, AgendaLoaderType type) {
@@ -21,17 +21,17 @@ public class AgendaLoader extends AsyncTaskLoader<AgendaData> {
     }
 
     @Override
-    public AgendaData loadInBackground() {
+    public AgendaViewDto loadInBackground() {
         if (BuildConfig.DEBUG) {
             Log.d(TAG, "Loading agenda data");
         }
         //TODO: Load data
-        AgendaData agendaData = new AgendaData();
+        AgendaViewDto agendaData = new AgendaViewDto();
         return agendaData;
     }
 
     @Override
-    public void deliverResult(AgendaData newAgendaData) {
+    public void deliverResult(AgendaViewDto newAgendaData) {
         if (BuildConfig.DEBUG) {
             Log.d(TAG, "Delivering agenda data");
         }
@@ -42,7 +42,7 @@ public class AgendaLoader extends AsyncTaskLoader<AgendaData> {
                 onReleaseResources(newAgendaData);
             }
         }
-        AgendaData oldAgendaData = agendaData;
+        AgendaViewDto oldAgendaData = agendaData;
         agendaData = newAgendaData;
 
         if (isStarted()) {
@@ -86,7 +86,7 @@ public class AgendaLoader extends AsyncTaskLoader<AgendaData> {
      * Handles a request to cancel a load.
      */
     @Override
-    public void onCanceled(AgendaData newAgendaData) {
+    public void onCanceled(AgendaViewDto newAgendaData) {
         super.onCanceled(newAgendaData);
 
         // At this point we can release the resources associated with 'apps'
@@ -115,7 +115,7 @@ public class AgendaLoader extends AsyncTaskLoader<AgendaData> {
     /**
      * Helper function to take care of releasing resources associated with an actively loaded data set.
      */
-    protected void onReleaseResources(AgendaData oldAgendaData) {
+    protected void onReleaseResources(AgendaViewDto oldAgendaData) {
         //do nothing
     }
 

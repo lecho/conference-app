@@ -3,7 +3,7 @@ package com.github.lecho.mobilization.viewmodel;
 /**
  * Created by Leszek on 2015-07-29.
  */
-public class SlotData {
+public class SlotViewDto {
 
     public String key;
     public String from;
@@ -11,8 +11,8 @@ public class SlotData {
     public long fromInMilliseconds;
     public long toInMilliseconds;
     public SlotType slotType;
-    public TalkData talkData;
-    public BreakData breakData;
+    public TalkViewDto talkData;
+    public BreakViewDto breakData;
 
     public enum SlotType {
         TALK, BREAK
