@@ -108,20 +108,31 @@ public class RealmFacade {
         TalkRealm.TalkViewConverter talkViewConverter = new TalkRealm.TalkViewConverter();
         BreakRealm.BreakViewConverter breakViewConverter = new BreakRealm.BreakViewConverter();
         AgendaViewDto agendaViewDto = new AgendaViewDto();
-        //TODO: talkRealm to agenda item converter
         for (TalkRealm talkRealm : talksRealms) {
-            AgendaItemViewDto agendaItemViewDto = new AgendaItemViewDto();
-            agendaItemViewDto.type = AgendaItemViewDto.AgendaItemType.TALK;
-            agendaItemViewDto.talk = talkViewConverter.convert(talkRealm);
+            AgendaItemViewDto agendaItemViewDto = convertTalkRealmToAgendaItem(talkRealm, talkViewConverter);
             agendaViewDto.agendaItems.add(agendaItemViewDto);
         }
         for (BreakRealm breakRealm : breaksRealms) {
-            AgendaItemViewDto agendaItemViewDto = new AgendaItemViewDto();
-            agendaItemViewDto.type = AgendaItemViewDto.AgendaItemType.BREAK;
-            agendaItemViewDto.agendaBreak = breakViewConverter.convert(breakRealm);
+            AgendaItemViewDto agendaItemViewDto = convertBreakRealmToAgendaItem(breakRealm, breakViewConverter);
             agendaViewDto.agendaItems.add(agendaItemViewDto);
         }
         return agendaViewDto;
+    }
+
+    private AgendaItemViewDto convertTalkRealmToAgendaItem(TalkRealm talkRealm, TalkRealm.TalkViewConverter
+            talkViewConverter) {
+        AgendaItemViewDto agendaItemViewDto = new AgendaItemViewDto();
+        agendaItemViewDto.type = AgendaItemViewDto.AgendaItemType.TALK;
+        agendaItemViewDto.talk = talkViewConverter.convert(talkRealm);
+        return agendaItemViewDto;
+    }
+
+    private AgendaItemViewDto convertBreakRealmToAgendaItem(BreakRealm breakRealm, BreakRealm.BreakViewConverter
+            breakViewConverter) {
+        AgendaItemViewDto agendaItemViewDto = new AgendaItemViewDto();
+        agendaItemViewDto.type = AgendaItemViewDto.AgendaItemType.BREAK;
+        agendaItemViewDto.agendaBreak = breakViewConverter.convert(breakRealm);
+        return agendaItemViewDto;
     }
 
     private void closeRealm() {
