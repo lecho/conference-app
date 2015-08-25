@@ -4,6 +4,7 @@ package com.github.lecho.mobilization.realmmodel;
 import android.util.Log;
 
 import com.github.lecho.mobilization.apimodel.SlotApiDto;
+import com.github.lecho.mobilization.viewmodel.SlotViewDto;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -85,6 +86,20 @@ public class SlotRealm extends RealmObject {
             } catch (ParseException e) {
                 Log.e(TAG, "Could not parse Slots From and To values", e);
             }
+        }
+    }
+
+    public static class SlotViewConverter extends RealmFacade.RealmToViewConverter<SlotRealm, SlotViewDto> {
+
+        @Override
+        public SlotViewDto convert(SlotRealm realmObject) {
+            SlotViewDto slotViewDto = new SlotViewDto();
+            slotViewDto.key = realmObject.getKey();
+            slotViewDto.from = realmObject.getFrom();
+            slotViewDto.to = realmObject.getTo();
+            slotViewDto.fromInMilliseconds = realmObject.getFromInMilliseconds();
+            slotViewDto.toInMilliseconds = realmObject.getToInMilliseconds();
+            return null;
         }
     }
 }

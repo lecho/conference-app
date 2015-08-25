@@ -7,5 +7,14 @@ public class BreakViewDto {
 
     public String key;
     public String title;
-    public String descriptionHtml;
+    public String description;
+
+    @Override
+    public String toString() {
+        return "BreakViewDto{" +
+                "key='" + key + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

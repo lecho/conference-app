@@ -13,4 +13,12 @@ public class AgendaItemViewDto {
         BREAK, TALK
     }
 
+    @Override
+    public String toString() {
+        return "AgendaItemViewDto{" +
+                "type=" + type +
+                ", agendaBreak=" + agendaBreak +
+                ", talk=" + talk +
+                '}';
+    }
 }

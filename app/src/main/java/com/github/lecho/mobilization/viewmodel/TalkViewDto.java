@@ -15,4 +15,17 @@ public class TalkViewDto {
     public SlotViewDto slot;
     public VenueViewDto venue;
     public List<SpeakerViewDto> speakers = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "TalkViewDto{" +
+                "key='" + key + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", language='" + language + '\'' +
+                ", slot=" + slot +
+                ", venue=" + venue +
+                ", speakers=" + speakers +
+                '}';
+    }
 }

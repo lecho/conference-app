@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -14,6 +15,7 @@ import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.apimodel.ApiData;
 import com.github.lecho.mobilization.apimodel.ApiFacade;
 import com.github.lecho.mobilization.realmmodel.RealmFacade;
+import com.github.lecho.mobilization.viewmodel.AgendaViewDto;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -50,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         RealmFacade facade = new RealmFacade(this);
         facade.saveApiData(apiData);
 
+        AgendaViewDto agendaViewDto = facade.loadWholeAgenda();
+        Log.e("Dupa", "Agenda: " + agendaViewDto.toString());
     }
 
     @Override

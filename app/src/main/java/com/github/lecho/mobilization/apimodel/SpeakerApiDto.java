@@ -17,9 +17,9 @@ public class SpeakerApiDto extends BaseApiDto {
         return "SpeakerRealm{" +
                 "firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
-                ", bioHtml='" + bioHtml + '\'' +
+                ", biography='" + bioHtml + '\'' +
                 ", www='" + www + '\'' +
-                ", twitter='" + twitter + '\'' +
+                ", twitterProfile='" + twitter + '\'' +
                 ", photoUrl='" + photoUrl + '\'' +
                 '}';
     }

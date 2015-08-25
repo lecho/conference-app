@@ -1,6 +1,7 @@
 package com.github.lecho.mobilization.realmmodel;
 
 import com.github.lecho.mobilization.apimodel.VenueApiDto;
+import com.github.lecho.mobilization.viewmodel.VenueViewDto;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -38,6 +39,17 @@ public class VenueRealm extends RealmObject {
             venueRealm.setKey(key);
             venueRealm.setTitle(apiDto.title);
             return venueRealm;
+        }
+    }
+
+    public static class VenueViewConverter extends RealmFacade.RealmToViewConverter<VenueRealm, VenueViewDto> {
+
+        @Override
+        public VenueViewDto convert(VenueRealm realmObject) {
+            VenueViewDto venueViewDto = new VenueViewDto();
+            venueViewDto.key = realmObject.getKey();
+            venueViewDto.title = realmObject.getTitle();
+            return venueViewDto;
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.github.lecho.mobilization.realmmodel;
 
 import com.github.lecho.mobilization.apimodel.BreakApiDto;
+import com.github.lecho.mobilization.viewmodel.BreakViewDto;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -56,6 +57,18 @@ public class BreakRealm extends RealmObject {
             breakRealm.setDescription(apiDto.descriptionHtml);
             breakRealm.setTitle(apiDto.title);
             return breakRealm;
+        }
+    }
+
+    public static class BreakViewConverter extends RealmFacade.RealmToViewConverter<BreakRealm, BreakViewDto> {
+
+        @Override
+        public BreakViewDto convert(BreakRealm realmObject) {
+            BreakViewDto breakViewDto = new BreakViewDto();
+            breakViewDto.key = realmObject.getKey();
+            breakViewDto.title = realmObject.getTitle();
+            breakViewDto.description = realmObject.getDescription();
+            return breakViewDto;
         }
     }
 }

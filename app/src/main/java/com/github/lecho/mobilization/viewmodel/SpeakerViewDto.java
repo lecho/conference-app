@@ -8,8 +8,21 @@ public class SpeakerViewDto {
     public String key;
     public String firstName;
     public String lastName;
-    public String bioHtml;
+    public String biography;
     public String wwwPage;
-    public String twitter;
-    public String photoFileName;
+    public String twitterProfile;
+    public String photo;
+
+    @Override
+    public String toString() {
+        return "SpeakerViewDto{" +
+                "key='" + key + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", biography='" + biography + '\'' +
+                ", wwwPage='" + wwwPage + '\'' +
+                ", twitterProfile='" + twitterProfile + '\'' +
+                ", photo='" + photo + '\'' +
+                '}';
+    }
 }

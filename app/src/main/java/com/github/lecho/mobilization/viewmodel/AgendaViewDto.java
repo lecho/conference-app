@@ -10,4 +10,10 @@ public class AgendaViewDto {
 
     public List<AgendaItemViewDto> agendaItems = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "AgendaViewDto{" +
+                "agendaItems=" + agendaItems +
+                '}';
+    }
 }

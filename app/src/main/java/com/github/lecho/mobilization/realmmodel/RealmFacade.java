@@ -8,6 +8,7 @@ import com.github.lecho.mobilization.apimodel.AgendaItemApiDto;
 import com.github.lecho.mobilization.apimodel.ApiData;
 import com.github.lecho.mobilization.apimodel.BaseApiDto;
 import com.github.lecho.mobilization.apimodel.TalkApiDto;
+import com.github.lecho.mobilization.viewmodel.AgendaItemViewDto;
 import com.github.lecho.mobilization.viewmodel.AgendaViewDto;
 
 import java.util.HashMap;
@@ -56,20 +57,33 @@ public class RealmFacade {
         }
     }
 
-    public AgendaViewDto loadAgenda() {
+    public AgendaViewDto loadWholeAgenda() {
         try {
             realm = Realm.getInstance(context);
             RealmResults<TalkRealm> talksRealms = realm.allObjects(TalkRealm.class);
             RealmResults<BreakRealm> breaksRealms = realm.allObjects(BreakRealm.class);
-        }finally {
+            TalkRealm.TalkViewConverter talkViewConverter = new TalkRealm.TalkViewConverter();
+            BreakRealm.BreakViewConverter breakViewConverter = new BreakRealm.BreakViewConverter();
+            AgendaViewDto agendaViewDto = new AgendaViewDto();
+            for (TalkRealm talkRealm : talksRealms) {
+                AgendaItemViewDto agendaItemViewDto = new AgendaItemViewDto();
+                agendaItemViewDto.type = AgendaItemViewDto.AgendaItemType.TALK;
+                agendaItemViewDto.talk = talkViewConverter.convert(talkRealm);
+                agendaViewDto.agendaItems.add(agendaItemViewDto);
+            }
+            for (BreakRealm breakRealm : breaksRealms) {
+                AgendaItemViewDto agendaItemViewDto = new AgendaItemViewDto();
+                agendaItemViewDto.type = AgendaItemViewDto.AgendaItemType.BREAK;
+                agendaItemViewDto.agendaBreak = breakViewConverter.convert(breakRealm);
+                agendaViewDto.agendaItems.add(agendaItemViewDto);
+            }
+            return agendaViewDto;
+        } finally {
             closeRealm();
         }
-        AgendaViewDto agendaViewDto = new AgendaViewDto();
-
-        return agendaViewDto;
     }
 
-    private void closeRealm(){
+    private void closeRealm() {
         if (realm != null) {
             realm.close();
             realm = null;
@@ -132,19 +146,15 @@ public class RealmFacade {
     }
 
     private <R extends RealmObject, A extends BaseApiDto> Map<String, R> convertApiDtoToRealm(Map<String, A>
-                                                                                                     apiDtoMap,
-                                                                                             ApiToRealmConverter<R, A>
-                                                                                                     converter) {
+                                                                                                      apiDtoMap,
+                                                                                              ApiToRealmConverter<R, A>
+                                                                                                      converter) {
         Map<String, R> resultMap = new HashMap<>(apiDtoMap.size());
         for (Map.Entry<String, A> entry : apiDtoMap.entrySet()) {
             final String key = entry.getKey();
             resultMap.put(key, converter.convert(key, entry.getValue()));
         }
         return resultMap;
-    }
-
-    private <R extends RealmObject, V> V convertRealmToViewDto(R realmObject, RealmToViewConverter<R, V> converter) {
-        return null;
     }
 
     public static abstract class ApiToRealmConverter<R extends RealmObject, A extends BaseApiDto> {

@@ -10,11 +10,15 @@ public class SlotViewDto {
     public String to;
     public long fromInMilliseconds;
     public long toInMilliseconds;
-    public SlotType slotType;
-    public TalkViewDto talkData;
-    public BreakViewDto breakData;
 
-    public enum SlotType {
-        TALK, BREAK
+    @Override
+    public String toString() {
+        return "SlotViewDto{" +
+                "key='" + key + '\'' +
+                ", from='" + from + '\'' +
+                ", to='" + to + '\'' +
+                ", fromInMilliseconds=" + fromInMilliseconds +
+                ", toInMilliseconds=" + toInMilliseconds +
+                '}';
     }
 }

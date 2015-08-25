@@ -1,6 +1,7 @@
 package com.github.lecho.mobilization.realmmodel;
 
 import com.github.lecho.mobilization.apimodel.TalkApiDto;
+import com.github.lecho.mobilization.viewmodel.TalkViewDto;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -86,6 +87,28 @@ public class TalkRealm extends RealmObject {
             talkRealm.setLanguage(apiDto.language);
             talkRealm.setTitle(apiDto.title);
             return talkRealm;
+        }
+    }
+
+    public static class TalkViewConverter extends RealmFacade.RealmToViewConverter<TalkRealm, TalkViewDto> {
+
+        private SlotRealm.SlotViewConverter slotViewConverter = new SlotRealm.SlotViewConverter();
+        private VenueRealm.VenueViewConverter venueViewConverter = new VenueRealm.VenueViewConverter();
+        private SpeakerRealm.SpeakerViewConverter speakerViewConverter = new SpeakerRealm.SpeakerViewConverter();
+
+        @Override
+        public TalkViewDto convert(TalkRealm realmObject) {
+            TalkViewDto talkViewDto = new TalkViewDto();
+            talkViewDto.key = realmObject.getKey();
+            talkViewDto.description = realmObject.getDescription();
+            talkViewDto.language = realmObject.getLanguage();
+            talkViewDto.title = realmObject.getTitle();
+            talkViewDto.slot = slotViewConverter.convert(realmObject.getSlot());
+            talkViewDto.venue = venueViewConverter.convert(realmObject.getVenue());
+            for (SpeakerRealm speakerRealm : realmObject.getSpeakers()) {
+                talkViewDto.speakers.add(speakerViewConverter.convert(speakerRealm));
+            }
+            return talkViewDto;
         }
     }
 }
