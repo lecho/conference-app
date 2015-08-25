@@ -99,7 +99,7 @@ public class SlotRealm extends RealmObject {
             slotViewDto.to = realmObject.getTo();
             slotViewDto.fromInMilliseconds = realmObject.getFromInMilliseconds();
             slotViewDto.toInMilliseconds = realmObject.getToInMilliseconds();
-            return null;
+            return slotViewDto;
         }
     }
 }

@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         facade.saveApiData(apiData);
 
         AgendaViewDto agendaViewDto = facade.loadWholeAgenda();
-        Log.e("Dupa", "Agenda: " + agendaViewDto.toString());
+        Log.e("TAG", "Agenda: " + agendaViewDto.toString());
     }
 
     @Override

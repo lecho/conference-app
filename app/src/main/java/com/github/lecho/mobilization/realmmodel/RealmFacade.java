@@ -10,6 +10,8 @@ import com.github.lecho.mobilization.apimodel.BaseApiDto;
 import com.github.lecho.mobilization.apimodel.TalkApiDto;
 import com.github.lecho.mobilization.viewmodel.AgendaItemViewDto;
 import com.github.lecho.mobilization.viewmodel.AgendaViewDto;
+import com.github.lecho.mobilization.viewmodel.SpeakerViewDto;
+import com.github.lecho.mobilization.viewmodel.TalkViewDto;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -60,27 +62,66 @@ public class RealmFacade {
     public AgendaViewDto loadWholeAgenda() {
         try {
             realm = Realm.getInstance(context);
+            //TODO: Wait for sorting by link https://github.com/realm/realm-java/issues/672
             RealmResults<TalkRealm> talksRealms = realm.allObjects(TalkRealm.class);
             RealmResults<BreakRealm> breaksRealms = realm.allObjects(BreakRealm.class);
-            TalkRealm.TalkViewConverter talkViewConverter = new TalkRealm.TalkViewConverter();
-            BreakRealm.BreakViewConverter breakViewConverter = new BreakRealm.BreakViewConverter();
-            AgendaViewDto agendaViewDto = new AgendaViewDto();
-            for (TalkRealm talkRealm : talksRealms) {
-                AgendaItemViewDto agendaItemViewDto = new AgendaItemViewDto();
-                agendaItemViewDto.type = AgendaItemViewDto.AgendaItemType.TALK;
-                agendaItemViewDto.talk = talkViewConverter.convert(talkRealm);
-                agendaViewDto.agendaItems.add(agendaItemViewDto);
-            }
-            for (BreakRealm breakRealm : breaksRealms) {
-                AgendaItemViewDto agendaItemViewDto = new AgendaItemViewDto();
-                agendaItemViewDto.type = AgendaItemViewDto.AgendaItemType.BREAK;
-                agendaItemViewDto.agendaBreak = breakViewConverter.convert(breakRealm);
-                agendaViewDto.agendaItems.add(agendaItemViewDto);
-            }
-            return agendaViewDto;
+            return loadAgenda(talksRealms, breaksRealms);
         } finally {
             closeRealm();
         }
+    }
+
+    public AgendaViewDto loadAgendaForVenue(String venueKey) {
+        try {
+            realm = Realm.getInstance(context);
+            RealmResults<TalkRealm> talksRealms = realm.where(TalkRealm.class).equalTo("venue.key", venueKey).findAll();
+            RealmResults<BreakRealm> breaksRealms = realm.allObjects(BreakRealm.class);
+            return loadAgenda(talksRealms, breaksRealms);
+        } finally {
+            closeRealm();
+        }
+    }
+
+    public TalkViewDto loadTalkByKey(String talkKey) {
+        try {
+            realm = Realm.getInstance(context);
+            TalkRealm talkRealm = realm.where(TalkRealm.class).equalTo("key", talkKey).findFirst();
+            TalkViewDto talkViewDto = new TalkRealm.TalkViewConverter().convert(talkRealm);
+            return talkViewDto;
+        } finally {
+            closeRealm();
+        }
+    }
+
+    public SpeakerViewDto loadSpeakerByKey(String speakerKey) {
+        try {
+            realm = Realm.getInstance(context);
+            SpeakerRealm speakerRealm = realm.where(SpeakerRealm.class).equalTo("key", speakerKey).findFirst();
+            SpeakerViewDto speakerViewDto = new SpeakerRealm.SpeakerViewConverter().convert(speakerRealm);
+            return speakerViewDto;
+        } finally {
+            closeRealm();
+        }
+    }
+
+    private AgendaViewDto loadAgenda(RealmResults<TalkRealm> talksRealms, RealmResults<BreakRealm> breaksRealms) {
+        TalkRealm.TalkViewConverter talkViewConverter = new TalkRealm.TalkViewConverter();
+        BreakRealm.BreakViewConverter breakViewConverter = new BreakRealm.BreakViewConverter();
+        AgendaViewDto agendaViewDto = new AgendaViewDto();
+        //TODO: talkRealm to agenda item converter
+        for (TalkRealm talkRealm : talksRealms) {
+            AgendaItemViewDto agendaItemViewDto = new AgendaItemViewDto();
+            agendaItemViewDto.type = AgendaItemViewDto.AgendaItemType.TALK;
+            agendaItemViewDto.talk = talkViewConverter.convert(talkRealm);
+            agendaViewDto.agendaItems.add(agendaItemViewDto);
+        }
+        for (BreakRealm breakRealm : breaksRealms) {
+            AgendaItemViewDto agendaItemViewDto = new AgendaItemViewDto();
+            agendaItemViewDto.type = AgendaItemViewDto.AgendaItemType.BREAK;
+            agendaItemViewDto.agendaBreak = breakViewConverter.convert(breakRealm);
+            agendaViewDto.agendaItems.add(agendaItemViewDto);
+        }
+        return agendaViewDto;
     }
 
     private void closeRealm() {
