@@ -12,6 +12,7 @@ public class TalkViewDto {
     public String title;
     public String description;
     public String language;
+    public boolean isInMyAgenda;
     public SlotViewDto slot;
     public VenueViewDto venue;
     public List<SpeakerViewDto> speakers = new ArrayList<>();
@@ -23,6 +24,7 @@ public class TalkViewDto {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", language='" + language + '\'' +
+                ", isInMyAgenda=" + isInMyAgenda +
                 ", slot=" + slot +
                 ", venue=" + venue +
                 ", speakers=" + speakers +

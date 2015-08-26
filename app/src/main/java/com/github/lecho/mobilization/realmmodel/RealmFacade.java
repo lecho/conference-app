@@ -82,6 +82,17 @@ public class RealmFacade {
         }
     }
 
+    public AgendaViewDto loadMyAgenda() {
+        try {
+            realm = Realm.getInstance(context);
+            RealmResults<TalkRealm> talksRealms = realm.where(TalkRealm.class).equalTo("isInMyAgenda", true).findAll();
+            RealmResults<BreakRealm> breaksRealms = realm.allObjects(BreakRealm.class);
+            return loadAgenda(talksRealms, breaksRealms);
+        } finally {
+            closeRealm();
+        }
+    }
+
     public TalkViewDto loadTalkByKey(String talkKey) {
         try {
             realm = Realm.getInstance(context);
@@ -158,8 +169,6 @@ public class RealmFacade {
      * SPEAKER -> TALKS(based on talks.json)
      */
     private void createTalkSpeakerRelation(ApiData apiData) {
-        // TALK -> SPEAKERS(based on talks.json)
-        // SPEAKER -> TALKS(based on talks.json)
         for (Map.Entry<String, TalkRealm> entry : talkRealmsMap.entrySet()) {
             TalkRealm talkRealm = entry.getValue();
             TalkApiDto talkApiDto = apiData.talksMap.get(entry.getKey());

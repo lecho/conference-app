@@ -17,6 +17,7 @@ public class TalkRealm extends RealmObject {
     private String title;
     private String description;
     private String language;
+    private boolean isInMyAgenda;
     private SlotRealm slot;
     private VenueRealm venue;
     private RealmList<SpeakerRealm> speakers = new RealmList<>();
@@ -77,6 +78,14 @@ public class TalkRealm extends RealmObject {
         this.speakers = speakers;
     }
 
+    public boolean isInMyAgenda() {
+        return isInMyAgenda;
+    }
+
+    public void setIsInMyAgenda(boolean isInMyAgenda) {
+        this.isInMyAgenda = isInMyAgenda;
+    }
+
     public static class TalkApiConverter extends RealmFacade.ApiToRealmConverter<TalkRealm, TalkApiDto> {
 
         @Override
@@ -103,6 +112,7 @@ public class TalkRealm extends RealmObject {
             talkViewDto.description = realmObject.getDescription();
             talkViewDto.language = realmObject.getLanguage();
             talkViewDto.title = realmObject.getTitle();
+            talkViewDto.isInMyAgenda = realmObject.isInMyAgenda();
             talkViewDto.slot = slotViewConverter.convert(realmObject.getSlot());
             talkViewDto.venue = venueViewConverter.convert(realmObject.getVenue());
             for (SpeakerRealm speakerRealm : realmObject.getSpeakers()) {
