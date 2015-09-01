@@ -5,6 +5,7 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
 import com.github.lecho.mobilization.BuildConfig;
+import com.github.lecho.mobilization.realmmodel.RealmFacade;
 import com.github.lecho.mobilization.viewmodel.AgendaViewDto;
 
 /**
@@ -14,10 +15,27 @@ public class AgendaLoader extends AsyncTaskLoader<AgendaViewDto> {
 
     private static final String TAG = AgendaLoader.class.getSimpleName();
     private AgendaViewDto agendaData;
-    private AgendaLoaderType type;
+    private final RealmFacade realmFacade;
+    private final AgendaLoaderType type;
+    private final String venueKey;
 
-    public AgendaLoader(Context context, AgendaLoaderType type) {
+    public static AgendaLoader getWholeAgendaLoader(Context context) {
+        return new AgendaLoader(context, AgendaLoaderType.WHOLE_AGENDA, null);
+    }
+
+    public static AgendaLoader getMyAgendaLoader(Context context) {
+        return new AgendaLoader(context, AgendaLoaderType.MY_AGENDA, null);
+    }
+
+    public static AgendaLoader getVenueAgendaLoader(Context context, String venueKey) {
+        return new AgendaLoader(context, AgendaLoaderType.VENUE_AGENDA, venueKey);
+    }
+
+    private AgendaLoader(Context context, AgendaLoaderType type, String venueKey) {
         super(context);
+        this.realmFacade = new RealmFacade(context);
+        this.type = type;
+        this.venueKey = venueKey;
     }
 
     @Override
@@ -25,8 +43,17 @@ public class AgendaLoader extends AsyncTaskLoader<AgendaViewDto> {
         if (BuildConfig.DEBUG) {
             Log.d(TAG, "Loading agenda data");
         }
-        //TODO: Load data
-        AgendaViewDto agendaData = new AgendaViewDto();
+        AgendaViewDto agendaData = null;
+        switch (type) {
+            case WHOLE_AGENDA:
+                agendaData = realmFacade.loadWholeAgenda();
+                break;
+            case VENUE_AGENDA:
+                agendaData = realmFacade.loadWholeAgenda();
+                break;
+            case MY_AGENDA:
+                break;
+        }
         return agendaData;
     }
 
