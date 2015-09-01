@@ -12,8 +12,11 @@ import com.github.lecho.mobilization.viewmodel.AgendaItemViewDto;
 import com.github.lecho.mobilization.viewmodel.AgendaViewDto;
 import com.github.lecho.mobilization.viewmodel.SpeakerViewDto;
 import com.github.lecho.mobilization.viewmodel.TalkViewDto;
+import com.github.lecho.mobilization.viewmodel.VenueViewDto;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.realm.Realm;
@@ -59,10 +62,62 @@ public class RealmFacade {
         }
     }
 
+    private void convertApiDataToRealm(final ApiData apiData) {
+        slotRealmsMap = convertApiDtoToRealm(apiData.slotsMap, new SlotRealm.SlotApiConverter());
+        breakRealmsMap = convertApiDtoToRealm(apiData.breaksMap, new BreakRealm.BreakApiConverter());
+        talkRealmsMap = convertApiDtoToRealm(apiData.talksMap, new TalkRealm.TalkApiConverter());
+        venueRealmsMap = convertApiDtoToRealm(apiData.venuesMap, new VenueRealm.VenueApiConverter());
+        speakerRealmsMap = convertApiDtoToRealm(apiData.speakersMap, new SpeakerRealm.SpeakerApiConverter());
+        createTalkSpeakerRelation(apiData);
+        createAgendaRelations(apiData);
+    }
+
+    /**
+     * TALK -> SPEAKERS(based on talks.json)
+     * SPEAKER -> TALKS(based on talks.json)
+     */
+    private void createTalkSpeakerRelation(ApiData apiData) {
+        for (Map.Entry<String, TalkRealm> entry : talkRealmsMap.entrySet()) {
+            TalkRealm talkRealm = entry.getValue();
+            TalkApiDto talkApiDto = apiData.talksMap.get(entry.getKey());
+            for (String speakerKey : talkApiDto.speakersKeys) {
+                SpeakerRealm speakerRealm = speakerRealmsMap.get(speakerKey);
+                talkRealm.getSpeakers().add(speakerRealm);
+                //TODO set speakers talks for both direction relation
+            }
+        }
+    }
+
+    /**
+     * TALK -> VENUE(based on schedule.json)
+     * TALK -> SLOT(based on schedule.json)
+     * BREAK -> SLOT(based on schedule.json)
+     */
+    private void createAgendaRelations(ApiData apiData) {
+        for (Map.Entry<String, AgendaItemApiDto> itemEntry : apiData.agendaMap.entrySet()) {
+            String slotKey = itemEntry.getKey();
+            AgendaItemApiDto agendaItemApiDto = itemEntry.getValue();
+            SlotRealm slotRealm = slotRealmsMap.get(slotKey);
+            if (TextUtils.isEmpty(agendaItemApiDto.breakKey)) {
+                for (Map.Entry<String, AgendaItemApiDto.TalkItemApiDto> talkEntry : agendaItemApiDto.talks.entrySet()) {
+                    String venueKey = talkEntry.getKey();
+                    VenueRealm venueRealm = venueRealmsMap.get(venueKey);
+                    AgendaItemApiDto.TalkItemApiDto agendaTalkItemApiDto = talkEntry.getValue();
+                    TalkRealm talkRealm = talkRealmsMap.get(agendaTalkItemApiDto.talkKey);
+                    talkRealm.setSlot(slotRealm);
+                    talkRealm.setVenue(venueRealm);
+                }
+            } else {
+                BreakRealm breakRealm = breakRealmsMap.get(agendaItemApiDto.breakKey);
+                breakRealm.setSlot(slotRealm);
+            }
+        }
+    }
+
     public AgendaViewDto loadWholeAgenda() {
         try {
             realm = Realm.getInstance(context);
-            //TODO: Wait for sorting by link https://github.com/realm/realm-java/issues/672
+            //TODO: Wait for sorting by linked realm https://github.com/realm/realm-java/issues/672
             RealmResults<TalkRealm> talksRealms = realm.allObjects(TalkRealm.class);
             RealmResults<BreakRealm> breaksRealms = realm.allObjects(BreakRealm.class);
             return loadAgenda(talksRealms, breaksRealms);
@@ -88,28 +143,6 @@ public class RealmFacade {
             RealmResults<TalkRealm> talksRealms = realm.where(TalkRealm.class).equalTo("isInMyAgenda", true).findAll();
             RealmResults<BreakRealm> breaksRealms = realm.allObjects(BreakRealm.class);
             return loadAgenda(talksRealms, breaksRealms);
-        } finally {
-            closeRealm();
-        }
-    }
-
-    public TalkViewDto loadTalkByKey(String talkKey) {
-        try {
-            realm = Realm.getInstance(context);
-            TalkRealm talkRealm = realm.where(TalkRealm.class).equalTo("key", talkKey).findFirst();
-            TalkViewDto talkViewDto = new TalkRealm.TalkViewConverter().convert(talkRealm);
-            return talkViewDto;
-        } finally {
-            closeRealm();
-        }
-    }
-
-    public SpeakerViewDto loadSpeakerByKey(String speakerKey) {
-        try {
-            realm = Realm.getInstance(context);
-            SpeakerRealm speakerRealm = realm.where(SpeakerRealm.class).equalTo("key", speakerKey).findFirst();
-            SpeakerViewDto speakerViewDto = new SpeakerRealm.SpeakerViewConverter().convert(speakerRealm);
-            return speakerViewDto;
         } finally {
             closeRealm();
         }
@@ -146,63 +179,45 @@ public class RealmFacade {
         return agendaItemViewDto;
     }
 
+    public TalkViewDto loadTalkByKey(String talkKey) {
+        try {
+            realm = Realm.getInstance(context);
+            TalkRealm talkRealm = realm.where(TalkRealm.class).equalTo("key", talkKey).findFirst();
+            return new TalkRealm.TalkViewConverter().convert(talkRealm);
+        } finally {
+            closeRealm();
+        }
+    }
+
+    public SpeakerViewDto loadSpeakerByKey(String speakerKey) {
+        try {
+            realm = Realm.getInstance(context);
+            SpeakerRealm speakerRealm = realm.where(SpeakerRealm.class).equalTo("key", speakerKey).findFirst();
+            return new SpeakerRealm.SpeakerViewConverter().convert(speakerRealm);
+        } finally {
+            closeRealm();
+        }
+    }
+
+    public List<VenueViewDto> loadAllVenues() {
+        try {
+            VenueRealm.VenueViewConverter venueViewConverter = new VenueRealm.VenueViewConverter();
+            realm = Realm.getInstance(context);
+            RealmResults<VenueRealm> venuesRealms = realm.allObjects(VenueRealm.class);
+            List<VenueViewDto> venueViewDtos = new ArrayList<>(venuesRealms.size());
+            for (VenueRealm venueRealm : venuesRealms) {
+                venueViewDtos.add(venueViewConverter.convert(venueRealm));
+            }
+            return venueViewDtos;
+        } finally {
+            closeRealm();
+        }
+    }
+
     private void closeRealm() {
         if (realm != null) {
             realm.close();
             realm = null;
-        }
-    }
-
-    private void convertApiDataToRealm(final ApiData apiData) {
-        slotRealmsMap = convertApiDtoToRealm(apiData.slotsMap, new SlotRealm.SlotApiConverter());
-        breakRealmsMap = convertApiDtoToRealm(apiData.breaksMap, new BreakRealm.BreakApiConverter());
-        talkRealmsMap = convertApiDtoToRealm(apiData.talksMap, new TalkRealm.TalkApiConverter());
-        venueRealmsMap = convertApiDtoToRealm(apiData.venuesMap, new VenueRealm.VenueApiConverter());
-        speakerRealmsMap = convertApiDtoToRealm(apiData.speakersMap, new SpeakerRealm.SpeakerApiConverter());
-
-        createTalkSpeakerRelation(apiData);
-        createAgendaRelations(apiData);
-    }
-
-    /**
-     * TALK -> SPEAKERS(based on talks.json)
-     * SPEAKER -> TALKS(based on talks.json)
-     */
-    private void createTalkSpeakerRelation(ApiData apiData) {
-        for (Map.Entry<String, TalkRealm> entry : talkRealmsMap.entrySet()) {
-            TalkRealm talkRealm = entry.getValue();
-            TalkApiDto talkApiDto = apiData.talksMap.get(entry.getKey());
-            for (String speakerKey : talkApiDto.speakersKeys) {
-                SpeakerRealm speakerRealm = speakerRealmsMap.get(speakerKey);
-                talkRealm.getSpeakers().add(speakerRealm);
-                //TODO set speakers talks
-            }
-        }
-    }
-
-    /**
-     * TALK -> VENUE(based on schedule.json)
-     * TALK -> SLOT(based on schedule.json)
-     * BREAK -> SLOT(based on schedule.json)
-     */
-    private void createAgendaRelations(ApiData apiData) {
-        for (Map.Entry<String, AgendaItemApiDto> itemEntry : apiData.agendaMap.entrySet()) {
-            String slotKey = itemEntry.getKey();
-            AgendaItemApiDto agendaItemApiDto = itemEntry.getValue();
-            SlotRealm slotRealm = slotRealmsMap.get(slotKey);
-            if (TextUtils.isEmpty(agendaItemApiDto.breakKey)) {
-                for (Map.Entry<String, AgendaItemApiDto.TalkItemApiDto> talkEntry : agendaItemApiDto.talks.entrySet()) {
-                    String venueKey = talkEntry.getKey();
-                    VenueRealm venueRealm = venueRealmsMap.get(venueKey);
-                    AgendaItemApiDto.TalkItemApiDto agendaTalkItemApiDto = talkEntry.getValue();
-                    TalkRealm talkRealm = talkRealmsMap.get(agendaTalkItemApiDto.talkKey);
-                    talkRealm.setSlot(slotRealm);
-                    talkRealm.setVenue(venueRealm);
-                }
-            } else {
-                BreakRealm breakRealm = breakRealmsMap.get(agendaItemApiDto.breakKey);
-                breakRealm.setSlot(slotRealm);
-            }
         }
     }
 
