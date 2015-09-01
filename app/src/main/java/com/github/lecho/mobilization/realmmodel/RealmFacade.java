@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.github.lecho.mobilization.apimodel.AgendaItemApiDto;
 import com.github.lecho.mobilization.apimodel.ApiData;
-import com.github.lecho.mobilization.apimodel.BaseApiDto;
 import com.github.lecho.mobilization.apimodel.TalkApiDto;
 import com.github.lecho.mobilization.viewmodel.AgendaItemViewDto;
 import com.github.lecho.mobilization.viewmodel.AgendaViewDto;
@@ -41,7 +40,7 @@ public class RealmFacade {
         this.context = context;
     }
 
-    public void saveApiData(final ApiData apiData) {
+    public void saveData(final ApiData apiData) {
         convertApiDataToRealm(apiData);
         try {
             realm = Realm.getInstance(context);
@@ -221,10 +220,10 @@ public class RealmFacade {
         }
     }
 
-    private <R extends RealmObject, A extends BaseApiDto> Map<String, R> convertApiDtoToRealm(Map<String, A>
-                                                                                                      apiDtoMap,
-                                                                                              ApiToRealmConverter<R, A>
-                                                                                                      converter) {
+    private <R extends RealmObject, A> Map<String, R> convertApiDtoToRealm(Map<String, A>
+                                                                                   apiDtoMap,
+                                                                           ApiToRealmConverter<R, A>
+                                                                                   converter) {
         Map<String, R> resultMap = new HashMap<>(apiDtoMap.size());
         for (Map.Entry<String, A> entry : apiDtoMap.entrySet()) {
             final String key = entry.getKey();
@@ -233,7 +232,7 @@ public class RealmFacade {
         return resultMap;
     }
 
-    public static abstract class ApiToRealmConverter<R extends RealmObject, A extends BaseApiDto> {
+    public static abstract class ApiToRealmConverter<R extends RealmObject, A> {
         public abstract R convert(String key, A apiDto);
     }
 

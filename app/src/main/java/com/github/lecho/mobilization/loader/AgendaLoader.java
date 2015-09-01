@@ -49,9 +49,10 @@ public class AgendaLoader extends AsyncTaskLoader<AgendaViewDto> {
                 agendaData = realmFacade.loadWholeAgenda();
                 break;
             case VENUE_AGENDA:
-                agendaData = realmFacade.loadWholeAgenda();
+                agendaData = realmFacade.loadAgendaForVenue(venueKey);
                 break;
             case MY_AGENDA:
+                agendaData = realmFacade.loadMyAgenda();
                 break;
         }
         return agendaData;

@@ -7,6 +7,8 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Leszek on 2015-08-12.
@@ -14,16 +16,20 @@ import java.io.InputStream;
 public class ApiFacade {
 
     private static final String TAG = ApiFacade.class.getSimpleName();
-    public static final String SCHEDULE_JSON_FILE = "schedule.json";
-    public static final String EVENT_JSON_FILE = "event.json";
-    public static final String BREAKS_JSON_FILE = "breaks.json";
-    public static final String SLOTS_JSON_FILE = "slots.json";
-    public static final String SPEAKERS_JSON_FILE = "speakers.json";
-    public static final String SPONSORS_JSON_FILE = "sponsors.json";
-    public static final String TALKS_JSON_FILE = "talks.json";
-    public static final String VENUES_JSON_FILE = "venues.json";
+    private static final String SCHEDULE_JSON_FILE = "schedule.json";
+    private static final String EVENT_JSON_FILE = "event.json";
+    private static final String BREAKS_JSON_FILE = "breaks.json";
+    private static final String SLOTS_JSON_FILE = "slots.json";
+    private static final String SPEAKERS_JSON_FILE = "speakers.json";
+    private static final String SPONSORS_JSON_FILE = "sponsors.json";
+    private static final String TALKS_JSON_FILE = "talks.json";
+    private static final String VENUES_JSON_FILE = "venues.json";
 
-    public static ApiData parseJsonFilesFromAssets(Context context, String folderName) {
+    public enum ApiDtoType {
+        AGENDA, EVENT, BREAKS, SLOTS, SPEAKERS, SPONSORS, TALKS, VENUES
+    }
+
+    public ApiData parseJsonFilesFromAssets(Context context, String folderName) {
         String agendaJson = readFileFromAsstes(context, folderName, SCHEDULE_JSON_FILE);
         String slotJson = readFileFromAsstes(context, folderName, SLOTS_JSON_FILE);
         String breaksJson = readFileFromAsstes(context, folderName, BREAKS_JSON_FILE);
@@ -31,21 +37,54 @@ public class ApiFacade {
         String talkJson = readFileFromAsstes(context, folderName, TALKS_JSON_FILE);
         String speakersJson = readFileFromAsstes(context, folderName, SPEAKERS_JSON_FILE);
 
+        Map<ApiDtoType, String> jsonsMap = new HashMap<>();
+        jsonsMap.put(ApiDtoType.AGENDA, agendaJson);
+        jsonsMap.put(ApiDtoType.SLOTS, slotJson);
+        jsonsMap.put(ApiDtoType.BREAKS, breaksJson);
+        jsonsMap.put(ApiDtoType.VENUES, venuesJson);
+        jsonsMap.put(ApiDtoType.TALKS, talkJson);
+        jsonsMap.put(ApiDtoType.SPEAKERS, speakersJson);
+
+        return parseJsons(jsonsMap);
+    }
+
+    public ApiData parseJsons(Map<ApiDtoType, String> jsonsMap) {
         ApiData apiData = new ApiData();
-        apiData.agendaMap = AgendaItemApiDto.fromJson(agendaJson, AgendaItemApiDto.class);
-        apiData.slotsMap = SlotApiDto.fromJson(slotJson, SlotApiDto.class);
-        apiData.breaksMap = BreakApiDto.fromJson(breaksJson, BreakApiDto.class);
-        apiData.venuesMap = VenueApiDto.fromJson(venuesJson, VenueApiDto.class);
-        apiData.talksMap = TalkApiDto.fromJson(talkJson, TalkApiDto.class);
-        apiData.speakersMap = SpeakerApiDto.fromJson(speakersJson, SpeakerApiDto.class);
+        for (Map.Entry<ApiDtoType, String> entry : jsonsMap.entrySet()) {
+            apiData = assignParsedData(apiData, entry.getKey(), entry.getValue());
+        }
         return apiData;
     }
 
-    public static ApiData parseJsonFromIntenalStorage(Context context, String folderName) {
-        return null;
+    private ApiData assignParsedData(ApiData apiData, ApiDtoType className, String json) {
+        switch (className) {
+            case BREAKS:
+                apiData.breaksMap = new BaseApiParser<BreakApiDto>().fromJson(json);
+                break;
+            case EVENT:
+                break;
+            case AGENDA:
+                apiData.agendaMap = new AgendaItemApiDto.AgendaItemApiParser().fromJson(json);
+                break;
+            case SLOTS:
+                apiData.slotsMap = new BaseApiParser<SlotApiDto>().fromJson(json);
+                break;
+            case SPEAKERS:
+                apiData.speakersMap = new BaseApiParser<SpeakerApiDto>().fromJson(json);
+                break;
+            case SPONSORS:
+                break;
+            case TALKS:
+                apiData.talksMap = new BaseApiParser<TalkApiDto>().fromJson(json);
+                break;
+            case VENUES:
+                apiData.venuesMap = new BaseApiParser<VenueApiDto>().fromJson(json);
+                break;
+        }
+        return apiData;
     }
 
-    private static String readFileFromAsstes(Context context, String folderName, String fileName) {
+    private String readFileFromAsstes(Context context, String folderName, String fileName) {
         String jsonString = "";
         BufferedInputStream bufferedInputStream = null;
         try {

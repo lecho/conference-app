@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * Created by Leszek on 2015-07-24.
  */
-public class TalkApiDto extends BaseApiDto{
+public class TalkApiDto {
 
     public String title;
     public String descriptionHtml;

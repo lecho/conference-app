@@ -47,10 +47,10 @@ public class MainActivity extends AppCompatActivity {
             fragmentManager.beginTransaction().replace(R.id.content_container, MyAgendaFragment.newInstance()).commit();
         }
 
-        ApiData apiData = ApiFacade.parseJsonFilesFromAssets(this, "test-data");
+        ApiData apiData = new ApiFacade().parseJsonFilesFromAssets(this, "test-data");
 
         RealmFacade facade = new RealmFacade(this);
-        facade.saveApiData(apiData);
+        facade.saveData(apiData);
 
         AgendaViewDto agendaViewDto = facade.loadWholeAgenda();
         Log.e("TAG", "Agenda: " + agendaViewDto.toString());

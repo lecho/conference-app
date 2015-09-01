@@ -3,7 +3,7 @@ package com.github.lecho.mobilization.apimodel;
 /**
  * Created by Leszek on 2015-07-24.
  */
-public class BreakApiDto extends BaseApiDto{
+public class BreakApiDto {
 
     public String title;
     public String descriptionHtml;
