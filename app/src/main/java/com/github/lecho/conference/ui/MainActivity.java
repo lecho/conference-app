@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
-        final ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
