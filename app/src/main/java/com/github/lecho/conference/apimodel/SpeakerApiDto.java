@@ -1,0 +1,26 @@
+package com.github.lecho.conference.apimodel;
+
+/**
+ * Created by Leszek on 2015-07-24.
+ */
+public class SpeakerApiDto {
+
+    public String firstname;
+    public String lastname;
+    public String bioHtml;
+    public String www;
+    public String twitter;
+    public String photoUrl;
+
+    @Override
+    public String toString() {
+        return "SpeakerRealm{" +
+                "firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", biography='" + bioHtml + '\'' +
+                ", www='" + www + '\'' +
+                ", twitterProfile='" + twitter + '\'' +
+                ", photoUrl='" + photoUrl + '\'' +
+                '}';
+    }
+}
