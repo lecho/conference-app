@@ -198,6 +198,21 @@ public class RealmFacade {
         }
     }
 
+    public List<SpeakerViewDto> loadAllSpeakers() {
+        try {
+            SpeakerRealm.SpeakerViewConverter speakerViewConverter = new SpeakerRealm.SpeakerViewConverter();
+            realm = Realm.getInstance(context);
+            RealmResults<SpeakerRealm> speakersRealms = realm.allObjects(SpeakerRealm.class);
+            List<SpeakerViewDto> venueViewDtos = new ArrayList<>(speakersRealms.size());
+            for (SpeakerRealm speakerRealm : speakersRealms) {
+                venueViewDtos.add(speakerViewConverter.convert(speakerRealm));
+            }
+            return venueViewDtos;
+        } finally {
+            closeRealm();
+        }
+    }
+
     public List<VenueViewDto> loadAllVenues() {
         try {
             VenueRealm.VenueViewConverter venueViewConverter = new VenueRealm.VenueViewConverter();
