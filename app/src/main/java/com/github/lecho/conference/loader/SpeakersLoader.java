@@ -28,7 +28,7 @@ public class SpeakersLoader extends BaseRealmLoader<List<SpeakerViewDto>> {
         if (BuildConfig.DEBUG) {
             Log.d(TAG, "Loading venues data");
         }
-        List<SpeakerViewDto> venuesData = realmFacade.loadAllSpeakers();
-        return venuesData;
+        List<SpeakerViewDto> newData = realmFacade.loadAllSpeakers();
+        return newData;
     }
 }

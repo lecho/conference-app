@@ -28,7 +28,7 @@ public class VenuesLoader extends BaseRealmLoader<List<VenueViewDto>> {
         if (BuildConfig.DEBUG) {
             Log.d(TAG, "Loading venues data");
         }
-        List<VenueViewDto> venuesData = realmFacade.loadAllVenues();
-        return venuesData;
+        List<VenueViewDto> newData = realmFacade.loadAllVenues();
+        return newData;
     }
 }
