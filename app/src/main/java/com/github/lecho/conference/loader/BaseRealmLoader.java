@@ -30,7 +30,7 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
     @Override
     public void deliverResult(T newData) {
         if (BuildConfig.DEBUG) {
-            Log.d(TAG, "Delivering agenda data");
+            Log.d(TAG, "Delivering data");
         }
 
         if (isReset()) {
