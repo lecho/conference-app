@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mobilization</string>
+    <string name="app_name">Conference</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -8,10 +8,16 @@
 
     <string name="action_settings">Settings</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_talk">TalkActivity</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_speaker">SpeakerActivity</string>
+
+    <string name="navigation_my_agenda">My agenda</string>
+    <string name="navigation_agenda">Agenda</string>
+    <string name="navigation_speakers">Speakers</string>
+    <string name="navigation_sponsors">Sponsors</string>
+    <string name="navigation_about">About</string>
 </resources>
