@@ -16,7 +16,6 @@
     <string name="title_activity_speaker">SpeakerActivity</string>
 
     <string name="navigation_my_agenda">My agenda</string>
-    <string name="navigation_agenda">Agenda</string>
     <string name="navigation_speakers">Speakers</string>
     <string name="navigation_sponsors">Sponsors</string>
     <string name="navigation_about">About</string>

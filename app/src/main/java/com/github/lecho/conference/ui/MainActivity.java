@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
+import android.view.View;
 
 import com.github.lecho.conference.R;
 
@@ -58,14 +59,21 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpNavigationView(){
         final int groupId = 0;
+        int itemId = 0;
+        int order = 0;
         navigationViewMenu = navigationView.getMenu();
         navigationViewMenu.setGroupCheckable(groupId, true, true);
-        navigationViewMenu.add(groupId, 0, 0, R.string.navigation_my_agenda).setCheckable(true);
-        SubMenu agendaMenuItem = navigationViewMenu.addSubMenu(1, 1, 1, R.string.navigation_agenda);
-        agendaMenuItem.add(1, 1, 1, "Mobica Track").setCheckable(true);
-        navigationViewMenu.add(groupId, 0, 2, R.string.navigation_speakers).setCheckable(true);
-        navigationViewMenu.add(groupId, 0, 3, R.string.navigation_sponsors).setCheckable(true);
-        navigationViewMenu.add(groupId, 0, 4, R.string.navigation_about).setCheckable(true);
+        navigationViewMenu.add(groupId, itemId++, order++, R.string.navigation_my_agenda).setCheckable(true);
+        SubMenu subMenuTracks = navigationViewMenu.addSubMenu(groupId, itemId++, order++, "Tracks");
+        subMenuTracks.add(groupId, itemId++, order++, "Mobica Track").setCheckable(true);
+        subMenuTracks.add(groupId, itemId++, order++, "TomTom Track").setCheckable(true);
+        subMenuTracks.add(groupId, itemId++, order++, "Seamless Track").setCheckable(true);
+        subMenuTracks.add(groupId, itemId++, order++, "Harman Track").setCheckable(true);
+        subMenuTracks.add(groupId, itemId++, order++, "HP Track").setCheckable(true);
+        SubMenu subMenuMore = navigationViewMenu.addSubMenu(groupId, itemId++, order++, "More");
+        subMenuMore.add(groupId, itemId++, order++, R.string.navigation_speakers).setCheckable(true);
+        subMenuMore.add(groupId, itemId++, order++, R.string.navigation_sponsors).setCheckable(true);
+        subMenuMore.add(groupId, itemId++, order++, R.string.navigation_about).setCheckable(true);
     }
 
     @Override
