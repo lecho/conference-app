@@ -2,6 +2,7 @@ package com.github.lecho.conference.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +16,10 @@ import android.view.SubMenu;
 import android.view.View;
 
 import com.github.lecho.conference.R;
+import com.github.lecho.conference.viewmodel.VenueViewDto;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -31,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
 
-    Menu navigationViewMenu;
+    private Menu navigationViewMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,23 +59,31 @@ public class MainActivity extends AppCompatActivity {
         //facade.saveData(apiData);
         //AgendaViewDto agendaViewDto = facade.loadWholeAgenda();
         //Log.e("TAG", "Agenda: " + agendaViewDto.toString());
-        setUpNavigationView();
+        List<VenueViewDto> venueViewDtos = new ArrayList<>();
+        for(int i = 0; i < 5; ++i){
+            VenueViewDto venueViewDto = new VenueViewDto();
+            venueViewDto.key = "trololo";
+            venueViewDto.title = "Venue" + i;
+            venueViewDtos.add(venueViewDto);
+        }
+
+        setUpNavigationView(venueViewDtos);
     }
 
-    private void setUpNavigationView(){
+    private void setUpNavigationView(@NonNull List<VenueViewDto> venueViewDtos){
         final int groupId = 0;
         int itemId = 0;
         int order = 0;
         navigationViewMenu = navigationView.getMenu();
         navigationViewMenu.setGroupCheckable(groupId, true, true);
         navigationViewMenu.add(groupId, itemId++, order++, R.string.navigation_my_agenda).setCheckable(true);
-        SubMenu subMenuTracks = navigationViewMenu.addSubMenu(groupId, itemId++, order++, "Tracks");
-        subMenuTracks.add(groupId, itemId++, order++, "Mobica Track").setCheckable(true);
-        subMenuTracks.add(groupId, itemId++, order++, "TomTom Track").setCheckable(true);
-        subMenuTracks.add(groupId, itemId++, order++, "Seamless Track").setCheckable(true);
-        subMenuTracks.add(groupId, itemId++, order++, "Harman Track").setCheckable(true);
-        subMenuTracks.add(groupId, itemId++, order++, "HP Track").setCheckable(true);
-        SubMenu subMenuMore = navigationViewMenu.addSubMenu(groupId, itemId++, order++, "More");
+        SubMenu subMenuVenues = navigationViewMenu.addSubMenu(groupId, itemId++, order++, R.string.navigation_venues);
+        String trackPostfix = getString(R.string.navigation_track);
+        for(VenueViewDto venueViewDto : venueViewDtos){
+            String venueName = new StringBuilder(venueViewDto.title).append(" ").append(trackPostfix).toString();
+            subMenuVenues.add(groupId, itemId++, order++, venueName).setCheckable(true);
+        }
+        SubMenu subMenuMore = navigationViewMenu.addSubMenu(groupId, itemId++, order++, R.string.navigation_more);
         subMenuMore.add(groupId, itemId++, order++, R.string.navigation_speakers).setCheckable(true);
         subMenuMore.add(groupId, itemId++, order++, R.string.navigation_sponsors).setCheckable(true);
         subMenuMore.add(groupId, itemId++, order++, R.string.navigation_about).setCheckable(true);
