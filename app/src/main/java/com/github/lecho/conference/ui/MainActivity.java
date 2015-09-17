@@ -11,7 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -76,21 +75,27 @@ public class MainActivity extends AppCompatActivity {
         int order = 0;
         navigationViewMenu = navigationView.getMenu();
         navigationViewMenu.setGroupCheckable(groupId, true, true);
-        navigationViewMenu.add(groupId, itemId++, order++, R.string.navigation_my_agenda).setCheckable(true);
+
+        navigationViewMenu.add(groupId, itemId++, order++, R.string.navigation_my_agenda).setCheckable(true)
+                .setOnMenuItemClickListener(new NavigationMenuClickListener(MyAgendaFragment.newInstance()));
+
         SubMenu subMenuVenues = navigationViewMenu.addSubMenu(groupId, itemId++, order++, R.string.navigation_venues);
         String trackPostfix = getString(R.string.navigation_track);
         for (VenueViewDto venueViewDto : venueViewDtos) {
             String venueName = new StringBuilder(venueViewDto.title).append(" ").append(trackPostfix).toString();
             MenuItem venueItem = subMenuVenues.add(groupId, itemId++, order++, venueName).setCheckable(true);
-            venueItem.setOnMenuItemClickListener(new VenueMenuItemClickListener(venueViewDto.key));
+            VenueAgendaFragment fragment = VenueAgendaFragment.newInstance(venueViewDto.key);
+            venueItem.setOnMenuItemClickListener(new NavigationMenuClickListener(fragment));
         }
+
         SubMenu subMenuMore = navigationViewMenu.addSubMenu(groupId, itemId++, order++, R.string.navigation_more);
         subMenuMore.add(groupId, itemId++, order++, R.string.navigation_speakers).setCheckable(true);
-        subMenuMore.add(groupId, itemId++, order++, R.string.navigation_sponsors).setCheckable(true);
+        subMenuMore.add(groupId, itemId++, order++, R.string.navigation_sponsors).setCheckable(true)
+                .setOnMenuItemClickListener(new NavigationMenuClickListener(SponsorsFragment.newInstance()));
         subMenuMore.add(groupId, itemId++, order++, R.string.navigation_about).setCheckable(true);
     }
 
-    public void replaceFragment(Fragment fragment) {
+    public void replaceFragment(@NonNull Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_container, fragment).commit();
     }
@@ -119,7 +124,8 @@ public class MainActivity extends AppCompatActivity {
             }
             case R.id.action_settings2: {
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_container, VenueAgendaFragment.newInstance("foo"))
+                fragmentManager.beginTransaction().replace(R.id.content_container, VenueAgendaFragment.newInstance
+                        ("foo"))
                         .commit();
                 return true;
             }
@@ -139,20 +145,19 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class VenueMenuItemClickListener implements MenuItem.OnMenuItemClickListener {
+    private class NavigationMenuClickListener implements MenuItem.OnMenuItemClickListener {
 
-        private final String venueKey;
+        final Fragment fragment;
 
-        public VenueMenuItemClickListener(@NonNull String venueKey){
-            this.venueKey = venueKey;
+        public NavigationMenuClickListener(Fragment fragment) {
+            this.fragment = fragment;
         }
 
         @Override
         public boolean onMenuItemClick(MenuItem item) {
-            VenueAgendaFragment fragment = VenueAgendaFragment.newInstance(venueKey);
             replaceFragment(fragment);
             drawerLayout.closeDrawer(GravityCompat.START);
-            return true;
+            return false;
         }
     }
 }
