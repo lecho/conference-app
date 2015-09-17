@@ -4,16 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
-import android.view.View;
 
 import com.github.lecho.conference.R;
 import com.github.lecho.conference.viewmodel.VenueViewDto;
@@ -50,8 +51,7 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         if (null == savedInstanceState) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_container, MyAgendaFragment.newInstance()).commit();
+            replaceFragment(MyAgendaFragment.newInstance());
         }
 
         //ApiData apiData = new ApiFacade().parseJsonFilesFromAssets(this, "test-data");
@@ -60,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
         //AgendaViewDto agendaViewDto = facade.loadWholeAgenda();
         //Log.e("TAG", "Agenda: " + agendaViewDto.toString());
         List<VenueViewDto> venueViewDtos = new ArrayList<>();
-        for(int i = 0; i < 5; ++i){
+        for (int i = 0; i < 5; ++i) {
             VenueViewDto venueViewDto = new VenueViewDto();
-            venueViewDto.key = "trololo";
+            venueViewDto.key = "foo";
             venueViewDto.title = "Venue" + i;
             venueViewDtos.add(venueViewDto);
         }
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         setUpNavigationView(venueViewDtos);
     }
 
-    private void setUpNavigationView(@NonNull List<VenueViewDto> venueViewDtos){
+    private void setUpNavigationView(@NonNull List<VenueViewDto> venueViewDtos) {
         final int groupId = 0;
         int itemId = 0;
         int order = 0;
@@ -79,14 +79,20 @@ public class MainActivity extends AppCompatActivity {
         navigationViewMenu.add(groupId, itemId++, order++, R.string.navigation_my_agenda).setCheckable(true);
         SubMenu subMenuVenues = navigationViewMenu.addSubMenu(groupId, itemId++, order++, R.string.navigation_venues);
         String trackPostfix = getString(R.string.navigation_track);
-        for(VenueViewDto venueViewDto : venueViewDtos){
+        for (VenueViewDto venueViewDto : venueViewDtos) {
             String venueName = new StringBuilder(venueViewDto.title).append(" ").append(trackPostfix).toString();
-            subMenuVenues.add(groupId, itemId++, order++, venueName).setCheckable(true);
+            MenuItem venueItem = subMenuVenues.add(groupId, itemId++, order++, venueName).setCheckable(true);
+            venueItem.setOnMenuItemClickListener(new VenueMenuItemClickListener(venueViewDto.key));
         }
         SubMenu subMenuMore = navigationViewMenu.addSubMenu(groupId, itemId++, order++, R.string.navigation_more);
         subMenuMore.add(groupId, itemId++, order++, R.string.navigation_speakers).setCheckable(true);
         subMenuMore.add(groupId, itemId++, order++, R.string.navigation_sponsors).setCheckable(true);
         subMenuMore.add(groupId, itemId++, order++, R.string.navigation_about).setCheckable(true);
+    }
+
+    public void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_container, fragment).commit();
     }
 
     @Override
@@ -113,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
             }
             case R.id.action_settings2: {
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_container, VenueAgendaFragment.newInstance())
+                fragmentManager.beginTransaction().replace(R.id.content_container, VenueAgendaFragment.newInstance("foo"))
                         .commit();
                 return true;
             }
@@ -133,4 +139,20 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private class VenueMenuItemClickListener implements MenuItem.OnMenuItemClickListener {
+
+        private final String venueKey;
+
+        public VenueMenuItemClickListener(@NonNull String venueKey){
+            this.venueKey = venueKey;
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            VenueAgendaFragment fragment = VenueAgendaFragment.newInstance(venueKey);
+            replaceFragment(fragment);
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return true;
+        }
+    }
 }

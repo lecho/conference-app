@@ -3,6 +3,7 @@ package com.github.lecho.conference.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,12 +21,16 @@ public class VenueAgendaFragment extends Fragment {
 
     public static final String TAG = "VenueAgendaFragment";
     public static final String[] DATASET = new String[]{"ALA", "OLA", "ELA", "EWA", "JULA"};
+    private static final String ARG_VENUE_KEY = "venue-key";
 
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    public static VenueAgendaFragment newInstance() {
+    public static VenueAgendaFragment newInstance(@NonNull String venueKey) {
         VenueAgendaFragment fragment = new VenueAgendaFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_VENUE_KEY, venueKey);
+        fragment.setArguments(args);
         return fragment;
     }
 
