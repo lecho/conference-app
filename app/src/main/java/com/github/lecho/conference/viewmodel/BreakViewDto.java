@@ -8,6 +8,7 @@ public class BreakViewDto {
     public String key;
     public String title;
     public String description;
+    public SlotViewDto slot;
 
     @Override
     public String toString() {
@@ -15,6 +16,7 @@ public class BreakViewDto {
                 "key='" + key + '\'' +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
+                ", slot=" + slot +
                 '}';
     }
 }

@@ -150,6 +150,7 @@ public class RealmFacade {
     private AgendaViewDto loadAgenda(RealmResults<TalkRealm> talksRealms, RealmResults<BreakRealm> breaksRealms) {
         TalkRealm.TalkViewConverter talkViewConverter = new TalkRealm.TalkViewConverter();
         BreakRealm.BreakViewConverter breakViewConverter = new BreakRealm.BreakViewConverter();
+        //TODO: sort by slot time
         AgendaViewDto agendaViewDto = new AgendaViewDto();
         for (TalkRealm talkRealm : talksRealms) {
             AgendaItemViewDto agendaItemViewDto = convertTalkRealmToAgendaItem(talkRealm, talkViewConverter);

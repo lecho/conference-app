@@ -62,12 +62,15 @@ public class BreakRealm extends RealmObject {
 
     public static class BreakViewConverter extends RealmFacade.RealmToViewConverter<BreakRealm, BreakViewDto> {
 
+        private SlotRealm.SlotViewConverter slotViewConverter = new SlotRealm.SlotViewConverter();
+
         @Override
         public BreakViewDto convert(BreakRealm realmObject) {
             BreakViewDto breakViewDto = new BreakViewDto();
             breakViewDto.key = realmObject.getKey();
             breakViewDto.title = realmObject.getTitle();
             breakViewDto.description = realmObject.getDescription();
+            breakViewDto.slot = slotViewConverter.convert(realmObject.getSlot());
             return breakViewDto;
         }
     }

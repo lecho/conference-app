@@ -27,11 +27,10 @@ public class MyAgendaFragment extends Fragment {
 
     public static final String TAG = "MyAgendaFragment";
     public static final List<String> DATASET = new ArrayList<>();
+    private MyAgendaAdapter adapter;
 
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
-
-    MyAgendaAdapter adapter;
 
     public static MyAgendaFragment newInstance() {
         MyAgendaFragment fragment = new MyAgendaFragment();

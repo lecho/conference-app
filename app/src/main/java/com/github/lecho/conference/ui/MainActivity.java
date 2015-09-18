@@ -27,6 +27,9 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    private Menu navigationViewMenu;
+
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
@@ -35,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.drawer_layout)
     DrawerLayout drawerLayout;
-
-    private Menu navigationViewMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
