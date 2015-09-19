@@ -17,37 +17,42 @@ import com.github.lecho.conference.viewmodel.SlotViewDto;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
 import com.github.lecho.conference.viewmodel.TalkViewDto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MyAgendaAdapter extends RecyclerView.Adapter<MyAgendaAdapter.AgendaViewHolder> {
+public class MyAgendaAdapter extends RecyclerView.Adapter<MyAgendaAdapter.MyAgendaViewHolder> {
 
     public static final int ITEM_TYPE_BREAK = 0;
     public static final int ITEM_TYPE_TALK = 1;
-    private List<AgendaItemViewDto> data;
+    private List<AgendaItemViewDto> data = new ArrayList<>();
     private Context context;
 
-    public MyAgendaAdapter(Context context, List<AgendaItemViewDto> data) {
-        this.data = data;
+    public MyAgendaAdapter(Context context) {
         this.context = context;
     }
 
+    public void setData(List<AgendaItemViewDto> data){
+        this.data = data;
+        notifyDataSetChanged();
+    }
+
     @Override
-    public MyAgendaAdapter.AgendaViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyAgendaViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         if (ITEM_TYPE_BREAK == viewType) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_break, parent, false);
         } else {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_my_agenda, parent, false);
         }
-        AgendaViewHolder viewHolder = new AgendaViewHolder(context, view, viewType);
+        MyAgendaViewHolder viewHolder = new MyAgendaViewHolder(context, view, viewType);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(AgendaViewHolder holder, int position) {
+    public void onBindViewHolder(MyAgendaViewHolder holder, int position) {
         holder.bindView(data.get(position));
     }
 
@@ -83,7 +88,7 @@ public class MyAgendaAdapter extends RecyclerView.Adapter<MyAgendaAdapter.Agenda
         }
     }
 
-    public static class AgendaViewHolder extends RecyclerView.ViewHolder {
+    public static class MyAgendaViewHolder extends RecyclerView.ViewHolder {
 
         private final Context context;
         private final int viewType;
@@ -106,7 +111,7 @@ public class MyAgendaAdapter extends RecyclerView.Adapter<MyAgendaAdapter.Agenda
         @Bind(R.id.text_speakers)
         TextView speakersView;
 
-        public AgendaViewHolder(Context context, View itemView, int viewType) {
+        public MyAgendaViewHolder(Context context, View itemView, int viewType) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             this.viewType = viewType;
@@ -120,7 +125,7 @@ public class MyAgendaAdapter extends RecyclerView.Adapter<MyAgendaAdapter.Agenda
                 BreakViewDto breakViewDto = agendaItem.agendaBreak;
                 slotViewDto = breakViewDto.slot;
                 titleText = breakViewDto.title;
-            } else if (ITEM_TYPE_TALK == viewType){
+            } else {
                 TalkViewDto talkViewDto = agendaItem.talk;
                 itemView.setOnClickListener(new TalkItemClickListener(context, talkViewDto.key));
                 slotViewDto = talkViewDto.slot;
@@ -128,8 +133,6 @@ public class MyAgendaAdapter extends RecyclerView.Adapter<MyAgendaAdapter.Agenda
                 venueView.setText(talkViewDto.venue.title);
                 languageView.setText(talkViewDto.language);
                 speakersView.setText(getSpeakersText(talkViewDto));
-            } else {
-                throw new IllegalArgumentException("Invalid item type " + viewType);
             }
 
             String timeSlotText = new StringBuilder(slotViewDto.from).append(" - ").append(slotViewDto.to).toString();
@@ -149,5 +152,4 @@ public class MyAgendaAdapter extends RecyclerView.Adapter<MyAgendaAdapter.Agenda
             return speakersText.toString();
         }
     }
-
 }
