@@ -1,5 +1,7 @@
 package com.github.lecho.conference.ui;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -25,9 +27,11 @@ public class MyAgendaAdapter extends RecyclerView.Adapter<MyAgendaAdapter.Agenda
     public static final int ITEM_TYPE_BREAK = 0;
     public static final int ITEM_TYPE_TALK = 1;
     private List<AgendaItemViewDto> data;
+    private Context context;
 
-    public MyAgendaAdapter(List<AgendaItemViewDto> data) {
+    public MyAgendaAdapter(Context context, List<AgendaItemViewDto> data) {
         this.data = data;
+        this.context = context;
     }
 
     @Override
@@ -38,7 +42,7 @@ public class MyAgendaAdapter extends RecyclerView.Adapter<MyAgendaAdapter.Agenda
         } else {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_my_agenda, parent, false);
         }
-        AgendaViewHolder viewHolder = new AgendaViewHolder(view, viewType);
+        AgendaViewHolder viewHolder = new AgendaViewHolder(context, view, viewType);
         return viewHolder;
     }
 
@@ -63,10 +67,26 @@ public class MyAgendaAdapter extends RecyclerView.Adapter<MyAgendaAdapter.Agenda
         return data.size();
     }
 
+    private static class TalkItemClickListener implements View.OnClickListener {
+
+        private final String talkKey;
+        private final Context context;
+
+        public TalkItemClickListener(Context context, String talkKey){
+            this.talkKey = talkKey;
+            this.context = context;
+        }
+
+        @Override
+        public void onClick(View v) {
+            TalkActivity.startActivity(context, talkKey);
+        }
+    }
+
     public static class AgendaViewHolder extends RecyclerView.ViewHolder {
 
-        private View.OnClickListener agendaItemClickListener;
-        private int viewType;
+        private final Context context;
+        private final int viewType;
 
         @Bind(R.id.text_time_slot)
         TextView timeSlotView;
@@ -86,10 +106,11 @@ public class MyAgendaAdapter extends RecyclerView.Adapter<MyAgendaAdapter.Agenda
         @Bind(R.id.text_speakers)
         TextView speakersView;
 
-        public AgendaViewHolder(View itemView, int viewType) {
+        public AgendaViewHolder(Context context, View itemView, int viewType) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             this.viewType = viewType;
+            this.context = context;
         }
 
         public void bindView(AgendaItemViewDto agendaItem) {
@@ -99,26 +120,33 @@ public class MyAgendaAdapter extends RecyclerView.Adapter<MyAgendaAdapter.Agenda
                 BreakViewDto breakViewDto = agendaItem.agendaBreak;
                 slotViewDto = breakViewDto.slot;
                 titleText = breakViewDto.title;
-            } else {
+            } else if (ITEM_TYPE_TALK == viewType){
                 TalkViewDto talkViewDto = agendaItem.talk;
+                itemView.setOnClickListener(new TalkItemClickListener(context, talkViewDto.key));
                 slotViewDto = talkViewDto.slot;
                 titleText = talkViewDto.title;
                 venueView.setText(talkViewDto.venue.title);
                 languageView.setText(talkViewDto.language);
-                StringBuilder speakersText = new StringBuilder();
-                for (SpeakerViewDto speakerViewDto : talkViewDto.speakers) {
-                    if (!TextUtils.isEmpty(speakersText)) {
-                        speakersText.append("\n");
-                    }
-                    speakersText.append(speakerViewDto.firstName).append(" ").append(speakerViewDto.lastName);
-                }
-                speakersView.setText(speakersText.toString());
-                itemView.setOnClickListener(agendaItemClickListener);
+                speakersView.setText(getSpeakersText(talkViewDto));
+            } else {
+                throw new IllegalArgumentException("Invalid item type " + viewType);
             }
 
             String timeSlotText = new StringBuilder(slotViewDto.from).append(" - ").append(slotViewDto.to).toString();
             timeSlotView.setText(timeSlotText);
             titleView.setText(titleText);
+        }
+
+        @NonNull
+        private String getSpeakersText(TalkViewDto talkViewDto) {
+            StringBuilder speakersText = new StringBuilder();
+            for (SpeakerViewDto speakerViewDto : talkViewDto.speakers) {
+                if (!TextUtils.isEmpty(speakersText)) {
+                    speakersText.append("\n");
+                }
+                speakersText.append(speakerViewDto.firstName).append(" ").append(speakerViewDto.lastName);
+            }
+            return speakersText.toString();
         }
     }
 

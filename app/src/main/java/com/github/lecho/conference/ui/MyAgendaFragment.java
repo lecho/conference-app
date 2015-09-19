@@ -63,7 +63,7 @@ public class MyAgendaFragment extends Fragment {
         RealmFacade facade = new RealmFacade(getActivity());
         AgendaViewDto agendaViewDto = facade.loadWholeAgenda();
 
-        adapter = new MyAgendaAdapter(agendaViewDto.agendaItems);
+        adapter = new MyAgendaAdapter(getActivity(), agendaViewDto.agendaItems);
         recyclerView.setAdapter(adapter);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
@@ -84,7 +84,6 @@ public class MyAgendaFragment extends Fragment {
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
             //Remove swiped item from list and notify the RecyclerView
             Toast.makeText(getActivity(), "trollo", Toast.LENGTH_SHORT).show();
-            DATASET.remove(viewHolder.getAdapterPosition());
             adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
         }
     };
