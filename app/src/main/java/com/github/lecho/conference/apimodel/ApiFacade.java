@@ -59,7 +59,7 @@ public class ApiFacade {
     private ApiData assignParsedData(ApiData apiData, ApiDtoType className, String json) {
         switch (className) {
             case BREAKS:
-                apiData.breaksMap = new BaseApiParser<BreakApiDto>().fromJson(json);
+                apiData.breaksMap = new BreakApiDto.BreakApiParser().fromJson(json);
                 break;
             case EVENT:
                 break;
@@ -67,18 +67,18 @@ public class ApiFacade {
                 apiData.agendaMap = new AgendaItemApiDto.AgendaItemApiParser().fromJson(json);
                 break;
             case SLOTS:
-                apiData.slotsMap = new BaseApiParser<SlotApiDto>().fromJson(json);
+                apiData.slotsMap = new SlotApiDto.SlotApiParser().fromJson(json);
                 break;
             case SPEAKERS:
-                apiData.speakersMap = new BaseApiParser<SpeakerApiDto>().fromJson(json);
+                apiData.speakersMap = new SpeakerApiDto.SpeakerApiParser().fromJson(json);
                 break;
             case SPONSORS:
                 break;
             case TALKS:
-                apiData.talksMap = new BaseApiParser<TalkApiDto>().fromJson(json);
+                apiData.talksMap = new TalkApiDto.TalkApiParser().fromJson(json);
                 break;
             case VENUES:
-                apiData.venuesMap = new BaseApiParser<VenueApiDto>().fromJson(json);
+                apiData.venuesMap = new VenueApiDto.VenueApiParser().fromJson(json);
                 break;
         }
         return apiData;

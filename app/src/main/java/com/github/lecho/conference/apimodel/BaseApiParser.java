@@ -11,11 +11,17 @@ import java.util.Map;
 /**
  * Created by Leszek on 2015-08-12.
  */
-public class BaseApiParser<T> {
+public abstract class BaseApiParser<T> {
 
-    public Map<String, T> fromJson(String json) {
-        Type type = new TypeToken<Map<String, T>>() {
-        }.getType();
+    public abstract  Map<String, T> fromJson(String json);
+
+    /**
+     *
+     * @param json
+     * @param type Type type = new TypeToken<Map<String, T>>() {}.getType();
+     * @return
+     */
+    protected Map<String, T> parseJson(String json, Type type) {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
         Map<String, T> objectsMap = gson.fromJson(json, type);
         return objectsMap;
