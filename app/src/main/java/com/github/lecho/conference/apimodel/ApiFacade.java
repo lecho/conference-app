@@ -30,12 +30,12 @@ public class ApiFacade {
     }
 
     public ApiData parseJsonFilesFromAssets(Context context, String folderName) {
-        String agendaJson = readFileFromAsstes(context, folderName, SCHEDULE_JSON_FILE);
-        String slotJson = readFileFromAsstes(context, folderName, SLOTS_JSON_FILE);
-        String breaksJson = readFileFromAsstes(context, folderName, BREAKS_JSON_FILE);
-        String venuesJson = readFileFromAsstes(context, folderName, VENUES_JSON_FILE);
-        String talkJson = readFileFromAsstes(context, folderName, TALKS_JSON_FILE);
-        String speakersJson = readFileFromAsstes(context, folderName, SPEAKERS_JSON_FILE);
+        String agendaJson = readFileFromAssets(context, folderName, SCHEDULE_JSON_FILE);
+        String slotJson = readFileFromAssets(context, folderName, SLOTS_JSON_FILE);
+        String breaksJson = readFileFromAssets(context, folderName, BREAKS_JSON_FILE);
+        String venuesJson = readFileFromAssets(context, folderName, VENUES_JSON_FILE);
+        String talkJson = readFileFromAssets(context, folderName, TALKS_JSON_FILE);
+        String speakersJson = readFileFromAssets(context, folderName, SPEAKERS_JSON_FILE);
 
         Map<ApiDtoType, String> jsonsMap = new HashMap<>();
         jsonsMap.put(ApiDtoType.AGENDA, agendaJson);
@@ -84,7 +84,7 @@ public class ApiFacade {
         return apiData;
     }
 
-    private String readFileFromAsstes(Context context, String folderName, String fileName) {
+    private String readFileFromAssets(Context context, String folderName, String fileName) {
         String jsonString = "";
         BufferedInputStream bufferedInputStream = null;
         try {
