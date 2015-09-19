@@ -2,6 +2,7 @@ package com.github.lecho.conference.ui;
 
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import com.github.lecho.conference.R;
 import com.github.lecho.conference.viewmodel.AgendaItemViewDto;
 import com.github.lecho.conference.viewmodel.BreakViewDto;
 import com.github.lecho.conference.viewmodel.SlotViewDto;
+import com.github.lecho.conference.viewmodel.SpeakerViewDto;
 import com.github.lecho.conference.viewmodel.TalkViewDto;
 
 import java.util.List;
@@ -49,7 +51,7 @@ public class MyAgendaAdapter extends RecyclerView.Adapter<MyAgendaAdapter.Agenda
     public int getItemViewType(int position) {
         if (AgendaItemViewDto.AgendaItemType.BREAK == data.get(position).type) {
             return ITEM_TYPE_BREAK;
-        } else if (AgendaItemViewDto.AgendaItemType.BREAK == data.get(position).type) {
+        } else if (AgendaItemViewDto.AgendaItemType.TALK == data.get(position).type) {
             return ITEM_TYPE_TALK;
         } else {
             throw new IllegalArgumentException("Invalid item type " + data.get(position).type);
@@ -86,9 +88,8 @@ public class MyAgendaAdapter extends RecyclerView.Adapter<MyAgendaAdapter.Agenda
 
         public AgendaViewHolder(View itemView, int viewType) {
             super(itemView);
-            this.viewType = viewType;
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(agendaItemClickListener);
+            this.viewType = viewType;
         }
 
         public void bindView(AgendaItemViewDto agendaItem) {
@@ -102,9 +103,20 @@ public class MyAgendaAdapter extends RecyclerView.Adapter<MyAgendaAdapter.Agenda
                 TalkViewDto talkViewDto = agendaItem.talk;
                 slotViewDto = talkViewDto.slot;
                 titleText = talkViewDto.title;
+                venueView.setText(talkViewDto.venue.title);
+                languageView.setText(talkViewDto.language);
+                StringBuilder speakersText = new StringBuilder();
+                for (SpeakerViewDto speakerViewDto : talkViewDto.speakers) {
+                    if (!TextUtils.isEmpty(speakersText)) {
+                        speakersText.append("\n");
+                    }
+                    speakersText.append(speakerViewDto.firstName).append(" ").append(speakerViewDto.lastName);
+                }
+                speakersView.setText(speakersText.toString());
+                itemView.setOnClickListener(agendaItemClickListener);
             }
 
-            String timeSlotText = new StringBuilder(slotViewDto.from).append(" ").append(slotViewDto.to).toString();
+            String timeSlotText = new StringBuilder(slotViewDto.from).append(" - ").append(slotViewDto.to).toString();
             timeSlotView.setText(timeSlotText);
             titleView.setText(titleText);
         }

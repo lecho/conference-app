@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.github.lecho.conference.R;
+import com.github.lecho.conference.realmmodel.RealmFacade;
+import com.github.lecho.conference.viewmodel.AgendaViewDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,18 +59,17 @@ public class MyAgendaFragment extends Fragment {
         ButterKnife.bind(this, rootView);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new MyAgendaAdapter(DATASET);
+
+        RealmFacade facade = new RealmFacade(getActivity());
+        AgendaViewDto agendaViewDto = facade.loadWholeAgenda();
+
+        adapter = new MyAgendaAdapter(agendaViewDto.agendaItems);
         recyclerView.setAdapter(adapter);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
         return rootView;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
     }
 
     ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper

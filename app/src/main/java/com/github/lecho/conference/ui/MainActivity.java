@@ -11,11 +11,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 
 import com.github.lecho.conference.R;
+import com.github.lecho.conference.apimodel.ApiData;
+import com.github.lecho.conference.apimodel.ApiFacade;
+import com.github.lecho.conference.realmmodel.RealmFacade;
+import com.github.lecho.conference.viewmodel.AgendaViewDto;
 import com.github.lecho.conference.viewmodel.VenueViewDto;
 
 import java.util.ArrayList;
@@ -54,11 +59,12 @@ public class MainActivity extends AppCompatActivity {
             replaceFragment(MyAgendaFragment.newInstance());
         }
 
-        //ApiData apiData = new ApiFacade().parseJsonFilesFromAssets(this, "test-data");
-        //RealmFacade facade = new RealmFacade(this);
-        //facade.saveData(apiData);
-        //AgendaViewDto agendaViewDto = facade.loadWholeAgenda();
-        //Log.e("TAG", "Agenda: " + agendaViewDto.toString());
+        ApiData apiData = new ApiFacade().parseJsonFilesFromAssets(this, "test-data");
+        RealmFacade facade = new RealmFacade(this);
+        facade.saveData(apiData);
+        AgendaViewDto agendaViewDto = facade.loadWholeAgenda();
+        Log.e("TAG", "Agenda: " + agendaViewDto.toString());
+
         List<VenueViewDto> venueViewDtos = new ArrayList<>();
         for (int i = 0; i < 5; ++i) {
             VenueViewDto venueViewDto = new VenueViewDto();
