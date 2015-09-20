@@ -21,6 +21,10 @@ public class TalkRealm extends RealmObject {
     private SlotRealm slot;
     private VenueRealm venue;
     private RealmList<SpeakerRealm> speakers = new RealmList<>();
+    /**
+     * Realm doesn't support sorting by relation for now so keep this value here
+     */
+    private long fromInMilliseconds;
 
     public String getKey() {
         return key;
@@ -84,6 +88,14 @@ public class TalkRealm extends RealmObject {
 
     public void setIsInMyAgenda(boolean isInMyAgenda) {
         this.isInMyAgenda = isInMyAgenda;
+    }
+
+    public long getFromInMilliseconds() {
+        return fromInMilliseconds;
+    }
+
+    public void setFromInMilliseconds(long fromInMilliseconds) {
+        this.fromInMilliseconds = fromInMilliseconds;
     }
 
     public static class TalkApiConverter extends RealmFacade.ApiToRealmConverter<TalkRealm, TalkApiDto> {

@@ -16,6 +16,10 @@ public class BreakRealm extends RealmObject {
     private String title;
     private String description;
     private SlotRealm slot;
+    /**
+     * Realm doesn't support sorting by relation for now so keep this value here
+     */
+    private long fromInMilliseconds;
 
     public String getKey() {
         return key;
@@ -47,6 +51,14 @@ public class BreakRealm extends RealmObject {
 
     public void setSlot(SlotRealm slot) {
         this.slot = slot;
+    }
+
+    public long getFromInMilliseconds() {
+        return fromInMilliseconds;
+    }
+
+    public void setFromInMilliseconds(long fromInMilliseconds) {
+        this.fromInMilliseconds = fromInMilliseconds;
     }
 
     public static class BreakApiConverter extends RealmFacade.ApiToRealmConverter<BreakRealm, BreakApiDto> {

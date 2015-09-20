@@ -134,6 +134,7 @@ public class MyAgendaAdapter extends RecyclerView.Adapter<MyAgendaAdapter.Agenda
         public void bindView(AgendaItemViewDto agendaItem) {
             BreakViewDto breakViewDto = agendaItem.agendaBreak;
             timeSlotView.setText(getTimeSlotText(breakViewDto.slot));
+            titleView.setText(breakViewDto.title);
         }
     }
 

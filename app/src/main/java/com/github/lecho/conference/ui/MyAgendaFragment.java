@@ -90,7 +90,6 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
             return false;
         }
 
-
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
             //Remove swiped item from list and notify the RecyclerView
