@@ -9,8 +9,6 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,6 +16,7 @@ import android.widget.TextView;
 import com.github.lecho.conference.R;
 import com.github.lecho.conference.loader.TalkLoader;
 import com.github.lecho.conference.viewmodel.SlotViewDto;
+import com.github.lecho.conference.viewmodel.SpeakerViewDto;
 import com.github.lecho.conference.viewmodel.TalkViewDto;
 
 import butterknife.Bind;
@@ -84,27 +83,6 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public Loader<TalkViewDto> onCreateLoader(int id, Bundle args) {
         if (id == LOADER_ID) {
             return TalkLoader.getTalkLoader(this, talkKey);
@@ -115,13 +93,13 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<TalkViewDto> loader, TalkViewDto talkViewDto) {
         if (loader.getId() == LOADER_ID) {
-            //TODO fill up data
             if (talkViewDto == null) {
                 Log.w(TAG, "Talk data is null for talk-key: " + talkKey);
                 return;
             }
             headerController.bind(talkViewDto);
             infoCardController.bind(talkViewDto);
+            speakersCardController.bind(talkViewDto);
         }
     }
 
@@ -155,7 +133,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
         }
 
         @NonNull
-        private String getTimeSlotText(SlotViewDto slotViewDto){
+        private String getTimeSlotText(SlotViewDto slotViewDto) {
             return new StringBuilder(slotViewDto.from).append(" - ").append(slotViewDto.to).toString();
         }
     }
@@ -184,6 +162,23 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
         }
 
         public void bind(TalkViewDto talkViewDto) {
+            speakersLayout.removeAllViews();
+            for (SpeakerViewDto speakerViewDto : talkViewDto.speakers) {
+                SpeakerLayout speakerLayout = new SpeakerLayout(TalkActivity.this);
+                speakerLayout.setSpeakerName(getSpeakerNameText(speakerViewDto));
+                //TODO set speaker avatar
+                speakersLayout.addView(speakerLayout);
+            }
+
+            SpeakerLayout speakerLayout = new SpeakerLayout(TalkActivity.this);
+            speakerLayout.setSpeakerName(getSpeakerNameText(talkViewDto.speakers.get(0)));
+            //TODO set speaker avatar
+            speakersLayout.addView(speakerLayout);
+        }
+
+        @NonNull
+        private String getSpeakerNameText(SpeakerViewDto speakerViewDto) {
+            return new StringBuilder(speakerViewDto.firstName).append(" ").append(speakerViewDto.lastName).toString();
         }
     }
 }
