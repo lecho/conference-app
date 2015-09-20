@@ -1,13 +1,11 @@
 package com.github.lecho.conference.loader;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.github.lecho.conference.BuildConfig;
 import com.github.lecho.conference.viewmodel.TalkViewDto;
-import com.github.lecho.conference.viewmodel.VenueViewDto;
-
-import java.util.List;
 
 /**
  * Created by Leszek on 2015-09-03.
@@ -23,13 +21,16 @@ public class TalkLoader extends BaseRealmLoader<TalkViewDto> {
 
     private TalkLoader(Context context, String talkKey) {
         super(context);
+        if (TextUtils.isEmpty(talkKey)) {
+            throw new IllegalArgumentException("Talk key cannot be empty");
+        }
         this.talkKey = talkKey;
     }
 
     @Override
     public TalkViewDto loadInBackground() {
         if (BuildConfig.DEBUG) {
-            Log.d(TAG, "Loading venues data");
+            Log.d(TAG, "Loading talk data");
         }
         TalkViewDto newData = realmFacade.loadTalkByKey(talkKey);
         return newData;

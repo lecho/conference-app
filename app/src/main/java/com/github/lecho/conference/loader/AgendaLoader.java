@@ -35,6 +35,9 @@ public class AgendaLoader extends BaseRealmLoader<AgendaViewDto> {
 
     @Override
     public AgendaViewDto loadInBackground() {
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, "Loading agenda data for loader type: " + type.name());
+        }
         AgendaViewDto agendaData = null;
         switch (type) {
             case WHOLE_AGENDA:
