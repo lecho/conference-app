@@ -164,16 +164,11 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
         public void bind(TalkViewDto talkViewDto) {
             speakersLayout.removeAllViews();
             for (SpeakerViewDto speakerViewDto : talkViewDto.speakers) {
-                SpeakerLayout speakerLayout = new SpeakerLayout(TalkActivity.this);
+                SpeakerLayout speakerLayout = new SpeakerLayout(TalkActivity.this, speakerViewDto.key);
                 speakerLayout.setSpeakerName(getSpeakerNameText(speakerViewDto));
                 //TODO set speaker avatar
                 speakersLayout.addView(speakerLayout);
             }
-
-            SpeakerLayout speakerLayout = new SpeakerLayout(TalkActivity.this);
-            speakerLayout.setSpeakerName(getSpeakerNameText(talkViewDto.speakers.get(0)));
-            //TODO set speaker avatar
-            speakersLayout.addView(speakerLayout);
         }
 
         @NonNull

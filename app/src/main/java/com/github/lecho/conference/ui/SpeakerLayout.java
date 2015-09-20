@@ -10,11 +10,14 @@ import com.github.lecho.conference.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Displays speaker's name and avatar. Use this class only from code.
  */
 public class SpeakerLayout extends LinearLayout {
+
+    private String speakerKey;
 
     @Bind(R.id.avatar)
     View avatarView;
@@ -22,8 +25,14 @@ public class SpeakerLayout extends LinearLayout {
     @Bind(R.id.text_speaker_name)
     TextView speakerNameView;
 
-    public SpeakerLayout(Context context) {
+    @OnClick
+    public void onClick() {
+        SpeakerActivity.startActivity(getContext(), speakerKey);
+    }
+
+    public SpeakerLayout(Context context, String speakerKey) {
         super(context);
+        this.speakerKey = speakerKey;
         LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate(R.layout.include_speaker, this, true);
         ButterKnife.bind(this, this);
@@ -35,7 +44,7 @@ public class SpeakerLayout extends LinearLayout {
         ButterKnife.bind(this, this);
     }
 
-    public void setSpeakerName(String speakerName){
+    public void setSpeakerName(String speakerName) {
         speakerNameView.setText(speakerName);
     }
 }
