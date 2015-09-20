@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.github.lecho.conference.R;
 import com.github.lecho.conference.loader.TalkLoader;
+import com.github.lecho.conference.viewmodel.SlotViewDto;
 import com.github.lecho.conference.viewmodel.TalkViewDto;
 
 import butterknife.Bind;
@@ -119,6 +120,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
                 Log.w(TAG, "Talk data is null for talk-key: " + talkKey);
                 return;
             }
+            headerController.bind(talkViewDto);
             infoCardController.bind(talkViewDto);
         }
     }
@@ -146,7 +148,15 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
         }
 
         public void bind(TalkViewDto talkViewDto) {
+            talkTitleView.setText(talkViewDto.title);
+            talkTimeSlotView.setText(getTimeSlotText(talkViewDto.slot));
+            talkVenueView.setText(talkViewDto.venue.title);
+            talkLanguageView.setText(talkViewDto.language);
+        }
 
+        @NonNull
+        private String getTimeSlotText(SlotViewDto slotViewDto){
+            return new StringBuilder(slotViewDto.from).append(" - ").append(slotViewDto.to).toString();
         }
     }
 
