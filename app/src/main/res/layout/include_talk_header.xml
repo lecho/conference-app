@@ -10,7 +10,7 @@
     android:layout_marginTop="12dp">
 
     <TextView
-        android:id="@+id/text_title"
+        android:id="@+id/text_talk_title"
         style="@style/TextAppearance.AppCompat.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
         style="@style/TextAppearance.AppCompat.Medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/text_title"
+        android:layout_below="@id/text_talk_title"
         android:text="10:30 - 11:00"/>
 
     <TextView

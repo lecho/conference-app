@@ -188,7 +188,11 @@ public class RealmFacade {
         try {
             realm = Realm.getInstance(context);
             TalkRealm talkRealm = realm.where(TalkRealm.class).equalTo("key", talkKey).findFirst();
-            return new TalkRealm.TalkViewConverter().convert(talkRealm);
+            if(talkRealm != null) {
+                return new TalkRealm.TalkViewConverter().convert(talkRealm);
+            } else {
+                return null;
+            }
         } finally {
             closeRealm();
         }

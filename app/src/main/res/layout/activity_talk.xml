@@ -45,7 +45,8 @@
             <include
                 layout="@layout/include_speakers_card"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"/>
         </LinearLayout>
     </ScrollView>
 

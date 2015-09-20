@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
-    android:id="@+id/description_card_view"
+    android:id="@+id/info_card"
     style="@style/CardView.Light"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -28,7 +28,7 @@
             android:background="@drawable/horizontal_divider"/>
 
         <TextView
-            android:id="@+id/text_venue"
+            android:id="@+id/text_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektron"
