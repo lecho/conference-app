@@ -68,7 +68,6 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
         getSupportActionBar().setTitle(null);
 
         talkKey = getIntent().getStringExtra(ARG_TALK_KEY);
-        talkKey = "talk-testy-bezpieczenstwa-aplikacji-mobilnych";
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
 
 //        addToMyAgenda.setOnClickListener(new View.OnClickListener() {
