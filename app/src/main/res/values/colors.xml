@@ -12,4 +12,6 @@
     <color name="gold">#D4AF37</color>
     <color name="silver">#C0C0C0</color>
     <color name="bronze">#CD7F32</color>
+
+    <color name="agenda_inactive_item_background">#EEEEEE</color>
 </resources>
