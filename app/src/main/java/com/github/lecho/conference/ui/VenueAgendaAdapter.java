@@ -66,12 +66,11 @@ public class VenueAgendaAdapter extends AgendaAdapter {
             speakersView.setText(getSpeakersText(talkViewDto));
             timeSlotView.setText(getTimeSlotText(talkViewDto.slot));
             if (talkViewDto.isInMyAgenda) {
-                addToMyAgendaButton.setOnClickListener(new RemoveFromMyAgendaClickListener(context, talkViewDto));
                 addToMyAgendaButton.setImageResource(R.drawable.ic_clear_small);
             } else {
-                addToMyAgendaButton.setOnClickListener(new AddToMyAgendaClickListener(context, talkViewDto));
                 addToMyAgendaButton.setImageResource(R.drawable.ic_add_small);
             }
+            addToMyAgendaButton.setOnClickListener(new AddToMyAgendaClickListener(context, talkViewDto));
             addToMyAgendaButtonLayout.setOnClickListener(new AddToMyAgendaLayoutListener(addToMyAgendaButton));
         }
     }
@@ -89,27 +88,13 @@ public class VenueAgendaAdapter extends AgendaAdapter {
         @Override
         public void onClick(View v) {
             RealmFacade realmFacade = new RealmFacade(context);
-            realmFacade.addTalkToMyAgenda(talkViewDto.key);
-            talkViewDto.isInMyAgenda = true;
-            notifyDataSetChanged();
-        }
-    }
-
-    protected class RemoveFromMyAgendaClickListener implements View.OnClickListener {
-
-        private Context context;
-        private TalkViewDto talkViewDto;
-
-        public RemoveFromMyAgendaClickListener(Context context, TalkViewDto talkViewDto) {
-            this.context = context;
-            this.talkViewDto = talkViewDto;
-        }
-
-        @Override
-        public void onClick(View v) {
-            RealmFacade realmFacade = new RealmFacade(context);
-            realmFacade.removeTalkFromMyAgenda(talkViewDto.key);
-            talkViewDto.isInMyAgenda = false;
+            if (talkViewDto.isInMyAgenda) {
+                realmFacade.removeTalkFromMyAgenda(talkViewDto.key);
+                talkViewDto.isInMyAgenda = false;
+            } else {
+                realmFacade.addTalkToMyAgenda(talkViewDto.key);
+                talkViewDto.isInMyAgenda = true;
+            }
             notifyDataSetChanged();
         }
     }

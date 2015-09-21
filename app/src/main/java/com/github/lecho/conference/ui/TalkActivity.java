@@ -3,7 +3,9 @@ package com.github.lecho.conference.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 
 import com.github.lecho.conference.R;
 import com.github.lecho.conference.loader.TalkLoader;
+import com.github.lecho.conference.realmmodel.RealmFacade;
 import com.github.lecho.conference.viewmodel.SlotViewDto;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
 import com.github.lecho.conference.viewmodel.TalkViewDto;
@@ -28,6 +31,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final String ARG_TALK_KEY = "talk-key";
     private static final int LOADER_ID = 0;
     private String talkKey;
+    private FABController fabController;
     private HeaderController headerController;
     private InfoCardController infoCardController;
     private SpeakersCardController speakersCardController;
@@ -44,8 +48,8 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
     @Bind(R.id.speakers_card)
     View speakersCard;
 
-    //@Bind(R.id.button_add_to_my_agenda)
-    //FloatingActionButton addToMyAgenda;
+    @Bind(R.id.button_add_to_my_agenda)
+    FloatingActionButton addToMyAgendaButton;
 
     public static void startActivity(@NonNull Context context, @NonNull String talkKey) {
         Intent intent = new Intent(context, TalkActivity.class);
@@ -59,6 +63,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.activity_talk);
         ButterKnife.bind(this);
 
+        fabController = new FABController(addToMyAgendaButton);
         headerController = new HeaderController(headerView);
         infoCardController = new InfoCardController(infoCard);
         speakersCardController = new SpeakersCardController(speakersCard);
@@ -69,16 +74,6 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
 
         talkKey = getIntent().getStringExtra(ARG_TALK_KEY);
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
-
-//        addToMyAgenda.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (v instanceof FloatingActionButton) {
-//                    FloatingActionButton bt = (FloatingActionButton) v;
-//                    bt.setLineMorphingState((bt.getLineMorphingState() + 1) % 2, true);
-//                }
-//            }
-//        });
     }
 
     @Override
@@ -96,9 +91,11 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
                 Log.w(TAG, "Talk data is null for talk-key: " + talkKey);
                 return;
             }
+            fabController.bind(talkViewDto);
             headerController.bind(talkViewDto);
             infoCardController.bind(talkViewDto);
             speakersCardController.bind(talkViewDto);
+
         }
     }
 
@@ -106,7 +103,26 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoaderReset(Loader<TalkViewDto> loader) {
     }
 
-    public class HeaderController {
+    protected class FABController {
+
+        FloatingActionButton addToMyAgendaButton;
+
+        public FABController(FloatingActionButton addToMyAgendaButton) {
+            this.addToMyAgendaButton = addToMyAgendaButton;
+        }
+
+        public void bind(TalkViewDto talkViewDto) {
+            if (talkViewDto.isInMyAgenda) {
+                addToMyAgendaButton.setImageResource(R.drawable.ic_clear_big);
+            } else {
+                addToMyAgendaButton.setImageResource(R.drawable.ic_add_big);
+            }
+            addToMyAgendaButton.setOnClickListener(new AddToMyAgendaClickListener(talkViewDto));
+            addToMyAgendaButton.show();
+        }
+    }
+
+    protected class HeaderController {
 
         @Bind(R.id.text_talk_title)
         TextView talkTitleView;
@@ -137,7 +153,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
         }
     }
 
-    public class InfoCardController {
+    protected class InfoCardController {
 
         @Bind(R.id.text_info)
         TextView talkInfoView;
@@ -151,7 +167,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
         }
     }
 
-    public class SpeakersCardController {
+    protected class SpeakersCardController {
 
         @Bind(R.id.speakers_layout)
         LinearLayout speakersLayout;
@@ -173,6 +189,30 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
         @NonNull
         private String getSpeakerNameText(SpeakerViewDto speakerViewDto) {
             return new StringBuilder(speakerViewDto.firstName).append(" ").append(speakerViewDto.lastName).toString();
+        }
+    }
+
+    protected class AddToMyAgendaClickListener implements View.OnClickListener {
+
+        private TalkViewDto talkViewDto;
+
+        public AddToMyAgendaClickListener(TalkViewDto talkViewDto) {
+            this.talkViewDto = talkViewDto;
+        }
+
+        @Override
+        public void onClick(View v) {
+            FloatingActionButton floatingActionButton = (FloatingActionButton) v;
+            RealmFacade realmFacade = new RealmFacade(getApplicationContext());
+            if (talkViewDto.isInMyAgenda) {
+                realmFacade.removeTalkFromMyAgenda(talkViewDto.key);
+                floatingActionButton.setImageResource(R.drawable.ic_add_big);
+                talkViewDto.isInMyAgenda = false;
+            } else {
+                realmFacade.addTalkToMyAgenda(talkViewDto.key);
+                floatingActionButton.setImageResource(R.drawable.ic_clear_big);
+                talkViewDto.isInMyAgenda = true;
+            }
         }
     }
 }
