@@ -132,7 +132,7 @@ public class RealmFacade {
     public AgendaViewDto loadAgendaForVenue(String venueKey) {
         try {
             realm = Realm.getInstance(context);
-            RealmResults<TalkRealm> talksRealms = realm.where(TalkRealm.class).equalTo("venue.title", venueKey)
+            RealmResults<TalkRealm> talksRealms = realm.where(TalkRealm.class).equalTo("venue.key", venueKey)
                     .findAllSorted("fromInMilliseconds");
             RealmResults<BreakRealm> breaksRealms = realm.where(BreakRealm.class).findAllSorted("fromInMilliseconds");
             return loadAgenda(talksRealms, breaksRealms);
@@ -144,7 +144,8 @@ public class RealmFacade {
     public AgendaViewDto loadMyAgenda() {
         try {
             realm = Realm.getInstance(context);
-            RealmResults<TalkRealm> talksRealms = realm.where(TalkRealm.class).equalTo("isInMyAgenda", true).findAllSorted("fromInMilliseconds");
+            RealmResults<TalkRealm> talksRealms = realm.where(TalkRealm.class).equalTo("isInMyAgenda", true)
+                    .findAllSorted("fromInMilliseconds");
             RealmResults<BreakRealm> breaksRealms = realm.where(BreakRealm.class).findAllSorted("fromInMilliseconds");
             return loadAgenda(talksRealms, breaksRealms);
         } finally {
@@ -187,8 +188,8 @@ public class RealmFacade {
     public TalkViewDto loadTalkByKey(String talkKey) {
         try {
             realm = Realm.getInstance(context);
-            TalkRealm talkRealm = realm.where(TalkRealm.class).equalTo("key", talkKey).findFirst();
-            if(talkRealm != null) {
+            TalkRealm talkRealm = loadTalkRealmByKey(talkKey);
+            if (talkRealm != null) {
                 return new TalkRealm.TalkViewConverter().convert(talkRealm);
             } else {
                 return null;
@@ -196,6 +197,10 @@ public class RealmFacade {
         } finally {
             closeRealm();
         }
+    }
+
+    private TalkRealm loadTalkRealmByKey(String talkKey) {
+        return realm.where(TalkRealm.class).equalTo("key", talkKey).findFirst();
     }
 
     public SpeakerViewDto loadSpeakerByKey(String speakerKey) {
@@ -233,6 +238,40 @@ public class RealmFacade {
                 venueViewDtos.add(venueViewConverter.convert(venueRealm));
             }
             return venueViewDtos;
+        } finally {
+            closeRealm();
+        }
+    }
+
+    public void addTalkToMyAgenda(String talkKey) {
+        try {
+            realm = Realm.getInstance(context);
+            realm.beginTransaction();
+            TalkRealm talkRealm = loadTalkRealmByKey(talkKey);
+            talkRealm.setIsInMyAgenda(true);
+            realm.commitTransaction();
+        } catch (Exception e) {
+            if (realm != null) {
+                realm.cancelTransaction();
+            }
+            Log.e(TAG, "Could not add talk to my agenda", e);
+        } finally {
+            closeRealm();
+        }
+    }
+
+    public void removeTalkFromMyAgenda(String talkKey) {
+        try {
+            realm = Realm.getInstance(context);
+            realm.beginTransaction();
+            TalkRealm talkRealm = loadTalkRealmByKey(talkKey);
+            talkRealm.setIsInMyAgenda(false);
+            realm.commitTransaction();
+        } catch (Exception e) {
+            if (realm != null) {
+                realm.cancelTransaction();
+            }
+            Log.e(TAG, "Could not remove talk from my agenda", e);
         } finally {
             closeRealm();
         }
@@ -281,7 +320,7 @@ public class RealmFacade {
             } else {
                 rhsValue = rhs.talk.slot.fromInMilliseconds;
             }
-            return (int)(lhsValue - rhsValue);
+            return (int) (lhsValue - rhsValue);
         }
 
         @Override

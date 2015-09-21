@@ -13,39 +13,4 @@
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
-    <!-- FloatingActionButton Style -->
-    <style name="FloatingActionButton" parent="Material.Drawable.Ripple.Touch.Light">
-        <item name="rd_rippleColor">@color/accent_ripple</item>
-        <item name="fab_backgroundColor">@color/accent</item>
-        <item name="fab_elevation">4dp</item>
-        <item name="fab_iconLineMorphing">@style/FloatingActionButtonIcon</item>
-        <item name="rd_delayClick">none</item>
-    </style>
-
-    <style name="SmallActionButton" parent="Material.Drawable.Ripple.Touch.Light">
-        <item name="rd_rippleColor">@color/accent_ripple</item>
-        <item name="fab_backgroundColor">@color/accent</item>
-        <item name="fab_elevation">0dp</item>
-        <item name="fab_iconLineMorphing">@style/FloatingActionButtonIcon</item>
-        <item name="rd_delayClick">none</item>
-    </style>
-
-
-    <style name="FloatingActionButtonIcon">
-        <item name="lmd_state">@xml/fab_icon_states</item>
-        <item name="lmd_curState">0</item>
-        <item name="lmd_padding">2dp</item>
-        <item name="lmd_animDuration">400</item>
-        <item name="lmd_interpolator">@android:anim/accelerate_decelerate_interpolator</item>
-        <item name="lmd_strokeSize">3dp</item>
-        <item name="lmd_strokeColor">#FFFFFFFF</item>
-        <item name="lmd_strokeCap">butt</item>
-        <item name="lmd_strokeJoin">miter</item>
-        <item name="lmd_clockwise">true</item>
-    </style>
-
-    <style name="FloatingActionButtonIcon.Light" parent="FloatingActionButtonIcon">
-        <item name="lmd_strokeColor">#FF000000</item>
-    </style>
-
 </resources>

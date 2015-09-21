@@ -26,7 +26,7 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
 
     public static final String TAG = "MyAgendaFragment";
     private static final int LOADER_ID = 0;
-    private MyAgendaAdapter adapter;
+    private AgendaAdapter adapter;
     ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new MyAgendaItemTouchCallback());
 
     @Bind(R.id.recycler_view)
@@ -52,7 +52,7 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
 
         //TODO Grid for tablet layout
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new MyAgendaAdapter(getActivity());
+        adapter = new AgendaAdapter(getActivity());
         recyclerView.setAdapter(adapter);
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
@@ -98,7 +98,7 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
 
         @Override
         public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-            if (MyAgendaAdapter.ITEM_TYPE_BREAK == viewHolder.getItemViewType()) {
+            if (AgendaAdapter.ITEM_TYPE_BREAK == viewHolder.getItemViewType()) {
                 return 0;
             }
             return super.getSwipeDirs(recyclerView, viewHolder);

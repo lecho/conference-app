@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         List<VenueViewDto> venueViewDtos = new ArrayList<>();
         for (int i = 0; i < 5; ++i) {
             VenueViewDto venueViewDto = new VenueViewDto();
-            venueViewDto.key = "foo";
+            venueViewDto.key = "venue-1";
             venueViewDto.title = "Venue" + i;
             venueViewDtos.add(venueViewDto);
         }

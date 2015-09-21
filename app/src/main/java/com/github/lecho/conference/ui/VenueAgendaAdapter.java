@@ -1,91 +1,130 @@
 package com.github.lecho.conference.ui;
 
-import android.support.v7.widget.RecyclerView;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.lecho.conference.R;
-import com.rey.material.widget.FloatingActionButton;
+import com.github.lecho.conference.realmmodel.RealmFacade;
+import com.github.lecho.conference.viewmodel.AgendaItemViewDto;
+import com.github.lecho.conference.viewmodel.TalkViewDto;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
-public class VenueAgendaAdapter extends RecyclerView.Adapter<VenueAgendaAdapter.AgendaViewHolder> {
+public class VenueAgendaAdapter extends AgendaAdapter {
 
-    private String[] dataset;
-
-    public VenueAgendaAdapter(String[] dataset) {
-        this.dataset = dataset;
+    public VenueAgendaAdapter(Context context) {
+        super(context);
     }
 
     @Override
-    public VenueAgendaAdapter.AgendaViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_venue_agenda, parent, false);
-        AgendaViewHolder viewHolder = new AgendaViewHolder(view);
+    public AgendaViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        AgendaViewHolder viewHolder;
+        if (ITEM_TYPE_BREAK == viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_agenda_break, parent, false);
+            viewHolder = new BreakViewHolder(context, view);
+        } else {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_venue_agenda_talk, parent,
+                    false);
+            viewHolder = new VenueAgendaTalkViewHolder(context, view);
+        }
         return viewHolder;
     }
 
-    @Override
-    public void onBindViewHolder(AgendaViewHolder holder, int position) {
-        holder.bindView(dataset[position]);
-    }
-
-    @Override
-    public int getItemCount() {
-        return dataset.length;
-    }
-
-    public static class AgendaViewHolder extends RecyclerView.ViewHolder {
-
-        //TODO pass listeners in constructor
-        View.OnClickListener agendaItemClickListener;
-        View.OnClickListener addToMyAgendaClickListener;
-
-        @Bind(R.id.button_add_to_my_agenda)
-        FloatingActionButton addToMyAgenda;
+    protected class VenueAgendaTalkViewHolder extends AgendaViewHolder {
 
         @Bind(R.id.button_add_to_my_agenda_layout)
-        FrameLayout addToMyAgendaLayout;
+        View addToMyAgendaButtonLayout;
+
+        @Bind(R.id.button_add_to_my_agenda)
+        ImageButton addToMyAgendaButton;
 
         @Bind(R.id.text_time_slot)
-        TextView timeSlot;
+        TextView timeSlotView;
 
         @Bind(R.id.text_title)
-        TextView title;
+        TextView titleView;
 
         @Bind(R.id.text_language)
-        TextView language;
+        TextView languageView;
 
         @Bind(R.id.text_speakers)
-        TextView speakers;
+        TextView speakersView;
 
-        public AgendaViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(agendaItemClickListener);
-            addToMyAgendaLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    addToMyAgenda.performClick();
-                }
-            });
-            addToMyAgenda.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    if (v instanceof FloatingActionButton) {
-                        FloatingActionButton bt = (FloatingActionButton) v;
-                        bt.setLineMorphingState((bt.getLineMorphingState() + 1) % 2, true);
-                    }
-                }
-            });
+        public VenueAgendaTalkViewHolder(Context context, View itemView) {
+            super(context, itemView);
         }
 
-        public void bindView(String text) {
+        public void bindView(AgendaItemViewDto agendaItem) {
+            TalkViewDto talkViewDto = agendaItem.talk;
+            itemView.setOnClickListener(new TalkItemClickListener(context, talkViewDto.key));
+            titleView.setText(talkViewDto.title);
+            languageView.setText(talkViewDto.language);
+            speakersView.setText(getSpeakersText(talkViewDto));
+            timeSlotView.setText(getTimeSlotText(talkViewDto.slot));
+            if (talkViewDto.isInMyAgenda) {
+                addToMyAgendaButton.setOnClickListener(new RemoveFromMyAgendaClickListener(context, talkViewDto));
+                addToMyAgendaButton.setImageResource(R.drawable.ic_clear_small);
+            } else {
+                addToMyAgendaButton.setOnClickListener(new AddToMyAgendaClickListener(context, talkViewDto));
+                addToMyAgendaButton.setImageResource(R.drawable.ic_add_small);
+            }
+            addToMyAgendaButtonLayout.setOnClickListener(new AddToMyAgendaLayoutListener(addToMyAgendaButton));
         }
     }
 
+    protected class AddToMyAgendaClickListener implements View.OnClickListener {
+
+        private Context context;
+        private TalkViewDto talkViewDto;
+
+        public AddToMyAgendaClickListener(Context context, TalkViewDto talkViewDto) {
+            this.context = context;
+            this.talkViewDto = talkViewDto;
+        }
+
+        @Override
+        public void onClick(View v) {
+            RealmFacade realmFacade = new RealmFacade(context);
+            realmFacade.addTalkToMyAgenda(talkViewDto.key);
+            talkViewDto.isInMyAgenda = true;
+            notifyDataSetChanged();
+        }
+    }
+
+    protected class RemoveFromMyAgendaClickListener implements View.OnClickListener {
+
+        private Context context;
+        private TalkViewDto talkViewDto;
+
+        public RemoveFromMyAgendaClickListener(Context context, TalkViewDto talkViewDto) {
+            this.context = context;
+            this.talkViewDto = talkViewDto;
+        }
+
+        @Override
+        public void onClick(View v) {
+            RealmFacade realmFacade = new RealmFacade(context);
+            realmFacade.removeTalkFromMyAgenda(talkViewDto.key);
+            talkViewDto.isInMyAgenda = false;
+            notifyDataSetChanged();
+        }
+    }
+
+    protected class AddToMyAgendaLayoutListener implements View.OnClickListener {
+
+        private View view;
+
+        public AddToMyAgendaLayoutListener(View view) {
+            this.view = view;
+        }
+
+        @Override
+        public void onClick(View v) {
+            view.performClick();
+        }
+    }
 }
