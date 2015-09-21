@@ -13,7 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.lecho.conference.R;
+import com.github.lecho.conference.apimodel.AgendaItemApiDto;
 import com.github.lecho.conference.loader.AgendaLoader;
+import com.github.lecho.conference.realmmodel.RealmFacade;
+import com.github.lecho.conference.viewmodel.AgendaItemViewDto;
 import com.github.lecho.conference.viewmodel.AgendaViewDto;
 
 import butterknife.Bind;
@@ -93,7 +96,11 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
             //Remove swiped item from list and notify the RecyclerView
-            adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+            final int position = viewHolder.getAdapterPosition();
+            AgendaItemViewDto agendaItemViewDto = adapter.getItem(position);
+            RealmFacade realmFacade = new RealmFacade(getContext());
+            realmFacade.removeTalkFromMyAgenda(agendaItemViewDto.talk.key);
+            adapter.removeItemFromAdapter(position);
         }
 
         @Override

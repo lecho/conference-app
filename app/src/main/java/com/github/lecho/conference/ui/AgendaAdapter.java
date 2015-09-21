@@ -38,6 +38,15 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
         notifyDataSetChanged();
     }
 
+    public AgendaItemViewDto getItem(int position) {
+        return data.get(position);
+    }
+
+    public void removeItemFromAdapter(int position) {
+        data.remove(position);
+        notifyItemRemoved(position);
+    }
+
     @Override
     public AgendaViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         AgendaViewHolder viewHolder;
@@ -85,7 +94,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
         public abstract void bindView(AgendaItemViewDto agendaItem);
 
         @NonNull
-        protected String getTimeSlotText(SlotViewDto slotViewDto){
+        protected String getTimeSlotText(SlotViewDto slotViewDto) {
             return new StringBuilder(slotViewDto.from).append(" - ").append(slotViewDto.to).toString();
         }
 
