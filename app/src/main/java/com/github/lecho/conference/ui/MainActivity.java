@@ -108,47 +108,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.global, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         switch (id) {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
-            case R.id.action_settings: {
-                Intent intent = new Intent(this, TalkActivity.class);
-                startActivity(intent);
-                return true;
-            }
-            case R.id.action_settings2: {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_container, VenueAgendaFragment.newInstance
-                        ("foo"))
-                        .commit();
-                return true;
-            }
-            case R.id.action_settings3: {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_container, SponsorsFragment.newInstance())
-                        .commit();
-                return true;
-            }
-            case R.id.action_settings4: {
-                Intent intent = new Intent(this, SpeakerActivity.class);
-                startActivity(intent);
-                return true;
-            }
         }
-
         return super.onOptionsItemSelected(item);
     }
 

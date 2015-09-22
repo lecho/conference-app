@@ -8,7 +8,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.lecho.conference.R;
-import com.github.lecho.conference.realmmodel.RealmFacade;
 import com.github.lecho.conference.viewmodel.AgendaItemViewDto;
 import com.github.lecho.conference.viewmodel.TalkViewDto;
 
@@ -77,13 +76,11 @@ public class VenueAgendaAdapter extends AgendaAdapter {
 
     protected class AddToMyAgendaClickListener implements View.OnClickListener {
 
-        private Context context;
         private TalkViewDto talkViewDto;
         private AddTalkInMyAgendaTask addTalkTask;
         private AddTalkInMyAgendaTask removeTalkTask;
 
         public AddToMyAgendaClickListener(Context context, TalkViewDto talkViewDto) {
-            this.context = context;
             this.talkViewDto = talkViewDto;
             addTalkTask = AddTalkInMyAgendaTask.getAddTask(context.getApplicationContext(), talkViewDto.key);
             removeTalkTask = AddTalkInMyAgendaTask.getRemoveTask(context.getApplicationContext(), talkViewDto.key);
