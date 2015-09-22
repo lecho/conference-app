@@ -3,7 +3,6 @@ package com.github.lecho.conference.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 
 import com.github.lecho.conference.R;
 import com.github.lecho.conference.loader.TalkLoader;
-import com.github.lecho.conference.realmmodel.RealmFacade;
 import com.github.lecho.conference.viewmodel.SlotViewDto;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
 import com.github.lecho.conference.viewmodel.TalkViewDto;
@@ -113,9 +111,9 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
 
         public void bind(TalkViewDto talkViewDto) {
             if (talkViewDto.isInMyAgenda) {
-                addToMyAgendaButton.setImageResource(R.drawable.ic_clear_big);
+                addToMyAgendaButton.setImageResource(R.drawable.ic_star_accent_big);
             } else {
-                addToMyAgendaButton.setImageResource(R.drawable.ic_add_big);
+                addToMyAgendaButton.setImageResource(R.drawable.ic_star_border_accent_big);
             }
             addToMyAgendaButton.setOnClickListener(new AddToMyAgendaClickListener(talkViewDto));
             addToMyAgendaButton.show();
@@ -192,27 +190,31 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
         }
     }
 
-    protected class AddToMyAgendaClickListener implements View.OnClickListener {
+    private class AddToMyAgendaClickListener implements View.OnClickListener {
 
         private TalkViewDto talkViewDto;
+        private AddTalkInMyAgendaTask addTalkTask;
+        private AddTalkInMyAgendaTask removeTalkTask;
 
         public AddToMyAgendaClickListener(TalkViewDto talkViewDto) {
             this.talkViewDto = talkViewDto;
+            addTalkTask = AddTalkInMyAgendaTask.getAddTask(getApplicationContext(), talkViewDto.key);
+            removeTalkTask = AddTalkInMyAgendaTask.getRemoveTask(getApplicationContext(), talkViewDto.key);
         }
 
         @Override
         public void onClick(View v) {
             FloatingActionButton floatingActionButton = (FloatingActionButton) v;
-            RealmFacade realmFacade = new RealmFacade(getApplicationContext());
             if (talkViewDto.isInMyAgenda) {
-                realmFacade.removeTalkFromMyAgenda(talkViewDto.key);
-                floatingActionButton.setImageResource(R.drawable.ic_add_big);
+                floatingActionButton.setImageResource(R.drawable.ic_star_border_accent_big);
                 talkViewDto.isInMyAgenda = false;
+                removeTalkTask.doInBackground();
             } else {
-                realmFacade.addTalkToMyAgenda(talkViewDto.key);
-                floatingActionButton.setImageResource(R.drawable.ic_clear_big);
+                floatingActionButton.setImageResource(R.drawable.ic_star_accent_big);
                 talkViewDto.isInMyAgenda = true;
+                addTalkTask.doInBackground();
             }
         }
     }
+
 }

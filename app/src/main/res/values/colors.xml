@@ -3,6 +3,7 @@
     <color name="divider">#DDDDDD</color>
     <color name="primary">#607D8B</color>
     <color name="primary_dark">#455A64</color>
+    <color name="primary_ripple">#90A4AE</color>
     <color name="accent">#CDDC39</color>
     <color name="accent_ripple">#DCE775</color>
 

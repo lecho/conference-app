@@ -66,9 +66,9 @@ public class VenueAgendaAdapter extends AgendaAdapter {
             speakersView.setText(getSpeakersText(talkViewDto));
             timeSlotView.setText(getTimeSlotText(talkViewDto.slot));
             if (talkViewDto.isInMyAgenda) {
-                addToMyAgendaButton.setImageResource(R.drawable.ic_clear_small);
+                addToMyAgendaButton.setImageResource(R.drawable.ic_star_accent);
             } else {
-                addToMyAgendaButton.setImageResource(R.drawable.ic_add_small);
+                addToMyAgendaButton.setImageResource(R.drawable.ic_star_border_accent);
             }
             addToMyAgendaButton.setOnClickListener(new AddToMyAgendaClickListener(context, talkViewDto));
             addToMyAgendaButtonLayout.setOnClickListener(new AddToMyAgendaLayoutListener(addToMyAgendaButton));
@@ -79,20 +79,23 @@ public class VenueAgendaAdapter extends AgendaAdapter {
 
         private Context context;
         private TalkViewDto talkViewDto;
+        private AddTalkInMyAgendaTask addTalkTask;
+        private AddTalkInMyAgendaTask removeTalkTask;
 
         public AddToMyAgendaClickListener(Context context, TalkViewDto talkViewDto) {
             this.context = context;
             this.talkViewDto = talkViewDto;
+            addTalkTask = AddTalkInMyAgendaTask.getAddTask(context.getApplicationContext(), talkViewDto.key);
+            removeTalkTask = AddTalkInMyAgendaTask.getRemoveTask(context.getApplicationContext(), talkViewDto.key);
         }
 
         @Override
         public void onClick(View v) {
-            RealmFacade realmFacade = new RealmFacade(context);
             if (talkViewDto.isInMyAgenda) {
-                realmFacade.removeTalkFromMyAgenda(talkViewDto.key);
+                removeTalkTask.doInBackground();
                 talkViewDto.isInMyAgenda = false;
             } else {
-                realmFacade.addTalkToMyAgenda(talkViewDto.key);
+                addTalkTask.doInBackground();
                 talkViewDto.isInMyAgenda = true;
             }
             notifyDataSetChanged();
