@@ -30,7 +30,6 @@
             android:layout_alignBottom="@id/info_card_title"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:text="EN"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
 
         <View
@@ -47,7 +46,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/divider"
-            android:text="Lorem Ipsum jest tekstem stosowanym jako przykładowy wypełniacz w przemyśle poligraficznym. Został po raz pierwszy użyty w XV w. przez nieznanego drukarza do wypełnienia tekstem próbnej książki. Pięć wieków później zaczął być używany przemyśle elektron"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
 
     </RelativeLayout>

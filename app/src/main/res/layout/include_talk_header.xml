@@ -15,7 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="Testy bezpieczeństwa na przykładach"
         android:textColor="@color/primary"/>
 
     <TextView
@@ -23,14 +22,12 @@
         style="@style/TextAppearance.AppCompat.Medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/text_talk_title"
-        android:text="10:30 - 11:00"/>
+        android:layout_below="@id/text_talk_title"/>
 
     <TextView
         android:id="@+id/text_venue"
         style="@style/TextAppearance.AppCompat.Small"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/text_time_slot"
-        android:text="Transition Technologies"/>
+        android:layout_below="@id/text_time_slot"/>
 </RelativeLayout>
