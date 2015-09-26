@@ -10,16 +10,16 @@ import com.github.lecho.conference.realmmodel.RealmFacade;
 /**
  * Created by Leszek on 2015-09-01.
  */
-public class DataUpdateService extends IntentService {
+public class ContentUpdateService extends IntentService {
 
-    private static final String TAG = DataUpdateService.class.getSimpleName();
+    private static final String TAG = ContentUpdateService.class.getSimpleName();
 
-    public DataUpdateService(){
+    public ContentUpdateService(){
         super(TAG);
     }
+
     @Override
     protected void onHandleIntent(Intent intent) {
-        //TODO DOWNLOAD JSON DATA
         ApiFacade apiFacade = new ApiFacade();
         ApiData apiData = apiFacade.parseJsonFilesFromAssets(getApplicationContext(), "test-data");
         RealmFacade realmFacade = new RealmFacade(getApplicationContext());

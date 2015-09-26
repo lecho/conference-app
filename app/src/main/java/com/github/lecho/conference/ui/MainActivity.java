@@ -20,6 +20,7 @@ import com.github.lecho.conference.R;
 import com.github.lecho.conference.apimodel.ApiData;
 import com.github.lecho.conference.apimodel.ApiFacade;
 import com.github.lecho.conference.realmmodel.RealmFacade;
+import com.github.lecho.conference.service.ContentUpdateService;
 import com.github.lecho.conference.viewmodel.AgendaViewDto;
 import com.github.lecho.conference.viewmodel.VenueViewDto;
 
@@ -57,12 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (null == savedInstanceState) {
             replaceFragment(MyAgendaFragment.newInstance());
-
-            ApiData apiData = new ApiFacade().parseJsonFilesFromAssets(this, "test-data");
-            RealmFacade facade = new RealmFacade(this);
-            facade.saveData(apiData);
-            AgendaViewDto agendaViewDto = facade.loadWholeAgenda();
-            Log.e("TAG", "Agenda: " + agendaViewDto.toString());
+            updateContent();
         }
 
         List<VenueViewDto> venueViewDtos = new ArrayList<>();
@@ -74,6 +70,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         setUpNavigationView(venueViewDtos);
+    }
+
+    private void updateContent() {
+        Intent serviceIntent = new Intent(getApplicationContext(), ContentUpdateService.class);
+        startService(serviceIntent);
     }
 
     private void setUpNavigationView(@NonNull List<VenueViewDto> venueViewDtos) {

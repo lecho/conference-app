@@ -22,6 +22,11 @@
         <activity
             android:name="com.github.lecho.conference.ui.SpeakerActivity">
         </activity>
+
+        <service
+            android:name="com.github.lecho.conference.service.ContentUpdateService"
+            android:exported="false">
+        </service>
     </application>
 
 </manifest>
