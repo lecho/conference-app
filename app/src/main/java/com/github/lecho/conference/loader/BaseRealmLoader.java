@@ -16,11 +16,13 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
     private static final String TAG = BaseRealmLoader.class.getSimpleName();
     protected T data;
     protected final RealmFacade realmFacade;
+    protected final boolean shouldHaveObserver;
     protected ContentChangeObserver contentChangeObserver;
 
-    protected BaseRealmLoader(Context context) {
+    protected BaseRealmLoader(Context context, boolean shouldObserveContent) {
         super(context);
         this.realmFacade = new RealmFacade(context);
+        this.shouldHaveObserver = shouldObserveContent;
     }
 
     @Override
@@ -63,10 +65,7 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
     @Override
     protected void onStartLoading() {
         // Start watching for changes in the app data.
-        if (contentChangeObserver == null) {
-            contentChangeObserver = new ContentChangeObserver(this);
-            contentChangeObserver.register();
-        }
+        registerObserver();
 
         if (null == data || takeContentChanged()) {
             forceLoad();
@@ -112,10 +111,7 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
         }
 
         // The Loader is being reset, so we should stop monitoring for changes.
-        if (contentChangeObserver != null) {
-            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(contentChangeObserver);
-            contentChangeObserver = null;
-        }
+        unregisterObserver();
     }
 
     /**
@@ -123,6 +119,20 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
      */
     protected void onReleaseResources(T oldData) {
         oldData = null;
+    }
+
+    private void registerObserver() {
+        if (shouldHaveObserver && contentChangeObserver == null) {
+            contentChangeObserver = new ContentChangeObserver(this);
+            contentChangeObserver.register();
+        }
+    }
+
+    private void unregisterObserver() {
+        if (contentChangeObserver != null) {
+            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(contentChangeObserver);
+            contentChangeObserver = null;
+        }
     }
 
 }

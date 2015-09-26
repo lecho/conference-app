@@ -20,7 +20,7 @@ public class VenuesLoader extends BaseRealmLoader<List<VenueViewDto>> {
     }
 
     private VenuesLoader(Context context) {
-        super(context);
+        super(context, true);
     }
 
     @Override

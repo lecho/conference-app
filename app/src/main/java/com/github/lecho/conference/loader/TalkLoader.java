@@ -20,7 +20,7 @@ public class TalkLoader extends BaseRealmLoader<TalkViewDto> {
     }
 
     private TalkLoader(Context context, String talkKey) {
-        super(context);
+        super(context, false);
         if (TextUtils.isEmpty(talkKey)) {
             throw new IllegalArgumentException("Talk key cannot be empty");
         }

@@ -28,7 +28,7 @@ public class AgendaLoader extends BaseRealmLoader<AgendaViewDto> {
     }
 
     private AgendaLoader(Context context, AgendaLoaderType type, String venueKey) {
-        super(context);
+        super(context, true);
         this.type = type;
         this.venueKey = venueKey;
     }
