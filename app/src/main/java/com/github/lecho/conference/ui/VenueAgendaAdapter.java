@@ -77,23 +77,22 @@ public class VenueAgendaAdapter extends AgendaAdapter {
     protected class AddToMyAgendaClickListener implements View.OnClickListener {
 
         private TalkViewDto talkViewDto;
-        private AddTalkInMyAgendaTask addTalkTask;
-        private AddTalkInMyAgendaTask removeTalkTask;
+        private Context context;
+
 
         public AddToMyAgendaClickListener(Context context, TalkViewDto talkViewDto) {
+            this.context = context;
             this.talkViewDto = talkViewDto;
-            addTalkTask = AddTalkInMyAgendaTask.getAddTask(context.getApplicationContext(), talkViewDto.key);
-            removeTalkTask = AddTalkInMyAgendaTask.getRemoveTask(context.getApplicationContext(), talkViewDto.key);
         }
 
         @Override
         public void onClick(View v) {
             if (talkViewDto.isInMyAgenda) {
-                removeTalkTask.doInBackground();
                 talkViewDto.isInMyAgenda = false;
+                TalkFavoriteTask.removeFromMyAgenda(context.getApplicationContext(), talkViewDto.key, false);
             } else {
-                addTalkTask.doInBackground();
                 talkViewDto.isInMyAgenda = true;
+                TalkFavoriteTask.addToMyAgenda(context.getApplicationContext(), talkViewDto.key, false);
             }
             notifyDataSetChanged();
         }

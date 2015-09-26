@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.app.NavUtils;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -127,7 +126,8 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
             } else {
                 addToMyAgendaButton.setImageResource(R.drawable.ic_star_border_accent_big);
             }
-            addToMyAgendaButton.setOnClickListener(new AddToMyAgendaClickListener(talkViewDto));
+            addToMyAgendaButton.setOnClickListener(new AddToMyAgendaClickListener(getApplicationContext(),
+                    talkViewDto));
             addToMyAgendaButton.show();
         }
     }
@@ -205,13 +205,11 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
     private class AddToMyAgendaClickListener implements View.OnClickListener {
 
         private TalkViewDto talkViewDto;
-        private AddTalkInMyAgendaTask addTalkTask;
-        private AddTalkInMyAgendaTask removeTalkTask;
+        private Context context;
 
-        public AddToMyAgendaClickListener(TalkViewDto talkViewDto) {
+        public AddToMyAgendaClickListener(Context context, TalkViewDto talkViewDto) {
+            this.context = context;
             this.talkViewDto = talkViewDto;
-            addTalkTask = AddTalkInMyAgendaTask.getAddTask(getApplicationContext(), talkViewDto.key);
-            removeTalkTask = AddTalkInMyAgendaTask.getRemoveTask(getApplicationContext(), talkViewDto.key);
         }
 
         @Override
@@ -220,11 +218,11 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
             if (talkViewDto.isInMyAgenda) {
                 floatingActionButton.setImageResource(R.drawable.ic_star_border_accent_big);
                 talkViewDto.isInMyAgenda = false;
-                removeTalkTask.doInBackground();
+                TalkFavoriteTask.removeFromMyAgenda(context, talkViewDto.key, true);
             } else {
                 floatingActionButton.setImageResource(R.drawable.ic_star_accent_big);
                 talkViewDto.isInMyAgenda = true;
-                addTalkTask.doInBackground();
+                TalkFavoriteTask.addToMyAgenda(context, talkViewDto.key, true);
             }
         }
     }

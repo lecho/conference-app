@@ -13,9 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.lecho.conference.R;
-import com.github.lecho.conference.apimodel.AgendaItemApiDto;
 import com.github.lecho.conference.loader.AgendaLoader;
-import com.github.lecho.conference.realmmodel.RealmFacade;
 import com.github.lecho.conference.viewmodel.AgendaItemViewDto;
 import com.github.lecho.conference.viewmodel.AgendaViewDto;
 
@@ -30,7 +28,7 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
     public static final String TAG = "MyAgendaFragment";
     private static final int LOADER_ID = 0;
     private AgendaAdapter adapter;
-    ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new MyAgendaItemTouchCallback());
+    private ItemTouchHelper itemTouchHelper;
 
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -57,6 +55,7 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new AgendaAdapter(getActivity());
         recyclerView.setAdapter(adapter);
+        itemTouchHelper = new ItemTouchHelper(new MyAgendaItemTouchCallback());
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
         return rootView;
@@ -98,8 +97,8 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
             //Remove swiped item from list and notify the RecyclerView
             final int position = viewHolder.getAdapterPosition();
             AgendaItemViewDto agendaItemViewDto = adapter.getItem(position);
-            RealmFacade realmFacade = new RealmFacade(getContext());
-            realmFacade.removeTalkFromMyAgenda(agendaItemViewDto.talk.key);
+            TalkFavoriteTask.removeFromMyAgenda(getActivity().getApplicationContext(), agendaItemViewDto.talk.key,
+                    false);
             adapter.removeItemFromAdapter(position);
         }
 

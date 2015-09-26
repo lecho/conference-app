@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.github.lecho.conference.apimodel.ApiData;
 import com.github.lecho.conference.apimodel.ApiFacade;
+import com.github.lecho.conference.loader.ContentChangeObserver;
 import com.github.lecho.conference.realmmodel.RealmFacade;
 
 /**
@@ -14,7 +15,7 @@ public class ContentUpdateService extends IntentService {
 
     private static final String TAG = ContentUpdateService.class.getSimpleName();
 
-    public ContentUpdateService(){
+    public ContentUpdateService() {
         super(TAG);
     }
 

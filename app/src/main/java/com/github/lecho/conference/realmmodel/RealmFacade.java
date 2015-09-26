@@ -1,7 +1,6 @@
 package com.github.lecho.conference.realmmodel;
 
 import android.content.Context;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -21,7 +20,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import io.realm.Realm;
 import io.realm.RealmObject;
@@ -33,7 +31,7 @@ import io.realm.RealmResults;
 public class RealmFacade {
 
     public static final String TAG = RealmFacade.class.getSimpleName();
-    private Context context;
+    private final Context context;
     private Realm realm;
     private Map<String, SlotRealm> slotRealmsMap;
     private Map<String, BreakRealm> breakRealmsMap;
@@ -48,7 +46,7 @@ public class RealmFacade {
     public void saveData(final ApiData apiData) {
         convertApiDataToRealm(apiData);
         try {
-            realm = Realm.getInstance(context);
+            realm = Realm.getDefaultInstance();
             realm.beginTransaction();
             realm.copyToRealmOrUpdate(slotRealmsMap.values());
             realm.copyToRealmOrUpdate(breakRealmsMap.values());
@@ -63,7 +61,7 @@ public class RealmFacade {
             Log.e(TAG, "Could not save api data to realm", e);
         } finally {
             closeRealm();
-            ContentChangeObserver.emitBroadcast(context);
+            ContentChangeObserver.emitBroadcast(context.getApplicationContext());
         }
     }
 
@@ -123,7 +121,7 @@ public class RealmFacade {
 
     public AgendaViewDto loadWholeAgenda() {
         try {
-            realm = Realm.getInstance(context);
+            realm = Realm.getDefaultInstance();
             //TODO: Wait for sorting by linked realm https://github.com/realm/realm-java/issues/672
             RealmResults<TalkRealm> talksRealms = realm.where(TalkRealm.class).findAllSorted("fromInMilliseconds");
             RealmResults<BreakRealm> breaksRealms = realm.where(BreakRealm.class).findAllSorted("fromInMilliseconds");
@@ -135,7 +133,7 @@ public class RealmFacade {
 
     public AgendaViewDto loadAgendaForVenue(String venueKey) {
         try {
-            realm = Realm.getInstance(context);
+            realm = Realm.getDefaultInstance();
             RealmResults<TalkRealm> talksRealms = realm.where(TalkRealm.class).equalTo("venue.key", venueKey)
                     .findAllSorted("fromInMilliseconds");
             RealmResults<BreakRealm> breaksRealms = realm.where(BreakRealm.class).findAllSorted("fromInMilliseconds");
@@ -147,7 +145,7 @@ public class RealmFacade {
 
     public AgendaViewDto loadMyAgenda() {
         try {
-            realm = Realm.getInstance(context);
+            realm = Realm.getDefaultInstance();
             RealmResults<TalkRealm> talksRealms = realm.where(TalkRealm.class).equalTo("isInMyAgenda", true)
                     .findAllSorted("fromInMilliseconds");
             RealmResults<BreakRealm> breaksRealms = realm.where(BreakRealm.class).findAllSorted("fromInMilliseconds");
@@ -191,7 +189,7 @@ public class RealmFacade {
 
     public TalkViewDto loadTalkByKey(String talkKey) {
         try {
-            realm = Realm.getInstance(context);
+            realm = Realm.getDefaultInstance();
             TalkRealm talkRealm = loadTalkRealmByKey(talkKey);
             if (talkRealm != null) {
                 return new TalkRealm.TalkViewConverter().convert(talkRealm);
@@ -209,7 +207,7 @@ public class RealmFacade {
 
     public SpeakerViewDto loadSpeakerByKey(String speakerKey) {
         try {
-            realm = Realm.getInstance(context);
+            realm = Realm.getDefaultInstance();
             SpeakerRealm speakerRealm = realm.where(SpeakerRealm.class).equalTo("key", speakerKey).findFirst();
             return new SpeakerRealm.SpeakerViewConverter().convert(speakerRealm);
         } finally {
@@ -220,7 +218,7 @@ public class RealmFacade {
     public List<SpeakerViewDto> loadAllSpeakers() {
         try {
             SpeakerRealm.SpeakerViewConverter speakerViewConverter = new SpeakerRealm.SpeakerViewConverter();
-            realm = Realm.getInstance(context);
+            realm = Realm.getDefaultInstance();
             RealmResults<SpeakerRealm> speakersRealms = realm.allObjects(SpeakerRealm.class);
             List<SpeakerViewDto> venueViewDtos = new ArrayList<>(speakersRealms.size());
             for (SpeakerRealm speakerRealm : speakersRealms) {
@@ -235,7 +233,7 @@ public class RealmFacade {
     public List<VenueViewDto> loadAllVenues() {
         try {
             VenueRealm.VenueViewConverter venueViewConverter = new VenueRealm.VenueViewConverter();
-            realm = Realm.getInstance(context);
+            realm = Realm.getDefaultInstance();
             RealmResults<VenueRealm> venuesRealms = realm.allObjects(VenueRealm.class);
             List<VenueViewDto> venueViewDtos = new ArrayList<>(venuesRealms.size());
             for (VenueRealm venueRealm : venuesRealms) {
@@ -247,13 +245,24 @@ public class RealmFacade {
         }
     }
 
-    public void addTalkToMyAgenda(String talkKey) {
+    public void addTalkToMyAgenda(String talkKey, boolean shouldEmitBroadcast) {
+        changeTalkFavoriteState(talkKey, true, shouldEmitBroadcast);
+    }
+
+    public void removeTalkFromMyAgenda(String talkKey, boolean shouldEmitBroadcast) {
+        changeTalkFavoriteState(talkKey, false, shouldEmitBroadcast);
+    }
+
+    public void changeTalkFavoriteState(String talkKey, boolean isInMyAgenda, boolean shouldEmitBroadcast) {
         try {
-            realm = Realm.getInstance(context);
+            realm = Realm.getDefaultInstance();
             realm.beginTransaction();
             TalkRealm talkRealm = loadTalkRealmByKey(talkKey);
-            talkRealm.setIsInMyAgenda(true);
+            talkRealm.setIsInMyAgenda(isInMyAgenda);
             realm.commitTransaction();
+            if (shouldEmitBroadcast) {
+                ContentChangeObserver.emitBroadcast(context.getApplicationContext());
+            }
         } catch (Exception e) {
             if (realm != null) {
                 realm.cancelTransaction();
@@ -261,25 +270,6 @@ public class RealmFacade {
             Log.e(TAG, "Could not add talk to my agenda", e);
         } finally {
             closeRealm();
-            ContentChangeObserver.emitBroadcast(context);
-        }
-    }
-
-    public void removeTalkFromMyAgenda(String talkKey) {
-        try {
-            realm = Realm.getInstance(context);
-            realm.beginTransaction();
-            TalkRealm talkRealm = loadTalkRealmByKey(talkKey);
-            talkRealm.setIsInMyAgenda(false);
-            realm.commitTransaction();
-        } catch (Exception e) {
-            if (realm != null) {
-                realm.cancelTransaction();
-            }
-            Log.e(TAG, "Could not remove talk from my agenda", e);
-        } finally {
-            closeRealm();
-            ContentChangeObserver.emitBroadcast(context);
         }
     }
 
