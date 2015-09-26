@@ -8,6 +8,7 @@ import android.util.Log;
 import com.github.lecho.conference.apimodel.AgendaItemApiDto;
 import com.github.lecho.conference.apimodel.ApiData;
 import com.github.lecho.conference.apimodel.TalkApiDto;
+import com.github.lecho.conference.loader.ContentChangeObserver;
 import com.github.lecho.conference.viewmodel.AgendaItemViewDto;
 import com.github.lecho.conference.viewmodel.AgendaViewDto;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
@@ -62,6 +63,7 @@ public class RealmFacade {
             Log.e(TAG, "Could not save api data to realm", e);
         } finally {
             closeRealm();
+            ContentChangeObserver.emitBroadcast(context);
         }
     }
 
@@ -259,6 +261,7 @@ public class RealmFacade {
             Log.e(TAG, "Could not add talk to my agenda", e);
         } finally {
             closeRealm();
+            ContentChangeObserver.emitBroadcast(context);
         }
     }
 
@@ -276,6 +279,7 @@ public class RealmFacade {
             Log.e(TAG, "Could not remove talk from my agenda", e);
         } finally {
             closeRealm();
+            ContentChangeObserver.emitBroadcast(context);
         }
     }
 

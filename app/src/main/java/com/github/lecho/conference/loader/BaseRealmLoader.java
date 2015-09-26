@@ -2,13 +2,11 @@ package com.github.lecho.conference.loader;
 
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.github.lecho.conference.BuildConfig;
 import com.github.lecho.conference.realmmodel.RealmFacade;
-import com.github.lecho.conference.viewmodel.VenueViewDto;
-
-import java.util.List;
 
 /**
  * Created by Leszek on 2015-09-03.
@@ -18,6 +16,7 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
     private static final String TAG = BaseRealmLoader.class.getSimpleName();
     protected T data;
     protected final RealmFacade realmFacade;
+    protected ContentChangeObserver contentChangeObserver;
 
     protected BaseRealmLoader(Context context) {
         super(context);
@@ -70,6 +69,16 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
         } else {
             forceLoad();
         }
+
+        // Start watching for changes in the app data.
+        if (contentChangeObserver == null) {
+            contentChangeObserver = new ContentChangeObserver(this);
+            contentChangeObserver.register();
+        }
+
+        if (null == data || takeContentChanged()) {
+            forceLoad();
+        }
     }
 
     /**
@@ -106,6 +115,12 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
             onReleaseResources(data);
             data = null;
         }
+
+        // The Loader is being reset, so we should stop monitoring for changes.
+        if (contentChangeObserver != null) {
+            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(contentChangeObserver);
+            contentChangeObserver = null;
+        }
     }
 
     /**
@@ -114,4 +129,5 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
     protected void onReleaseResources(T oldData) {
         //do nothing
     }
+
 }
