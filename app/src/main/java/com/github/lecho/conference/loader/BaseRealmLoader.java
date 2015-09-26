@@ -62,14 +62,6 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
      */
     @Override
     protected void onStartLoading() {
-        if (data != null) {
-            // If we currently have a result available, deliver it
-            // immediately.
-            deliverResult(data);
-        } else {
-            forceLoad();
-        }
-
         // Start watching for changes in the app data.
         if (contentChangeObserver == null) {
             contentChangeObserver = new ContentChangeObserver(this);
@@ -78,6 +70,9 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
 
         if (null == data || takeContentChanged()) {
             forceLoad();
+        } else if (data != null) {
+            // If we currently have a result available, deliver it immediately.
+            deliverResult(data);
         }
     }
 
@@ -127,7 +122,7 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
      * Helper function to take care of releasing resources associated with an actively loaded data set.
      */
     protected void onReleaseResources(T oldData) {
-        //do nothing
+        oldData = null;
     }
 
 }
