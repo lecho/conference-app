@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,13 +27,14 @@ public class VenueAgendaFragment extends Fragment implements LoaderManager.Loade
     public static final String TAG = "VenueAgendaFragment";
     private static final int LOADER_ID = 0;
     private static final String ARG_VENUE_KEY = "venue-key";
+    private static final String ARG_VENUE_NAME = "venue-name";
     private VenueAgendaAdapter adapter;
     private String venueKey;
 
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    public static VenueAgendaFragment newInstance(@NonNull String venueKey) {
+    public static VenueAgendaFragment newInstance(@NonNull String venueKey, @NonNull String venueName) {
         VenueAgendaFragment fragment = new VenueAgendaFragment();
         Bundle args = new Bundle();
         args.putString(ARG_VENUE_KEY, venueKey);
@@ -41,10 +43,14 @@ public class VenueAgendaFragment extends Fragment implements LoaderManager.Loade
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         venueKey = getArguments().getString(ARG_VENUE_KEY);
         getLoaderManager().initLoader(LOADER_ID, null, this);
+        String venueName = getArguments().getString(ARG_VENUE_KEY);
+        StringBuilder title = new StringBuilder(venueName).append(" ").append(getString(R.string.title_activity_track));
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(title.toString());
+
     }
 
     @Nullable

@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         for (VenueViewDto venueViewDto : venueViewDtos) {
             String venueName = new StringBuilder(venueViewDto.title).append(" ").append(trackPostfix).toString();
             MenuItem venueItem = subMenuVenues.add(groupId, itemId++, order++, venueName).setCheckable(true);
-            VenueAgendaFragment fragment = VenueAgendaFragment.newInstance(venueViewDto.key);
+            VenueAgendaFragment fragment = VenueAgendaFragment.newInstance(venueViewDto.key, venueViewDto.title);
             venueItem.setOnMenuItemClickListener(new NavigationMenuClickListener(fragment));
         }
 
