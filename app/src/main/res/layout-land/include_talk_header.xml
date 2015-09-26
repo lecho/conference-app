@@ -35,13 +35,4 @@
         android:layout_marginLeft="8dp"
         android:layout_toRightOf="@id/text_time_slot"
         android:text="Transition Technologies"/>
-
-    <TextView
-        android:id="@+id/text_language"
-        style="@style/TextAppearance.AppCompat.Small"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/text_venue"
-        android:text="English"/>
-
 </RelativeLayout>

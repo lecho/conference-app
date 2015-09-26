@@ -17,4 +17,5 @@
     <string name="navigation_sponsors">Sponsors</string>
     <string name="navigation_about">About</string>
     <string name="navigation_track"> track</string>
+    <string name="info_card_title">Info</string>
 </resources>

@@ -143,9 +143,6 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
         @Bind(R.id.text_venue)
         TextView talkVenueView;
 
-        @Bind(R.id.text_language)
-        TextView talkLanguageView;
-
         public HeaderController(View view) {
             ButterKnife.bind(this, view);
         }
@@ -154,7 +151,6 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
             talkTitleView.setText(talkViewDto.title);
             talkTimeSlotView.setText(getTimeSlotText(talkViewDto.slot));
             talkVenueView.setText(talkViewDto.venue.title);
-            talkLanguageView.setText(talkViewDto.language);
         }
 
         @NonNull
@@ -168,12 +164,16 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
         @Bind(R.id.text_info)
         TextView talkInfoView;
 
+        @Bind(R.id.info_card_language)
+        TextView talkLanguageView;
+
         public InfoCardController(View view) {
             ButterKnife.bind(this, view);
         }
 
         public void bind(TalkViewDto talkViewDto) {
             talkInfoView.setText(talkViewDto.description);
+            talkLanguageView.setText(talkViewDto.language);
         }
     }
 
