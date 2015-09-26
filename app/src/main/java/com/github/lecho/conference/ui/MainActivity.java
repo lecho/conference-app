@@ -57,13 +57,13 @@ public class MainActivity extends AppCompatActivity {
 
         if (null == savedInstanceState) {
             replaceFragment(MyAgendaFragment.newInstance());
-        }
 
-        ApiData apiData = new ApiFacade().parseJsonFilesFromAssets(this, "test-data");
-        RealmFacade facade = new RealmFacade(this);
-        facade.saveData(apiData);
-        AgendaViewDto agendaViewDto = facade.loadWholeAgenda();
-        Log.e("TAG", "Agenda: " + agendaViewDto.toString());
+            ApiData apiData = new ApiFacade().parseJsonFilesFromAssets(this, "test-data");
+            RealmFacade facade = new RealmFacade(this);
+            facade.saveData(apiData);
+            AgendaViewDto agendaViewDto = facade.loadWholeAgenda();
+            Log.e("TAG", "Agenda: " + agendaViewDto.toString());
+        }
 
         List<VenueViewDto> venueViewDtos = new ArrayList<>();
         for (int i = 0; i < 5; ++i) {
