@@ -12,23 +12,17 @@ import com.github.lecho.conference.BuildConfig;
 /**
  * Created by Leszek on 2015-09-26.
  */
-public class ContentChangeObserver extends BroadcastReceiver {
+public class TimeZoneChangeObserver extends BroadcastReceiver {
 
-    private static final String TAG = ContentChangeObserver.class.getSimpleName();
-    private static final String CONTENT_CHANGE_BROADCAST_ACTION = "content-change-broadcast-action";
+    private static final String TAG = TimeZoneChangeObserver.class.getSimpleName();
     private BaseRealmLoader loader;
 
-    public ContentChangeObserver(BaseRealmLoader loader) {
+    public TimeZoneChangeObserver(BaseRealmLoader loader) {
         this.loader = loader;
     }
 
-    public static void emitBroadcast(Context context) {
-        Intent broadcastIntent = new Intent(CONTENT_CHANGE_BROADCAST_ACTION);
-        LocalBroadcastManager.getInstance(context).sendBroadcast(broadcastIntent);
-    }
-
     public void register() {
-        IntentFilter intentFilter = new IntentFilter(CONTENT_CHANGE_BROADCAST_ACTION);
+        IntentFilter intentFilter = new IntentFilter(Intent.ACTION_TIMEZONE_CHANGED);
         LocalBroadcastManager.getInstance(loader.getContext()).registerReceiver(this, intentFilter);
     }
 
@@ -39,7 +33,7 @@ public class ContentChangeObserver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (BuildConfig.DEBUG) {
-            Log.d(TAG, "Received content change broadcast");
+            Log.d(TAG, "Received time zone change broadcast");
         }
         loader.onContentChanged();
     }

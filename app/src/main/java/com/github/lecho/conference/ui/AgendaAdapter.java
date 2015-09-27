@@ -4,9 +4,11 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.lecho.conference.R;
@@ -17,6 +19,8 @@ import com.github.lecho.conference.viewmodel.SpeakerViewDto;
 import com.github.lecho.conference.viewmodel.TalkViewDto;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -84,14 +88,31 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
     protected abstract class AgendaViewHolder extends RecyclerView.ViewHolder {
 
         protected final Context context;
+        private Calendar calendar;
+
+        @Bind(R.id.text_time_slot)
+        TextView timeSlotView;
+
+        @Bind(R.id.current_item_indicator)
+        ImageView currentItemIndicatorView;
 
         public AgendaViewHolder(Context context, View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             this.context = context;
+            calendar = Calendar.getInstance();
         }
 
         public abstract void bindView(AgendaItemViewDto agendaItem);
+
+        protected void bindSlot(SlotViewDto slotViewDto) {
+            timeSlotView.setText(getTimeSlotText(slotViewDto));
+            if (isCurrentItem(slotViewDto)) {
+                currentItemIndicatorView.setVisibility(View.VISIBLE);
+            } else {
+                currentItemIndicatorView.setVisibility(View.GONE);
+            }
+        }
 
         @NonNull
         protected String getTimeSlotText(SlotViewDto slotViewDto) {
@@ -109,12 +130,25 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
             }
             return speakersText.toString();
         }
+
+        protected boolean isCurrentItem(SlotViewDto slotViewDto) {
+            calendar.setTimeInMillis(slotViewDto.fromInMilliseconds);
+            final int fromHour = calendar.get(Calendar.HOUR_OF_DAY);
+            final int fromMinute = calendar.get(Calendar.MINUTE);
+            final int fromTime = 60 * fromHour + fromMinute;
+            calendar.setTimeInMillis(slotViewDto.toInMilliseconds);
+            final int toHour = calendar.get(Calendar.HOUR_OF_DAY);
+            final int toMinute = calendar.get(Calendar.MINUTE);
+            final int toTime = 60 * toHour + toMinute;
+            calendar.setTime(new Date());
+            final int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+            final int currentMinute = calendar.get(Calendar.MINUTE);
+            final int currentTime = 60 * currentHour + currentMinute;
+            return currentTime >= fromTime && currentTime <= toTime;
+        }
     }
 
     protected class BreakViewHolder extends AgendaViewHolder {
-
-        @Bind(R.id.text_time_slot)
-        TextView timeSlotView;
 
         @Bind(R.id.text_title)
         TextView titleView;
@@ -126,15 +160,12 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
         @Override
         public void bindView(AgendaItemViewDto agendaItem) {
             BreakViewDto breakViewDto = agendaItem.agendaBreak;
-            timeSlotView.setText(getTimeSlotText(breakViewDto.slot));
+            bindSlot(breakViewDto.slot);
             titleView.setText(breakViewDto.title);
         }
     }
 
     protected class AgendaTalkViewHolder extends AgendaViewHolder {
-
-        @Bind(R.id.text_time_slot)
-        TextView timeSlotView;
 
         @Bind(R.id.text_venue)
         TextView venueView;
@@ -154,12 +185,12 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
 
         public void bindView(AgendaItemViewDto agendaItem) {
             TalkViewDto talkViewDto = agendaItem.talk;
+            bindSlot(talkViewDto.slot);
             itemView.setOnClickListener(new TalkItemClickListener(context, talkViewDto.key));
             titleView.setText(talkViewDto.title);
             venueView.setText(talkViewDto.venue.title);
             languageView.setText(talkViewDto.language);
             speakersView.setText(getSpeakersText(talkViewDto));
-            timeSlotView.setText(getTimeSlotText(talkViewDto.slot));
         }
     }
 

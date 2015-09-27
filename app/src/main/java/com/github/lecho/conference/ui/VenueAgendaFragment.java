@@ -1,7 +1,7 @@
 package com.github.lecho.conference.ui;
 
 
-import android.app.Activity;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -38,6 +38,7 @@ public class VenueAgendaFragment extends Fragment implements LoaderManager.Loade
         VenueAgendaFragment fragment = new VenueAgendaFragment();
         Bundle args = new Bundle();
         args.putString(ARG_VENUE_KEY, venueKey);
+        args.putString(ARG_VENUE_NAME, venueName);
         fragment.setArguments(args);
         return fragment;
     }
@@ -47,9 +48,9 @@ public class VenueAgendaFragment extends Fragment implements LoaderManager.Loade
         super.onActivityCreated(savedInstanceState);
         venueKey = getArguments().getString(ARG_VENUE_KEY);
         getLoaderManager().initLoader(LOADER_ID, null, this);
-        String venueName = getArguments().getString(ARG_VENUE_KEY);
+        String venueName = getArguments().getString(ARG_VENUE_NAME);
         StringBuilder title = new StringBuilder(venueName).append(" ").append(getString(R.string.title_activity_track));
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(title.toString());
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(title.toString());
 
     }
 
@@ -65,6 +66,13 @@ public class VenueAgendaFragment extends Fragment implements LoaderManager.Loade
         recyclerView.setAdapter(adapter);
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //Only to refresh current item indicator when time have changed, good enough without timer
+        adapter.notifyDataSetChanged();
     }
 
     @Override

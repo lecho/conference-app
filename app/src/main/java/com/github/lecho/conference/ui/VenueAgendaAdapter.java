@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.lecho.conference.R;
@@ -41,9 +42,6 @@ public class VenueAgendaAdapter extends AgendaAdapter {
         @Bind(R.id.button_add_to_my_agenda)
         ImageButton addToMyAgendaButton;
 
-        @Bind(R.id.text_time_slot)
-        TextView timeSlotView;
-
         @Bind(R.id.text_title)
         TextView titleView;
 
@@ -59,11 +57,11 @@ public class VenueAgendaAdapter extends AgendaAdapter {
 
         public void bindView(AgendaItemViewDto agendaItem) {
             TalkViewDto talkViewDto = agendaItem.talk;
+            bindSlot(talkViewDto.slot);
             itemView.setOnClickListener(new TalkItemClickListener(context, talkViewDto.key));
             titleView.setText(talkViewDto.title);
             languageView.setText(talkViewDto.language);
             speakersView.setText(getSpeakersText(talkViewDto));
-            timeSlotView.setText(getTimeSlotText(talkViewDto.slot));
             if (talkViewDto.isInMyAgenda) {
                 addToMyAgendaButton.setImageResource(R.drawable.ic_star_accent);
             } else {

@@ -2,7 +2,6 @@ package com.github.lecho.conference.loader;
 
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.github.lecho.conference.BuildConfig;
@@ -16,13 +15,14 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
     private static final String TAG = BaseRealmLoader.class.getSimpleName();
     protected T data;
     protected final RealmFacade realmFacade;
-    protected final boolean shouldHaveObserver;
+    protected final boolean shouldHaveContentObserver;
     protected ContentChangeObserver contentChangeObserver;
+    protected TimeZoneChangeObserver timeZoneChangeObserver;
 
     protected BaseRealmLoader(Context context, boolean shouldObserveContent) {
         super(context);
         this.realmFacade = new RealmFacade(context);
-        this.shouldHaveObserver = shouldObserveContent;
+        this.shouldHaveContentObserver = shouldObserveContent;
     }
 
     @Override
@@ -65,7 +65,7 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
     @Override
     protected void onStartLoading() {
         // Start watching for changes in the app data.
-        registerObserver();
+        registerObservers();
 
         if (null == data || takeContentChanged()) {
             forceLoad();
@@ -111,7 +111,7 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
         }
 
         // The Loader is being reset, so we should stop monitoring for changes.
-        unregisterObserver();
+        unregisterObservers();
     }
 
     /**
@@ -121,18 +121,25 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
         oldData = null;
     }
 
-    private void registerObserver() {
-        if (shouldHaveObserver && contentChangeObserver == null) {
+    private void registerObservers() {
+        if (shouldHaveContentObserver && contentChangeObserver == null) {
             contentChangeObserver = new ContentChangeObserver(this);
             contentChangeObserver.register();
         }
-    }
-
-    private void unregisterObserver() {
-        if (contentChangeObserver != null) {
-            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(contentChangeObserver);
-            contentChangeObserver = null;
+        if (timeZoneChangeObserver == null) {
+            timeZoneChangeObserver = new TimeZoneChangeObserver(this);
+            timeZoneChangeObserver.register();
         }
     }
 
+    private void unregisterObservers() {
+        if (contentChangeObserver != null) {
+            contentChangeObserver.unregister();
+            contentChangeObserver = null;
+        }
+        if (timeZoneChangeObserver != null) {
+            timeZoneChangeObserver.unregister();
+            timeZoneChangeObserver = null;
+        }
+    }
 }

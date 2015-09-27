@@ -25,6 +25,14 @@
             android:text="9:00 - 10:00"
             android:textStyle="bold"/>
 
+        <ImageView
+            android:id="@+id/current_item_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/text_time_slot"
+            android:src="@drawable/ic_current_agenda_item"
+            android:visibility="gone"/>
+
         <FrameLayout
             android:id="@+id/button_add_to_my_agenda_layout"
             android:layout_width="48dp"

@@ -43,7 +43,7 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getLoaderManager().initLoader(LOADER_ID, null, this);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.title_activity_my_agenda);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.title_activity_my_agenda);
     }
 
     @Nullable
@@ -61,6 +61,13 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //Only to refresh current item indicator when time have changed, good enough without timer
+        adapter.notifyDataSetChanged();
     }
 
     @Override
