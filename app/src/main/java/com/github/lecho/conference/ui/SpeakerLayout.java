@@ -7,20 +7,23 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.lecho.conference.R;
+import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Displays speaker's name and avatar. Use this class only from code.
  */
 public class SpeakerLayout extends LinearLayout {
 
+    private static final String ASSETS_SPEAKERS_IMAGES = "file:///android_asset/speakers-images/";
     private String speakerKey;
 
     @Bind(R.id.speaker_avatar)
-    View avatarView;
+    CircleImageView avatarView;
 
     @Bind(R.id.text_speaker_name)
     TextView speakerNameView;
@@ -42,6 +45,11 @@ public class SpeakerLayout extends LinearLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
         ButterKnife.bind(this, this);
+    }
+
+    public void loadAvatar(String photoFileName) {
+        Picasso.with(getContext()).load(ASSETS_SPEAKERS_IMAGES + photoFileName).placeholder(R.drawable.dummy_avatar)
+                .into(avatarView);
     }
 
     public void setSpeakerName(String speakerName) {

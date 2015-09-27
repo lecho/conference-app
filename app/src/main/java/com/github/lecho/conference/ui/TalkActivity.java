@@ -20,6 +20,7 @@ import com.github.lecho.conference.loader.TalkLoader;
 import com.github.lecho.conference.viewmodel.SlotViewDto;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
 import com.github.lecho.conference.viewmodel.TalkViewDto;
+import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -191,7 +192,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
             for (SpeakerViewDto speakerViewDto : talkViewDto.speakers) {
                 SpeakerLayout speakerLayout = new SpeakerLayout(TalkActivity.this, speakerViewDto.key);
                 speakerLayout.setSpeakerName(getSpeakerNameText(speakerViewDto));
-                //TODO set speaker avatar
+                speakerLayout.loadAvatar(speakerViewDto.photo);
                 speakersLayout.addView(speakerLayout);
             }
         }

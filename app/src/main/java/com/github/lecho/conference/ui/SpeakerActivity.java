@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.github.lecho.conference.R;
 import com.github.lecho.conference.loader.SpeakerLoader;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
+import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -100,7 +101,8 @@ public class SpeakerActivity extends AppCompatActivity implements LoaderManager.
 
     protected class HeaderController {
 
-        private final static String TWITTER_WWW = "https://twitter.com/";
+        private static final String TWITTER_WWW = "https://twitter.com/";
+        private static final String ASSETS_SPEAKERS_IMAGES = "file:///android_asset/speakers-images/";
 
         @Bind(R.id.speaker_avatar)
         CircleImageView avatarView;
@@ -120,6 +122,12 @@ public class SpeakerActivity extends AppCompatActivity implements LoaderManager.
 
         public void bind(SpeakerViewDto speakerViewDto) {
             speakerNameView.setText(getSpeakersFullName(speakerViewDto));
+            loadAvatar(speakerViewDto.photo);
+        }
+
+        private void loadAvatar(String photoFileName) {
+            Picasso.with(getApplicationContext()).load(ASSETS_SPEAKERS_IMAGES + photoFileName)
+                    .placeholder(R.drawable.dummy_avatar).into(avatarView);
         }
 
         @NonNull
