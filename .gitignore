@@ -34,3 +34,8 @@ proguard/
 
 /.settings
 /.gradle
+
+#app content
+*/json-data
+*/speakers-images
+*/sponsors-images
