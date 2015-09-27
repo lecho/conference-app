@@ -26,8 +26,7 @@ public class SpeakerLoader extends BaseRealmLoader<SpeakerViewDto> {
     @Override
     public SpeakerViewDto loadInBackground() {
         if (BuildConfig.DEBUG) {
-            Log.d(TAG, "Loading speakers" +
-                    " data");
+            Log.d(TAG, "Loading speaker data");
         }
         SpeakerViewDto newData = realmFacade.loadSpeakerByKey(speakerKey);
         return newData;

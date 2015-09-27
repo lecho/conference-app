@@ -9,7 +9,7 @@
                 android:layout_marginTop="12dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/avatar"
+        android:id="@+id/speaker_avatar"
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_alignParentRight="true"
@@ -23,8 +23,28 @@
         style="@style/TextAppearance.AppCompat.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/avatar"
-        android:text="Małgorzata Koroniewska"
+        android:layout_toLeftOf="@id/speaker_avatar"
+        android:text="Małgorzata Koroniewska Jasnorzewska"
         android:textColor="@color/primary"/>
+
+    <ImageButton
+        android:id="@+id/www_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_speaker_name"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:src="@drawable/ic_star_accent"/>
+
+    <ImageButton
+        android:id="@+id/twitter_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_speaker_name"
+        android:layout_marginTop="8dp"
+        android:layout_toRightOf="@id/www_button"
+        android:background="@null"
+        android:src="@drawable/ic_star_accent"/>
 
 </RelativeLayout>

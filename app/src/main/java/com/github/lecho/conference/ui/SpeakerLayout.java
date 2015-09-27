@@ -19,7 +19,7 @@ public class SpeakerLayout extends LinearLayout {
 
     private String speakerKey;
 
-    @Bind(R.id.avatar)
+    @Bind(R.id.speaker_avatar)
     View avatarView;
 
     @Bind(R.id.text_speaker_name)

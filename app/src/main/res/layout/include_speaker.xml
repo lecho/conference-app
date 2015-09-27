@@ -12,7 +12,7 @@
     android:paddingTop="4dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/avatar"
+        android:id="@+id/speaker_avatar"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginRight="16dp"
