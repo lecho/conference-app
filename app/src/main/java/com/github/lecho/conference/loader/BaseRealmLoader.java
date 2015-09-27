@@ -17,7 +17,6 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
     protected final RealmFacade realmFacade;
     protected final boolean shouldHaveContentObserver;
     protected ContentChangeObserver contentChangeObserver;
-    protected TimeZoneChangeObserver timeZoneChangeObserver;
 
     protected BaseRealmLoader(Context context, boolean shouldObserveContent) {
         super(context);
@@ -65,7 +64,7 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
     @Override
     protected void onStartLoading() {
         // Start watching for changes in the app data.
-        registerObservers();
+        registerObserver();
 
         if (null == data || takeContentChanged()) {
             forceLoad();
@@ -111,7 +110,7 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
         }
 
         // The Loader is being reset, so we should stop monitoring for changes.
-        unregisterObservers();
+        unregisterObserver();
     }
 
     /**
@@ -121,25 +120,17 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
         oldData = null;
     }
 
-    private void registerObservers() {
+    private void registerObserver() {
         if (shouldHaveContentObserver && contentChangeObserver == null) {
             contentChangeObserver = new ContentChangeObserver(this);
             contentChangeObserver.register();
         }
-        if (timeZoneChangeObserver == null) {
-            timeZoneChangeObserver = new TimeZoneChangeObserver(this);
-            timeZoneChangeObserver.register();
-        }
     }
 
-    private void unregisterObservers() {
+    private void unregisterObserver() {
         if (contentChangeObserver != null) {
             contentChangeObserver.unregister();
             contentChangeObserver = null;
-        }
-        if (timeZoneChangeObserver != null) {
-            timeZoneChangeObserver.unregister();
-            timeZoneChangeObserver = null;
         }
     }
 }

@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -89,6 +91,12 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
 
         protected final Context context;
         private Calendar calendar;
+        private int fromHour;
+        private int fromMinute;
+        private int toHour;
+        private int toMinute;
+        private int currentHour;
+        private int currentMinute;
 
         @Bind(R.id.text_time_slot)
         TextView timeSlotView;
@@ -106,17 +114,60 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
         public abstract void bindView(AgendaItemViewDto agendaItem);
 
         protected void bindSlot(SlotViewDto slotViewDto) {
-            timeSlotView.setText(getTimeSlotText(slotViewDto));
-            if (isCurrentItem(slotViewDto)) {
+            calculateSlotInTimeZone(slotViewDto);
+            timeSlotView.setText(getTimeSlotText());
+            if (isInCurrentSlot()) {
                 currentItemIndicatorView.setVisibility(View.VISIBLE);
             } else {
                 currentItemIndicatorView.setVisibility(View.GONE);
             }
         }
 
+        private void calculateSlotInTimeZone(SlotViewDto slotViewDto) {
+            TimeZone defaultTZ = TimeZone.getDefault();
+            if (!defaultTZ.getID().equals(calendar.getTimeZone().getID())) {
+                calendar.setTimeZone(defaultTZ);
+            }
+            calendar.setTimeZone(TimeZone.getDefault());
+            calendar.setTimeInMillis(slotViewDto.fromInMilliseconds);
+            fromHour = calendar.get(Calendar.HOUR_OF_DAY);
+            fromMinute = calendar.get(Calendar.MINUTE);
+            calendar.setTimeInMillis(slotViewDto.toInMilliseconds);
+            toHour = calendar.get(Calendar.HOUR_OF_DAY);
+            toMinute = calendar.get(Calendar.MINUTE);
+            calendar.setTime(new Date());
+            currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+            currentMinute = calendar.get(Calendar.MINUTE);
+        }
+
         @NonNull
-        protected String getTimeSlotText(SlotViewDto slotViewDto) {
-            return new StringBuilder(slotViewDto.from).append(" - ").append(slotViewDto.to).toString();
+        private String getTimeSlotText() {
+            StringBuilder slotTextBuilder = new StringBuilder();
+            slotTextBuilder = appendValueInXXFormat(slotTextBuilder, fromHour);
+            slotTextBuilder.append(":");
+            slotTextBuilder = appendValueInXXFormat(slotTextBuilder, fromMinute);
+            slotTextBuilder.append("-");
+            slotTextBuilder = appendValueInXXFormat(slotTextBuilder, toHour);
+            slotTextBuilder.append(":");
+            slotTextBuilder = appendValueInXXFormat(slotTextBuilder, toMinute);
+            return slotTextBuilder.toString();
+        }
+
+        @NonNull
+        private StringBuilder appendValueInXXFormat(StringBuilder stringBuilder, int value) {
+            if (value < 10) {
+                stringBuilder.append("0").append(value);
+            } else {
+                stringBuilder.append(value);
+            }
+            return stringBuilder;
+        }
+
+        private boolean isInCurrentSlot() {
+            final int fromTime = 60 * fromHour + fromMinute;
+            final int toTime = 60 * toHour + toMinute;
+            final int currentTime = 60 * currentHour + currentMinute;
+            return currentTime >= fromTime && currentTime <= toTime;
         }
 
         @NonNull
@@ -131,21 +182,6 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
             return speakersText.toString();
         }
 
-        protected boolean isCurrentItem(SlotViewDto slotViewDto) {
-            calendar.setTimeInMillis(slotViewDto.fromInMilliseconds);
-            final int fromHour = calendar.get(Calendar.HOUR_OF_DAY);
-            final int fromMinute = calendar.get(Calendar.MINUTE);
-            final int fromTime = 60 * fromHour + fromMinute;
-            calendar.setTimeInMillis(slotViewDto.toInMilliseconds);
-            final int toHour = calendar.get(Calendar.HOUR_OF_DAY);
-            final int toMinute = calendar.get(Calendar.MINUTE);
-            final int toTime = 60 * toHour + toMinute;
-            calendar.setTime(new Date());
-            final int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
-            final int currentMinute = calendar.get(Calendar.MINUTE);
-            final int currentTime = 60 * currentHour + currentMinute;
-            return currentTime >= fromTime && currentTime <= toTime;
-        }
     }
 
     protected class BreakViewHolder extends AgendaViewHolder {

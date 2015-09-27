@@ -9,6 +9,7 @@ import com.github.lecho.conference.viewmodel.SlotViewDto;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -68,6 +69,7 @@ public class SlotRealm extends RealmObject {
     public static class SlotApiConverter extends RealmFacade.ApiToRealmConverter<SlotRealm, SlotApiDto> {
         private static final String TAG = SlotApiConverter.class.getSimpleName();
         private static final DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        private static final String UTC_TIME_ZONE = "UTC";
 
         @Override
         public SlotRealm convert(String key, SlotApiDto apiDto) {
@@ -81,6 +83,7 @@ public class SlotRealm extends RealmObject {
 
         public void timeToMilliseconds(SlotRealm slotRealm) {
             try {
+                dateFormat.setTimeZone(TimeZone.getTimeZone(UTC_TIME_ZONE));
                 slotRealm.setFromInMilliseconds(dateFormat.parse(slotRealm.getFrom()).getTime());
                 slotRealm.setToInMilliseconds(dateFormat.parse(slotRealm.getTo()).getTime());
             } catch (ParseException e) {
