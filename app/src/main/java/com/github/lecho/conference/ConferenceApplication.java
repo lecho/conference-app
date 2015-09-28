@@ -2,6 +2,8 @@ package com.github.lecho.conference;
 
 import android.app.Application;
 
+import com.squareup.leakcanary.LeakCanary;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -15,6 +17,7 @@ public class ConferenceApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        LeakCanary.install(this);
         RealmConfiguration config = new RealmConfiguration.Builder(getApplicationContext())
                 .name("conference.realm")
                 .schemaVersion(SCHEMA_VERSION)
