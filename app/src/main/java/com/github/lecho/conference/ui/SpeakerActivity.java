@@ -102,6 +102,8 @@ public class SpeakerActivity extends AppCompatActivity implements LoaderManager.
     protected class HeaderController {
 
         private static final String TWITTER_WWW = "https://twitter.com/";
+        private static final String TWITTER_PACKAGE = "com.twitter.android";
+        private static final String TWITTER_URI = "twitter://user?screen_name=";
         private static final String ASSETS_SPEAKERS_IMAGES = "file:///android_asset/speakers-images/";
 
         @Bind(R.id.speaker_avatar)
@@ -123,6 +125,13 @@ public class SpeakerActivity extends AppCompatActivity implements LoaderManager.
         public void bind(SpeakerViewDto speakerViewDto) {
             speakerNameView.setText(getSpeakersFullName(speakerViewDto));
             loadAvatar(speakerViewDto.photo);
+            twitterButton.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    gotToTwitterProfile("leszekwach");
+                }
+            });
         }
 
         private void loadAvatar(String photoFileName) {
@@ -135,6 +144,17 @@ public class SpeakerActivity extends AppCompatActivity implements LoaderManager.
             return new StringBuilder(speakerViewDto.firstName).append(" ").append(speakerViewDto.lastName).toString();
         }
 
+        private void gotToTwitterProfile(String username) {
+            try {
+                getPackageManager().getPackageInfo(TWITTER_PACKAGE, 0);
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(TWITTER_URI + username));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            } catch (Exception e) {
+                goToWebPage(TWITTER_WWW + username);
+            }
+        }
+
         private void goToWebPage(@NonNull String url) {
             StringBuilder urlBuilder = new StringBuilder(url);
             if (!url.startsWith("http://") || !url.startsWith("https://")) {
@@ -142,10 +162,6 @@ public class SpeakerActivity extends AppCompatActivity implements LoaderManager.
             }
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(urlBuilder.toString()));
             startActivity(i);
-        }
-
-        private void gotToTwitterProfile(@NonNull String twitterName) {
-            goToWebPage(TWITTER_WWW + twitterName);
         }
     }
 

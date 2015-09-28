@@ -6,35 +6,33 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 
 import com.github.lecho.conference.R;
-import com.github.lecho.conference.apimodel.ApiData;
-import com.github.lecho.conference.apimodel.ApiFacade;
-import com.github.lecho.conference.realmmodel.RealmFacade;
+import com.github.lecho.conference.loader.VenuesLoader;
 import com.github.lecho.conference.service.ContentUpdateService;
-import com.github.lecho.conference.viewmodel.AgendaViewDto;
 import com.github.lecho.conference.viewmodel.VenueViewDto;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<VenueViewDto>> {
 
-
-    private Menu navigationViewMenu;
+    private static final int LOADER_ID = 0;
+    private NavigationViewController navigationViewController;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -50,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        navigationViewController = new NavigationViewController(navigationView);
+        navigationViewController.bindStaticItems();
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -61,46 +61,12 @@ public class MainActivity extends AppCompatActivity {
             updateContent();
         }
 
-        List<VenueViewDto> venueViewDtos = new ArrayList<>();
-        for (int i = 0; i < 5; ++i) {
-            VenueViewDto venueViewDto = new VenueViewDto();
-            venueViewDto.key = "venue-1";
-            venueViewDto.title = "Venue" + i;
-            venueViewDtos.add(venueViewDto);
-        }
-
-        setUpNavigationView(venueViewDtos);
+        getSupportLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
     private void updateContent() {
         Intent serviceIntent = new Intent(getApplicationContext(), ContentUpdateService.class);
         startService(serviceIntent);
-    }
-
-    private void setUpNavigationView(@NonNull List<VenueViewDto> venueViewDtos) {
-        final int groupId = 0;
-        int itemId = 0;
-        int order = 0;
-        navigationViewMenu = navigationView.getMenu();
-        navigationViewMenu.setGroupCheckable(groupId, true, true);
-
-        navigationViewMenu.add(groupId, itemId++, order++, R.string.navigation_my_agenda).setCheckable(true)
-                .setOnMenuItemClickListener(new NavigationMenuClickListener(MyAgendaFragment.newInstance()));
-
-        SubMenu subMenuVenues = navigationViewMenu.addSubMenu(groupId, itemId++, order++, R.string.navigation_venues);
-        String trackPostfix = getString(R.string.navigation_track);
-        for (VenueViewDto venueViewDto : venueViewDtos) {
-            String venueName = new StringBuilder(venueViewDto.title).append(" ").append(trackPostfix).toString();
-            MenuItem venueItem = subMenuVenues.add(groupId, itemId++, order++, venueName).setCheckable(true);
-            VenueAgendaFragment fragment = VenueAgendaFragment.newInstance(venueViewDto.key, venueViewDto.title);
-            venueItem.setOnMenuItemClickListener(new NavigationMenuClickListener(fragment));
-        }
-
-        SubMenu subMenuMore = navigationViewMenu.addSubMenu(groupId, itemId++, order++, R.string.navigation_more);
-        subMenuMore.add(groupId, itemId++, order++, R.string.navigation_speakers).setCheckable(true);
-        subMenuMore.add(groupId, itemId++, order++, R.string.navigation_sponsors).setCheckable(true)
-                .setOnMenuItemClickListener(new NavigationMenuClickListener(SponsorsFragment.newInstance()));
-        subMenuMore.add(groupId, itemId++, order++, R.string.navigation_about).setCheckable(true);
     }
 
     public void replaceFragment(@NonNull Fragment fragment) {
@@ -120,6 +86,68 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public Loader<List<VenueViewDto>> onCreateLoader(int id, Bundle args) {
+        if (id == LOADER_ID) {
+            return VenuesLoader.getVenuesLoader(this);
+        }
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<VenueViewDto>> loader, List<VenueViewDto> venueViewDtos) {
+        if (loader.getId() == LOADER_ID) {
+            navigationViewController.bindVenuesItems(venueViewDtos);
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<VenueViewDto>> loader) {
+    }
+
+    private class NavigationViewController {
+
+        private NavigationView navigationView;
+        private Menu navigationMenu;
+        private SubMenu venuesSubMenu;
+        private final int groupId = 0;
+
+        public NavigationViewController(NavigationView navigationView) {
+            this.navigationView = navigationView;
+            navigationMenu = navigationView.getMenu();
+        }
+
+        public void bindStaticItems() {
+            int itemId = 0;
+            int order = 0;
+            navigationMenu = navigationView.getMenu();
+            navigationMenu.setGroupCheckable(groupId, true, true);
+            //MyAgenda
+            navigationMenu.add(groupId, itemId++, order++, R.string.navigation_my_agenda).setCheckable(true)
+                    .setOnMenuItemClickListener(new NavigationMenuClickListener(MyAgendaFragment.newInstance()));
+            //Tracks
+            venuesSubMenu = navigationMenu.addSubMenu(groupId, itemId++, order++, R.string.navigation_venues);
+            //More
+            SubMenu subMenuMore = navigationMenu.addSubMenu(groupId, itemId++, order++, R.string.navigation_more);
+            subMenuMore.add(groupId, itemId++, order++, R.string.navigation_speakers).setCheckable(true);
+            subMenuMore.add(groupId, itemId++, order++, R.string.navigation_sponsors).setCheckable(true)
+                    .setOnMenuItemClickListener(new NavigationMenuClickListener(SponsorsFragment.newInstance()));
+            subMenuMore.add(groupId, itemId++, order++, R.string.navigation_about).setCheckable(true);
+        }
+
+        public void bindVenuesItems(@NonNull List<VenueViewDto> venueViewDtos) {
+            int itemId = 0;
+            int order = 0;
+            venuesSubMenu.clear();
+            for (VenueViewDto venueViewDto : venueViewDtos) {
+                MenuItem venueItem = venuesSubMenu.add(groupId, itemId++, order++, venueViewDto.title).
+                        setCheckable(true);
+                VenueAgendaFragment fragment = VenueAgendaFragment.newInstance(venueViewDto.key, venueViewDto.title);
+                venueItem.setOnMenuItemClickListener(new NavigationMenuClickListener(fragment));
+            }
+        }
     }
 
     private class NavigationMenuClickListener implements MenuItem.OnMenuItemClickListener {
