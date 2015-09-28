@@ -16,7 +16,7 @@ public abstract class TalkFavoriteTask extends AsyncTask<Void, Void, Void> {
     protected final boolean shouldEmitBroadcast;
 
     private TalkFavoriteTask(Context context, String talkKey, boolean shouldEmitBroadcast) {
-        this.context = context;
+        this.context = context.getApplicationContext();
         this.talkKey = talkKey;
         this.shouldEmitBroadcast = shouldEmitBroadcast;
     }

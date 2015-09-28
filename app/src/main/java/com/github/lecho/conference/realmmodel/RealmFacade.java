@@ -43,7 +43,7 @@ public class RealmFacade {
     private Map<String, SpeakerRealm> speakerRealmsMap;
 
     public RealmFacade(Context context) {
-        this.context = context;
+        this.context = context.getApplicationContext();
     }
 
     public void saveData(final ApiData apiData) {

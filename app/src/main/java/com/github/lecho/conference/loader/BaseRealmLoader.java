@@ -19,8 +19,8 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
     protected ContentChangeObserver contentChangeObserver;
 
     protected BaseRealmLoader(Context context, boolean shouldObserveContent) {
-        super(context);
-        this.realmFacade = new RealmFacade(context);
+        super(context.getApplicationContext());
+        this.realmFacade = new RealmFacade(getContext());
         this.shouldHaveContentObserver = shouldObserveContent;
     }
 
