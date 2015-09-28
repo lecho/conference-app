@@ -30,6 +30,7 @@ public class ApiFacade {
     }
 
     public ApiData parseJsonFilesFromAssets(Context context, String folderName) {
+        String eventJson = readFileFromAssets(context, folderName, EVENT_JSON_FILE);
         String agendaJson = readFileFromAssets(context, folderName, SCHEDULE_JSON_FILE);
         String slotJson = readFileFromAssets(context, folderName, SLOTS_JSON_FILE);
         String breaksJson = readFileFromAssets(context, folderName, BREAKS_JSON_FILE);
@@ -38,6 +39,7 @@ public class ApiFacade {
         String speakersJson = readFileFromAssets(context, folderName, SPEAKERS_JSON_FILE);
 
         Map<ApiDtoType, String> jsonsMap = new HashMap<>();
+        jsonsMap.put(ApiDtoType.EVENT, eventJson);
         jsonsMap.put(ApiDtoType.AGENDA, agendaJson);
         jsonsMap.put(ApiDtoType.SLOTS, slotJson);
         jsonsMap.put(ApiDtoType.BREAKS, breaksJson);
@@ -62,6 +64,7 @@ public class ApiFacade {
                 apiData.breaksMap = new BreakApiDto.BreakApiParser().fromJson(json);
                 break;
             case EVENT:
+                apiData.eventsMap = new EventApiDto.EventApiParser().fromJson(json);
                 break;
             case AGENDA:
                 apiData.agendaMap = new AgendaItemApiDto.AgendaItemApiParser().fromJson(json);

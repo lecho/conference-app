@@ -1,5 +1,7 @@
 package com.github.lecho.conference.apimodel;
 
+import com.github.lecho.conference.viewmodel.EventViewDto;
+
 import java.util.Map;
 
 /**
@@ -7,6 +9,7 @@ import java.util.Map;
  */
 public class ApiData {
 
+    public Map<String, EventApiDto> eventsMap;
     public Map<String, AgendaItemApiDto> agendaMap;
     public Map<String, BreakApiDto> breaksMap;
     public Map<String, SlotApiDto> slotsMap;

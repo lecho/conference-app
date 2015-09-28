@@ -6,10 +6,12 @@ import android.util.Log;
 
 import com.github.lecho.conference.apimodel.AgendaItemApiDto;
 import com.github.lecho.conference.apimodel.ApiData;
+import com.github.lecho.conference.apimodel.EventApiDto;
 import com.github.lecho.conference.apimodel.TalkApiDto;
 import com.github.lecho.conference.loader.ContentChangeObserver;
 import com.github.lecho.conference.viewmodel.AgendaItemViewDto;
 import com.github.lecho.conference.viewmodel.AgendaViewDto;
+import com.github.lecho.conference.viewmodel.EventViewDto;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
 import com.github.lecho.conference.viewmodel.TalkViewDto;
 import com.github.lecho.conference.viewmodel.VenueViewDto;
@@ -33,6 +35,7 @@ public class RealmFacade {
     public static final String TAG = RealmFacade.class.getSimpleName();
     private final Context context;
     private Realm realm;
+    private Map<String, EventRealm> eventRealmsMap;
     private Map<String, SlotRealm> slotRealmsMap;
     private Map<String, BreakRealm> breakRealmsMap;
     private Map<String, TalkRealm> talkRealmsMap;
@@ -48,6 +51,7 @@ public class RealmFacade {
         try {
             realm = Realm.getDefaultInstance();
             realm.beginTransaction();
+            realm.copyToRealmOrUpdate(eventRealmsMap.values());
             realm.copyToRealmOrUpdate(slotRealmsMap.values());
             realm.copyToRealmOrUpdate(breakRealmsMap.values());
             realm.copyToRealmOrUpdate(venueRealmsMap.values());
@@ -66,6 +70,7 @@ public class RealmFacade {
     }
 
     private void convertApiDataToRealm(final ApiData apiData) {
+        eventRealmsMap = convertApiDtoToRealm(apiData.eventsMap, new EventRealm.EventApiConverter());
         slotRealmsMap = convertApiDtoToRealm(apiData.slotsMap, new SlotRealm.SlotApiConverter());
         breakRealmsMap = convertApiDtoToRealm(apiData.breaksMap, new BreakRealm.BreakApiConverter());
         talkRealmsMap = convertApiDtoToRealm(apiData.talksMap, new TalkRealm.TalkApiConverter());
@@ -268,6 +273,18 @@ public class RealmFacade {
                 realm.cancelTransaction();
             }
             Log.e(TAG, "Could not add talk to my agenda", e);
+        } finally {
+            closeRealm();
+        }
+    }
+
+    public EventViewDto loadEvent() {
+        try {
+            EventRealm.EventViewConverter eventViewConverter = new EventRealm.EventViewConverter();
+            realm = Realm.getDefaultInstance();
+            EventRealm eventRealm = realm.where(EventRealm.class).findFirst();
+            EventViewDto eventViewDto = eventViewConverter.convert(eventRealm);
+            return eventViewDto;
         } finally {
             closeRealm();
         }

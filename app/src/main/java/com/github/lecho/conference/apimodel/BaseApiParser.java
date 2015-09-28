@@ -13,10 +13,9 @@ import java.util.Map;
  */
 public abstract class BaseApiParser<T> {
 
-    public abstract  Map<String, T> fromJson(String json);
+    public abstract Map<String, T> fromJson(String json);
 
     /**
-     *
      * @param json
      * @param type Type type = new TypeToken<Map<String, T>>() {}.getType();
      * @return
