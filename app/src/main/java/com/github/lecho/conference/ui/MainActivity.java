@@ -125,16 +125,20 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             navigationMenu = navigationView.getMenu();
             navigationMenu.setGroupCheckable(groupId, true, true);
             //MyAgenda
-            navigationMenu.add(groupId, itemId++, order++, R.string.navigation_my_agenda).setCheckable(true)
+            navigationMenu.add(groupId, itemId++, order++, R.string.navigation_my_agenda).setCheckable(true).setIcon
+                    (R.drawable.ic_nav_my_agenda)
                     .setOnMenuItemClickListener(new NavigationMenuClickListener(MyAgendaFragment.newInstance()));
             //Tracks
             venuesSubMenu = navigationMenu.addSubMenu(groupId, itemId++, order++, R.string.navigation_venues);
             //More
             SubMenu subMenuMore = navigationMenu.addSubMenu(groupId, itemId++, order++, R.string.navigation_more);
-            subMenuMore.add(groupId, itemId++, order++, R.string.navigation_speakers).setCheckable(true);
-            subMenuMore.add(groupId, itemId++, order++, R.string.navigation_sponsors).setCheckable(true)
+            subMenuMore.add(groupId, itemId++, order++, R.string.navigation_speakers).setCheckable(true).setIcon(R
+                    .drawable.ic_nav_speakers);
+            subMenuMore.add(groupId, itemId++, order++, R.string.navigation_sponsors).setCheckable(true).setIcon(R
+                    .drawable.ic_nav_sponsors)
                     .setOnMenuItemClickListener(new NavigationMenuClickListener(SponsorsFragment.newInstance()));
-            subMenuMore.add(groupId, itemId++, order++, R.string.navigation_about).setCheckable(true);
+            subMenuMore.add(groupId, itemId++, order++, R.string.navigation_about).setCheckable(true).setIcon(R
+                    .drawable.ic_nav_about);
         }
 
         public void bindVenuesItems(@NonNull List<VenueViewDto> venueViewDtos) {
@@ -143,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             venuesSubMenu.clear();
             for (VenueViewDto venueViewDto : venueViewDtos) {
                 MenuItem venueItem = venuesSubMenu.add(groupId, itemId++, order++, venueViewDto.title).
-                        setCheckable(true);
+                        setCheckable(true).setIcon(R.drawable.ic_nav_agenda);
                 VenueAgendaFragment fragment = VenueAgendaFragment.newInstance(venueViewDto.key, venueViewDto.title);
                 venueItem.setOnMenuItemClickListener(new NavigationMenuClickListener(fragment));
             }
