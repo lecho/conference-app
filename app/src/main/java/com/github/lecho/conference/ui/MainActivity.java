@@ -18,18 +18,18 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 
 import com.github.lecho.conference.R;
-import com.github.lecho.conference.loader.VenuesLoader;
+import com.github.lecho.conference.loader.NavigationViewDataLoader;
 import com.github.lecho.conference.service.ContentUpdateService;
+import com.github.lecho.conference.viewmodel.NavigationViewDto;
 import com.github.lecho.conference.viewmodel.VenueViewDto;
 
-import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<VenueViewDto>> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<NavigationViewDto> {
 
     private static final int LOADER_ID = 0;
     private NavigationViewController navigationViewController;
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         navigationViewController = new NavigationViewController(navigationView);
-        navigationViewController.bindStaticItems();
+        navigationViewController.bindStaticMenuItems();
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -89,22 +89,22 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public Loader<List<VenueViewDto>> onCreateLoader(int id, Bundle args) {
+    public Loader<NavigationViewDto> onCreateLoader(int id, Bundle args) {
         if (id == LOADER_ID) {
-            return VenuesLoader.getVenuesLoader(this);
+            return NavigationViewDataLoader.getLoader(this);
         }
         return null;
     }
 
     @Override
-    public void onLoadFinished(Loader<List<VenueViewDto>> loader, List<VenueViewDto> venueViewDtos) {
+    public void onLoadFinished(Loader<NavigationViewDto> loader, NavigationViewDto navigationViewDto) {
         if (loader.getId() == LOADER_ID) {
-            navigationViewController.bindVenuesItems(venueViewDtos);
+            navigationViewController.bindVenuesMenuItems(navigationViewDto.venueViewDtos);
         }
     }
 
     @Override
-    public void onLoaderReset(Loader<List<VenueViewDto>> loader) {
+    public void onLoaderReset(Loader<NavigationViewDto> loader) {
     }
 
     private class NavigationViewController {
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             navigationMenu = navigationView.getMenu();
         }
 
-        public void bindStaticItems() {
+        public void bindStaticMenuItems() {
             int itemId = 0;
             int order = 0;
             navigationMenu = navigationView.getMenu();
@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     .drawable.ic_nav_about);
         }
 
-        public void bindVenuesItems(@NonNull List<VenueViewDto> venueViewDtos) {
+        public void bindVenuesMenuItems(@NonNull List<VenueViewDto> venueViewDtos) {
             int itemId = 0;
             int order = 0;
             venuesSubMenu.clear();
