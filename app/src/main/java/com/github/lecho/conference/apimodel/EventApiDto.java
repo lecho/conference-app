@@ -13,7 +13,7 @@ import java.util.Map;
 public class EventApiDto {
 
     public String title;
-    public String date;
+    public String data;
     public String time;
     public LocationApiDto location;
 
@@ -21,7 +21,7 @@ public class EventApiDto {
     public String toString() {
         return "EventApiDto{" +
                 "title='" + title + '\'' +
-                ", date='" + date + '\'' +
+                ", data='" + data + '\'' +
                 ", time='" + time + '\'' +
                 ", location=" + location +
                 '}';

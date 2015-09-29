@@ -69,7 +69,7 @@ public class SlotRealm extends RealmObject {
     public static class SlotApiConverter extends RealmFacade.ApiToRealmConverter<SlotRealm, SlotApiDto> {
         private static final String TAG = SlotApiConverter.class.getSimpleName();
         private static final DateFormat dateFormat = new SimpleDateFormat("HH:mm");
-        private static final String UTC_TIME_ZONE = "UTC";
+        private static final String LOCAL_TIMEZONE = "Poland";
 
         @Override
         public SlotRealm convert(String key, SlotApiDto apiDto) {
@@ -83,7 +83,7 @@ public class SlotRealm extends RealmObject {
 
         public void timeToMilliseconds(SlotRealm slotRealm) {
             try {
-                dateFormat.setTimeZone(TimeZone.getTimeZone(UTC_TIME_ZONE));
+                dateFormat.setTimeZone(TimeZone.getTimeZone(LOCAL_TIMEZONE));
                 slotRealm.setFromInMilliseconds(dateFormat.parse(slotRealm.getFrom()).getTime());
                 slotRealm.setToInMilliseconds(dateFormat.parse(slotRealm.getTo()).getTime());
             } catch (ParseException e) {

@@ -1,6 +1,5 @@
 package com.github.lecho.conference.realmmodel;
 
-import com.github.lecho.conference.apimodel.BreakApiDto;
 import com.github.lecho.conference.apimodel.EventApiDto;
 import com.github.lecho.conference.viewmodel.EventViewDto;
 
@@ -109,7 +108,7 @@ public class EventRealm extends RealmObject {
         public EventRealm convert(String key, EventApiDto apiDto) {
             EventRealm eventRealm = new EventRealm();
             eventRealm.setTitle(apiDto.title);
-            eventRealm.setDate(apiDto.date);
+            eventRealm.setDate(apiDto.data);
             eventRealm.setTime(apiDto.time);
             eventRealm.setCity(apiDto.location.city);
             eventRealm.setCountry(apiDto.location.country);
