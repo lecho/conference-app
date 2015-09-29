@@ -167,7 +167,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
             final int fromTime = 60 * fromHour + fromMinute;
             final int toTime = 60 * toHour + toMinute;
             final int currentTime = 60 * currentHour + currentMinute;
-            return currentTime >= fromTime && currentTime <= toTime;
+            return currentTime >= fromTime && currentTime < toTime;
         }
 
         @NonNull
