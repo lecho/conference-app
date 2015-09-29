@@ -280,11 +280,13 @@ public class RealmFacade {
 
     public EventViewDto loadEvent() {
         try {
-            EventRealm.EventViewConverter eventViewConverter = new EventRealm.EventViewConverter();
             realm = Realm.getDefaultInstance();
             EventRealm eventRealm = realm.where(EventRealm.class).findFirst();
-            EventViewDto eventViewDto = eventViewConverter.convert(eventRealm);
-            return eventViewDto;
+            if (eventRealm != null) {
+                return new EventRealm.EventViewConverter().convert(eventRealm);
+            } else {
+                return null;
+            }
         } finally {
             closeRealm();
         }

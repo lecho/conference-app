@@ -13,13 +13,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.github.lecho.conference.R;
 import com.github.lecho.conference.loader.NavigationViewDataLoader;
 import com.github.lecho.conference.service.ContentUpdateService;
+import com.github.lecho.conference.viewmodel.EventViewDto;
 import com.github.lecho.conference.viewmodel.NavigationViewDto;
 import com.github.lecho.conference.viewmodel.VenueViewDto;
 
@@ -31,8 +36,10 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<NavigationViewDto> {
 
+    private static final String TAG = MainActivity.class.getSimpleName();
     private static final int LOADER_ID = 0;
-    private NavigationViewController navigationViewController;
+    private NavigationMenuController navigationMenuController;
+    private NavigationHeaderController navigationHeaderController;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -48,8 +55,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        navigationViewController = new NavigationViewController(navigationView);
-        navigationViewController.bindStaticMenuItems();
+        navigationMenuController = new NavigationMenuController(navigationView);
+        navigationMenuController.bindStaticMenuItems();
+        navigationHeaderController = new NavigationHeaderController(navigationView);
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -99,7 +107,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<NavigationViewDto> loader, NavigationViewDto navigationViewDto) {
         if (loader.getId() == LOADER_ID) {
-            navigationViewController.bindVenuesMenuItems(navigationViewDto.venueViewDtos);
+            navigationMenuController.bindVenuesMenuItems(navigationViewDto.venueViewDtos);
+            navigationHeaderController.bind(navigationViewDto.eventViewDto);
         }
     }
 
@@ -107,14 +116,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoaderReset(Loader<NavigationViewDto> loader) {
     }
 
-    private class NavigationViewController {
+    protected class NavigationMenuController {
 
         private NavigationView navigationView;
         private Menu navigationMenu;
         private SubMenu venuesSubMenu;
         private final int groupId = 0;
 
-        public NavigationViewController(NavigationView navigationView) {
+        public NavigationMenuController(NavigationView navigationView) {
             this.navigationView = navigationView;
             navigationMenu = navigationView.getMenu();
         }
@@ -151,6 +160,48 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 VenueAgendaFragment fragment = VenueAgendaFragment.newInstance(venueViewDto.key, venueViewDto.title);
                 venueItem.setOnMenuItemClickListener(new NavigationMenuClickListener(fragment));
             }
+        }
+    }
+
+    protected class NavigationHeaderController {
+
+        @Bind(R.id.text_event_title)
+        TextView eventTitleView;
+
+        @Bind(R.id.text_event_date)
+        TextView eventDateView;
+
+        @Bind(R.id.text_event_place)
+        TextView eventPlaceView;
+
+        @Bind(R.id.map_button)
+        ImageButton mapButton;
+
+        public NavigationHeaderController(NavigationView navigationView) {
+            ButterKnife.bind(this, navigationView);
+        }
+
+        public void bind(EventViewDto eventViewDto) {
+            if(null == eventViewDto){
+                Log.w(TAG, "Null event data");
+                return;
+            }
+            eventTitleView.setText(eventViewDto.title);
+            StringBuilder eventDateText = new StringBuilder().append(eventViewDto.date).append(", ").append
+                    (eventViewDto.time);
+            eventDateView.setText(eventDateText.toString());
+            StringBuilder eventPlaceText = new StringBuilder().append(eventViewDto.place).append("\n").append
+                    (eventViewDto.street).append(" ").append(eventViewDto.city);
+            eventPlaceView.setText(eventPlaceText.toString());
+            mapButton.setOnClickListener(new MapButtonClickListener());
+        }
+    }
+
+    private class MapButtonClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+
         }
     }
 
