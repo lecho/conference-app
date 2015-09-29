@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.github.lecho.conference.R;
 import com.github.lecho.conference.loader.NavigationViewDataLoader;
 import com.github.lecho.conference.service.ContentUpdateService;
+import com.github.lecho.conference.util.Utils;
 import com.github.lecho.conference.viewmodel.EventViewDto;
 import com.github.lecho.conference.viewmodel.NavigationViewDto;
 import com.github.lecho.conference.viewmodel.VenueViewDto;
@@ -182,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
 
         public void bind(EventViewDto eventViewDto) {
-            if(null == eventViewDto){
+            if (null == eventViewDto) {
                 Log.w(TAG, "Null event data");
                 return;
             }
@@ -193,15 +194,23 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             StringBuilder eventPlaceText = new StringBuilder().append(eventViewDto.place).append("\n").append
                     (eventViewDto.street).append(" ").append(eventViewDto.city);
             eventPlaceView.setText(eventPlaceText.toString());
-            mapButton.setOnClickListener(new MapButtonClickListener());
+            mapButton.setOnClickListener(new MapButtonClickListener(eventViewDto.latitude, eventViewDto.longitude));
         }
     }
 
     private class MapButtonClickListener implements View.OnClickListener {
 
+        private final double latitude;
+        private final double longitude;
+
+        public MapButtonClickListener(double latitude, double longitude) {
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
+
         @Override
         public void onClick(View v) {
-
+            Utils.launchGMaps(MainActivity.this, latitude, longitude);
         }
     }
 
