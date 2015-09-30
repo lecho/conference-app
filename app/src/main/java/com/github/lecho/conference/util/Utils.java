@@ -4,12 +4,17 @@ import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.util.Log;
 import android.util.Pair;
+
+import com.github.lecho.conference.service.ContentUpdateService;
+
+import io.realm.Realm;
 
 /**
  * Created by Leszek on 2015-09-29.
@@ -18,6 +23,29 @@ public class Utils {
 
     private static final String TAG = Utils.class.getSimpleName();
     private static final String GOOGLE_MAPS_PACKAGE = "com.google.android.apps.maps";
+    public static final String PREFS_FILE_NAME = "conference-shared-prefs";
+    public static final String PREFS_SCHEMA_VERSION = "schema-version";
+
+    public static void upgradeSchema(Context context) {
+        if (Utils.checkIfSchemaUpgradeNeeded(context)) {
+            Log.i(TAG, "Upgrading schema");
+            Intent serviceIntent = new Intent(context, ContentUpdateService.class);
+            context.startService(serviceIntent);
+        }
+    }
+
+    private static boolean checkIfSchemaUpgradeNeeded(Context context) {
+        final long previousSchemaVersion = context.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE).getLong
+                (PREFS_SCHEMA_VERSION, 0);
+        final long currentSchemaVersion = Realm.getDefaultInstance().getConfiguration().getSchemaVersion();
+        if (currentSchemaVersion != previousSchemaVersion) {
+            SharedPreferences.Editor editor = context.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE)
+                    .edit();
+            editor.putLong(PREFS_SCHEMA_VERSION, currentSchemaVersion).apply();
+            return true;
+        }
+        return false;
+    }
 
     public static boolean launchGMaps(Context context, double latitude, double longitude) {
         final String GMAPS = "geo:";

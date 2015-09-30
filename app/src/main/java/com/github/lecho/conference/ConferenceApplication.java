@@ -12,7 +12,10 @@ import io.realm.RealmConfiguration;
  */
 public class ConferenceApplication extends Application {
 
-    private static final int SCHEMA_VERSION = 2;
+    /**
+     * Always increment schema version.
+     */
+    private static final int SCHEMA_VERSION = 3;
 
     @Override
     public void onCreate() {

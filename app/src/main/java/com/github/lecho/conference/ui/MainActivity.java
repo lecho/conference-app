@@ -1,6 +1,5 @@
 package com.github.lecho.conference.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -23,7 +22,6 @@ import android.widget.TextView;
 
 import com.github.lecho.conference.R;
 import com.github.lecho.conference.loader.NavigationViewDataLoader;
-import com.github.lecho.conference.service.ContentUpdateService;
 import com.github.lecho.conference.util.Utils;
 import com.github.lecho.conference.viewmodel.EventViewDto;
 import com.github.lecho.conference.viewmodel.NavigationViewDto;
@@ -66,16 +64,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         if (null == savedInstanceState) {
+            //TODO some info upon first start
             replaceFragment(MyAgendaFragment.newInstance());
-            updateContent();
+            Utils.upgradeSchema(getApplicationContext());
         }
 
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
-    }
-
-    private void updateContent() {
-        Intent serviceIntent = new Intent(getApplicationContext(), ContentUpdateService.class);
-        startService(serviceIntent);
     }
 
     public void replaceFragment(@NonNull Fragment fragment) {
@@ -100,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public Loader<NavigationViewDto> onCreateLoader(int id, Bundle args) {
         if (id == LOADER_ID) {
-            return NavigationViewDataLoader.getLoader(this);
+            return NavigationViewDataLoader.getLoader(getApplicationContext());
         }
         return null;
     }
