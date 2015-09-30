@@ -4,12 +4,13 @@ import android.content.Context;
 import android.util.Log;
 
 import com.github.lecho.conference.BuildConfig;
+import com.github.lecho.conference.util.Optional;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
 
 /**
  * Created by Leszek on 2015-09-03.
  */
-public class SpeakerLoader extends BaseRealmLoader<SpeakerViewDto> {
+public class SpeakerLoader extends BaseRealmLoader<Optional<SpeakerViewDto>> {
 
     private static final String TAG = SpeakerLoader.class.getSimpleName();
     private String speakerKey;
@@ -24,11 +25,11 @@ public class SpeakerLoader extends BaseRealmLoader<SpeakerViewDto> {
     }
 
     @Override
-    public SpeakerViewDto loadInBackground() {
+    public Optional<SpeakerViewDto> loadInBackground() {
         if (BuildConfig.DEBUG) {
             Log.d(TAG, "Loading speaker data");
         }
-        SpeakerViewDto newData = realmFacade.loadSpeakerByKey(speakerKey);
+        Optional<SpeakerViewDto> newData = realmFacade.loadSpeakerByKey(speakerKey);
         return newData;
     }
 }

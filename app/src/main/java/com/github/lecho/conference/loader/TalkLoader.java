@@ -5,12 +5,13 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.github.lecho.conference.BuildConfig;
+import com.github.lecho.conference.util.Optional;
 import com.github.lecho.conference.viewmodel.TalkViewDto;
 
 /**
  * Created by Leszek on 2015-09-03.
  */
-public class TalkLoader extends BaseRealmLoader<TalkViewDto> {
+public class TalkLoader extends BaseRealmLoader<Optional<TalkViewDto>> {
 
     private static final String TAG = TalkLoader.class.getSimpleName();
     private String talkKey;
@@ -28,11 +29,11 @@ public class TalkLoader extends BaseRealmLoader<TalkViewDto> {
     }
 
     @Override
-    public TalkViewDto loadInBackground() {
+    public Optional<TalkViewDto> loadInBackground() {
         if (BuildConfig.DEBUG) {
             Log.d(TAG, "Loading talk data");
         }
-        TalkViewDto newData = realmFacade.loadTalkByKey(talkKey);
+        Optional<TalkViewDto> newData = realmFacade.loadTalkByKey(talkKey);
         return newData;
     }
 }

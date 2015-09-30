@@ -6,9 +6,9 @@ import android.util.Log;
 
 import com.github.lecho.conference.apimodel.AgendaItemApiDto;
 import com.github.lecho.conference.apimodel.ApiData;
-import com.github.lecho.conference.apimodel.EventApiDto;
 import com.github.lecho.conference.apimodel.TalkApiDto;
 import com.github.lecho.conference.loader.ContentChangeObserver;
+import com.github.lecho.conference.util.Optional;
 import com.github.lecho.conference.viewmodel.AgendaItemViewDto;
 import com.github.lecho.conference.viewmodel.AgendaViewDto;
 import com.github.lecho.conference.viewmodel.EventViewDto;
@@ -192,15 +192,14 @@ public class RealmFacade {
         return agendaItemViewDto;
     }
 
-    public TalkViewDto loadTalkByKey(String talkKey) {
+    public Optional<TalkViewDto> loadTalkByKey(String talkKey) {
         try {
             realm = Realm.getDefaultInstance();
             TalkRealm talkRealm = loadTalkRealmByKey(talkKey);
-            if (talkRealm != null) {
-                return new TalkRealm.TalkViewConverter().convert(talkRealm);
-            } else {
-                return null;
+            if (talkRealm == null) {
+                return Optional.empty();
             }
+            return Optional.of(new TalkRealm.TalkViewConverter().convert(talkRealm));
         } finally {
             closeRealm();
         }
@@ -210,11 +209,14 @@ public class RealmFacade {
         return realm.where(TalkRealm.class).equalTo("key", talkKey).findFirst();
     }
 
-    public SpeakerViewDto loadSpeakerByKey(String speakerKey) {
+    public Optional<SpeakerViewDto> loadSpeakerByKey(String speakerKey) {
         try {
             realm = Realm.getDefaultInstance();
             SpeakerRealm speakerRealm = realm.where(SpeakerRealm.class).equalTo("key", speakerKey).findFirst();
-            return new SpeakerRealm.SpeakerViewConverter().convert(speakerRealm);
+            if (speakerRealm == null) {
+                return Optional.empty();
+            }
+            return Optional.of(new SpeakerRealm.SpeakerViewConverter().convert(speakerRealm));
         } finally {
             closeRealm();
         }
@@ -278,15 +280,14 @@ public class RealmFacade {
         }
     }
 
-    public EventViewDto loadEvent() {
+    public Optional<EventViewDto> loadEvent() {
         try {
             realm = Realm.getDefaultInstance();
             EventRealm eventRealm = realm.where(EventRealm.class).findFirst();
-            if (eventRealm != null) {
-                return new EventRealm.EventViewConverter().convert(eventRealm);
-            } else {
-                return null;
+            if (eventRealm == null) {
+                return Optional.empty();
             }
+            return Optional.of(new EventRealm.EventViewConverter().convert(eventRealm));
         } finally {
             closeRealm();
         }

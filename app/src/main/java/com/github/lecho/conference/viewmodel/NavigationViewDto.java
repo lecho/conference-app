@@ -1,5 +1,7 @@
 package com.github.lecho.conference.viewmodel;
 
+import com.github.lecho.conference.util.Optional;
+
 import java.util.List;
 
 /**
@@ -8,5 +10,5 @@ import java.util.List;
 public class NavigationViewDto {
 
     public List<VenueViewDto> venueViewDtos;
-    public EventViewDto eventViewDto;
+    public Optional<EventViewDto> eventViewDto;
 }

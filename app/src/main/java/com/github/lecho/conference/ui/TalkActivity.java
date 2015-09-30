@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.github.lecho.conference.R;
 import com.github.lecho.conference.loader.TalkLoader;
+import com.github.lecho.conference.util.Optional;
 import com.github.lecho.conference.viewmodel.SlotViewDto;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
 import com.github.lecho.conference.viewmodel.TalkViewDto;
@@ -25,7 +26,7 @@ import com.squareup.picasso.Picasso;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class TalkActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<TalkViewDto> {
+public class TalkActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Optional<TalkViewDto>> {
 
     private static final String TAG = TalkActivity.class.getSimpleName();
     private static final String ARG_TALK_KEY = "talk-key";
@@ -87,7 +88,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public Loader<TalkViewDto> onCreateLoader(int id, Bundle args) {
+    public Loader<Optional<TalkViewDto>> onCreateLoader(int id, Bundle args) {
         if (id == LOADER_ID) {
             return TalkLoader.getTalkLoader(this, talkKey);
         }
@@ -95,12 +96,13 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public void onLoadFinished(Loader<TalkViewDto> loader, TalkViewDto talkViewDto) {
+    public void onLoadFinished(Loader<Optional<TalkViewDto>> loader, Optional<TalkViewDto> data) {
         if (loader.getId() == LOADER_ID) {
-            if (talkViewDto == null) {
+            if (!data.isPresent()) {
                 Log.w(TAG, "Talk data is null for talk-key: " + talkKey);
                 return;
             }
+            TalkViewDto talkViewDto = data.get();
             fabController.bind(talkViewDto);
             headerController.bind(talkViewDto);
             infoCardController.bind(talkViewDto);
@@ -110,7 +112,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public void onLoaderReset(Loader<TalkViewDto> loader) {
+    public void onLoaderReset(Loader<Optional<TalkViewDto>> loader) {
     }
 
     protected class FABController {

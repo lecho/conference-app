@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.github.lecho.conference.BuildConfig;
+import com.github.lecho.conference.util.Optional;
 import com.github.lecho.conference.viewmodel.EventViewDto;
 import com.github.lecho.conference.viewmodel.NavigationViewDto;
 import com.github.lecho.conference.viewmodel.VenueViewDto;
@@ -31,7 +32,7 @@ public class NavigationViewDataLoader extends BaseRealmLoader<NavigationViewDto>
             Log.d(TAG, "Loading navigation view data");
         }
         List<VenueViewDto> venueViewDtos = realmFacade.loadAllVenues();
-        EventViewDto eventViewDto = realmFacade.loadEvent();
+        Optional<EventViewDto> eventViewDto = realmFacade.loadEvent();
         NavigationViewDto newData = new NavigationViewDto();
         newData.venueViewDtos = venueViewDtos;
         newData.eventViewDto = eventViewDto;

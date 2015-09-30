@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.github.lecho.conference.R;
 import com.github.lecho.conference.loader.SpeakerLoader;
+import com.github.lecho.conference.util.Optional;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
 import com.squareup.picasso.Picasso;
 
@@ -24,7 +25,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class SpeakerActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<SpeakerViewDto> {
+public class SpeakerActivity extends AppCompatActivity implements LoaderManager
+        .LoaderCallbacks<Optional<SpeakerViewDto>> {
 
     private static final String TAG = SpeakerActivity.class.getSimpleName();
     private static final String ARG_SPEAKER_KEY = "speaker-key";
@@ -76,7 +78,7 @@ public class SpeakerActivity extends AppCompatActivity implements LoaderManager.
     }
 
     @Override
-    public Loader<SpeakerViewDto> onCreateLoader(int id, Bundle args) {
+    public Loader<Optional<SpeakerViewDto>> onCreateLoader(int id, Bundle args) {
         if (id == LOADER_ID) {
             return SpeakerLoader.getSpeakerLoader(this, speakerKey);
         }
@@ -84,19 +86,20 @@ public class SpeakerActivity extends AppCompatActivity implements LoaderManager.
     }
 
     @Override
-    public void onLoadFinished(Loader<SpeakerViewDto> loader, SpeakerViewDto speakerViewDto) {
+    public void onLoadFinished(Loader<Optional<SpeakerViewDto>> loader, Optional<SpeakerViewDto> data) {
         if (loader.getId() == LOADER_ID) {
-            if (speakerViewDto == null) {
+            if (!data.isPresent()) {
                 Log.w(TAG, "Speaker data is null for speaker-key: " + speakerKey);
                 return;
             }
+            SpeakerViewDto speakerViewDto = data.get();
             headerController.bind(speakerViewDto);
             infoCardController.bind(speakerViewDto);
         }
     }
 
     @Override
-    public void onLoaderReset(Loader<SpeakerViewDto> loader) {
+    public void onLoaderReset(Loader<Optional<SpeakerViewDto>> loader) {
     }
 
     protected class HeaderController {

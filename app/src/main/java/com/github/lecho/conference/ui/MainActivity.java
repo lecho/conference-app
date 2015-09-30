@@ -103,7 +103,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoadFinished(Loader<NavigationViewDto> loader, NavigationViewDto navigationViewDto) {
         if (loader.getId() == LOADER_ID) {
             navigationMenuController.bindVenuesMenuItems(navigationViewDto.venueViewDtos);
-            navigationHeaderController.bind(navigationViewDto.eventViewDto);
+            if (navigationViewDto.eventViewDto.isPresent()) {
+                navigationHeaderController.bind(navigationViewDto.eventViewDto.get());
+            }
         }
     }
 
