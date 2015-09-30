@@ -20,7 +20,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class SpeakerLayout extends LinearLayout {
 
     private static final String ASSETS_SPEAKERS_IMAGES = "file:///android_asset/speakers-images/";
-    private String speakerKey;
+    private final String speakerKey;
 
     @Bind(R.id.speaker_avatar)
     CircleImageView avatarView;

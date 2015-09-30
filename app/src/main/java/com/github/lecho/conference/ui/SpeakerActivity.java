@@ -2,13 +2,13 @@ package com.github.lecho.conference.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.github.lecho.conference.R;
 import com.github.lecho.conference.loader.SpeakerLoader;
 import com.github.lecho.conference.util.Optional;
+import com.github.lecho.conference.util.Utils;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
 import com.squareup.picasso.Picasso;
 
@@ -104,11 +105,6 @@ public class SpeakerActivity extends AppCompatActivity implements LoaderManager
 
     protected class HeaderController {
 
-        private static final String TWITTER_WWW = "https://twitter.com/";
-        private static final String TWITTER_PACKAGE = "com.twitter.android";
-        private static final String TWITTER_URI = "twitter://user?screen_name=";
-        private static final String ASSETS_SPEAKERS_IMAGES = "file:///android_asset/speakers-images/";
-
         @Bind(R.id.speaker_avatar)
         CircleImageView avatarView;
 
@@ -125,21 +121,11 @@ public class SpeakerActivity extends AppCompatActivity implements LoaderManager
             ButterKnife.bind(this, view);
         }
 
-        public void bind(SpeakerViewDto speakerViewDto) {
+        public void bind(final SpeakerViewDto speakerViewDto) {
             speakerNameView.setText(getSpeakersFullName(speakerViewDto));
-            loadAvatar(speakerViewDto.photo);
-            twitterButton.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    gotToTwitterProfile("leszekwach");
-                }
-            });
-        }
-
-        private void loadAvatar(String photoFileName) {
-            Picasso.with(getApplicationContext()).load(ASSETS_SPEAKERS_IMAGES + photoFileName)
-                    .placeholder(R.drawable.dummy_avatar).into(avatarView);
+            Utils.loadAvatar(getApplicationContext(), speakerViewDto.photo, avatarView);
+            setUpWwwButton(speakerViewDto);
+            setUpTwitterButton(speakerViewDto);
         }
 
         @NonNull
@@ -147,24 +133,30 @@ public class SpeakerActivity extends AppCompatActivity implements LoaderManager
             return new StringBuilder(speakerViewDto.firstName).append(" ").append(speakerViewDto.lastName).toString();
         }
 
-        private void gotToTwitterProfile(String username) {
-            try {
-                getPackageManager().getPackageInfo(TWITTER_PACKAGE, 0);
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(TWITTER_URI + username));
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            } catch (Exception e) {
-                goToWebPage(TWITTER_WWW + username);
+        private void setUpWwwButton(final SpeakerViewDto speakerViewDto) {
+            if (TextUtils.isEmpty(speakerViewDto.wwwPage)) {
+                wwwButton.setEnabled(false);
+            } else {
+                wwwButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Utils.openWebBrowser(getApplicationContext(), speakerViewDto.wwwPage);
+                    }
+                });
             }
         }
 
-        private void goToWebPage(@NonNull String url) {
-            StringBuilder urlBuilder = new StringBuilder(url);
-            if (!url.startsWith("http://") || !url.startsWith("https://")) {
-                urlBuilder.insert(0, "http://");
+        private void setUpTwitterButton(final SpeakerViewDto speakerViewDto) {
+            if (TextUtils.isEmpty(speakerViewDto.twitterProfile)) {
+                twitterButton.setEnabled(false);
+            } else {
+                twitterButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Utils.openTwitter(getApplicationContext(), speakerViewDto.twitterProfile);
+                    }
+                });
             }
-            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(urlBuilder.toString()));
-            startActivity(i);
         }
     }
 

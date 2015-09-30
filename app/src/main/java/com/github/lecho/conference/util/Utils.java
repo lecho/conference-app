@@ -11,8 +11,11 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.util.Log;
 import android.util.Pair;
+import android.widget.ImageView;
 
+import com.github.lecho.conference.R;
 import com.github.lecho.conference.service.ContentUpdateService;
+import com.squareup.picasso.Picasso;
 
 import io.realm.Realm;
 
@@ -23,8 +26,12 @@ public class Utils {
 
     private static final String TAG = Utils.class.getSimpleName();
     private static final String GOOGLE_MAPS_PACKAGE = "com.google.android.apps.maps";
+    private static final String TWITTER_WWW = "https://twitter.com/";
+    private static final String TWITTER_PACKAGE = "com.twitter.android";
+    private static final String TWITTER_URI = "twitter://user?screen_name=";
     public static final String PREFS_FILE_NAME = "conference-shared-prefs";
     public static final String PREFS_SCHEMA_VERSION = "schema-version";
+    private static final String ASSETS_SPEAKERS_IMAGES = "file:///android_asset/speakers-images/";
 
     public static void upgradeSchema(Context context) {
         if (Utils.checkIfSchemaUpgradeNeeded(context)) {
@@ -47,6 +54,11 @@ public class Utils {
         return false;
     }
 
+    public static void loadAvatar(Context context, String photoFileName, ImageView imageView) {
+        Picasso.with(context.getApplicationContext()).load(ASSETS_SPEAKERS_IMAGES + photoFileName)
+                .placeholder(R.drawable.dummy_avatar).into(imageView);
+    }
+
     public static boolean launchGMaps(Context context, double latitude, double longitude) {
         final String GMAPS = "geo:";
         final String ZOOM = "?z=17";
@@ -55,6 +67,7 @@ public class Utils {
         try {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(sb.toString()));
             intent.setPackage(GOOGLE_MAPS_PACKAGE);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             ComponentName componentName = intent.resolveActivity(context.getPackageManager());
             if (null == componentName) {
                 Log.e(TAG, "No activity to handle geo intent");
@@ -69,15 +82,15 @@ public class Utils {
     }
 
     @SuppressLint("DefaultLocale")
-    public static boolean launchWebBrowser(Context context, String url) {
+    public static boolean openWebBrowser(Context context, String url) {
         try {
             url = url.toLowerCase();
             if (!url.startsWith("http://") || !url.startsWith("https://")) {
                 url = "http://" + url;
             }
 
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(url));
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             ResolveInfo resolveInfo = context.getPackageManager().resolveActivity(intent,
                     PackageManager.MATCH_DEFAULT_ONLY);
             if (null == resolveInfo) {
@@ -85,11 +98,27 @@ public class Utils {
                 return false;
             }
             context.startActivity(intent);
-            Log.i(TAG, "Launching browser with url: " + url);
             return true;
         } catch (Exception e) {
             Log.e(TAG, "Could not start web browser", e);
             return false;
+        }
+    }
+
+    public static boolean openTwitter(Context context, String username) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(TWITTER_URI + username));
+            intent.setPackage(TWITTER_PACKAGE);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            ComponentName componentName = intent.resolveActivity(context.getPackageManager());
+            if (null == componentName) {
+                Log.e(TAG, "No activity to handle twitter intent");
+                return false;
+            }
+            context.startActivity(intent);
+            return true;
+        } catch (Exception e) {
+            return openWebBrowser(context, TWITTER_WWW + username);
         }
     }
 
