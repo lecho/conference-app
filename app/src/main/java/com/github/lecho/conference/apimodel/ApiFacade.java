@@ -37,6 +37,7 @@ public class ApiFacade {
         String venuesJson = readFileFromAssets(context, folderName, VENUES_JSON_FILE);
         String talkJson = readFileFromAssets(context, folderName, TALKS_JSON_FILE);
         String speakersJson = readFileFromAssets(context, folderName, SPEAKERS_JSON_FILE);
+        String sponsorJson = readFileFromAssets(context, folderName, SPONSORS_JSON_FILE);
 
         Map<ApiDtoType, String> jsonsMap = new HashMap<>();
         jsonsMap.put(ApiDtoType.EVENT, eventJson);
@@ -46,6 +47,7 @@ public class ApiFacade {
         jsonsMap.put(ApiDtoType.VENUES, venuesJson);
         jsonsMap.put(ApiDtoType.TALKS, talkJson);
         jsonsMap.put(ApiDtoType.SPEAKERS, speakersJson);
+        jsonsMap.put(ApiDtoType.SPONSORS, sponsorJson);
 
         return parseJsons(jsonsMap);
     }
@@ -76,6 +78,7 @@ public class ApiFacade {
                 apiData.speakersMap = new SpeakerApiDto.SpeakerApiParser().fromJson(json);
                 break;
             case SPONSORS:
+                apiData.sponsorsMap = new SponsorApiDto.SponsorApiParser().fromJson(json);
                 break;
             case TALKS:
                 apiData.talksMap = new TalkApiDto.TalkApiParser().fromJson(json);
