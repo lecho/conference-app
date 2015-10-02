@@ -3,8 +3,8 @@
     "firstname": "Maciej",
     "lastname": "Górski",
     "bio_html": "Maciej is a passionate developer, but also a conference wanderer - during the last year, he spent more time listening (and sometimes speaking) to people during various conferences and meetups on topics mostly related to mobile and Java Eee, than sitting and coding behind his desk. He likes open source. Last year he worked at lot with the new Android API for maps, which resulted in the birth of a small library called Android Maps Extensions. This year he is working on Hrisey, a new kind of anti-boilerplate tool. When he's not programming, Maciej avoids computers and prefers to bike.",
-    "www": "",
-    "twitter": "",
+    "www": "http://paweldudek.github.io/speaking/",
+    "twitter": "dusker",
     "photo_url": "/images/speakers/maciej-gorski.jpg"
   },
   "speaker-maciej-schmidt": {

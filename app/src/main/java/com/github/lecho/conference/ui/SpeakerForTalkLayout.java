@@ -1,12 +1,16 @@
 package com.github.lecho.conference.ui;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.lecho.conference.R;
+import com.github.lecho.conference.util.Utils;
+import com.github.lecho.conference.viewmodel.SpeakerViewDto;
 import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
@@ -17,10 +21,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Displays speaker's name and avatar. Use this class only from code.
  */
-public class SpeakerLayout extends LinearLayout {
+public class SpeakerForTalkLayout extends LinearLayout {
 
-    private static final String ASSETS_SPEAKERS_IMAGES = "file:///android_asset/speakers-images/";
-    private final String speakerKey;
+    private final SpeakerViewDto speakerViewDto;
 
     @Bind(R.id.speaker_avatar)
     CircleImageView avatarView;
@@ -30,29 +33,24 @@ public class SpeakerLayout extends LinearLayout {
 
     @OnClick
     public void onClick() {
-        SpeakerActivity.startActivity(getContext(), speakerKey);
+        SpeakerActivity.startActivity(getContext(), speakerViewDto.key);
     }
 
-    public SpeakerLayout(Context context, String speakerKey) {
+    public SpeakerForTalkLayout(Context context, SpeakerViewDto speakerViewDto) {
         super(context);
-        this.speakerKey = speakerKey;
+        this.speakerViewDto = speakerViewDto;
         LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate(R.layout.include_speaker, this, true);
         ButterKnife.bind(this, this);
     }
 
-    @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
-        ButterKnife.bind(this, this);
+    public void bind() {
+        Utils.loadAvatar(getContext().getApplicationContext(), speakerViewDto.photo, avatarView);
+        speakerNameView.setText(getSpeakerNameText(speakerViewDto));
     }
 
-    public void loadAvatar(String photoFileName) {
-        Picasso.with(getContext()).load(ASSETS_SPEAKERS_IMAGES + photoFileName).placeholder(R.drawable.dummy_avatar)
-                .into(avatarView);
-    }
-
-    public void setSpeakerName(String speakerName) {
-        speakerNameView.setText(speakerName);
+    @NonNull
+    private String getSpeakerNameText(SpeakerViewDto speakerViewDto) {
+        return new StringBuilder(speakerViewDto.firstName).append(" ").append(speakerViewDto.lastName).toString();
     }
 }

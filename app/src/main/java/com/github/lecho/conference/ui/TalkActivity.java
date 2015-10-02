@@ -21,7 +21,6 @@ import com.github.lecho.conference.util.Optional;
 import com.github.lecho.conference.viewmodel.SlotViewDto;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
 import com.github.lecho.conference.viewmodel.TalkViewDto;
-import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -192,16 +191,10 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
         public void bind(TalkViewDto talkViewDto) {
             speakersLayout.removeAllViews();
             for (SpeakerViewDto speakerViewDto : talkViewDto.speakers) {
-                SpeakerLayout speakerLayout = new SpeakerLayout(TalkActivity.this, speakerViewDto.key);
-                speakerLayout.setSpeakerName(getSpeakerNameText(speakerViewDto));
-                speakerLayout.loadAvatar(speakerViewDto.photo);
-                speakersLayout.addView(speakerLayout);
+                SpeakerForTalkLayout speakerForTalkLayout = new SpeakerForTalkLayout(TalkActivity.this, speakerViewDto);
+                speakerForTalkLayout.bind();
+                speakersLayout.addView(speakerForTalkLayout);
             }
-        }
-
-        @NonNull
-        private String getSpeakerNameText(SpeakerViewDto speakerViewDto) {
-            return new StringBuilder(speakerViewDto.firstName).append(" ").append(speakerViewDto.lastName).toString();
         }
     }
 
