@@ -39,7 +39,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
         this.context = context;
     }
 
-    public void setData(List<AgendaItemViewDto> data) {
+    public void setData(@NonNull List<AgendaItemViewDto> data) {
         this.data = data;
         notifyDataSetChanged();
     }
@@ -106,8 +106,8 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
 
         public AgendaViewHolder(Context context, View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
             this.context = context;
+            ButterKnife.bind(this, itemView);
             calendar = Calendar.getInstance();
         }
 

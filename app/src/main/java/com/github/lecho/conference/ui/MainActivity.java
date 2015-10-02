@@ -139,7 +139,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             //More
             SubMenu subMenuMore = navigationMenu.addSubMenu(groupId, itemId++, order++, R.string.navigation_more);
             subMenuMore.add(groupId, itemId++, order++, R.string.navigation_speakers).setCheckable(true).setIcon(R
-                    .drawable.ic_nav_speakers);
+                    .drawable.ic_nav_speakers)
+                    .setOnMenuItemClickListener(new NavigationMenuClickListener(SpeakersFragment.newInstance()));
             subMenuMore.add(groupId, itemId++, order++, R.string.navigation_sponsors).setCheckable(true).setIcon(R
                     .drawable.ic_nav_sponsors)
                     .setOnMenuItemClickListener(new NavigationMenuClickListener(SponsorsFragment.newInstance()));

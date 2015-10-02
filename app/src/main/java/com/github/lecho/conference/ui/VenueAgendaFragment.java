@@ -1,7 +1,6 @@
 package com.github.lecho.conference.ui;
 
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,7 +23,7 @@ import butterknife.ButterKnife;
 
 public class VenueAgendaFragment extends Fragment implements LoaderManager.LoaderCallbacks<AgendaViewDto> {
 
-    public static final String TAG = "VenueAgendaFragment";
+    public static final String TAG = VenueAgendaFragment.class.getSimpleName();
     private static final int LOADER_ID = 0;
     private static final String ARG_VENUE_KEY = "venue-key";
     private static final String ARG_VENUE_NAME = "venue-name";
