@@ -1,14 +1,14 @@
-package com.github.lecho.conference.ui;
+package com.github.lecho.conference.ui.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.lecho.conference.R;
+import com.github.lecho.conference.async.TalkFavoriteTask;
 import com.github.lecho.conference.viewmodel.AgendaItemViewDto;
 import com.github.lecho.conference.viewmodel.TalkViewDto;
 

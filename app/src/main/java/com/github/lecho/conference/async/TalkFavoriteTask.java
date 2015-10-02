@@ -1,9 +1,8 @@
-package com.github.lecho.conference.ui;
+package com.github.lecho.conference.async;
 
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.github.lecho.conference.loader.ContentChangeObserver;
 import com.github.lecho.conference.realmmodel.RealmFacade;
 
 /**

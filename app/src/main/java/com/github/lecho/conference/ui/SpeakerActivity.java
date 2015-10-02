@@ -16,11 +16,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.lecho.conference.R;
-import com.github.lecho.conference.loader.SpeakerLoader;
+import com.github.lecho.conference.ui.loader.SpeakerLoader;
 import com.github.lecho.conference.util.Optional;
 import com.github.lecho.conference.util.Utils;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
-import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

@@ -14,7 +14,7 @@ import android.util.Pair;
 import android.widget.ImageView;
 
 import com.github.lecho.conference.R;
-import com.github.lecho.conference.service.ContentUpdateService;
+import com.github.lecho.conference.async.ContentUpdateService;
 import com.squareup.picasso.Picasso;
 
 import io.realm.Realm;

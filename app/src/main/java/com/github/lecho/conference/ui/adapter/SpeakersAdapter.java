@@ -1,4 +1,4 @@
-package com.github.lecho.conference.ui;
+package com.github.lecho.conference.ui.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.lecho.conference.R;
+import com.github.lecho.conference.ui.SpeakerActivity;
 import com.github.lecho.conference.util.Utils;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
 

@@ -1,11 +1,10 @@
-package com.github.lecho.conference.service;
+package com.github.lecho.conference.async;
 
 import android.app.IntentService;
 import android.content.Intent;
 
 import com.github.lecho.conference.apimodel.ApiData;
 import com.github.lecho.conference.apimodel.ApiFacade;
-import com.github.lecho.conference.loader.ContentChangeObserver;
 import com.github.lecho.conference.realmmodel.RealmFacade;
 
 /**

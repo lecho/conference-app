@@ -1,4 +1,4 @@
-package com.github.lecho.conference.loader;
+package com.github.lecho.conference.ui.loader;
 
 import android.content.Context;
 import android.util.Log;

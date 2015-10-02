@@ -1,4 +1,4 @@
-package com.github.lecho.conference.ui;
+package com.github.lecho.conference.ui.fragment;
 
 
 import android.app.Activity;
@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.lecho.conference.R;
+import com.github.lecho.conference.ui.adapter.SponsorsAdapter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

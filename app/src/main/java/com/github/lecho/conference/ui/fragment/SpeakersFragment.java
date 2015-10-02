@@ -1,4 +1,4 @@
-package com.github.lecho.conference.ui;
+package com.github.lecho.conference.ui.fragment;
 
 
 import android.os.Bundle;
@@ -14,7 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.lecho.conference.R;
-import com.github.lecho.conference.loader.SpeakersLoader;
+import com.github.lecho.conference.ui.loader.SpeakersLoader;
+import com.github.lecho.conference.ui.adapter.SpeakersAdapter;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.github.lecho.conference.ui;
+package com.github.lecho.conference.ui.view;
 
 import android.content.Context;
 import android.support.design.widget.AppBarLayout;

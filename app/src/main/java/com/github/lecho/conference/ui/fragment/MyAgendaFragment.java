@@ -1,4 +1,4 @@
-package com.github.lecho.conference.ui;
+package com.github.lecho.conference.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,7 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.lecho.conference.R;
-import com.github.lecho.conference.loader.AgendaLoader;
+import com.github.lecho.conference.ui.loader.AgendaLoader;
+import com.github.lecho.conference.async.TalkFavoriteTask;
+import com.github.lecho.conference.ui.adapter.AgendaAdapter;
 import com.github.lecho.conference.viewmodel.AgendaItemViewDto;
 import com.github.lecho.conference.viewmodel.AgendaViewDto;
 

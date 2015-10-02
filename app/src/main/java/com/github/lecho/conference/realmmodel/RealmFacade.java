@@ -7,7 +7,7 @@ import android.util.Log;
 import com.github.lecho.conference.apimodel.AgendaItemApiDto;
 import com.github.lecho.conference.apimodel.ApiData;
 import com.github.lecho.conference.apimodel.TalkApiDto;
-import com.github.lecho.conference.loader.ContentChangeObserver;
+import com.github.lecho.conference.ui.loader.ContentChangeObserver;
 import com.github.lecho.conference.util.Optional;
 import com.github.lecho.conference.viewmodel.AgendaItemViewDto;
 import com.github.lecho.conference.viewmodel.AgendaViewDto;

@@ -16,7 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.lecho.conference.R;
-import com.github.lecho.conference.loader.TalkLoader;
+import com.github.lecho.conference.ui.loader.TalkLoader;
+import com.github.lecho.conference.async.TalkFavoriteTask;
+import com.github.lecho.conference.ui.view.SpeakerForTalkLayout;
 import com.github.lecho.conference.util.Optional;
 import com.github.lecho.conference.viewmodel.SlotViewDto;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;

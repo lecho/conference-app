@@ -21,7 +21,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.lecho.conference.R;
-import com.github.lecho.conference.loader.NavigationViewDataLoader;
+import com.github.lecho.conference.ui.loader.NavigationViewDataLoader;
+import com.github.lecho.conference.ui.fragment.MyAgendaFragment;
+import com.github.lecho.conference.ui.fragment.SpeakersFragment;
+import com.github.lecho.conference.ui.fragment.SponsorsFragment;
+import com.github.lecho.conference.ui.fragment.VenueAgendaFragment;
 import com.github.lecho.conference.util.Utils;
 import com.github.lecho.conference.viewmodel.EventViewDto;
 import com.github.lecho.conference.viewmodel.NavigationViewDto;
