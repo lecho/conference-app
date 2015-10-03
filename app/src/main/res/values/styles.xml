@@ -9,8 +9,15 @@
         <item name="android:windowBackground">@color/window_background</item>
     </style>
 
-    <style name="CardViewStyle.Light" parent="CardView.Light">
-        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+    <style name="CardViewItem.Light" parent="CardView.Light">
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+    </style>
+
+    <style name="CardViewItemSelectable.Light" parent="CardViewItem.Light">
+        <item name="android:foreground">?attr/selectableItemBackground</item>
     </style>
 
 </resources>
