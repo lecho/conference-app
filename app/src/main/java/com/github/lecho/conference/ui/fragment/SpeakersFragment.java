@@ -60,7 +60,7 @@ public class SpeakersFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public Loader<List<SpeakerViewDto>> onCreateLoader(int id, Bundle args) {
         if (id == LOADER_ID) {
-            return SpeakersLoader.getSpeakersLoader(getActivity().getApplicationContext());
+            return SpeakersLoader.getLoader(getActivity().getApplicationContext());
         }
         return null;
     }

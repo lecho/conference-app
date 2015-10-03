@@ -91,7 +91,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public Loader<Optional<TalkViewDto>> onCreateLoader(int id, Bundle args) {
         if (id == LOADER_ID) {
-            return TalkLoader.getTalkLoader(this, talkKey);
+            return TalkLoader.getLoader(this, talkKey);
         }
         return null;
     }

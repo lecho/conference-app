@@ -16,6 +16,11 @@ import java.util.Map;
  */
 public class SponsorApiDto {
 
+    private static final String DIAMON = "diamond";
+    private static final String PLATINUM = "platinum";
+    private static final String GOLD = "gold";
+    private static final String SILVER = "silver";
+    private static final String COPPER = "copper";
     public String name;
     public String logoUrl;
     public String link;
@@ -46,7 +51,19 @@ public class SponsorApiDto {
         }
 
         private SponsorType getSponsorType(String sponsorTypeString) {
-            return SponsorType.OTHER;
+            if (DIAMON.equals(sponsorTypeString)) {
+                return SponsorType.DIAMOND;
+            } else if (PLATINUM.equals(sponsorTypeString)) {
+                return SponsorType.PLATINIUM;
+            } else if (GOLD.equals(sponsorTypeString)) {
+                return SponsorType.GOLD;
+            } else if (SILVER.equals(sponsorTypeString)) {
+                return SponsorType.SILVER;
+            } else if (COPPER.equals(sponsorTypeString)) {
+                return SponsorType.COPPER;
+            } else {
+                return SponsorType.OTHER;
+            }
         }
     }
 }

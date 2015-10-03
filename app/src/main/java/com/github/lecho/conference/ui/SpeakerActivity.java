@@ -80,7 +80,7 @@ public class SpeakerActivity extends AppCompatActivity implements LoaderManager
     @Override
     public Loader<Optional<SpeakerViewDto>> onCreateLoader(int id, Bundle args) {
         if (id == LOADER_ID) {
-            return SpeakerLoader.getSpeakerLoader(this, speakerKey);
+            return SpeakerLoader.getLoader(this, speakerKey);
         }
         return null;
     }
@@ -122,7 +122,7 @@ public class SpeakerActivity extends AppCompatActivity implements LoaderManager
 
         public void bind(final SpeakerViewDto speakerViewDto) {
             speakerNameView.setText(getSpeakersFullName(speakerViewDto));
-            Utils.loadAvatar(getApplicationContext(), speakerViewDto.photo, avatarView);
+            Utils.loadSpeakerImage(getApplicationContext(), speakerViewDto.photo, avatarView);
             setUpWwwButton(speakerViewDto);
             setUpTwitterButton(speakerViewDto);
         }

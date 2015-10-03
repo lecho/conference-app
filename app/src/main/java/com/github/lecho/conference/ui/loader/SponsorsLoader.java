@@ -5,17 +5,18 @@ import android.util.Log;
 
 import com.github.lecho.conference.BuildConfig;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
+import com.github.lecho.conference.viewmodel.SponsorViewDto;
 
 import java.util.List;
 
 /**
  * Created by Leszek on 2015-09-03.
  */
-public class SponsorsLoader extends BaseRealmLoader<List<SpeakerViewDto>> {
+public class SponsorsLoader extends BaseRealmLoader<List<SponsorViewDto>> {
 
     private static final String TAG = SponsorsLoader.class.getSimpleName();
 
-    public static SponsorsLoader getSpeakersLoader(Context context) {
+    public static SponsorsLoader getLoader(Context context) {
         return new SponsorsLoader(context);
     }
 
@@ -24,11 +25,11 @@ public class SponsorsLoader extends BaseRealmLoader<List<SpeakerViewDto>> {
     }
 
     @Override
-    public List<SpeakerViewDto> loadInBackground() {
+    public List<SponsorViewDto> loadInBackground() {
         if (BuildConfig.DEBUG) {
             Log.d(TAG, "Loading speakers data");
         }
-        List<SpeakerViewDto> newData = realmFacade.loadAllSpeakers();
+        List<SponsorViewDto> newData = realmFacade.loadAllSponsors();
         return newData;
     }
 }

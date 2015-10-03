@@ -16,7 +16,7 @@ public class TalkLoader extends BaseRealmLoader<Optional<TalkViewDto>> {
     private static final String TAG = TalkLoader.class.getSimpleName();
     private String talkKey;
 
-    public static TalkLoader getTalkLoader(Context context, String talkKey) {
+    public static TalkLoader getLoader(Context context, String talkKey) {
         return new TalkLoader(context, talkKey);
     }
 

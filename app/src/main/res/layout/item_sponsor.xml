@@ -22,7 +22,7 @@
             android:background="@color/gold"/>
 
         <TextView
-            android:id="@+id/text_color"
+            android:id="@+id/text_type"
             style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
             style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/text_color"
+            android:layout_below="@id/text_type"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:gravity="center"

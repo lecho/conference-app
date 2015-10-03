@@ -15,7 +15,7 @@ public class SpeakersLoader extends BaseRealmLoader<List<SpeakerViewDto>> {
 
     private static final String TAG = SpeakersLoader.class.getSimpleName();
 
-    public static SpeakersLoader getSpeakersLoader(Context context) {
+    public static SpeakersLoader getLoader(Context context) {
         return new SpeakersLoader(context);
     }
 

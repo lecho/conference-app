@@ -1,10 +1,11 @@
 package com.github.lecho.conference.ui.fragment;
 
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,14 +15,19 @@ import android.view.ViewGroup;
 
 import com.github.lecho.conference.R;
 import com.github.lecho.conference.ui.adapter.SponsorsAdapter;
+import com.github.lecho.conference.ui.loader.SponsorsLoader;
+import com.github.lecho.conference.viewmodel.SponsorViewDto;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class SponsorsFragment extends Fragment {
+public class SponsorsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<SponsorViewDto>> {
 
-    public static final String TAG = "SponsorsFragment";
-    public static final String[] DATASET = new String[]{"ALA", "OLA", "ELA", "EWA", "JULA"};
+    public static final String TAG = SponsorsFragment.class.getSimpleName();
+    private static final int LOADER_ID = 0;
+    private SponsorsAdapter adapter;
 
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -34,6 +40,7 @@ public class SponsorsFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        getLoaderManager().initLoader(LOADER_ID, null, this);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.title_activity_sponsors);
     }
 
@@ -41,17 +48,31 @@ public class SponsorsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View rootView = inflater.inflate(R.layout.fragment_agenda, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_speakers, container, false);
         ButterKnife.bind(this, rootView);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new SponsorsAdapter(DATASET));
-
+        adapter = new SponsorsAdapter(getActivity());
+        recyclerView.setAdapter(adapter);
         return rootView;
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public Loader<List<SponsorViewDto>> onCreateLoader(int id, Bundle args) {
+        if (id == LOADER_ID) {
+            return SponsorsLoader.getLoader(getActivity().getApplicationContext());
+        }
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<SponsorViewDto>> loader, List<SponsorViewDto> data) {
+        if (loader.getId() == LOADER_ID) {
+            adapter.setData(data);
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<SponsorViewDto>> loader) {
     }
 }

@@ -13,6 +13,7 @@ import com.github.lecho.conference.viewmodel.AgendaItemViewDto;
 import com.github.lecho.conference.viewmodel.AgendaViewDto;
 import com.github.lecho.conference.viewmodel.EventViewDto;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
+import com.github.lecho.conference.viewmodel.SponsorViewDto;
 import com.github.lecho.conference.viewmodel.TalkViewDto;
 import com.github.lecho.conference.viewmodel.VenueViewDto;
 
@@ -41,6 +42,7 @@ public class RealmFacade {
     private Map<String, TalkRealm> talkRealmsMap;
     private Map<String, VenueRealm> venueRealmsMap;
     private Map<String, SpeakerRealm> speakerRealmsMap;
+    private Map<String, SponsorRealm> sponsorRealmMap;
 
     public RealmFacade(Context context) {
         this.context = context.getApplicationContext();
@@ -57,6 +59,7 @@ public class RealmFacade {
             realm.copyToRealmOrUpdate(venueRealmsMap.values());
             realm.copyToRealmOrUpdate(talkRealmsMap.values());
             realm.copyToRealmOrUpdate(speakerRealmsMap.values());
+            realm.copyToRealmOrUpdate(sponsorRealmMap.values());
             realm.commitTransaction();
         } catch (Exception e) {
             if (realm != null) {
@@ -76,6 +79,7 @@ public class RealmFacade {
         talkRealmsMap = convertApiDtoToRealm(apiData.talksMap, new TalkRealm.TalkApiConverter());
         venueRealmsMap = convertApiDtoToRealm(apiData.venuesMap, new VenueRealm.VenueApiConverter());
         speakerRealmsMap = convertApiDtoToRealm(apiData.speakersMap, new SpeakerRealm.SpeakerApiConverter());
+        sponsorRealmMap = convertApiDtoToRealm(apiData.sponsorsMap, new SponsorRealm.SponsorApiConverter());
         createTalkSpeakerRelation(apiData);
         createAgendaRelations(apiData);
     }
@@ -227,11 +231,11 @@ public class RealmFacade {
             SpeakerRealm.SpeakerViewConverter speakerViewConverter = new SpeakerRealm.SpeakerViewConverter();
             realm = Realm.getDefaultInstance();
             RealmResults<SpeakerRealm> speakersRealms = realm.where(SpeakerRealm.class).findAllSorted("firstName");
-            List<SpeakerViewDto> venueViewDtos = new ArrayList<>(speakersRealms.size());
+            List<SpeakerViewDto> speakerViewDtos = new ArrayList<>(speakersRealms.size());
             for (SpeakerRealm speakerRealm : speakersRealms) {
-                venueViewDtos.add(speakerViewConverter.convert(speakerRealm));
+                speakerViewDtos.add(speakerViewConverter.convert(speakerRealm));
             }
-            return venueViewDtos;
+            return speakerViewDtos;
         } finally {
             closeRealm();
         }
@@ -251,6 +255,23 @@ public class RealmFacade {
             closeRealm();
         }
     }
+
+    public List<SponsorViewDto> loadAllSponsors() {
+        try {
+            SponsorRealm.SponsorViewConverter sponsorViewConverter = new SponsorRealm.SponsorViewConverter();
+            realm = Realm.getDefaultInstance();
+            RealmResults<SponsorRealm> sponsorRealms = realm.where(SponsorRealm.class).findAll();
+            List<SponsorViewDto> sponsorViewDtos = new ArrayList<>(sponsorRealms.size());
+            for (SponsorRealm sponsorRealm : sponsorRealms) {
+                sponsorViewDtos.add(sponsorViewConverter.convert(sponsorRealm));
+            }
+            Collections.sort(sponsorViewDtos, new SponsorComparator());
+            return sponsorViewDtos;
+        } finally {
+            closeRealm();
+        }
+    }
+
 
     public void addTalkToMyAgenda(String talkKey, boolean shouldEmitBroadcast) {
         changeTalkFavoriteState(talkKey, true, shouldEmitBroadcast);
@@ -337,6 +358,19 @@ public class RealmFacade {
                 rhsValue = rhs.talk.slot.fromInMilliseconds;
             }
             return (int) (lhsValue - rhsValue);
+        }
+
+        @Override
+        public boolean equals(Object object) {
+            return false;
+        }
+    }
+
+    private static class SponsorComparator implements Comparator<SponsorViewDto> {
+
+        @Override
+        public int compare(SponsorViewDto lhs, SponsorViewDto rhs) {
+            return lhs.type.ordinal() - rhs.type.ordinal();
         }
 
         @Override

@@ -3,8 +3,6 @@ package com.github.lecho.conference.ui.view;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -12,7 +10,6 @@ import com.github.lecho.conference.R;
 import com.github.lecho.conference.ui.SpeakerActivity;
 import com.github.lecho.conference.util.Utils;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
-import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -46,7 +43,7 @@ public class SpeakerForTalkLayout extends LinearLayout {
     }
 
     public void bind() {
-        Utils.loadAvatar(getContext().getApplicationContext(), speakerViewDto.photo, avatarView);
+        Utils.loadSpeakerImage(getContext().getApplicationContext(), speakerViewDto.photo, avatarView);
         speakerNameView.setText(getSpeakerNameText(speakerViewDto));
     }
 

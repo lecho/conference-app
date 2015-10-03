@@ -9,6 +9,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.IntegerRes;
 import android.util.Log;
 import android.util.Pair;
 import android.widget.ImageView;
@@ -31,7 +33,8 @@ public class Utils {
     private static final String TWITTER_URI = "twitter://user?screen_name=";
     public static final String PREFS_FILE_NAME = "conference-shared-prefs";
     public static final String PREFS_SCHEMA_VERSION = "schema-version";
-    private static final String ASSETS_SPEAKERS_IMAGES = "file:///android_asset/speakers-images/";
+    private static final String ASSETS_SPEAKERS_IMAGES = "file:///android_asset/images/speakers";
+    private static final String ASSETS_SPONSORS_IMAGES = "file:///android_asset/images/speakers";
 
     public static void upgradeSchema(Context context) {
         if (Utils.checkIfSchemaUpgradeNeeded(context)) {
@@ -54,9 +57,13 @@ public class Utils {
         return false;
     }
 
-    public static void loadAvatar(Context context, String photoFileName, ImageView imageView) {
-        Picasso.with(context.getApplicationContext()).load(ASSETS_SPEAKERS_IMAGES + photoFileName)
-                .placeholder(R.drawable.dummy_avatar).into(imageView);
+    public static void loadSpeakerImage(Context context, String fileName, ImageView imageView) {
+        Picasso.with(context.getApplicationContext()).load(ASSETS_SPEAKERS_IMAGES + fileName).placeholder(R.drawable
+                .dummy_avatar).into(imageView);
+    }
+
+    public static void loadSponsorImage(Context context, String fileName, ImageView imageView) {
+        Picasso.with(context.getApplicationContext()).load(ASSETS_SPONSORS_IMAGES + fileName).into(imageView);
     }
 
     public static boolean launchGMaps(Context context, double latitude, double longitude) {
