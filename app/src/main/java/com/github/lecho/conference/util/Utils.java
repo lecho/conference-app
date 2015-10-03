@@ -90,14 +90,14 @@ public class Utils {
     }
 
     @SuppressLint("DefaultLocale")
-    public static boolean openWebBrowser(Context context, String url) {
+    public static boolean openWebBrowser(Context context, final String url) {
         try {
-            url = url.toLowerCase();
-            if (!url.startsWith("http://") || !url.startsWith("https://")) {
-                url = "http://" + url;
+            StringBuilder targetUrl = new StringBuilder(url.toLowerCase());
+            if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                targetUrl.insert(0, "http://");
             }
 
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(targetUrl.toString()));
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             ResolveInfo resolveInfo = context.getPackageManager().resolveActivity(intent,
                     PackageManager.MATCH_DEFAULT_ONLY);
