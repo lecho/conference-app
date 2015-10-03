@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
     android:id="@+id/card_view"
-    style="@style/CardView.Light"
+    style="@style/CardViewItemSelectable.Light"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    android:layout_marginTop="8dp">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,7 +12,7 @@
         android:padding="16dp">
 
         <View
-            android:id="@+id/color"
+            android:id="@+id/sponsor_color"
             android:layout_width="match_parent"
             android:layout_height="16dp"
             android:background="@color/gold"/>
@@ -26,7 +22,7 @@
             style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/color"
+            android:layout_below="@id/sponsor_color"
             android:gravity="center"
             android:text="GOLD SPONSOR"
             android:textStyle="bold"/>
@@ -41,15 +37,23 @@
             android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="Mobica"
-            android:textColor="@color/primary_dark"
+            android:textColor="@color/primary"
             android:textStyle="bold"/>
 
 
         <ImageView
-            android:id="@+id/logo"
+            android:id="@+id/sponsor_logo"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="64dp"
             android:layout_below="@id/text_name"
             android:scaleType="centerInside"/>
+
+        <TextView
+            android:id="@+id/text_web_page"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sponsor_logo"
+            android:gravity="center"/>
     </RelativeLayout>
 </android.support.v7.widget.CardView>

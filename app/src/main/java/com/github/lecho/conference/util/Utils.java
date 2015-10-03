@@ -63,7 +63,8 @@ public class Utils {
     }
 
     public static void loadSponsorImage(Context context, String fileName, ImageView imageView) {
-        Picasso.with(context.getApplicationContext()).load(ASSETS_SPONSORS_IMAGES + fileName).into(imageView);
+        Picasso.with(context.getApplicationContext()).load(ASSETS_SPONSORS_IMAGES + fileName).placeholder(R.drawable
+                .dummy_sponsor).into(imageView);
     }
 
     public static boolean launchGMaps(Context context, double latitude, double longitude) {

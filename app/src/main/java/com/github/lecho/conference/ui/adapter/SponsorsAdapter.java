@@ -1,6 +1,7 @@
 package com.github.lecho.conference.ui.adapter;
 
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -50,9 +51,12 @@ public class SponsorsAdapter extends RecyclerView.Adapter<SponsorsAdapter.Sponso
         return data.size();
     }
 
-    public static class SponsorViewHolder extends RecyclerView.ViewHolder {
+    public class SponsorViewHolder extends RecyclerView.ViewHolder {
 
         private final Context context;
+
+        @Bind(R.id.sponsor_color)
+        View sponsorColorView;
 
         @Bind(R.id.text_type)
         TextView typeView;
@@ -60,8 +64,11 @@ public class SponsorsAdapter extends RecyclerView.Adapter<SponsorsAdapter.Sponso
         @Bind(R.id.text_name)
         TextView nameView;
 
-        @Bind(R.id.logo)
+        @Bind(R.id.sponsor_logo)
         ImageView logoView;
+
+        @Bind(R.id.text_web_page)
+        TextView webPageView;
 
         public SponsorViewHolder(Context context, View itemView) {
             super(itemView);
@@ -70,8 +77,30 @@ public class SponsorsAdapter extends RecyclerView.Adapter<SponsorsAdapter.Sponso
         }
 
         public void bindView(SponsorViewDto sponsorViewDto) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                sponsorColorView.setBackgroundColor(context.getResources().getColor(sponsorViewDto.type.getColorRes()));
+            } else {
+                sponsorColorView.setBackgroundColor(context.getColor(sponsorViewDto.type.getColorRes()));
+            }
+            typeView.setText(sponsorViewDto.type.getTextRes());
             nameView.setText(sponsorViewDto.name);
+            webPageView.setText(sponsorViewDto.wwwPage);
             Utils.loadSponsorImage(context.getApplicationContext(), sponsorViewDto.logo, logoView);
+            itemView.setOnClickListener(new SponsorItemClickListener(sponsorViewDto.wwwPage));
+        }
+    }
+
+    private class SponsorItemClickListener implements View.OnClickListener {
+
+        private final String webPage;
+
+        public SponsorItemClickListener(String webPage) {
+            this.webPage = webPage;
+        }
+
+        @Override
+        public void onClick(View v) {
+            Utils.openWebBrowser(context.getApplicationContext(), webPage);
         }
     }
 

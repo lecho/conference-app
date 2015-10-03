@@ -54,7 +54,7 @@ public class SponsorApiDto {
             if (DIAMON.equals(sponsorTypeString)) {
                 return SponsorType.DIAMOND;
             } else if (PLATINUM.equals(sponsorTypeString)) {
-                return SponsorType.PLATINIUM;
+                return SponsorType.PLATINUM;
             } else if (GOLD.equals(sponsorTypeString)) {
                 return SponsorType.GOLD;
             } else if (SILVER.equals(sponsorTypeString)) {
