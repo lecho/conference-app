@@ -3,6 +3,8 @@ package com.github.lecho.conference.apimodel;
 import android.content.Context;
 import android.util.Log;
 
+import com.github.lecho.conference.util.Utils;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -29,15 +31,16 @@ public class ApiFacade {
         AGENDA, EVENT, BREAKS, SLOTS, SPEAKERS, SPONSORS, TALKS, VENUES
     }
 
-    public ApiData parseJsonFilesFromAssets(Context context, String folderName) {
-        String eventJson = readFileFromAssets(context, folderName, EVENT_JSON_FILE);
-        String agendaJson = readFileFromAssets(context, folderName, SCHEDULE_JSON_FILE);
-        String slotJson = readFileFromAssets(context, folderName, SLOTS_JSON_FILE);
-        String breaksJson = readFileFromAssets(context, folderName, BREAKS_JSON_FILE);
-        String venuesJson = readFileFromAssets(context, folderName, VENUES_JSON_FILE);
-        String talkJson = readFileFromAssets(context, folderName, TALKS_JSON_FILE);
-        String speakersJson = readFileFromAssets(context, folderName, SPEAKERS_JSON_FILE);
-        String sponsorJson = readFileFromAssets(context, folderName, SPONSORS_JSON_FILE);
+    public ApiData parseJsonFilesFromAssets(Context context) {
+        final String jsonFolder = Utils.getJsonFolder();
+        String eventJson = Utils.readFileFromAssets(context, jsonFolder, EVENT_JSON_FILE);
+        String agendaJson = Utils.readFileFromAssets(context, jsonFolder, SCHEDULE_JSON_FILE);
+        String slotJson = Utils.readFileFromAssets(context, jsonFolder, SLOTS_JSON_FILE);
+        String breaksJson = Utils.readFileFromAssets(context, jsonFolder, BREAKS_JSON_FILE);
+        String venuesJson = Utils.readFileFromAssets(context, jsonFolder, VENUES_JSON_FILE);
+        String talkJson = Utils.readFileFromAssets(context, jsonFolder, TALKS_JSON_FILE);
+        String speakersJson = Utils.readFileFromAssets(context, jsonFolder, SPEAKERS_JSON_FILE);
+        String sponsorJson = Utils.readFileFromAssets(context, jsonFolder, SPONSORS_JSON_FILE);
 
         Map<ApiDtoType, String> jsonsMap = new HashMap<>();
         jsonsMap.put(ApiDtoType.EVENT, eventJson);
@@ -88,29 +91,5 @@ public class ApiFacade {
                 break;
         }
         return apiData;
-    }
-
-    private String readFileFromAssets(Context context, String folderName, String fileName) {
-        String jsonString = "";
-        BufferedInputStream bufferedInputStream = null;
-        try {
-            File jsonFile = new File(folderName, fileName);
-            InputStream inputStream = context.getAssets().open(jsonFile.getPath(), Context.MODE_PRIVATE);
-            bufferedInputStream = new BufferedInputStream(inputStream);
-            byte[] buffer = new byte[bufferedInputStream.available()];
-            bufferedInputStream.read(buffer);
-            jsonString = new String(buffer);
-        } catch (IOException e) {
-            Log.e(TAG, "Could not read file from assets", e);
-        } finally {
-            if (bufferedInputStream != null) {
-                try {
-                    bufferedInputStream.close();
-                } catch (IOException e) {
-                    Log.e(TAG, "Could not close input stream", e);
-                }
-            }
-        }
-        return jsonString;
     }
 }

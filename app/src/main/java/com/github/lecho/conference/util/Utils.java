@@ -19,6 +19,11 @@ import com.github.lecho.conference.R;
 import com.github.lecho.conference.async.ContentUpdateService;
 import com.squareup.picasso.Picasso;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
 import io.realm.Realm;
 
 /**
@@ -27,14 +32,17 @@ import io.realm.Realm;
 public class Utils {
 
     private static final String TAG = Utils.class.getSimpleName();
+
+    private static final String ASSETS_JSON_FOLDER = "json";
+    private static final String ASSETS_SPEAKERS_IMAGES = "file:///android_asset/images/speakers";
+    private static final String ASSETS_SPONSORS_IMAGES = "file:///android_asset/images/speakers";
+
     private static final String GOOGLE_MAPS_PACKAGE = "com.google.android.apps.maps";
     private static final String TWITTER_WWW = "https://twitter.com/";
     private static final String TWITTER_PACKAGE = "com.twitter.android";
     private static final String TWITTER_URI = "twitter://user?screen_name=";
     public static final String PREFS_FILE_NAME = "conference-shared-prefs";
     public static final String PREFS_SCHEMA_VERSION = "schema-version";
-    private static final String ASSETS_SPEAKERS_IMAGES = "file:///android_asset/images/speakers";
-    private static final String ASSETS_SPONSORS_IMAGES = "file:///android_asset/images/speakers";
 
     public static void upgradeSchema(Context context) {
         if (Utils.checkIfSchemaUpgradeNeeded(context)) {
@@ -55,6 +63,10 @@ public class Utils {
             return true;
         }
         return false;
+    }
+
+    public static String getJsonFolder() {
+        return ASSETS_JSON_FOLDER;
     }
 
     public static void loadSpeakerImage(Context context, String fileName, ImageView imageView) {
@@ -114,19 +126,16 @@ public class Utils {
     }
 
     public static boolean openTwitter(Context context, String username) {
-        try {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(TWITTER_URI + username));
-            intent.setPackage(TWITTER_PACKAGE);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            ComponentName componentName = intent.resolveActivity(context.getPackageManager());
-            if (null == componentName) {
-                Log.e(TAG, "No activity to handle twitter intent");
-                return false;
-            }
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(TWITTER_URI + username));
+        intent.setPackage(TWITTER_PACKAGE);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        ComponentName componentName = intent.resolveActivity(context.getPackageManager());
+        if (null == componentName) {
+            Log.e(TAG, "No activity to handle twitter intent");
+            return openWebBrowser(context, TWITTER_WWW + username);
+        } else {
             context.startActivity(intent);
             return true;
-        } catch (Exception e) {
-            return openWebBrowser(context, TWITTER_WWW + username);
         }
     }
 
@@ -138,5 +147,29 @@ public class Utils {
             Log.e(TAG, "Could not get version number");
             return new Pair<>("", 0);
         }
+    }
+
+    public static String readFileFromAssets(Context context, String folderName, String fileName) {
+        String jsonString = "";
+        BufferedInputStream bufferedInputStream = null;
+        try {
+            File jsonFile = new File(folderName, fileName);
+            InputStream inputStream = context.getAssets().open(jsonFile.getPath(), Context.MODE_PRIVATE);
+            bufferedInputStream = new BufferedInputStream(inputStream);
+            byte[] buffer = new byte[bufferedInputStream.available()];
+            bufferedInputStream.read(buffer);
+            jsonString = new String(buffer);
+        } catch (IOException e) {
+            Log.e(TAG, "Could not read file from assets", e);
+        } finally {
+            if (bufferedInputStream != null) {
+                try {
+                    bufferedInputStream.close();
+                } catch (IOException e) {
+                    Log.e(TAG, "Could not close input stream", e);
+                }
+            }
+        }
+        return jsonString;
     }
 }
