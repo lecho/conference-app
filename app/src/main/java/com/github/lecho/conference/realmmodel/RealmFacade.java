@@ -7,7 +7,7 @@ import android.util.Log;
 import com.github.lecho.conference.apimodel.AgendaItemApiDto;
 import com.github.lecho.conference.apimodel.ApiData;
 import com.github.lecho.conference.apimodel.TalkApiDto;
-import com.github.lecho.conference.ui.loader.ContentChangeObserver;
+import com.github.lecho.conference.ui.loader.LoaderChangeObserver;
 import com.github.lecho.conference.util.Optional;
 import com.github.lecho.conference.viewmodel.AgendaItemViewDto;
 import com.github.lecho.conference.viewmodel.AgendaViewDto;
@@ -68,7 +68,7 @@ public class RealmFacade {
             Log.e(TAG, "Could not save api data to realm", e);
         } finally {
             closeRealm();
-            ContentChangeObserver.emitBroadcast(context.getApplicationContext());
+            LoaderChangeObserver.emitBroadcast(context.getApplicationContext());
         }
     }
 
@@ -293,7 +293,7 @@ public class RealmFacade {
             talkRealm.setIsInMyAgenda(isInMyAgenda);
             realm.commitTransaction();
             if (shouldEmitBroadcast) {
-                ContentChangeObserver.emitBroadcast(context.getApplicationContext());
+                LoaderChangeObserver.emitBroadcast(context.getApplicationContext());
             }
         } catch (Exception e) {
             if (realm != null) {

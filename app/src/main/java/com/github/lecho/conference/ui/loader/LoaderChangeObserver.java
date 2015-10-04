@@ -12,13 +12,13 @@ import com.github.lecho.conference.BuildConfig;
 /**
  * Created by Leszek on 2015-09-26.
  */
-public class ContentChangeObserver extends BroadcastReceiver {
+public class LoaderChangeObserver extends BroadcastReceiver {
 
-    private static final String TAG = ContentChangeObserver.class.getSimpleName();
+    private static final String TAG = LoaderChangeObserver.class.getSimpleName();
     private static final String CONTENT_CHANGE_BROADCAST_ACTION = "content-change-broadcast-action";
     private BaseRealmLoader loader;
 
-    public ContentChangeObserver(BaseRealmLoader loader) {
+    public LoaderChangeObserver(BaseRealmLoader loader) {
         this.loader = loader;
     }
 

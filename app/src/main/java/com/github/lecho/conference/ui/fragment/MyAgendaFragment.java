@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Leszek on 2015-07-08.
  */
-public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCallbacks<AgendaViewDto> {
+public class MyAgendaFragment extends BaseAgendaFragment implements LoaderManager.LoaderCallbacks<AgendaViewDto> {
 
     public static final String TAG = "MyAgendaFragment";
     private static final int LOADER_ID = 0;
@@ -65,12 +65,12 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
         return rootView;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        //Only to refresh current item indicator when time have changed, good enough without timer
-        adapter.notifyDataSetChanged();
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        //Only to refresh current item indicator when time have changed, good enough without timer
+//        adapter.notifyDataSetChanged();
+//    }
 
     @Override
     public Loader<AgendaViewDto> onCreateLoader(int id, Bundle args) {

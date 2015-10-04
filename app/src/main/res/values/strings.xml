@@ -26,4 +26,7 @@
     <string name="sponsor_type_silver">SILVER SPONSOR</string>
     <string name="sponsor_type_copper">COPPER SPONSOR</string>
     <string name="sponsor_type_other">OTHER SPONSOR</string>
+
+    <string name="talk_added_to_myagenda">Talk added to My Agenda</string>
+    <string name="talk_removed_to_myagenda">Talk removed from My Agenda</string>
 </resources>

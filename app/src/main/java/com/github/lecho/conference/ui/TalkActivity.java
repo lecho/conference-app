@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.lecho.conference.R;
+import com.github.lecho.conference.ui.snackbar.SnackbarForTalkHelper;
+import com.github.lecho.conference.ui.snackbar.SnackbarForTalkObserver;
 import com.github.lecho.conference.ui.loader.TalkLoader;
 import com.github.lecho.conference.async.TalkFavoriteTask;
 import com.github.lecho.conference.ui.view.SpeakerForTalkLayout;
@@ -37,6 +40,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
     private HeaderController headerController;
     private InfoCardController infoCardController;
     private SpeakersCardController speakersCardController;
+    private SnackbarForTalkHelper snackbarForTalkHelper;
 
     @Bind(R.id.toolbar)
     Toolbar toolbarView;
@@ -69,6 +73,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
         headerController = new HeaderController(headerView);
         infoCardController = new InfoCardController(infoCard);
         speakersCardController = new SpeakersCardController(speakersCard);
+        snackbarForTalkHelper = new SnackbarForTalkHelper(getApplicationContext(), toolbarView);
 
         setSupportActionBar(toolbarView);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -76,6 +81,18 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
 
         talkKey = getIntent().getStringExtra(ARG_TALK_KEY);
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        snackbarForTalkHelper.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        snackbarForTalkHelper.onResume();
     }
 
     @Override

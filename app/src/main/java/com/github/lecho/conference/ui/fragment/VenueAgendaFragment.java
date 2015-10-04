@@ -17,12 +17,13 @@ import android.view.ViewGroup;
 import com.github.lecho.conference.R;
 import com.github.lecho.conference.ui.loader.AgendaLoader;
 import com.github.lecho.conference.ui.adapter.VenueAgendaAdapter;
+import com.github.lecho.conference.ui.snackbar.SnackbarForTalkHelper;
 import com.github.lecho.conference.viewmodel.AgendaViewDto;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class VenueAgendaFragment extends Fragment implements LoaderManager.LoaderCallbacks<AgendaViewDto> {
+public class VenueAgendaFragment extends BaseAgendaFragment implements LoaderManager.LoaderCallbacks<AgendaViewDto> {
 
     public static final String TAG = VenueAgendaFragment.class.getSimpleName();
     private static final int LOADER_ID = 0;
@@ -51,7 +52,6 @@ public class VenueAgendaFragment extends Fragment implements LoaderManager.Loade
         String venueName = getArguments().getString(ARG_VENUE_NAME);
         StringBuilder title = new StringBuilder(venueName).append(" ").append(getString(R.string.title_activity_track));
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(title.toString());
-
     }
 
     @Nullable
@@ -66,13 +66,6 @@ public class VenueAgendaFragment extends Fragment implements LoaderManager.Loade
         recyclerView.setAdapter(adapter);
 
         return rootView;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        //Only to refresh current item indicator when time have changed, good enough without timer
-        adapter.notifyDataSetChanged();
     }
 
     @Override

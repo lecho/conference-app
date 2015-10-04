@@ -16,7 +16,7 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
     protected T data;
     protected final RealmFacade realmFacade;
     protected final boolean shouldHaveContentObserver;
-    protected ContentChangeObserver contentChangeObserver;
+    protected LoaderChangeObserver contentChangeObserver;
 
     protected BaseRealmLoader(Context context, boolean shouldObserveContent) {
         super(context.getApplicationContext());
@@ -122,7 +122,7 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
 
     private void registerObserver() {
         if (shouldHaveContentObserver && contentChangeObserver == null) {
-            contentChangeObserver = new ContentChangeObserver(this);
+            contentChangeObserver = new LoaderChangeObserver(this);
             contentChangeObserver.register();
         }
     }
