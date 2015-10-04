@@ -4,7 +4,9 @@ import android.content.Context;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -86,7 +88,9 @@ public class SponsorsAdapter extends RecyclerView.Adapter<SponsorsAdapter.Sponso
             nameView.setText(sponsorViewDto.name);
             webPageView.setText(sponsorViewDto.wwwPage);
             Utils.loadSponsorImage(context.getApplicationContext(), sponsorViewDto.logo, logoView);
-            itemView.setOnClickListener(new SponsorItemClickListener(sponsorViewDto.wwwPage));
+            if (!TextUtils.isEmpty(sponsorViewDto.wwwPage)) {
+                itemView.setOnClickListener(new SponsorItemClickListener(sponsorViewDto.wwwPage));
+            }
         }
     }
 
