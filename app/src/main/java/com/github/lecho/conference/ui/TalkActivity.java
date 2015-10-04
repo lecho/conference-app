@@ -17,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.lecho.conference.R;
+import com.github.lecho.conference.realmmodel.RealmFacade;
+import com.github.lecho.conference.ui.fragment.SlotConflictDialogFragment;
 import com.github.lecho.conference.ui.snackbar.SnackbarForTalkHelper;
 import com.github.lecho.conference.ui.snackbar.SnackbarForTalkObserver;
 import com.github.lecho.conference.ui.loader.TalkLoader;
@@ -107,6 +109,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader<Optional<TalkViewDto>> onCreateLoader(int id, Bundle args) {
+        Log.w(TAG, "Create lodar talk data: " + talkKey);
         if (id == LOADER_ID) {
             return TalkLoader.getLoader(this, talkKey);
         }
@@ -115,6 +118,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<Optional<TalkViewDto>> loader, Optional<TalkViewDto> data) {
+        Log.w(TAG, "Loaded talk data: " + talkKey);
         if (loader.getId() == LOADER_ID) {
             if (!data.isPresent()) {
                 Log.w(TAG, "Talk data is null for talk-key: " + talkKey);
@@ -229,12 +233,17 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
 
         @Override
         public void onClick(View v) {
+            RealmFacade realmFacade = new RealmFacade(context);
             FloatingActionButton floatingActionButton = (FloatingActionButton) v;
             if (talkViewDto.isInMyAgenda) {
                 floatingActionButton.setImageResource(R.drawable.ic_star_border_accent_big);
                 talkViewDto.isInMyAgenda = false;
                 TalkFavoriteTask.removeFromMyAgenda(context, talkViewDto.key, true);
             } else {
+                if (!realmFacade.isTalkSlotEmpty(talkViewDto.key)) {
+                    SlotConflictDialogFragment.show(TalkActivity.this, talkViewDto.key);
+                    return;
+                }
                 floatingActionButton.setImageResource(R.drawable.ic_star_accent_big);
                 talkViewDto.isInMyAgenda = true;
                 TalkFavoriteTask.addToMyAgenda(context, talkViewDto.key, true);

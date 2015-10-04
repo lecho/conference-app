@@ -29,4 +29,8 @@
 
     <string name="talk_added_to_myagenda">Talk added to My Agenda</string>
     <string name="talk_removed_to_myagenda">Talk removed from My Agenda</string>
+    <string name="dialog_slot_conflict_title">Slot conflict</string>
+    <string name="dialog_slot_conflict_message">"You have another talk in the same time slot. Do you want to replace it with this talk?"</string>
+    <string name="dialog_slot_conflict_button_positive">Yes</string>
+    <string name="dialog_slot_conflict_button_negative">No</string>
 </resources>
