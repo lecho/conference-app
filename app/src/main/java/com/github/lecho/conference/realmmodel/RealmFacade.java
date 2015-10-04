@@ -213,6 +213,10 @@ public class RealmFacade {
         return realm.where(TalkRealm.class).equalTo("key", talkKey).findFirst();
     }
 
+    private TalkRealm loadFavoriteTalkRealmBySlot(String slotKey) {
+        return realm.where(TalkRealm.class).equalTo("isInMyAgenda", true).equalTo("slot.key", slotKey).findFirst();
+    }
+
     public Optional<SpeakerViewDto> loadSpeakerByKey(String speakerKey) {
         try {
             realm = Realm.getDefaultInstance();
@@ -296,6 +300,21 @@ public class RealmFacade {
                 realm.cancelTransaction();
             }
             Log.e(TAG, "Could not add talk to my agenda", e);
+        } finally {
+            closeRealm();
+        }
+    }
+
+    public boolean isTalkSlotEmpty(String talkKey) {
+        try {
+            realm = Realm.getDefaultInstance();
+            final TalkRealm talkRealm = loadTalkRealmByKey(talkKey);
+            final TalkRealm conflictedTalk = loadFavoriteTalkRealmBySlot(talkRealm.getSlot().getKey());
+            if (null == conflictedTalk) {
+                return true;
+            } else {
+                return false;
+            }
         } finally {
             closeRealm();
         }
