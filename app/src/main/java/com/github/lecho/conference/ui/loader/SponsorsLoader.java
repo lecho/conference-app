@@ -21,7 +21,7 @@ public class SponsorsLoader extends BaseRealmLoader<List<SponsorViewDto>> {
     }
 
     private SponsorsLoader(Context context) {
-        super(context, true);
+        super(context);
     }
 
     @Override

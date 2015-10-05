@@ -20,7 +20,7 @@ public class SpeakersLoader extends BaseRealmLoader<List<SpeakerViewDto>> {
     }
 
     private SpeakersLoader(Context context) {
-        super(context, true);
+        super(context);
     }
 
     @Override

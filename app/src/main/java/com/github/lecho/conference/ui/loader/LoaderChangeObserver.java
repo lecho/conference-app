@@ -27,13 +27,13 @@ public class LoaderChangeObserver extends BroadcastReceiver {
         LocalBroadcastManager.getInstance(context).sendBroadcast(broadcastIntent);
     }
 
-    public void register() {
+    public void register(Context context) {
         IntentFilter intentFilter = new IntentFilter(CONTENT_CHANGE_BROADCAST_ACTION);
-        LocalBroadcastManager.getInstance(loader.getContext()).registerReceiver(this, intentFilter);
+        LocalBroadcastManager.getInstance(context).registerReceiver(this, intentFilter);
     }
 
-    public void unregister() {
-        LocalBroadcastManager.getInstance(loader.getContext()).unregisterReceiver(this);
+    public void unregister(Context context) {
+        LocalBroadcastManager.getInstance(context).unregisterReceiver(this);
     }
 
     @Override

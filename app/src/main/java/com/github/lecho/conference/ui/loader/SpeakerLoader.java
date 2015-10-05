@@ -20,7 +20,7 @@ public class SpeakerLoader extends BaseRealmLoader<Optional<SpeakerViewDto>> {
     }
 
     private SpeakerLoader(Context context, String talkKey) {
-        super(context, false);
+        super(context);
         this.speakerKey = talkKey;
     }
 

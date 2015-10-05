@@ -21,7 +21,7 @@ public class TalkLoader extends BaseRealmLoader<Optional<TalkViewDto>> {
     }
 
     private TalkLoader(Context context, String talkKey) {
-        super(context, false);
+        super(context);
         if (TextUtils.isEmpty(talkKey)) {
             throw new IllegalArgumentException("Talk key cannot be empty");
         }

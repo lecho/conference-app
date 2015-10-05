@@ -23,7 +23,7 @@ public class NavigationViewDataLoader extends BaseRealmLoader<NavigationViewDto>
     }
 
     private NavigationViewDataLoader(Context context) {
-        super(context, true);
+        super(context);
     }
 
     @Override

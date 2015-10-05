@@ -15,13 +15,11 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
     private static final String TAG = BaseRealmLoader.class.getSimpleName();
     protected T data;
     protected final RealmFacade realmFacade;
-    protected final boolean shouldHaveContentObserver;
     protected LoaderChangeObserver contentChangeObserver;
 
-    protected BaseRealmLoader(Context context, boolean shouldObserveContent) {
+    protected BaseRealmLoader(Context context) {
         super(context.getApplicationContext());
         this.realmFacade = new RealmFacade(getContext());
-        this.shouldHaveContentObserver = shouldObserveContent;
     }
 
     @Override
@@ -121,15 +119,15 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
     }
 
     private void registerObserver() {
-        if (shouldHaveContentObserver && contentChangeObserver == null) {
+        if (contentChangeObserver == null) {
             contentChangeObserver = new LoaderChangeObserver(this);
-            contentChangeObserver.register();
+            contentChangeObserver.register(getContext());
         }
     }
 
     private void unregisterObserver() {
         if (contentChangeObserver != null) {
-            contentChangeObserver.unregister();
+            contentChangeObserver.unregister(getContext());
             contentChangeObserver = null;
         }
     }
