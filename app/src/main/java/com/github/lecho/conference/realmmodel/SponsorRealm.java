@@ -59,7 +59,6 @@ public class SponsorRealm extends RealmObject {
             sponsorRealm.setName(apiDto.name);
             sponsorRealm.setWwwPage(apiDto.link);
             sponsorRealm.setType(apiDto.type.ordinal());
-            Uri.parse(apiDto.logoUrl);
             sponsorRealm.setLogo(Uri.parse(apiDto.logoUrl).getLastPathSegment());
             return sponsorRealm;
         }
@@ -72,7 +71,7 @@ public class SponsorRealm extends RealmObject {
             SponsorViewDto sponsorViewDto = new SponsorViewDto();
             sponsorViewDto.name = realmObject.getName();
             sponsorViewDto.wwwPage = realmObject.getWwwPage();
-            sponsorViewDto.logo = realmObject.logo;
+            sponsorViewDto.logo = realmObject.getLogo();
             //Realm doesn't support Enums
             sponsorViewDto.type = getType(realmObject.getType());
             return sponsorViewDto;

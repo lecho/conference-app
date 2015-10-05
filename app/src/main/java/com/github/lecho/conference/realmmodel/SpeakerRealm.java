@@ -1,5 +1,7 @@
 package com.github.lecho.conference.realmmodel;
 
+import android.net.Uri;
+
 import com.github.lecho.conference.apimodel.SpeakerApiDto;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
 
@@ -85,8 +87,7 @@ public class SpeakerRealm extends RealmObject {
             speakerRealm.setBiography(apiDto.bioHtml);
             speakerRealm.setFirstName(apiDto.firstname);
             speakerRealm.setLastName(apiDto.lastname);
-            //TODO parse photo name
-            speakerRealm.setPhoto(apiDto.photoUrl);
+            speakerRealm.setPhoto(Uri.parse(apiDto.photoUrl).getLastPathSegment());
             speakerRealm.setTwitterProfile(apiDto.twitter);
             speakerRealm.setWebPage(apiDto.www);
             return speakerRealm;

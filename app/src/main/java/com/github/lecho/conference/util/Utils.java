@@ -38,8 +38,8 @@ public class Utils {
     private static final String TAG = Utils.class.getSimpleName();
 
     private static final String ASSETS_JSON_FOLDER = "json";
-    private static final String ASSETS_SPEAKERS_IMAGES = "file:///android_asset/images/speakers";
-    private static final String ASSETS_SPONSORS_IMAGES = "file:///android_asset/images/speakers";
+    private static final String ASSETS_SPEAKERS_IMAGES = "file:///android_asset/images/speakers/";
+    private static final String ASSETS_SPONSORS_IMAGES = "file:///android_asset/images/sponsors/";
 
     private static final String GOOGLE_MAPS_PACKAGE = "com.google.android.apps.maps";
     private static final String TWITTER_WWW = "https://twitter.com/";
