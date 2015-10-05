@@ -3,12 +3,20 @@ package com.github.lecho.conference.ui.fragment;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDialogFragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.github.lecho.conference.R;
-import com.github.lecho.conference.async.TalkFavoriteTask;
+import com.github.lecho.conference.realmmodel.RealmFacade;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by Leszek on 2015-10-04.
@@ -16,17 +24,26 @@ import com.github.lecho.conference.async.TalkFavoriteTask;
 public class SlotConflictDialogFragment extends AppCompatDialogFragment {
 
     private static final String TAG = SlotConflictDialogFragment.class.getSimpleName();
-    private static final String ARG_TALK_KEY = "arg-talk-key";
-    private String talkKey;
+    private static final String ARG_OLD_TALK_KEY = "arg-old-talk-key";
+    private static final String ARG_OLD_TALK_TITLE = "arg-old-talk-title";
+    private static final String ARG_NEW_TALK_KEY = "arg-new-talk-key";
+    private String oldTalkKey;
+    private String newTalkKey;
+    private String oldTalkTitle;
 
-    public static void show(AppCompatActivity activity, String talkKey) {
-        newInstance(talkKey).show(activity.getSupportFragmentManager(), TAG);
+    @Bind(R.id.text_slot_conflict_old_talk_title)
+    TextView oldTalkTitleView;
+
+    public static void show(AppCompatActivity activity, String oldTalkKey, String oldTalkTitle, String newTalkKey) {
+        newInstance(oldTalkKey, oldTalkTitle, newTalkKey).show(activity.getSupportFragmentManager(), TAG);
     }
 
-    private static SlotConflictDialogFragment newInstance(String talkKey) {
+    private static SlotConflictDialogFragment newInstance(String oldTalkKey, String oldTalkName, String newTalkKey) {
         SlotConflictDialogFragment fragment = new SlotConflictDialogFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_TALK_KEY, talkKey);
+        args.putString(ARG_OLD_TALK_KEY, oldTalkKey);
+        args.putString(ARG_OLD_TALK_TITLE, oldTalkName);
+        args.putString(ARG_NEW_TALK_KEY, newTalkKey);
         fragment.setArguments(args);
         return fragment;
     }
@@ -34,14 +51,20 @@ public class SlotConflictDialogFragment extends AppCompatDialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        talkKey = getArguments().getString(ARG_TALK_KEY);
+        oldTalkKey = getArguments().getString(ARG_OLD_TALK_KEY);
+        oldTalkTitle = getArguments().getString(ARG_OLD_TALK_TITLE);
+        newTalkKey = getArguments().getString(ARG_NEW_TALK_KEY);
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        return new AlertDialog.Builder(getContext())
+        final AppCompatActivity activity = (AppCompatActivity) getActivity();
+        View view = activity.getLayoutInflater().inflate(R.layout.dialog_fragment_slot_conflict, null, false);
+        ButterKnife.bind(this, view);
+        oldTalkTitleView.setText(oldTalkTitle);
+        return new AlertDialog.Builder(activity.getSupportActionBar().getThemedContext())
+                .setView(view)
                 .setTitle(R.string.dialog_slot_conflict_title)
-                .setMessage(R.string.dialog_slot_conflict_message)
                 .setPositiveButton(R.string.dialog_slot_conflict_button_positive, new PositiveClickListener())
                 .setNegativeButton(R.string.dialog_slot_conflict_button_negative, new NegativeClickListener())
                 .create();
@@ -51,7 +74,9 @@ public class SlotConflictDialogFragment extends AppCompatDialogFragment {
 
         @Override
         public void onClick(DialogInterface dialog, int which) {
-            TalkFavoriteTask.addToMyAgenda(getContext().getApplicationContext(), talkKey, true);
+            //TalkFavoriteTask.addToMyAgenda(getContext().getApplicationContext(), talkKey, true);
+            RealmFacade facade = new RealmFacade(getContext().getApplicationContext());
+            facade.replaceTalk(oldTalkKey, newTalkKey);
         }
     }
 

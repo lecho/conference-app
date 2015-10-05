@@ -288,8 +288,8 @@ public class RealmFacade {
     public void changeTalkFavoriteState(String talkKey, boolean isInMyAgenda, boolean shouldEmitBroadcast) {
         try {
             realm = Realm.getDefaultInstance();
-            realm.beginTransaction();
             TalkRealm talkRealm = loadTalkRealmByKey(talkKey);
+            realm.beginTransaction();
             talkRealm.setIsInMyAgenda(isInMyAgenda);
             realm.commitTransaction();
             if (shouldEmitBroadcast) {
@@ -305,16 +305,34 @@ public class RealmFacade {
         }
     }
 
-    public boolean isTalkSlotEmpty(String talkKey) {
+    public Optional<TalkViewDto> checkIfTalkConflicted(String talkKey) {
         try {
             realm = Realm.getDefaultInstance();
-            final TalkRealm talkRealm = loadTalkRealmByKey(talkKey);
-            final TalkRealm conflictedTalk = loadFavoriteTalkRealmBySlot(talkRealm.getSlot().getKey());
-            if (null == conflictedTalk) {
-                return true;
-            } else {
-                return false;
+            TalkRealm talkRealm = loadTalkRealmByKey(talkKey);
+            TalkRealm conflictedTalk = loadFavoriteTalkRealmBySlot(talkRealm.getSlot().getKey());
+            if (conflictedTalk == null) {
+                return Optional.empty();
             }
+            return Optional.of(new TalkRealm.TalkViewConverter().convert(conflictedTalk));
+        } finally {
+            closeRealm();
+        }
+    }
+
+    public void replaceTalk(String oldTalkKey, String newTalkKey) {
+        try {
+            realm = Realm.getDefaultInstance();
+            TalkRealm oldTalkRealm = loadTalkRealmByKey(oldTalkKey);
+            TalkRealm newTalkRealm = loadTalkRealmByKey(newTalkKey);
+            realm.beginTransaction();
+            oldTalkRealm.setIsInMyAgenda(false);
+            newTalkRealm.setIsInMyAgenda(true);
+            realm.commitTransaction();
+        } catch (Exception e) {
+            if (realm != null) {
+                realm.cancelTransaction();
+            }
+            Log.e(TAG, "Could not replace talks, old talk: " + oldTalkKey + ", new talk: " + newTalkKey, e);
         } finally {
             closeRealm();
         }

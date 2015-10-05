@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +19,6 @@ import com.github.lecho.conference.R;
 import com.github.lecho.conference.realmmodel.RealmFacade;
 import com.github.lecho.conference.ui.fragment.SlotConflictDialogFragment;
 import com.github.lecho.conference.ui.snackbar.SnackbarForTalkHelper;
-import com.github.lecho.conference.ui.snackbar.SnackbarForTalkObserver;
 import com.github.lecho.conference.ui.loader.TalkLoader;
 import com.github.lecho.conference.async.TalkFavoriteTask;
 import com.github.lecho.conference.ui.view.SpeakerForTalkLayout;
@@ -240,8 +238,11 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
                 talkViewDto.isInMyAgenda = false;
                 TalkFavoriteTask.removeFromMyAgenda(context, talkViewDto.key, true);
             } else {
-                if (!realmFacade.isTalkSlotEmpty(talkViewDto.key)) {
-                    SlotConflictDialogFragment.show(TalkActivity.this, talkViewDto.key);
+                Optional<TalkViewDto> optionalConflictedTalk = realmFacade.checkIfTalkConflicted(talkViewDto.key);
+                if (optionalConflictedTalk.isPresent()) {
+                    TalkViewDto conflictedTalk = optionalConflictedTalk.get();
+                    SlotConflictDialogFragment.show(TalkActivity.this, conflictedTalk.key, conflictedTalk.title,
+                            talkViewDto.key);
                     return;
                 }
                 floatingActionButton.setImageResource(R.drawable.ic_star_accent_big);
