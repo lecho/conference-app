@@ -14,8 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.lecho.conference.R;
+import com.github.lecho.conference.async.TalkAsyncHelper;
 import com.github.lecho.conference.ui.loader.AgendaLoader;
-import com.github.lecho.conference.async.TalkFavoriteTask;
 import com.github.lecho.conference.ui.adapter.AgendaAdapter;
 import com.github.lecho.conference.viewmodel.AgendaItemViewDto;
 import com.github.lecho.conference.viewmodel.AgendaViewDto;
@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Leszek on 2015-07-08.
  */
-public class MyAgendaFragment extends BaseAgendaFragment implements LoaderManager.LoaderCallbacks<AgendaViewDto> {
+public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCallbacks<AgendaViewDto> {
 
     public static final String TAG = "MyAgendaFragment";
     private static final int LOADER_ID = 0;
@@ -57,20 +57,13 @@ public class MyAgendaFragment extends BaseAgendaFragment implements LoaderManage
 
         //TODO Grid for tablet layout
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new AgendaAdapter(getActivity());
+        adapter = new AgendaAdapter((AppCompatActivity) getActivity());
         recyclerView.setAdapter(adapter);
         itemTouchHelper = new ItemTouchHelper(new MyAgendaItemTouchCallback());
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
         return rootView;
     }
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        //Only to refresh current item indicator when time have changed, good enough without timer
-//        adapter.notifyDataSetChanged();
-//    }
 
     @Override
     public Loader<AgendaViewDto> onCreateLoader(int id, Bundle args) {
@@ -108,8 +101,7 @@ public class MyAgendaFragment extends BaseAgendaFragment implements LoaderManage
             //Remove swiped item from list and notify the RecyclerView
             final int position = viewHolder.getAdapterPosition();
             AgendaItemViewDto agendaItemViewDto = adapter.getItem(position);
-            TalkFavoriteTask.removeFromMyAgenda(getActivity().getApplicationContext(), agendaItemViewDto.talk.key,
-                    false);
+            TalkAsyncHelper.removeTalkSilent(getActivity().getApplicationContext(), agendaItemViewDto.talk.key);
             adapter.removeItemFromAdapter(position);
         }
 

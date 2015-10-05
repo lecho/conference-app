@@ -23,12 +23,13 @@ import com.github.lecho.conference.viewmodel.AgendaViewDto;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class VenueAgendaFragment extends BaseAgendaFragment implements LoaderManager.LoaderCallbacks<AgendaViewDto> {
+public class VenueAgendaFragment extends Fragment implements LoaderManager.LoaderCallbacks<AgendaViewDto> {
 
     public static final String TAG = VenueAgendaFragment.class.getSimpleName();
     private static final int LOADER_ID = 0;
     private static final String ARG_VENUE_KEY = "venue-key";
     private static final String ARG_VENUE_NAME = "venue-name";
+    private SnackbarForTalkHelper snackbarForTalkHelper;
     private VenueAgendaAdapter adapter;
     private String venueKey;
 
@@ -60,12 +61,24 @@ public class VenueAgendaFragment extends BaseAgendaFragment implements LoaderMan
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_agenda, container, false);
         ButterKnife.bind(this, rootView);
-
+        snackbarForTalkHelper = new SnackbarForTalkHelper(getActivity().getApplicationContext(), container);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new VenueAgendaAdapter(getActivity());
+        adapter = new VenueAgendaAdapter((AppCompatActivity) getActivity());
         recyclerView.setAdapter(adapter);
-
         return rootView;
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        snackbarForTalkHelper.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        snackbarForTalkHelper.onResume();
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.github.lecho.conference.ui.adapter;
 
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +10,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.lecho.conference.R;
-import com.github.lecho.conference.async.TalkFavoriteTask;
+import com.github.lecho.conference.async.TalkAsyncHelper;
+import com.github.lecho.conference.util.Utils;
 import com.github.lecho.conference.viewmodel.AgendaItemViewDto;
 import com.github.lecho.conference.viewmodel.TalkViewDto;
 
@@ -16,8 +19,10 @@ import butterknife.Bind;
 
 public class VenueAgendaAdapter extends AgendaAdapter {
 
-    public VenueAgendaAdapter(Context context) {
-        super(context);
+    private static final String TAG = AddToMyAgendaClickListener.class.getSimpleName();
+
+    public VenueAgendaAdapter(AppCompatActivity activity) {
+        super(activity);
     }
 
     @Override
@@ -25,11 +30,11 @@ public class VenueAgendaAdapter extends AgendaAdapter {
         AgendaViewHolder viewHolder;
         if (ITEM_TYPE_BREAK == viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_agenda_break, parent, false);
-            viewHolder = new BreakViewHolder(context, view);
+            viewHolder = new BreakViewHolder(activity, view);
         } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_venue_agenda_talk, parent,
                     false);
-            viewHolder = new VenueAgendaTalkViewHolder(context, view);
+            viewHolder = new VenueAgendaTalkViewHolder(activity, view);
         }
         return viewHolder;
     }
@@ -51,14 +56,14 @@ public class VenueAgendaAdapter extends AgendaAdapter {
         @Bind(R.id.text_speakers)
         TextView speakersView;
 
-        public VenueAgendaTalkViewHolder(Context context, View itemView) {
-            super(context, itemView);
+        public VenueAgendaTalkViewHolder(AppCompatActivity activity, View itemView) {
+            super(activity, itemView);
         }
 
         public void bindView(AgendaItemViewDto agendaItem) {
             TalkViewDto talkViewDto = agendaItem.talk;
             bindSlot(talkViewDto.slot);
-            itemView.setOnClickListener(new TalkItemClickListener(context, talkViewDto.key));
+            itemView.setOnClickListener(new TalkItemClickListener(activity, talkViewDto.key));
             titleView.setText(talkViewDto.title);
             languageView.setText(talkViewDto.language);
             speakersView.setText(getSpeakersText(talkViewDto));
@@ -67,7 +72,7 @@ public class VenueAgendaAdapter extends AgendaAdapter {
             } else {
                 addToMyAgendaButton.setImageResource(R.drawable.ic_star_border_accent);
             }
-            addToMyAgendaButton.setOnClickListener(new AddToMyAgendaClickListener(context, talkViewDto));
+            addToMyAgendaButton.setOnClickListener(new AddToMyAgendaClickListener(activity, talkViewDto));
             addToMyAgendaButtonLayout.setOnClickListener(new AddToMyAgendaLayoutListener(addToMyAgendaButton));
         }
     }
@@ -75,11 +80,11 @@ public class VenueAgendaAdapter extends AgendaAdapter {
     protected class AddToMyAgendaClickListener implements View.OnClickListener {
 
         private TalkViewDto talkViewDto;
-        private Context context;
+        private AppCompatActivity activity;
 
 
-        public AddToMyAgendaClickListener(Context context, TalkViewDto talkViewDto) {
-            this.context = context;
+        public AddToMyAgendaClickListener(AppCompatActivity activity, TalkViewDto talkViewDto) {
+            this.activity = activity;
             this.talkViewDto = talkViewDto;
         }
 
@@ -87,10 +92,14 @@ public class VenueAgendaAdapter extends AgendaAdapter {
         public void onClick(View v) {
             if (talkViewDto.isInMyAgenda) {
                 talkViewDto.isInMyAgenda = false;
-                TalkFavoriteTask.removeFromMyAgenda(context.getApplicationContext(), talkViewDto.key, false);
+                TalkAsyncHelper.removeTalk(activity.getApplicationContext(), talkViewDto.key);
             } else {
+                if (Utils.checkSlotConflict(activity, talkViewDto.key)) {
+                    Log.d(TAG, "Slot conflict for talk with key: " + talkViewDto.key);
+                    return;
+                }
                 talkViewDto.isInMyAgenda = true;
-                TalkFavoriteTask.addToMyAgenda(context.getApplicationContext(), talkViewDto.key, false);
+                TalkAsyncHelper.addTalk(activity.getApplicationContext(), talkViewDto.key);
             }
             notifyDataSetChanged();
         }

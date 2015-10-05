@@ -277,22 +277,26 @@ public class RealmFacade {
     }
 
 
-    public void addTalkToMyAgenda(String talkKey, boolean shouldEmitBroadcast) {
-        changeTalkFavoriteState(talkKey, true, shouldEmitBroadcast);
+    public void addTalkToMyAgenda(String talkKey) {
+        changeTalkFavoriteState(talkKey, true, true);
     }
 
-    public void removeTalkFromMyAgenda(String talkKey, boolean shouldEmitBroadcast) {
-        changeTalkFavoriteState(talkKey, false, shouldEmitBroadcast);
+    public void removeTalkFromMyAgenda(String talkKey) {
+        changeTalkFavoriteState(talkKey, false, true);
     }
 
-    public void changeTalkFavoriteState(String talkKey, boolean isInMyAgenda, boolean shouldEmitBroadcast) {
+    public void removeTalkFromMyAgendaSilent(String talkKey) {
+        changeTalkFavoriteState(talkKey, false, false);
+    }
+
+    private void changeTalkFavoriteState(String talkKey, boolean isInMyAgenda, boolean emitContentBroadcast) {
         try {
             realm = Realm.getDefaultInstance();
             TalkRealm talkRealm = loadTalkRealmByKey(talkKey);
             realm.beginTransaction();
             talkRealm.setIsInMyAgenda(isInMyAgenda);
             realm.commitTransaction();
-            if (shouldEmitBroadcast) {
+            if (emitContentBroadcast) {
                 LoaderChangeObserver.emitBroadcast(context.getApplicationContext());
             }
         } catch (Exception e) {
@@ -328,6 +332,7 @@ public class RealmFacade {
             oldTalkRealm.setIsInMyAgenda(false);
             newTalkRealm.setIsInMyAgenda(true);
             realm.commitTransaction();
+            LoaderChangeObserver.emitBroadcast(context.getApplicationContext());
         } catch (Exception e) {
             if (realm != null) {
                 realm.cancelTransaction();

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.lecho.conference.R;
+import com.github.lecho.conference.async.TalkAsyncHelper;
 import com.github.lecho.conference.realmmodel.RealmFacade;
 
 import butterknife.Bind;
@@ -74,9 +75,7 @@ public class SlotConflictDialogFragment extends AppCompatDialogFragment {
 
         @Override
         public void onClick(DialogInterface dialog, int which) {
-            //TalkFavoriteTask.addToMyAgenda(getContext().getApplicationContext(), talkKey, true);
-            RealmFacade facade = new RealmFacade(getContext().getApplicationContext());
-            facade.replaceTalk(oldTalkKey, newTalkKey);
+            TalkAsyncHelper.replaceTalk(getContext().getApplicationContext(), oldTalkKey, newTalkKey);
         }
     }
 

@@ -27,8 +27,8 @@
     <string name="sponsor_type_copper">COPPER SPONSOR</string>
     <string name="sponsor_type_other">OTHER SPONSOR</string>
 
-    <string name="talk_added_to_myagenda">Talk added to My Agenda</string>
-    <string name="talk_removed_to_myagenda">Talk removed from My Agenda</string>
+    <string name="talk_added_to_myagenda">Added to My Agenda</string>
+    <string name="talk_removed_to_myagenda">Removed from My Agenda</string>
     <string name="dialog_slot_conflict_title">Slot conflict</string>
     <string name="dialog_slot_conflict_message_part1">"You have another talk in the same slot:"</string>
     <string name="dialog_slot_conflict_message_part2">"Do you want to replace it?"</string>

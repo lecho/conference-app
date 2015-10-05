@@ -1,5 +1,6 @@
 package com.github.lecho.conference.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,13 +17,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.lecho.conference.R;
+import com.github.lecho.conference.async.TalkAsyncHelper;
 import com.github.lecho.conference.realmmodel.RealmFacade;
 import com.github.lecho.conference.ui.fragment.SlotConflictDialogFragment;
 import com.github.lecho.conference.ui.snackbar.SnackbarForTalkHelper;
 import com.github.lecho.conference.ui.loader.TalkLoader;
-import com.github.lecho.conference.async.TalkFavoriteTask;
 import com.github.lecho.conference.ui.view.SpeakerForTalkLayout;
 import com.github.lecho.conference.util.Optional;
+import com.github.lecho.conference.util.Utils;
 import com.github.lecho.conference.viewmodel.SlotViewDto;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
 import com.github.lecho.conference.viewmodel.TalkViewDto;
@@ -57,10 +59,10 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
     @Bind(R.id.button_add_to_my_agenda)
     FloatingActionButton addToMyAgendaButton;
 
-    public static void startActivity(@NonNull Context context, @NonNull String talkKey) {
-        Intent intent = new Intent(context, TalkActivity.class);
+    public static void startActivity(@NonNull Activity activity, @NonNull String talkKey) {
+        Intent intent = new Intent(activity, TalkActivity.class);
         intent.putExtra(ARG_TALK_KEY, talkKey);
-        context.startActivity(intent);
+        activity.startActivity(intent);
     }
 
     @Override
@@ -231,23 +233,19 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
 
         @Override
         public void onClick(View v) {
-            RealmFacade realmFacade = new RealmFacade(context);
             FloatingActionButton floatingActionButton = (FloatingActionButton) v;
             if (talkViewDto.isInMyAgenda) {
                 floatingActionButton.setImageResource(R.drawable.ic_star_border_accent_big);
                 talkViewDto.isInMyAgenda = false;
-                TalkFavoriteTask.removeFromMyAgenda(context, talkViewDto.key, true);
+                TalkAsyncHelper.removeTalk(context.getApplicationContext(), talkViewDto.key);
             } else {
-                Optional<TalkViewDto> optionalConflictedTalk = realmFacade.checkIfTalkConflicted(talkViewDto.key);
-                if (optionalConflictedTalk.isPresent()) {
-                    TalkViewDto conflictedTalk = optionalConflictedTalk.get();
-                    SlotConflictDialogFragment.show(TalkActivity.this, conflictedTalk.key, conflictedTalk.title,
-                            talkViewDto.key);
+                if (Utils.checkSlotConflict(TalkActivity.this, talkViewDto.key)) {
+                    Log.d(TAG, "Slot conflict for talk with key: " + talkViewDto.key);
                     return;
                 }
                 floatingActionButton.setImageResource(R.drawable.ic_star_accent_big);
                 talkViewDto.isInMyAgenda = true;
-                TalkFavoriteTask.addToMyAgenda(context, talkViewDto.key, true);
+                TalkAsyncHelper.addTalk(context.getApplicationContext(), talkViewDto.key);
             }
         }
     }

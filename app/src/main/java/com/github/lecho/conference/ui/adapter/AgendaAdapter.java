@@ -2,6 +2,7 @@ package com.github.lecho.conference.ui.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -32,10 +33,10 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
     public static final int ITEM_TYPE_BREAK = 0;
     public static final int ITEM_TYPE_TALK = 1;
     protected List<AgendaItemViewDto> data = new ArrayList<>();
-    protected Context context;
+    protected AppCompatActivity activity;
 
-    public AgendaAdapter(Context context) {
-        this.context = context;
+    public AgendaAdapter(AppCompatActivity activity) {
+        this.activity = activity;
     }
 
     public void setData(@NonNull List<AgendaItemViewDto> data) {
@@ -57,10 +58,10 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
         AgendaViewHolder viewHolder;
         if (ITEM_TYPE_BREAK == viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_agenda_break, parent, false);
-            viewHolder = new BreakViewHolder(context, view);
+            viewHolder = new BreakViewHolder(activity, view);
         } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_agenda_talk, parent, false);
-            viewHolder = new AgendaTalkViewHolder(context, view);
+            viewHolder = new AgendaTalkViewHolder(activity, view);
         }
         return viewHolder;
     }
@@ -88,7 +89,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
 
     protected abstract class AgendaViewHolder extends RecyclerView.ViewHolder {
 
-        protected final Context context;
+        protected final AppCompatActivity activity;
         private Calendar calendar;
         private int fromHour;
         private int fromMinute;
@@ -103,9 +104,9 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
         @Bind(R.id.current_item_indicator)
         ImageView currentItemIndicatorView;
 
-        public AgendaViewHolder(Context context, View itemView) {
+        public AgendaViewHolder(AppCompatActivity activity, View itemView) {
             super(itemView);
-            this.context = context;
+            this.activity = activity;
             ButterKnife.bind(this, itemView);
             calendar = Calendar.getInstance();
         }
@@ -188,8 +189,8 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
         @Bind(R.id.text_title)
         TextView titleView;
 
-        public BreakViewHolder(Context context, View itemView) {
-            super(context, itemView);
+        public BreakViewHolder(AppCompatActivity activity, View itemView) {
+            super(activity, itemView);
         }
 
         @Override
@@ -214,14 +215,14 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
         @Bind(R.id.text_speakers)
         TextView speakersView;
 
-        public AgendaTalkViewHolder(Context context, View itemView) {
-            super(context, itemView);
+        public AgendaTalkViewHolder(AppCompatActivity activity, View itemView) {
+            super(activity, itemView);
         }
 
         public void bindView(AgendaItemViewDto agendaItem) {
             TalkViewDto talkViewDto = agendaItem.talk;
             bindSlot(talkViewDto.slot);
-            itemView.setOnClickListener(new TalkItemClickListener(context, talkViewDto.key));
+            itemView.setOnClickListener(new TalkItemClickListener(activity, talkViewDto.key));
             titleView.setText(talkViewDto.title);
             venueView.setText(talkViewDto.venue.title);
             languageView.setText(talkViewDto.language);
@@ -232,16 +233,16 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
     protected class TalkItemClickListener implements View.OnClickListener {
 
         private final String talkKey;
-        private final Context context;
+        private final AppCompatActivity activity;
 
-        public TalkItemClickListener(Context context, String talkKey) {
+        public TalkItemClickListener(AppCompatActivity activity, String talkKey) {
             this.talkKey = talkKey;
-            this.context = context;
+            this.activity = activity;
         }
 
         @Override
         public void onClick(View v) {
-            TalkActivity.startActivity(context, talkKey);
+            TalkActivity.startActivity(activity, talkKey);
         }
     }
 }

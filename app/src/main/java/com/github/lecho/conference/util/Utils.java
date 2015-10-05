@@ -11,12 +11,16 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntegerRes;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.Pair;
 import android.widget.ImageView;
 
 import com.github.lecho.conference.R;
 import com.github.lecho.conference.async.ContentUpdateService;
+import com.github.lecho.conference.realmmodel.RealmFacade;
+import com.github.lecho.conference.ui.fragment.SlotConflictDialogFragment;
+import com.github.lecho.conference.viewmodel.TalkViewDto;
 import com.squareup.picasso.Picasso;
 
 import java.io.BufferedInputStream;
@@ -77,6 +81,24 @@ public class Utils {
     public static void loadSponsorImage(Context context, String fileName, ImageView imageView) {
         Picasso.with(context.getApplicationContext()).load(ASSETS_SPONSORS_IMAGES + fileName).placeholder(R.drawable
                 .dummy_sponsor).into(imageView);
+    }
+
+    /**
+     * Checks if there is slot conflict for talk with given key. If yes shows conflict dialog.
+     *
+     * @param activity
+     * @param talkKey
+     * @return true if there is slot conflict
+     */
+    public static boolean checkSlotConflict(AppCompatActivity activity, String talkKey) {
+        RealmFacade realmFacade = new RealmFacade(activity.getApplicationContext());
+        Optional<TalkViewDto> optionalConflictedTalk = realmFacade.checkIfTalkConflicted(talkKey);
+        if (optionalConflictedTalk.isPresent()) {
+            TalkViewDto conflictedTalk = optionalConflictedTalk.get();
+            SlotConflictDialogFragment.show(activity, conflictedTalk.key, conflictedTalk.title, talkKey);
+            return true;
+        }
+        return false;
     }
 
     public static boolean launchGMaps(Context context, double latitude, double longitude) {
