@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -13,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -47,17 +49,23 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
     @Bind(R.id.toolbar)
     Toolbar toolbarView;
 
-    @Bind(R.id.talk_header)
-    View headerView;
+    @Bind(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbarLayout;
 
-    @Bind(R.id.info_card)
-    View infoCard;
-
-    @Bind(R.id.speakers_card)
-    View speakersCard;
-
-    @Bind(R.id.button_add_to_my_agenda)
-    FloatingActionButton addToMyAgendaButton;
+    @Bind(R.id.header_image)
+    ImageView headerImageView;
+//
+//    @Bind(R.id.talk_header)
+//    View headerView;
+//
+//    @Bind(R.id.info_card)
+//    View infoCard;
+//
+//    @Bind(R.id.speakers_card)
+//    View speakersCard;
+//
+//    @Bind(R.id.button_add_to_my_agenda)
+//    FloatingActionButton addToMyAgendaButton;
 
     public static void startActivity(@NonNull Activity activity, @NonNull String talkKey) {
         Intent intent = new Intent(activity, TalkActivity.class);
@@ -71,30 +79,32 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.activity_talk);
         ButterKnife.bind(this);
 
-        fabController = new FABController(addToMyAgendaButton);
-        headerController = new HeaderController(headerView);
-        infoCardController = new InfoCardController(infoCard);
-        speakersCardController = new SpeakersCardController(speakersCard);
-        snackbarForTalkHelper = new SnackbarForTalkHelper(getApplicationContext(), toolbarView);
+//        fabController = new FABController(addToMyAgendaButton);
+//        headerController = new HeaderController(headerView);
+//        infoCardController = new InfoCardController(infoCard);
+//        speakersCardController = new SpeakersCardController(speakersCard);
+//        snackbarForTalkHelper = new SnackbarForTalkHelper(getApplicationContext(), toolbarView);
 
         setSupportActionBar(toolbarView);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(null);
+        getSupportActionBar().setTitle("9:30 - 10:00");
+        collapsingToolbarLayout.setTitleEnabled(false);
 
         talkKey = getIntent().getStringExtra(ARG_TALK_KEY);
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
+        Utils.loadHeaderImage(getApplicationContext(), "header_image1.jpg", headerImageView);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        snackbarForTalkHelper.onPause();
+        //snackbarForTalkHelper.onPause();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        snackbarForTalkHelper.onResume();
+        //snackbarForTalkHelper.onResume();
     }
 
     @Override
@@ -118,19 +128,19 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<Optional<TalkViewDto>> loader, Optional<TalkViewDto> data) {
-        Log.w(TAG, "Loaded talk data: " + talkKey);
-        if (loader.getId() == LOADER_ID) {
-            if (!data.isPresent()) {
-                Log.w(TAG, "Talk data is null for talk-key: " + talkKey);
-                return;
-            }
-            TalkViewDto talkViewDto = data.get();
-            fabController.bind(talkViewDto);
-            headerController.bind(talkViewDto);
-            infoCardController.bind(talkViewDto);
-            speakersCardController.bind(talkViewDto);
-
-        }
+//        Log.w(TAG, "Loaded talk data: " + talkKey);
+//        if (loader.getId() == LOADER_ID) {
+//            if (!data.isPresent()) {
+//                Log.w(TAG, "Talk data is null for talk-key: " + talkKey);
+//                return;
+//            }
+//            TalkViewDto talkViewDto = data.get();
+//            fabController.bind(talkViewDto);
+//            headerController.bind(talkViewDto);
+//            infoCardController.bind(talkViewDto);
+//            speakersCardController.bind(talkViewDto);
+//
+//        }
     }
 
     @Override

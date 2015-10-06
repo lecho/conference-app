@@ -40,6 +40,7 @@ public class Utils {
     private static final String ASSETS_JSON_FOLDER = "json";
     private static final String ASSETS_SPEAKERS_IMAGES = "file:///android_asset/images/speakers/";
     private static final String ASSETS_SPONSORS_IMAGES = "file:///android_asset/images/sponsors/";
+    private static final String ASSETS_HEADERS_IMAGES = "file:///android_asset/images/headers/";
 
     private static final String GOOGLE_MAPS_PACKAGE = "com.google.android.apps.maps";
     private static final String TWITTER_WWW = "https://twitter.com/";
@@ -81,6 +82,10 @@ public class Utils {
     public static void loadSponsorImage(Context context, String fileName, ImageView imageView) {
         Picasso.with(context.getApplicationContext()).load(ASSETS_SPONSORS_IMAGES + fileName).placeholder(R.drawable
                 .dummy_sponsor).into(imageView);
+    }
+
+    public static void loadHeaderImage(Context context, String fileName, ImageView imageView) {
+        Picasso.with(context.getApplicationContext()).load(ASSETS_HEADERS_IMAGES + fileName).into(imageView);
     }
 
     /**
