@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.lecho.conference.R;
@@ -167,6 +168,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     protected class NavigationHeaderController {
 
+        private static final String NAVIGATION_HEADER_IMAGE = "navigation_header.jpg";
+
+        @Bind(R.id.navigation_header_image)
+        ImageView headerView;
+
         @Bind(R.id.text_event_title)
         TextView eventTitleView;
 
@@ -196,6 +202,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     (eventViewDto.street).append(" ").append(eventViewDto.city);
             eventPlaceView.setText(eventPlaceText.toString());
             mapButton.setOnClickListener(new MapButtonClickListener(eventViewDto.latitude, eventViewDto.longitude));
+            Utils.loadHeaderImage(getApplicationContext(), NAVIGATION_HEADER_IMAGE, headerView);
         }
     }
 

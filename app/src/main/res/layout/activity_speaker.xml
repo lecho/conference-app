@@ -121,8 +121,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/speaker_avatar"
-        android:layout_width="128dp"
-        android:layout_height="128dp"
+        android:layout_width="@dimen/speaker_main_avatar_dimen"
+        android:layout_height="@dimen/speaker_main_avatar_dimen"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:src="@drawable/dummy_avatar"

@@ -9,4 +9,6 @@
     <dimen name="fab_compat_margin_right">0dp</dimen>
     <dimen name="fab_compat_margin_bottom">-60dp</dimen>
     <dimen name="header_image_height">192dp</dimen>
+    <dimen name="speaker_main_avatar_dimen">128dp</dimen>
+    <dimen name="main_avatar_min_distance_from_toolbar">128dp</dimen>
 </resources>

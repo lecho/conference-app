@@ -129,7 +129,6 @@
         android:id="@+id/button_add_to_my_agenda"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/fab_compat_margin_bottom"
         android:layout_marginRight="@dimen/fab_compat_margin_right"
         android:clickable="true"
         app:backgroundTint="@color/primary"

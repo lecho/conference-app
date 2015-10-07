@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
+import com.github.lecho.conference.R;
 import com.github.lecho.conference.util.Utils;
 
 import java.util.List;
@@ -57,7 +58,8 @@ public class CircleImageViewBehavior extends CoordinatorLayout.Behavior<CircleIm
 
             Rect rect = this.mTmpRect;
             ViewGroupUtilsHoneycomb.getDescendantRect(parent, appBarLayout, rect);
-            if (rect.bottom <= Utils.dp2px(child.getContext(), 128)) {
+            if (rect.bottom <= child.getContext().getResources().getDimension(R.dimen
+                    .main_avatar_min_distance_from_toolbar)) {
                 hide(child);
             } else {
                 show(child);

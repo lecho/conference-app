@@ -160,7 +160,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
 
     protected class HeaderController {
 
-        private static final String TALK_HEADER_IMAGE = "header_image1.jpg";
+        private static final String TALK_HEADER_IMAGE = "talk_header.jpg";
 
         @Bind(R.id.header_image)
         ImageView headerImageView;

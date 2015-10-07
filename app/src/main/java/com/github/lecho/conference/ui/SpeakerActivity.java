@@ -111,7 +111,7 @@ public class SpeakerActivity extends AppCompatActivity implements LoaderManager
 
     protected class HeaderController {
 
-        private static final String SPEAKER_HEADER_IMAGE = "speaker-header.jpg";
+        private static final String SPEAKER_HEADER_IMAGE = "speaker_header.jpg";
         @Bind(R.id.header_image)
         ImageView headerImageView;
 
