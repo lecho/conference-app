@@ -1,6 +1,5 @@
 package com.github.lecho.conference.ui.adapter;
 
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;

@@ -1,5 +1,7 @@
 package com.github.lecho.conference.viewmodel;
 
+import android.support.annotation.NonNull;
+
 /**
  * Created by Leszek on 2015-07-29.
  */
@@ -12,6 +14,11 @@ public class SpeakerViewDto {
     public String wwwPage;
     public String twitterProfile;
     public String photo;
+
+    @NonNull
+    public String getSpeakerNameText() {
+        return new StringBuilder(firstName).append(" ").append(lastName).toString();
+    }
 
     @Override
     public String toString() {

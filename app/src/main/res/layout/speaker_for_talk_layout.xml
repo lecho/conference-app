@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    android:id="@+id/speakers_card"
+    style="@style/CardViewItemSelectable.Light"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/speaker_avatar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/dummy_avatar"
+            app:border_color="@color/accent"
+            app:border_width="2dp"/>
+
+        <TextView
+            android:id="@+id/text_speaker_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@id/speaker_avatar"
+            android:text="Jan Nowak"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textStyle="bold"/>
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

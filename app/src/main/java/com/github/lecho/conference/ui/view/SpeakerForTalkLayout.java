@@ -38,17 +38,12 @@ public class SpeakerForTalkLayout extends LinearLayout {
         super(context);
         this.speakerViewDto = speakerViewDto;
         LayoutInflater inflater = LayoutInflater.from(context);
-        inflater.inflate(R.layout.include_speaker, this, true);
+        inflater.inflate(R.layout.speaker_for_talk_layout, this, true);
         ButterKnife.bind(this, this);
     }
 
     public void bind() {
         Utils.loadSpeakerImage(getContext().getApplicationContext(), speakerViewDto.photo, avatarView);
-        speakerNameView.setText(getSpeakerNameText(speakerViewDto));
-    }
-
-    @NonNull
-    private String getSpeakerNameText(SpeakerViewDto speakerViewDto) {
-        return new StringBuilder(speakerViewDto.firstName).append(" ").append(speakerViewDto.lastName).toString();
+        speakerNameView.setText(speakerViewDto.getSpeakerNameText());
     }
 }

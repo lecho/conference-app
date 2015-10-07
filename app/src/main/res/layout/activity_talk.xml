@@ -100,34 +100,26 @@
                 android:textColor="@color/primary"
                 android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/text_info"
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_info"
+                style="@style/CardViewInclude.Light"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="Biorąc pod uwagę fakt, że samochody należą do konstrukcji dość mobilnych było jedynie kwestią czasu kiedy trafi tam HTML5. Tradycyjne środowisko tej technologii dawno przestało przestało być jedynym.Jak jednak wygląda tworzenie aplikacji typu IVI (In-vehicle infotainment)? Czym ekran w aucie różni się od tabletu?Opowiem o wyzwaniach jakie stawia przed HTML5 rynek automotive oraz innych doświadczeniach specyficznych dla tej platformy. W części praktycznej zaprezentuje różnice w działaniu demonstracyjnej aplikacji, na zbliżonym do docelowego sprzęcie, w porównaniu z urządzeniami mobilnymi i PC."
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/text_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="Biorąc pod uwagę fakt, że samochody należą do konstrukcji dość mobilnych było jedynie kwestią czasu kiedy trafi tam HTML5. Tradycyjne środowisko tej technologii dawno przestało przestało być jedynym.Jak jednak wygląda tworzenie aplikacji typu IVI (In-vehicle infotainment)? Czym ekran w aucie różni się od tabletu?Opowiem o wyzwaniach jakie stawia przed HTML5 rynek automotive oraz innych doświadczeniach specyficznych dla tej platformy. W części praktycznej zaprezentuje różnice w działaniu demonstracyjnej aplikacji, na zbliżonym do docelowego sprzęcie, w porównaniu z urządzeniami mobilnymi i PC."
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+            </android.support.v7.widget.CardView>
 
             <LinearLayout
                 android:id="@+id/speakers_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="16dp"
-                android:gravity="center_vertical"
                 android:orientation="vertical">
-
-                <include
-                    layout="@layout/include_speakers_card"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
             </LinearLayout>
         </LinearLayout>
 

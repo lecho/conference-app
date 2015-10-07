@@ -15,8 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.lecho.conference.R;
-import com.github.lecho.conference.ui.loader.AgendaLoader;
 import com.github.lecho.conference.ui.adapter.VenueAgendaAdapter;
+import com.github.lecho.conference.ui.loader.AgendaLoader;
 import com.github.lecho.conference.ui.snackbar.SnackbarForTalkHelper;
 import com.github.lecho.conference.viewmodel.AgendaViewDto;
 

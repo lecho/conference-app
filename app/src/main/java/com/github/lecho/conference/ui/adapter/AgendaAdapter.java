@@ -1,6 +1,5 @@
 package com.github.lecho.conference.ui.adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -20,10 +19,7 @@ import com.github.lecho.conference.viewmodel.SpeakerViewDto;
 import com.github.lecho.conference.viewmodel.TalkViewDto;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -90,13 +86,6 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
     protected abstract class AgendaViewHolder extends RecyclerView.ViewHolder {
 
         protected final AppCompatActivity activity;
-        private Calendar calendar;
-        private int fromHour;
-        private int fromMinute;
-        private int toHour;
-        private int toMinute;
-        private int currentHour;
-        private int currentMinute;
 
         @Bind(R.id.text_time_slot)
         TextView timeSlotView;
@@ -108,66 +97,18 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
             super(itemView);
             this.activity = activity;
             ButterKnife.bind(this, itemView);
-            calendar = Calendar.getInstance();
         }
 
         public abstract void bindView(AgendaItemViewDto agendaItem);
 
         protected void bindSlot(SlotViewDto slotViewDto) {
-            calculateSlotInTimeZone(slotViewDto);
-            timeSlotView.setText(getTimeSlotText());
-            if (isInCurrentSlot()) {
+            SlotViewDto.SlotInTimeZone slotInTimeZone = SlotViewDto.SlotInTimeZone.getSlotInTimezone(slotViewDto);
+            timeSlotView.setText(slotInTimeZone.getTimeSlotText());
+            if (slotInTimeZone.isInCurrentSlot()) {
                 currentItemIndicatorView.setVisibility(View.VISIBLE);
             } else {
                 currentItemIndicatorView.setVisibility(View.GONE);
             }
-        }
-
-        private void calculateSlotInTimeZone(SlotViewDto slotViewDto) {
-            TimeZone defaultTZ = TimeZone.getDefault();
-            if (!defaultTZ.getID().equals(calendar.getTimeZone().getID())) {
-                calendar.setTimeZone(defaultTZ);
-            }
-            calendar.setTimeZone(TimeZone.getDefault());
-            calendar.setTimeInMillis(slotViewDto.fromInMilliseconds);
-            fromHour = calendar.get(Calendar.HOUR_OF_DAY);
-            fromMinute = calendar.get(Calendar.MINUTE);
-            calendar.setTimeInMillis(slotViewDto.toInMilliseconds);
-            toHour = calendar.get(Calendar.HOUR_OF_DAY);
-            toMinute = calendar.get(Calendar.MINUTE);
-            calendar.setTime(new Date());
-            currentHour = calendar.get(Calendar.HOUR_OF_DAY);
-            currentMinute = calendar.get(Calendar.MINUTE);
-        }
-
-        @NonNull
-        private String getTimeSlotText() {
-            StringBuilder slotTextBuilder = new StringBuilder();
-            slotTextBuilder = appendValueInXXFormat(slotTextBuilder, fromHour);
-            slotTextBuilder.append(":");
-            slotTextBuilder = appendValueInXXFormat(slotTextBuilder, fromMinute);
-            slotTextBuilder.append("-");
-            slotTextBuilder = appendValueInXXFormat(slotTextBuilder, toHour);
-            slotTextBuilder.append(":");
-            slotTextBuilder = appendValueInXXFormat(slotTextBuilder, toMinute);
-            return slotTextBuilder.toString();
-        }
-
-        @NonNull
-        private StringBuilder appendValueInXXFormat(StringBuilder stringBuilder, int value) {
-            if (value < 10) {
-                stringBuilder.append("0").append(value);
-            } else {
-                stringBuilder.append(value);
-            }
-            return stringBuilder;
-        }
-
-        private boolean isInCurrentSlot() {
-            final int fromTime = 60 * fromHour + fromMinute;
-            final int toTime = 60 * toHour + toMinute;
-            final int currentTime = 60 * currentHour + currentMinute;
-            return currentTime >= fromTime && currentTime < toTime;
         }
 
         @NonNull
