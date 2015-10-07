@@ -74,12 +74,12 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
         snackbarForTalkHelper = new SnackbarForTalkHelper(getApplicationContext(), toolbarView);
 
         setSupportActionBar(toolbarView);
+        collapsingToolbarLayout.setTitleEnabled(false);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(null);
         }
-        collapsingToolbarLayout.setTitleEnabled(false);
 
         talkKey = getIntent().getStringExtra(ARG_TALK_KEY);
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);

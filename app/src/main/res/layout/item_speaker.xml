@@ -19,8 +19,8 @@
             android:layout_height="64dp"
             android:layout_centerHorizontal="true"
             android:src="@drawable/dummy_avatar"
-            app:border_color="@color/accent"
-            app:border_width="2dp"/>
+            app:civ_border_color="@color/accent"
+            app:civ_border_width="2dp"/>
 
         <TextView
             android:id="@+id/text_speaker_name"

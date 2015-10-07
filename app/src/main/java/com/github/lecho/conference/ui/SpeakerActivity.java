@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -13,6 +15,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.lecho.conference.R;
@@ -35,14 +38,14 @@ public class SpeakerActivity extends AppCompatActivity implements LoaderManager
     private HeaderController headerController;
     private InfoCardController infoCardController;
 
+    @Bind(R.id.main_container)
+    View mainContainerView;
+
     @Bind(R.id.toolbar)
     Toolbar toolbarView;
 
-    @Bind(R.id.speaker_header)
-    View headerView;
-
-    @Bind(R.id.info_card)
-    View infoCard;
+    @Bind(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbarLayout;
 
     public static void startActivity(Context context, String speakerKey) {
         Intent intent = new Intent(context, SpeakerActivity.class);
@@ -56,12 +59,16 @@ public class SpeakerActivity extends AppCompatActivity implements LoaderManager
         setContentView(R.layout.activity_speaker);
         ButterKnife.bind(this);
 
-        headerController = new HeaderController(headerView);
-        infoCardController = new InfoCardController(infoCard);
+        headerController = new HeaderController(mainContainerView);
+        infoCardController = new InfoCardController(mainContainerView);
 
         setSupportActionBar(toolbarView);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(null);
+        collapsingToolbarLayout.setTitleEnabled(false);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(null);
+        }
 
         speakerKey = getIntent().getStringExtra(ARG_SPEAKER_KEY);
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
@@ -104,6 +111,10 @@ public class SpeakerActivity extends AppCompatActivity implements LoaderManager
 
     protected class HeaderController {
 
+        private static final String SPEAKER_HEADER_IMAGE = "speaker-header.jpg";
+        @Bind(R.id.header_image)
+        ImageView headerImageView;
+
         @Bind(R.id.speaker_avatar)
         CircleImageView avatarView;
 
@@ -121,15 +132,11 @@ public class SpeakerActivity extends AppCompatActivity implements LoaderManager
         }
 
         public void bind(final SpeakerViewDto speakerViewDto) {
-            speakerNameView.setText(getSpeakersFullName(speakerViewDto));
+            speakerNameView.setText(speakerViewDto.getSpeakerNameText());
+            Utils.loadHeaderImage(getApplicationContext(), SPEAKER_HEADER_IMAGE, headerImageView);
             Utils.loadSpeakerImage(getApplicationContext(), speakerViewDto.photo, avatarView);
             setUpWwwButton(speakerViewDto);
             setUpTwitterButton(speakerViewDto);
-        }
-
-        @NonNull
-        private String getSpeakersFullName(SpeakerViewDto speakerViewDto) {
-            return new StringBuilder(speakerViewDto.firstName).append(" ").append(speakerViewDto.lastName).toString();
         }
 
         private void setUpWwwButton(final SpeakerViewDto speakerViewDto) {

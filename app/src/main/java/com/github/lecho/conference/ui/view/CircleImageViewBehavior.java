@@ -2,18 +2,23 @@ package com.github.lecho.conference.ui.view;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.support.design.widget.AnimationUtils;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
+import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+
+import com.github.lecho.conference.util.Utils;
+
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -26,6 +31,10 @@ public class CircleImageViewBehavior extends CoordinatorLayout.Behavior<CircleIm
     private boolean isHiding;
 
     public CircleImageViewBehavior() {
+    }
+
+    public CircleImageViewBehavior(Context context, AttributeSet attrs) {
+        super();
     }
 
     @Override
@@ -48,7 +57,7 @@ public class CircleImageViewBehavior extends CoordinatorLayout.Behavior<CircleIm
 
             Rect rect = this.mTmpRect;
             ViewGroupUtilsHoneycomb.getDescendantRect(parent, appBarLayout, rect);
-            if (rect.bottom <= 120) {
+            if (rect.bottom <= Utils.dp2px(child.getContext(), 128)) {
                 hide(child);
             } else {
                 show(child);
@@ -56,6 +65,21 @@ public class CircleImageViewBehavior extends CoordinatorLayout.Behavior<CircleIm
 
             return true;
         }
+    }
+
+    public boolean onLayoutChild(CoordinatorLayout parent, CircleImageView child, int layoutDirection) {
+        List dependencies = parent.getDependencies(child);
+        int i = 0;
+
+        for (int count = dependencies.size(); i < count; ++i) {
+            View dependency = (View) dependencies.get(i);
+            if (dependency instanceof AppBarLayout && updateVisibility(parent, (AppBarLayout) dependency, child)) {
+                break;
+            }
+        }
+
+        parent.onLayoutChild(child, layoutDirection);
+        return true;
     }
 
     private void hide(final CircleImageView view) {
@@ -152,127 +176,6 @@ public class CircleImageViewBehavior extends CoordinatorLayout.Behavior<CircleIm
             if (!view.getMatrix().isIdentity()) {
                 m.preConcat(view.getMatrix());
             }
-
         }
     }
 }
-
-
-//public static class Behavior extends android.support.design.widget.CoordinatorLayout.Behavior<FloatingActionButton> {
-//    private static final boolean SNACKBAR_BEHAVIOR_ENABLED;
-//    private Rect mTmpRect;
-//
-//    public Behavior() {
-//    }
-//
-//    public boolean layoutDependsOn(CoordinatorLayout parent, FloatingActionButton child, View dependency) {
-//        return SNACKBAR_BEHAVIOR_ENABLED && dependency instanceof Snackbar.SnackbarLayout;
-//    }
-//
-//    public boolean onDependentViewChanged(CoordinatorLayout parent, FloatingActionButton child, View dependency) {
-//        if (dependency instanceof Snackbar.SnackbarLayout) {
-//            this.updateFabTranslationForSnackbar(parent, child, dependency);
-//        } else if (dependency instanceof AppBarLayout) {
-//            this.updateFabVisibility(parent, (AppBarLayout) dependency, child);
-//        }
-//
-//        return false;
-//    }
-//
-//    public void onDependentViewRemoved(CoordinatorLayout parent, FloatingActionButton child, View dependency) {
-//        if (dependency instanceof Snackbar.SnackbarLayout && ViewCompat.getTranslationY(child) != 0.0F) {
-//            ViewCompat.animate(child).translationY(0.0F).scaleX(1.0F).scaleY(1.0F).alpha(1.0F).setInterpolator
-//                    (AnimationUtils.FAST_OUT_SLOW_IN_INTERPOLATOR).setListener((ViewPropertyAnimatorListener) null);
-//        }
-//
-//    }
-//
-//    private boolean updateFabVisibility(CoordinatorLayout parent, AppBarLayout appBarLayout, FloatingActionButton
-//            child) {
-//        CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) child.getLayoutParams();
-//        if (lp.getAnchorId() != appBarLayout.getId()) {
-//            return false;
-//        } else {
-//            if (this.mTmpRect == null) {
-//                this.mTmpRect = new Rect();
-//            }
-//
-//            Rect rect = this.mTmpRect;
-//            ViewGroupUtils.getDescendantRect(parent, appBarLayout, rect);
-//            if (rect.bottom <= appBarLayout.getMinimumHeightForVisibleOverlappingContent()) {
-//                child.hide();
-//            } else {
-//                child.show();
-//            }
-//
-//            return true;
-//        }
-//    }
-//
-//    private void updateFabTranslationForSnackbar(CoordinatorLayout parent, FloatingActionButton fab, View snackbar) {
-//        if (fab.getVisibility() == 0) {
-//            float translationY = this.getFabTranslationYForSnackbar(parent, fab);
-//            ViewCompat.setTranslationY(fab, translationY);
-//        }
-//    }
-//
-//    private float getFabTranslationYForSnackbar(CoordinatorLayout parent, FloatingActionButton fab) {
-//        float minOffset = 0.0F;
-//        List dependencies = parent.getDependencies(fab);
-//        int i = 0;
-//
-//        for (int z = dependencies.size(); i < z; ++i) {
-//            View view = (View) dependencies.get(i);
-//            if (view instanceof Snackbar.SnackbarLayout && parent.doViewsOverlap(fab, view)) {
-//                minOffset = Math.min(minOffset, ViewCompat.getTranslationY(view) - (float) view.getHeight());
-//            }
-//        }
-//
-//        return minOffset;
-//    }
-//
-//    public boolean onLayoutChild(CoordinatorLayout parent, FloatingActionButton child, int layoutDirection) {
-//        List dependencies = parent.getDependencies(child);
-//        int i = 0;
-//
-//        for (int count = dependencies.size(); i < count; ++i) {
-//            View dependency = (View) dependencies.get(i);
-//            if (dependency instanceof AppBarLayout && this.updateFabVisibility(parent, (AppBarLayout) dependency,
-//                    child)) {
-//                break;
-//            }
-//        }
-//
-//        parent.onLayoutChild(child, layoutDirection);
-//        this.offsetIfNeeded(parent, child);
-//        return true;
-//    }
-//
-//    private void offsetIfNeeded(CoordinatorLayout parent, FloatingActionButton fab) {
-//        Rect padding = fab.mShadowPadding;
-//        if (padding != null && padding.centerX() > 0 && padding.centerY() > 0) {
-//            CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
-//            int offsetTB = 0;
-//            int offsetLR = 0;
-//            if (fab.getRight() >= parent.getWidth() - lp.rightMargin) {
-//                offsetLR = padding.right;
-//            } else if (fab.getLeft() <= lp.leftMargin) {
-//                offsetLR = -padding.left;
-//            }
-//
-//            if (fab.getBottom() >= parent.getBottom() - lp.bottomMargin) {
-//                offsetTB = padding.bottom;
-//            } else if (fab.getTop() <= lp.topMargin) {
-//                offsetTB = -padding.top;
-//            }
-//
-//            fab.offsetTopAndBottom(offsetTB);
-//            fab.offsetLeftAndRight(offsetLR);
-//        }
-//
-//    }
-//
-//    static {
-//        SNACKBAR_BEHAVIOR_ENABLED = Build.VERSION.SDK_INT >= 11;
-//    }
-//}
