@@ -22,6 +22,7 @@ import com.github.lecho.conference.R;
 import com.github.lecho.conference.ui.loader.SpeakerLoader;
 import com.github.lecho.conference.util.Optional;
 import com.github.lecho.conference.util.Utils;
+import com.github.lecho.conference.viewmodel.SlotViewDto;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
 
 import butterknife.Bind;
@@ -132,6 +133,10 @@ public class SpeakerActivity extends AppCompatActivity implements LoaderManager
         }
 
         public void bind(final SpeakerViewDto speakerViewDto) {
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setTitle(speakerViewDto.firstName);
+            }
             speakerNameView.setText(speakerViewDto.getSpeakerNameText());
             Utils.loadHeaderImage(getApplicationContext(), SPEAKER_HEADER_IMAGE, headerImageView);
             Utils.loadSpeakerImage(getApplicationContext(), speakerViewDto.photo, avatarView);

@@ -188,7 +188,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
             talkTitleView.setText(talkViewDto.title);
             Utils.loadHeaderImage(getApplicationContext(), TALK_HEADER_IMAGE, headerImageView);
             talkVenueView.setText(talkViewDto.venue.getVenueText(getApplicationContext()));
-            talkLanguageView.setText(talkViewDto.language);
+            talkLanguageView.setText(talkViewDto.getLanguageLong(getApplicationContext()));
         }
     }
 

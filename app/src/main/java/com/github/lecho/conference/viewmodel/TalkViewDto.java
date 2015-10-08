@@ -1,5 +1,10 @@
 package com.github.lecho.conference.viewmodel;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+
+import com.github.lecho.conference.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +13,8 @@ import java.util.List;
  */
 public class TalkViewDto {
 
+    private static final String POLISH = "PL";
+    private static final String ENGLISH = "EN";
     public String key;
     public String title;
     public String description;
@@ -16,6 +23,17 @@ public class TalkViewDto {
     public SlotViewDto slot;
     public VenueViewDto venue;
     public List<SpeakerViewDto> speakers = new ArrayList<>();
+
+    @NonNull
+    public String getLanguageLong(Context context) {
+        if (language.equalsIgnoreCase(POLISH)) {
+            return context.getString(R.string.talk_language_pl);
+        } else if (language.equalsIgnoreCase(ENGLISH)) {
+            return context.getString(R.string.talk_language_en);
+        } else {
+            return language;
+        }
+    }
 
     @Override
     public String toString() {

@@ -166,7 +166,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
             itemView.setOnClickListener(new TalkItemClickListener(activity, talkViewDto.key));
             titleView.setText(talkViewDto.title);
             venueView.setText(talkViewDto.venue.title);
-            languageView.setText(talkViewDto.language);
+            languageView.setText(talkViewDto.getLanguageLong(activity.getApplicationContext()));
             speakersView.setText(getSpeakersText(talkViewDto));
         }
     }
