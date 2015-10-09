@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -72,6 +74,18 @@ public class SpeakerActivity extends AppCompatActivity implements LoaderManager
 
         speakerKey = getIntent().getStringExtra(ARG_SPEAKER_KEY);
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //Workaround:/ https://code.google.com/p/android/issues/detail?id=183334
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            onBackPressed();
+            return true;
+        } else if (keyCode == KeyEvent.KEYCODE_MENU) {
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override

@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -95,6 +96,18 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
     protected void onResume() {
         super.onResume();
         snackbarForTalkHelper.onResume();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //Workaround:/ https://code.google.com/p/android/issues/detail?id=183334
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            onBackPressed();
+            return true;
+        } else if (keyCode == KeyEvent.KEYCODE_MENU) {
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
