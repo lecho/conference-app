@@ -264,12 +264,12 @@ public class RealmFacade {
         try {
             SponsorRealm.SponsorViewConverter sponsorViewConverter = new SponsorRealm.SponsorViewConverter();
             realm = Realm.getDefaultInstance();
-            RealmResults<SponsorRealm> sponsorRealms = realm.where(SponsorRealm.class).findAll();
+            RealmResults<SponsorRealm> sponsorRealms = realm.where(SponsorRealm.class).findAllSorted("type", true,
+                    "name", true);
             List<SponsorViewDto> sponsorViewDtos = new ArrayList<>(sponsorRealms.size());
             for (SponsorRealm sponsorRealm : sponsorRealms) {
                 sponsorViewDtos.add(sponsorViewConverter.convert(sponsorRealm));
             }
-            Collections.sort(sponsorViewDtos, new SponsorComparator());
             return sponsorViewDtos;
         } finally {
             closeRealm();
@@ -400,19 +400,6 @@ public class RealmFacade {
                 rhsValue = rhs.talk.slot.fromInMilliseconds;
             }
             return (int) (lhsValue - rhsValue);
-        }
-
-        @Override
-        public boolean equals(Object object) {
-            return false;
-        }
-    }
-
-    private static class SponsorComparator implements Comparator<SponsorViewDto> {
-
-        @Override
-        public int compare(SponsorViewDto lhs, SponsorViewDto rhs) {
-            return lhs.type.ordinal() - rhs.type.ordinal();
         }
 
         @Override
