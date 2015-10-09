@@ -49,7 +49,6 @@
                     android:layout_marginStart="16dp"
                     android:ellipsize="end"
                     android:maxLines="2"
-                    android:text="Kazimiesz Komorowski"
                     android:textColor="@color/white"
                     android:textStyle="bold"/>
             </RelativeLayout>
@@ -75,7 +74,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="16dp">
 
             <ImageButton
                 android:id="@+id/www_button"
@@ -112,7 +112,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="16dp"
-                    android:text="Biorąc pod uwagę fakt, że samochody należą do konstrukcji dość mobilnych było jedynie kwestią czasu kiedy trafi tam HTML5. Tradycyjne środowisko tej technologii dawno przestało przestało być jedynym.Jak jednak wygląda tworzenie aplikacji typu IVI (In-vehicle infotainment)? Czym ekran w aucie różni się od tabletu?Opowiem o wyzwaniach jakie stawia przed HTML5 rynek automotive oraz innych doświadczeniach specyficznych dla tej platformy. W części praktycznej zaprezentuje różnice w działaniu demonstracyjnej aplikacji, na zbliżonym do docelowego sprzęcie, w porównaniu z urządzeniami mobilnymi i PC."
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
             </android.support.v7.widget.CardView>
         </RelativeLayout>

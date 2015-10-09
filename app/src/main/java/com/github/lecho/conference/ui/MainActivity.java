@@ -22,11 +22,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.lecho.conference.R;
-import com.github.lecho.conference.ui.loader.NavigationViewDataLoader;
 import com.github.lecho.conference.ui.fragment.MyAgendaFragment;
 import com.github.lecho.conference.ui.fragment.SpeakersFragment;
 import com.github.lecho.conference.ui.fragment.SponsorsFragment;
 import com.github.lecho.conference.ui.fragment.VenueAgendaFragment;
+import com.github.lecho.conference.ui.loader.NavigationViewDataLoader;
 import com.github.lecho.conference.util.Utils;
 import com.github.lecho.conference.viewmodel.EventViewDto;
 import com.github.lecho.conference.viewmodel.NavigationViewDto;
@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         navigationMenuController = new NavigationMenuController(navigationView);
         navigationMenuController.bindStaticMenuItems();
         navigationHeaderController = new NavigationHeaderController(navigationView);
+        navigationHeaderController.bindHeaderImage();
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
     }
-
+    
     public void replaceFragment(@NonNull Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_container, fragment).commit();
@@ -189,6 +190,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             ButterKnife.bind(this, navigationView);
         }
 
+        public void bindHeaderImage() {
+            Utils.loadHeaderImage(getApplicationContext(), NAVIGATION_HEADER_IMAGE, headerView);
+        }
+
         public void bind(EventViewDto eventViewDto) {
             if (null == eventViewDto) {
                 Log.w(TAG, "Null event data");
@@ -202,7 +207,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                     (eventViewDto.street).append(" ").append(eventViewDto.city);
             eventPlaceView.setText(eventPlaceText.toString());
             mapButton.setOnClickListener(new MapButtonClickListener(eventViewDto.latitude, eventViewDto.longitude));
-            Utils.loadHeaderImage(getApplicationContext(), NAVIGATION_HEADER_IMAGE, headerView);
         }
     }
 

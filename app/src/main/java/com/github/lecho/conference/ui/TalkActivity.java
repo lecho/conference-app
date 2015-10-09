@@ -29,7 +29,6 @@ import com.github.lecho.conference.util.Utils;
 import com.github.lecho.conference.viewmodel.SlotViewDto;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
 import com.github.lecho.conference.viewmodel.TalkViewDto;
-import com.github.lecho.conference.viewmodel.VenueViewDto;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -69,6 +68,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
 
         fabController = new FABController(mainContainerView);
         headerController = new HeaderController(mainContainerView);
+        headerController.bindHeaderImage();
         infoCardController = new InfoCardController(mainContainerView);
         speakersCardController = new SpeakersCardController(mainContainerView);
         snackbarForTalkHelper = new SnackbarForTalkHelper(getApplicationContext(), toolbarView);
@@ -178,6 +178,10 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
             ButterKnife.bind(this, view);
         }
 
+        public void bindHeaderImage() {
+            Utils.loadHeaderImage(getApplicationContext(), TALK_HEADER_IMAGE, headerImageView);
+        }
+
         public void bind(TalkViewDto talkViewDto) {
             ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
@@ -186,7 +190,6 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
                 actionBar.setTitle(slotInTimeZone.getTimeSlotText());
             }
             talkTitleView.setText(talkViewDto.title);
-            Utils.loadHeaderImage(getApplicationContext(), TALK_HEADER_IMAGE, headerImageView);
             talkVenueView.setText(talkViewDto.venue.getVenueText(getApplicationContext()));
             talkLanguageView.setText(talkViewDto.getLanguageLong(getApplicationContext()));
         }

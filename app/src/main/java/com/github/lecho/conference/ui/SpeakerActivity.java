@@ -3,7 +3,6 @@ package com.github.lecho.conference.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -22,7 +21,6 @@ import com.github.lecho.conference.R;
 import com.github.lecho.conference.ui.loader.SpeakerLoader;
 import com.github.lecho.conference.util.Optional;
 import com.github.lecho.conference.util.Utils;
-import com.github.lecho.conference.viewmodel.SlotViewDto;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
 
 import butterknife.Bind;
@@ -61,6 +59,7 @@ public class SpeakerActivity extends AppCompatActivity implements LoaderManager
         ButterKnife.bind(this);
 
         headerController = new HeaderController(mainContainerView);
+        headerController.bindHeaderImage();
         infoCardController = new InfoCardController(mainContainerView);
 
         setSupportActionBar(toolbarView);
@@ -132,13 +131,16 @@ public class SpeakerActivity extends AppCompatActivity implements LoaderManager
             ButterKnife.bind(this, view);
         }
 
+        public void bindHeaderImage() {
+            Utils.loadHeaderImage(getApplicationContext(), SPEAKER_HEADER_IMAGE, headerImageView);
+        }
+
         public void bind(final SpeakerViewDto speakerViewDto) {
             ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
                 actionBar.setTitle(speakerViewDto.firstName);
             }
             speakerNameView.setText(speakerViewDto.getSpeakerNameText());
-            Utils.loadHeaderImage(getApplicationContext(), SPEAKER_HEADER_IMAGE, headerImageView);
             Utils.loadSpeakerImage(getApplicationContext(), speakerViewDto.photo, avatarView);
             setUpWwwButton(speakerViewDto);
             setUpTwitterButton(speakerViewDto);

@@ -64,7 +64,7 @@ public class VenueAgendaAdapter extends AgendaAdapter {
             bindSlot(talkViewDto.slot);
             itemView.setOnClickListener(new TalkItemClickListener(activity, talkViewDto.key));
             titleView.setText(talkViewDto.title);
-            languageView.setText(talkViewDto.getLanguageLong(activity.getApplicationContext()));
+            languageView.setText(talkViewDto.language);
             speakersView.setText(getSpeakersText(talkViewDto));
             if (talkViewDto.isInMyAgenda) {
                 addToMyAgendaButton.setImageResource(R.drawable.ic_star_accent);

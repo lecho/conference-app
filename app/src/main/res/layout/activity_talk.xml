@@ -49,7 +49,6 @@
                     android:layout_marginStart="16dp"
                     android:ellipsize="end"
                     android:maxLines="2"
-                    android:text="Czy nastała era continuous everything? Przewodnik po bezustannym procesie tworzenia"
                     android:textColor="@color/white"
                     android:textStyle="bold"/>
             </RelativeLayout>
@@ -75,6 +74,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
             android:orientation="vertical">
 
             <TextView
@@ -85,7 +85,6 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="Mobica Track"
                 android:textColor="@color/primary"
                 android:textStyle="bold"/>
 
@@ -96,7 +95,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
-                android:text="English"
                 android:textColor="@color/primary"
                 android:textStyle="bold"/>
 
@@ -111,7 +109,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="16dp"
-                    android:text="Biorąc pod uwagę fakt, że samochody należą do konstrukcji dość mobilnych było jedynie kwestią czasu kiedy trafi tam HTML5. Tradycyjne środowisko tej technologii dawno przestało przestało być jedynym.Jak jednak wygląda tworzenie aplikacji typu IVI (In-vehicle infotainment)? Czym ekran w aucie różni się od tabletu?Opowiem o wyzwaniach jakie stawia przed HTML5 rynek automotive oraz innych doświadczeniach specyficznych dla tej platformy. W części praktycznej zaprezentuje różnice w działaniu demonstracyjnej aplikacji, na zbliżonym do docelowego sprzęcie, w porównaniu z urządzeniami mobilnymi i PC."
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
             </android.support.v7.widget.CardView>
 
