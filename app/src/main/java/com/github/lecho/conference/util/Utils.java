@@ -84,14 +84,14 @@ public class Utils {
     }
 
     public static void loadSpeakerImageSmall(Context context, String fileName, ImageView imageView) {
-        loadSpeakerImage(context, fileName, imageView, R.dimen.speaker_avatar_medium_size);
+        loadSpeakerImage(context, fileName, imageView, R.dimen.speaker_avatar_small_size);
     }
 
     private static void loadSpeakerImage(Context context, String fileName, ImageView imageView, @DimenRes int dimen) {
         Picasso.with(context.getApplicationContext())
                 .load(ASSETS_SPEAKERS_IMAGES + fileName)
                 .placeholder(R.drawable.ic_dummy_avatar)
-                .resizeDimen(dimen, dimen)
+                        //.resizeDimen(dimen, dimen)
                 .into(imageView);
     }
 

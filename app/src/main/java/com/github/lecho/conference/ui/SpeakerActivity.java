@@ -130,7 +130,7 @@ public class SpeakerActivity extends AppCompatActivity implements LoaderManager
         ImageView headerImageView;
 
         @Bind(R.id.speaker_avatar)
-        CircleImageView avatarView;
+        ImageView avatarView;
 
         @Bind(R.id.text_speaker_name)
         TextView speakerNameView;

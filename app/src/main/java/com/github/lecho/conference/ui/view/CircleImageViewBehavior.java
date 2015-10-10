@@ -8,25 +8,22 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.widget.ImageView;
 
 import com.github.lecho.conference.R;
-import com.github.lecho.conference.util.Utils;
 
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Leszek on 2015-10-07.
  */
-public class CircleImageViewBehavior extends CoordinatorLayout.Behavior<CircleImageView> {
+public class CircleImageViewBehavior extends CoordinatorLayout.Behavior<ImageView> {
 
     private Rect mTmpRect;
     private boolean isHiding;
@@ -39,15 +36,14 @@ public class CircleImageViewBehavior extends CoordinatorLayout.Behavior<CircleIm
     }
 
     @Override
-    public boolean onDependentViewChanged(CoordinatorLayout parent, CircleImageView child, View dependency) {
+    public boolean onDependentViewChanged(CoordinatorLayout parent, ImageView child, View dependency) {
         if (dependency instanceof AppBarLayout) {
             this.updateVisibility(parent, (AppBarLayout) dependency, child);
         }
         return false;
     }
 
-
-    private boolean updateVisibility(CoordinatorLayout parent, AppBarLayout appBarLayout, CircleImageView child) {
+    private boolean updateVisibility(CoordinatorLayout parent, AppBarLayout appBarLayout, ImageView child) {
         CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) child.getLayoutParams();
         if (lp.getAnchorId() != appBarLayout.getId()) {
             return false;
@@ -69,7 +65,8 @@ public class CircleImageViewBehavior extends CoordinatorLayout.Behavior<CircleIm
         }
     }
 
-    public boolean onLayoutChild(CoordinatorLayout parent, CircleImageView child, int layoutDirection) {
+    @Override
+    public boolean onLayoutChild(CoordinatorLayout parent, ImageView child, int layoutDirection) {
         List dependencies = parent.getDependencies(child);
         int i = 0;
 
@@ -84,7 +81,7 @@ public class CircleImageViewBehavior extends CoordinatorLayout.Behavior<CircleIm
         return true;
     }
 
-    private void hide(final CircleImageView view) {
+    private void hide(final ImageView view) {
         if (!isHiding && view.getVisibility() == View.VISIBLE) {
             if (ViewCompat.isLaidOut(view) && !view.isInEditMode()) {
                 view.animate().scaleX(0.0F).scaleY(0.0F).alpha(0.0F).setDuration(200L).setInterpolator(new
@@ -110,7 +107,7 @@ public class CircleImageViewBehavior extends CoordinatorLayout.Behavior<CircleIm
         }
     }
 
-    private void show(final CircleImageView view) {
+    private void show(final ImageView view) {
         if (view.getVisibility() != View.VISIBLE) {
             if (ViewCompat.isLaidOut(view) && !view.isInEditMode()) {
                 view.setAlpha(0.0F);
