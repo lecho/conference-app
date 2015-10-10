@@ -9,6 +9,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
@@ -74,18 +75,29 @@ public class Utils {
         return ASSETS_JSON_FOLDER;
     }
 
-    public static void loadSpeakerImage(Context context, String fileName, ImageView imageView) {
+    public static void loadSpeakerImageBig(Context context, String fileName, ImageView imageView) {
+        loadSpeakerImage(context, fileName, imageView, R.dimen.speaker_avatar_big_size);
+    }
+
+    public static void loadSpeakerImageMedium(Context context, String fileName, ImageView imageView) {
+        loadSpeakerImage(context, fileName, imageView, R.dimen.speaker_avatar_medium_size);
+    }
+
+    public static void loadSpeakerImageSmall(Context context, String fileName, ImageView imageView) {
+        loadSpeakerImage(context, fileName, imageView, R.dimen.speaker_avatar_medium_size);
+    }
+
+    private static void loadSpeakerImage(Context context, String fileName, ImageView imageView, @DimenRes int dimen) {
         Picasso.with(context.getApplicationContext())
                 .load(ASSETS_SPEAKERS_IMAGES + fileName)
-                .error(R.drawable.dummy_avatar)
-                .fit()
+                .placeholder(R.drawable.ic_dummy_avatar)
+                .resizeDimen(dimen, dimen)
                 .into(imageView);
     }
 
     public static void loadSponsorImage(Context context, String fileName, ImageView imageView) {
         Picasso.with(context.getApplicationContext())
                 .load(ASSETS_SPONSORS_IMAGES + fileName)
-                .error(R.drawable.dummy_sponsor)
                 .fit()
                 .centerInside()
                 .into(imageView);

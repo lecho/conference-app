@@ -14,10 +14,10 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/speaker_avatar"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/speaker_avatar_small_size"
+            android:layout_height="@dimen/speaker_avatar_small_size"
             android:layout_alignParentRight="true"
-            android:src="@drawable/dummy_avatar"
+            android:src="@drawable/ic_dummy_avatar"
             app:civ_border_color="@color/accent"
             app:civ_border_width="2dp"/>
 
@@ -26,9 +26,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_toLeftOf="@id/speaker_avatar"
-            android:text="Jan Nowak"
+            android:layout_toStartOf="@id/speaker_avatar"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textStyle="bold"/>
     </RelativeLayout>

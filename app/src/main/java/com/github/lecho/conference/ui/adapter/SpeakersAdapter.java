@@ -72,7 +72,7 @@ public class SpeakersAdapter extends RecyclerView.Adapter<SpeakersAdapter.Speake
         public void bindView(SpeakerViewDto speakerViewDto) {
             speakerNameView.setText(speakerViewDto.getSpeakerNameText());
             itemView.setOnClickListener(new SpeakerItemClickListener(context, speakerViewDto.key));
-            Utils.loadSpeakerImage(context.getApplicationContext(), speakerViewDto.photo, avatarView);
+            Utils.loadSpeakerImageMedium(context.getApplicationContext(), speakerViewDto.photo, avatarView);
         }
     }
 

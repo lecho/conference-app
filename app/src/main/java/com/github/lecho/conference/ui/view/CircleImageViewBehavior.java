@@ -58,7 +58,7 @@ public class CircleImageViewBehavior extends CoordinatorLayout.Behavior<CircleIm
 
             Rect rect = this.mTmpRect;
             ViewGroupUtilsHoneycomb.getDescendantRect(parent, appBarLayout, rect);
-            if (rect.bottom <= child.getContext().getResources().getDimension(R.dimen
+            if (rect.bottom <= child.getContext().getResources().getDimensionPixelSize(R.dimen
                     .main_avatar_min_distance_from_toolbar)) {
                 hide(child);
             } else {

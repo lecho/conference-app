@@ -155,7 +155,7 @@ public class SpeakerActivity extends AppCompatActivity implements LoaderManager
                 actionBar.setTitle(speakerViewDto.firstName);
             }
             speakerNameView.setText(speakerViewDto.getSpeakerNameText());
-            Utils.loadSpeakerImage(getApplicationContext(), speakerViewDto.photo, avatarView);
+            Utils.loadSpeakerImageBig(getApplicationContext(), speakerViewDto.photo, avatarView);
             setUpWwwButton(speakerViewDto);
             setUpTwitterButton(speakerViewDto);
         }

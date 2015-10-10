@@ -43,7 +43,7 @@ public class SpeakerForTalkLayout extends LinearLayout {
     }
 
     public void bind() {
-        Utils.loadSpeakerImage(getContext().getApplicationContext(), speakerViewDto.photo, avatarView);
+        Utils.loadSpeakerImageSmall(getContext().getApplicationContext(), speakerViewDto.photo, avatarView);
         speakerNameView.setText(speakerViewDto.getSpeakerNameText());
     }
 }
