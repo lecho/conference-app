@@ -75,17 +75,28 @@ public class Utils {
     }
 
     public static void loadSpeakerImage(Context context, String fileName, ImageView imageView) {
-        Picasso.with(context.getApplicationContext()).load(ASSETS_SPEAKERS_IMAGES + fileName).placeholder(R.drawable
-                .dummy_avatar).into(imageView);
+        Picasso.with(context.getApplicationContext())
+                .load(ASSETS_SPEAKERS_IMAGES + fileName)
+                .error(R.drawable.dummy_avatar)
+                .fit()
+                .into(imageView);
     }
 
     public static void loadSponsorImage(Context context, String fileName, ImageView imageView) {
-        Picasso.with(context.getApplicationContext()).load(ASSETS_SPONSORS_IMAGES + fileName).placeholder(R.drawable
-                .dummy_sponsor).into(imageView);
+        Picasso.with(context.getApplicationContext())
+                .load(ASSETS_SPONSORS_IMAGES + fileName)
+                .error(R.drawable.dummy_sponsor)
+                .fit()
+                .centerInside()
+                .into(imageView);
     }
 
     public static void loadHeaderImage(Context context, String fileName, ImageView imageView) {
-        Picasso.with(context.getApplicationContext()).load(ASSETS_HEADERS_IMAGES + fileName).into(imageView);
+        Picasso.with(context.getApplicationContext())
+                .load(ASSETS_HEADERS_IMAGES + fileName)
+                .fit()
+                .centerCrop()
+                .into(imageView);
     }
 
     /**
