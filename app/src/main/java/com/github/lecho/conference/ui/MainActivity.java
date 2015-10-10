@@ -1,6 +1,7 @@
 package com.github.lecho.conference.ui;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -8,33 +9,19 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.KeyEventCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.github.lecho.conference.R;
 import com.github.lecho.conference.ui.fragment.MyAgendaFragment;
-import com.github.lecho.conference.ui.fragment.SpeakersFragment;
-import com.github.lecho.conference.ui.fragment.SponsorsFragment;
-import com.github.lecho.conference.ui.fragment.VenueAgendaFragment;
 import com.github.lecho.conference.ui.loader.NavigationViewDataLoader;
+import com.github.lecho.conference.ui.navigation.NavViewController;
 import com.github.lecho.conference.util.Utils;
-import com.github.lecho.conference.viewmodel.EventViewDto;
 import com.github.lecho.conference.viewmodel.NavigationViewDto;
-import com.github.lecho.conference.viewmodel.VenueViewDto;
-
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -43,9 +30,10 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<NavigationViewDto> {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String ARG_CHECKED_NAV_ITEM_ID = "checked-nav-item-id";
     private static final int LOADER_ID = 0;
-    private NavigationMenuController navigationMenuController;
-    private NavigationHeaderController navigationHeaderController;
+    private NavViewController navViewController;
+    private int checkedNavItemId;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -61,28 +49,30 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        navigationMenuController = new NavigationMenuController(navigationView);
-        navigationMenuController.bindStaticMenuItems();
-        navigationHeaderController = new NavigationHeaderController(navigationView);
-        navigationHeaderController.bindHeaderImage();
+        navViewController = new NavViewController(navigationView, new MainActivityNavItemListener());
+        navViewController.bindHeaderImage(getApplicationContext());
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
-        if (null == savedInstanceState) {
-            //TODO some info upon first start
-            replaceFragment(MyAgendaFragment.newInstance());
-            Utils.upgradeSchema(getApplicationContext());
+        if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        if (savedInstanceState == null) {
+            replaceFragment(MyAgendaFragment.newInstance());
+            Utils.upgradeSchema(getApplicationContext());
+            checkedNavItemId = 0;
+        } else {
+            checkedNavItemId = savedInstanceState.getInt(ARG_CHECKED_NAV_ITEM_ID);
+        }
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
-    public void replaceFragment(@NonNull Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_container, fragment).commit();
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(ARG_CHECKED_NAV_ITEM_ID, checkedNavItemId);
     }
 
     @Override
@@ -104,9 +94,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         switch (id) {
             case android.R.id.home:
@@ -114,6 +101,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void replaceFragment(@NonNull Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.content_container, fragment).commit();
     }
 
     @Override
@@ -127,10 +119,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<NavigationViewDto> loader, NavigationViewDto navigationViewDto) {
         if (loader.getId() == LOADER_ID) {
-            navigationMenuController.bindVenuesMenuItems(navigationViewDto.venueViewDtos);
+            navViewController.bindMenu(navigationViewDto.venueViewDtos);
             if (navigationViewDto.eventViewDto.isPresent()) {
-                navigationHeaderController.bind(navigationViewDto.eventViewDto.get());
+                navViewController.bindHeader(getApplicationContext(), navigationViewDto.eventViewDto.get());
             }
+            navViewController.checkMenuItem(checkedNavItemId);
         }
     }
 
@@ -138,126 +131,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoaderReset(Loader<NavigationViewDto> loader) {
     }
 
-    protected class NavigationMenuController {
-
-        private NavigationView navigationView;
-        private Menu navigationMenu;
-        private SubMenu venuesSubMenu;
-        private final int groupId = 0;
-
-        public NavigationMenuController(NavigationView navigationView) {
-            this.navigationView = navigationView;
-            navigationMenu = navigationView.getMenu();
-        }
-
-        public void bindStaticMenuItems() {
-            int itemId = 0;
-            int order = 0;
-            navigationMenu = navigationView.getMenu();
-            navigationMenu.setGroupCheckable(groupId, true, true);
-            //MyAgenda
-            navigationMenu.add(groupId, itemId++, order++, R.string.navigation_my_agenda).setCheckable(true).setIcon
-                    (R.drawable.ic_nav_my_agenda)
-                    .setOnMenuItemClickListener(new NavigationMenuClickListener(MyAgendaFragment.newInstance()));
-            //Tracks
-            venuesSubMenu = navigationMenu.addSubMenu(groupId, itemId++, order++, R.string.navigation_venues);
-            //More
-            SubMenu subMenuMore = navigationMenu.addSubMenu(groupId, itemId++, order++, R.string.navigation_more);
-            subMenuMore.add(groupId, itemId++, order++, R.string.navigation_speakers).setCheckable(true).setIcon(R
-                    .drawable.ic_nav_speakers)
-                    .setOnMenuItemClickListener(new NavigationMenuClickListener(SpeakersFragment.newInstance()));
-            subMenuMore.add(groupId, itemId++, order++, R.string.navigation_sponsors).setCheckable(true).setIcon(R
-                    .drawable.ic_nav_sponsors)
-                    .setOnMenuItemClickListener(new NavigationMenuClickListener(SponsorsFragment.newInstance()));
-            subMenuMore.add(groupId, itemId++, order++, R.string.navigation_about).setCheckable(true).setIcon(R
-                    .drawable.ic_nav_about);
-        }
-
-        public void bindVenuesMenuItems(@NonNull List<VenueViewDto> venueViewDtos) {
-            int itemId = 0;
-            int order = 0;
-            venuesSubMenu.clear();
-            for (VenueViewDto venueViewDto : venueViewDtos) {
-                MenuItem venueItem = venuesSubMenu.add(groupId, itemId++, order++, venueViewDto.title).
-                        setCheckable(true).setIcon(R.drawable.ic_nav_agenda);
-                VenueAgendaFragment fragment = VenueAgendaFragment.newInstance(venueViewDto.key, venueViewDto.title);
-                venueItem.setOnMenuItemClickListener(new NavigationMenuClickListener(fragment));
-            }
-        }
-    }
-
-    protected class NavigationHeaderController {
-
-        private static final String NAVIGATION_HEADER_IMAGE = "navigation_header.jpg";
-
-        @Bind(R.id.navigation_header_image)
-        ImageView headerView;
-
-        @Bind(R.id.text_event_title)
-        TextView eventTitleView;
-
-        @Bind(R.id.text_event_date)
-        TextView eventDateView;
-
-        @Bind(R.id.text_event_place)
-        TextView eventPlaceView;
-
-        @Bind(R.id.map_button)
-        ImageButton mapButton;
-
-        public NavigationHeaderController(NavigationView navigationView) {
-            ButterKnife.bind(this, navigationView);
-        }
-
-        public void bindHeaderImage() {
-            Utils.loadHeaderImage(getApplicationContext(), NAVIGATION_HEADER_IMAGE, headerView);
-        }
-
-        public void bind(EventViewDto eventViewDto) {
-            if (null == eventViewDto) {
-                Log.w(TAG, "Null event data");
-                return;
-            }
-            eventTitleView.setText(eventViewDto.title);
-            StringBuilder eventDateText = new StringBuilder().append(eventViewDto.date).append(", ").append
-                    (eventViewDto.time);
-            eventDateView.setText(eventDateText.toString());
-            StringBuilder eventPlaceText = new StringBuilder().append(eventViewDto.place).append("\n").append
-                    (eventViewDto.street).append(" ").append(eventViewDto.city);
-            eventPlaceView.setText(eventPlaceText.toString());
-            mapButton.setOnClickListener(new MapButtonClickListener(eventViewDto.latitude, eventViewDto.longitude));
-        }
-    }
-
-    private class MapButtonClickListener implements View.OnClickListener {
-
-        private final double latitude;
-        private final double longitude;
-
-        public MapButtonClickListener(double latitude, double longitude) {
-            this.latitude = latitude;
-            this.longitude = longitude;
-        }
+    private class MainActivityNavItemListener implements NavViewController.MenuItemListener {
 
         @Override
-        public void onClick(View v) {
-            Utils.launchGMaps(MainActivity.this, latitude, longitude);
-        }
-    }
-
-    private class NavigationMenuClickListener implements MenuItem.OnMenuItemClickListener {
-
-        final Fragment fragment;
-
-        public NavigationMenuClickListener(Fragment fragment) {
-            this.fragment = fragment;
-        }
-
-        @Override
-        public boolean onMenuItemClick(MenuItem item) {
-            replaceFragment(fragment);
+        public void onItemClick(@NonNull MenuItem item, @NonNull Fragment fragment) {
+            checkedNavItemId = item.getItemId();
             drawerLayout.closeDrawer(GravityCompat.START);
-            return false;
+            replaceFragment(fragment);
         }
     }
 }
