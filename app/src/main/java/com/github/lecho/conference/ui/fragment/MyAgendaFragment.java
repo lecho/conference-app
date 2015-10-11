@@ -1,6 +1,5 @@
 package com.github.lecho.conference.ui.fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -34,7 +33,7 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
     private static final int LOADER_ID = 0;
     private AgendaAdapter adapter;
     private ItemTouchHelper itemTouchHelper;
-    private OpenStartDrawerCallback drawerCallback;
+    private OpenDrawerCallback drawerCallback;
 
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -72,9 +71,9 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            drawerCallback = (OpenStartDrawerCallback) getActivity();
+            drawerCallback = (OpenDrawerCallback) getActivity();
         } catch (Exception e) {
-            throw new ClassCastException(getActivity().toString() + " must implement OpenStartDrawerCallback");
+            throw new ClassCastException(getActivity().toString() + " must implement OpenDrawerCallback");
         }
     }
 
@@ -143,7 +142,7 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
         }
     }
 
-    public interface OpenStartDrawerCallback {
+    public interface OpenDrawerCallback {
         void onOpenDrawer();
     }
 }

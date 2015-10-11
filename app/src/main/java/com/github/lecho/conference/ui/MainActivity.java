@@ -1,7 +1,6 @@
 package com.github.lecho.conference.ui;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -28,10 +27,11 @@ import butterknife.ButterKnife;
 
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<NavigationViewDto>,
-        MyAgendaFragment.OpenStartDrawerCallback {
+        MyAgendaFragment.OpenDrawerCallback {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String ARG_CHECKED_NAV_ITEM_ID = "checked-nav-item-id";
+    private static int DRAWER_GRAVITY = GravityCompat.START;
     private static final int LOADER_ID = 0;
     private NavViewController navViewController;
     private int checkedNavItemId;
@@ -80,13 +80,17 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         //Workaround:/ https://code.google.com/p/android/issues/detail?id=183334
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            onBackPressed();
+            if (drawerLayout.isDrawerOpen(DRAWER_GRAVITY)) {
+                drawerLayout.closeDrawer(DRAWER_GRAVITY);
+            } else {
+                onBackPressed();
+            }
             return true;
         } else if (keyCode == KeyEvent.KEYCODE_MENU) {
-            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                drawerLayout.closeDrawer(GravityCompat.START);
+            if (drawerLayout.isDrawerOpen(DRAWER_GRAVITY)) {
+                drawerLayout.closeDrawer(DRAWER_GRAVITY);
             } else {
-                drawerLayout.openDrawer(GravityCompat.START);
+                drawerLayout.openDrawer(DRAWER_GRAVITY);
             }
             return true;
         }
@@ -98,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         int id = item.getItemId();
         switch (id) {
             case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
+                drawerLayout.openDrawer(DRAWER_GRAVITY);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -134,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onOpenDrawer() {
-        drawerLayout.openDrawer(GravityCompat.START);
+        drawerLayout.openDrawer(DRAWER_GRAVITY);
     }
 
     private class MainActivityNavItemListener implements NavViewController.MenuItemListener {
@@ -142,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         @Override
         public void onItemClick(@NonNull MenuItem item, @NonNull Fragment fragment) {
             checkedNavItemId = item.getItemId();
-            drawerLayout.closeDrawer(GravityCompat.START);
+            drawerLayout.closeDrawer(DRAWER_GRAVITY);
             replaceFragment(fragment);
         }
     }
