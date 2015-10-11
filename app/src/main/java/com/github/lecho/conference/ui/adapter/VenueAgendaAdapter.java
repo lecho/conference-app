@@ -21,19 +21,21 @@ public class VenueAgendaAdapter extends AgendaAdapter {
     private static final String TAG = AddToMyAgendaClickListener.class.getSimpleName();
 
     public VenueAgendaAdapter(AppCompatActivity activity) {
-        super(activity);
+        super(activity, null);
     }
 
     @Override
-    public AgendaViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        AgendaViewHolder viewHolder;
+    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        BaseViewHolder viewHolder;
         if (ITEM_TYPE_BREAK == viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_agenda_break, parent, false);
+            View view = LayoutInflater.from(activity).inflate(R.layout.item_agenda_break, parent, false);
             viewHolder = new BreakViewHolder(activity, view);
-        } else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_venue_agenda_talk, parent,
+        } else if (ITEM_TYPE_TALK == viewType) {
+            View view = LayoutInflater.from(activity).inflate(R.layout.item_venue_agenda_talk, parent,
                     false);
             viewHolder = new VenueAgendaTalkViewHolder(activity, view);
+        } else {
+            viewHolder = new BaseViewHolder(new View(activity));
         }
         return viewHolder;
     }

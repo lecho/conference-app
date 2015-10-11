@@ -12,6 +12,7 @@ import com.github.lecho.conference.util.Optional;
 import com.github.lecho.conference.viewmodel.AgendaItemViewDto;
 import com.github.lecho.conference.viewmodel.AgendaViewDto;
 import com.github.lecho.conference.viewmodel.EventViewDto;
+import com.github.lecho.conference.viewmodel.SlotViewDto;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
 import com.github.lecho.conference.viewmodel.SponsorViewDto;
 import com.github.lecho.conference.viewmodel.TalkViewDto;
@@ -122,6 +123,7 @@ public class RealmFacade {
                 }
             } else {
                 BreakRealm breakRealm = breakRealmsMap.get(agendaItemApiDto.breakKey);
+                slotRealm.setIsInMyAgenda(true);//Break slot is always in my agenda
                 breakRealm.setSlot(slotRealm);
                 breakRealm.setFromInMilliseconds(slotRealm.getFromInMilliseconds());
             }
@@ -134,7 +136,7 @@ public class RealmFacade {
             //TODO: Wait for sorting by linked realm https://github.com/realm/realm-java/issues/672
             RealmResults<TalkRealm> talksRealms = realm.where(TalkRealm.class).findAllSorted("fromInMilliseconds");
             RealmResults<BreakRealm> breaksRealms = realm.where(BreakRealm.class).findAllSorted("fromInMilliseconds");
-            return loadAgenda(talksRealms, breaksRealms);
+            return loadAgenda(talksRealms, breaksRealms, null);
         } finally {
             closeRealm();
         }
@@ -146,7 +148,7 @@ public class RealmFacade {
             RealmResults<TalkRealm> talksRealms = realm.where(TalkRealm.class).equalTo("venue.key", venueKey)
                     .findAllSorted("fromInMilliseconds");
             RealmResults<BreakRealm> breaksRealms = realm.where(BreakRealm.class).findAllSorted("fromInMilliseconds");
-            return loadAgenda(talksRealms, breaksRealms);
+            return loadAgenda(talksRealms, breaksRealms, null);
         } finally {
             closeRealm();
         }
@@ -158,13 +160,16 @@ public class RealmFacade {
             RealmResults<TalkRealm> talksRealms = realm.where(TalkRealm.class).equalTo("isInMyAgenda", true)
                     .findAllSorted("fromInMilliseconds");
             RealmResults<BreakRealm> breaksRealms = realm.where(BreakRealm.class).findAllSorted("fromInMilliseconds");
-            return loadAgenda(talksRealms, breaksRealms);
+            RealmResults<SlotRealm> slotsRealms = realm.where(SlotRealm.class).equalTo("isInMyAgenda", false)
+                    .findAllSorted("fromInMilliseconds");
+            return loadAgenda(talksRealms, breaksRealms, slotsRealms);
         } finally {
             closeRealm();
         }
     }
 
-    private AgendaViewDto loadAgenda(RealmResults<TalkRealm> talksRealms, RealmResults<BreakRealm> breaksRealms) {
+    private AgendaViewDto loadAgenda(RealmResults<TalkRealm> talksRealms, RealmResults<BreakRealm> breaksRealms,
+                                     RealmResults<SlotRealm> slotsRealms) {
         TalkRealm.TalkViewConverter talkViewConverter = new TalkRealm.TalkViewConverter();
         BreakRealm.BreakViewConverter breakViewConverter = new BreakRealm.BreakViewConverter();
         AgendaViewDto agendaViewDto = new AgendaViewDto();
@@ -176,23 +181,41 @@ public class RealmFacade {
             AgendaItemViewDto agendaItemViewDto = convertBreakRealmToAgendaItem(breakRealm, breakViewConverter);
             agendaViewDto.agendaItems.add(agendaItemViewDto);
         }
+        if (slotsRealms != null) {
+            SlotRealm.SlotViewConverter slotViewConverter = new SlotRealm.SlotViewConverter();
+            for (SlotRealm slotRealm : slotsRealms) {
+                AgendaItemViewDto agendaItemViewDto = convertSlotRealmToAgendaItem(slotRealm, slotViewConverter);
+                agendaViewDto.agendaItems.add(agendaItemViewDto);
+            }
+        }
         Collections.sort(agendaViewDto.agendaItems, new AgendaItemComparator());
         return agendaViewDto;
     }
 
-    private AgendaItemViewDto convertTalkRealmToAgendaItem(TalkRealm talkRealm, TalkRealm.TalkViewConverter
-            talkViewConverter) {
+    private AgendaItemViewDto convertTalkRealmToAgendaItem(TalkRealm talkRealm,
+                                                           TalkRealm.TalkViewConverter converter) {
         AgendaItemViewDto agendaItemViewDto = new AgendaItemViewDto();
         agendaItemViewDto.type = AgendaItemViewDto.AgendaItemType.TALK;
-        agendaItemViewDto.talk = talkViewConverter.convert(talkRealm);
+        agendaItemViewDto.fromInMilliseconds = talkRealm.getFromInMilliseconds();
+        agendaItemViewDto.talk = converter.convert(talkRealm);
         return agendaItemViewDto;
     }
 
-    private AgendaItemViewDto convertBreakRealmToAgendaItem(BreakRealm breakRealm, BreakRealm.BreakViewConverter
-            breakViewConverter) {
+    private AgendaItemViewDto convertBreakRealmToAgendaItem(BreakRealm breakRealm,
+                                                            BreakRealm.BreakViewConverter converter) {
         AgendaItemViewDto agendaItemViewDto = new AgendaItemViewDto();
         agendaItemViewDto.type = AgendaItemViewDto.AgendaItemType.BREAK;
-        agendaItemViewDto.agendaBreak = breakViewConverter.convert(breakRealm);
+        agendaItemViewDto.fromInMilliseconds = breakRealm.getFromInMilliseconds();
+        agendaItemViewDto.agendaBreak = converter.convert(breakRealm);
+        return agendaItemViewDto;
+    }
+
+    private AgendaItemViewDto convertSlotRealmToAgendaItem(SlotRealm slotRealm,
+                                                           SlotRealm.SlotViewConverter converter) {
+        AgendaItemViewDto agendaItemViewDto = new AgendaItemViewDto();
+        agendaItemViewDto.type = AgendaItemViewDto.AgendaItemType.SLOT;
+        agendaItemViewDto.fromInMilliseconds = slotRealm.getFromInMilliseconds();
+        agendaItemViewDto.slot = converter.convert(slotRealm);
         return agendaItemViewDto;
     }
 
@@ -295,6 +318,7 @@ public class RealmFacade {
             TalkRealm talkRealm = loadTalkRealmByKey(talkKey);
             realm.beginTransaction();
             talkRealm.setIsInMyAgenda(isInMyAgenda);
+            talkRealm.getSlot().setIsInMyAgenda(isInMyAgenda);
             realm.commitTransaction();
             if (emitContentBroadcast) {
                 LoaderChangeObserver.emitBroadcast(context.getApplicationContext());
@@ -330,7 +354,9 @@ public class RealmFacade {
             TalkRealm newTalkRealm = loadTalkRealmByKey(newTalkKey);
             realm.beginTransaction();
             oldTalkRealm.setIsInMyAgenda(false);
+            oldTalkRealm.getSlot().setIsInMyAgenda(false);
             newTalkRealm.setIsInMyAgenda(true);
+            newTalkRealm.getSlot().setIsInMyAgenda(true);
             realm.commitTransaction();
             LoaderChangeObserver.emitBroadcast(context.getApplicationContext());
         } catch (Exception e) {
@@ -387,19 +413,7 @@ public class RealmFacade {
 
         @Override
         public int compare(AgendaItemViewDto lhs, AgendaItemViewDto rhs) {
-            long lhsValue;
-            long rhsValue;
-            if (AgendaItemViewDto.AgendaItemType.BREAK == lhs.type) {
-                lhsValue = lhs.agendaBreak.slot.fromInMilliseconds;
-            } else {
-                lhsValue = lhs.talk.slot.fromInMilliseconds;
-            }
-            if (AgendaItemViewDto.AgendaItemType.BREAK == rhs.type) {
-                rhsValue = rhs.agendaBreak.slot.fromInMilliseconds;
-            } else {
-                rhsValue = rhs.talk.slot.fromInMilliseconds;
-            }
-            return (int) (lhsValue - rhsValue);
+            return (int) (lhs.fromInMilliseconds - rhs.fromInMilliseconds);
         }
 
         @Override

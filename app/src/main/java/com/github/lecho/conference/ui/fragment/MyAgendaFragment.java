@@ -1,5 +1,7 @@
 package com.github.lecho.conference.ui.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -28,10 +30,11 @@ import butterknife.ButterKnife;
  */
 public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCallbacks<AgendaViewDto> {
 
-    public static final String TAG = "MyAgendaFragment";
+    public static final String TAG = MyAgendaFragment.class.getSimpleName();
     private static final int LOADER_ID = 0;
     private AgendaAdapter adapter;
     private ItemTouchHelper itemTouchHelper;
+    private OpenStartDrawerCallback drawerCallback;
 
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -57,12 +60,28 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
 
         //TODO Grid for tablet layout
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new AgendaAdapter((AppCompatActivity) getActivity());
+        adapter = new AgendaAdapter((AppCompatActivity) getActivity(), new EmptySlotClickListener());
         recyclerView.setAdapter(adapter);
         itemTouchHelper = new ItemTouchHelper(new MyAgendaItemTouchCallback());
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
         return rootView;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            drawerCallback = (OpenStartDrawerCallback) getActivity();
+        } catch (Exception e) {
+            throw new ClassCastException(getActivity().toString() + " must implement OpenStartDrawerCallback");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        drawerCallback = null;
     }
 
     @Override
@@ -107,10 +126,24 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
 
         @Override
         public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-            if (AgendaAdapter.ITEM_TYPE_BREAK == viewHolder.getItemViewType()) {
-                return 0;
+            if (AgendaAdapter.ITEM_TYPE_TALK == viewHolder.getItemViewType()) {
+                return super.getSwipeDirs(recyclerView, viewHolder);
             }
-            return super.getSwipeDirs(recyclerView, viewHolder);
+            return 0;
         }
+    }
+
+    private class EmptySlotClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            if (drawerCallback != null) {
+                drawerCallback.onOpenDrawer();
+            }
+        }
+    }
+
+    public interface OpenStartDrawerCallback {
+        void onOpenDrawer();
     }
 }

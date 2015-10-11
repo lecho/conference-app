@@ -25,6 +25,7 @@ public class SlotRealm extends RealmObject {
     private String to;
     private long fromInMilliseconds;
     private long toInMilliseconds;
+    private boolean isInMyAgenda;
 
     public String getKey() {
         return key;
@@ -66,6 +67,14 @@ public class SlotRealm extends RealmObject {
         this.toInMilliseconds = toInMilliseconds;
     }
 
+    public boolean isInMyAgenda() {
+        return isInMyAgenda;
+    }
+
+    public void setIsInMyAgenda(boolean isInMyAgenda) {
+        this.isInMyAgenda = isInMyAgenda;
+    }
+
     public static class SlotApiConverter extends RealmFacade.ApiToRealmConverter<SlotRealm, SlotApiDto> {
         private static final String TAG = SlotApiConverter.class.getSimpleName();
         private static final DateFormat dateFormat = new SimpleDateFormat("HH:mm");
@@ -78,6 +87,7 @@ public class SlotRealm extends RealmObject {
             slotRealm.setFrom(apiDto.from);
             slotRealm.setTo(apiDto.to);
             timeToMilliseconds(slotRealm);
+            slotRealm.setIsInMyAgenda(false);
             return slotRealm;
         }
 
@@ -102,6 +112,7 @@ public class SlotRealm extends RealmObject {
             slotViewDto.to = realmObject.getTo();
             slotViewDto.fromInMilliseconds = realmObject.getFromInMilliseconds();
             slotViewDto.toInMilliseconds = realmObject.getToInMilliseconds();
+            slotViewDto.isEmpty = realmObject.isInMyAgenda();
             return slotViewDto;
         }
     }

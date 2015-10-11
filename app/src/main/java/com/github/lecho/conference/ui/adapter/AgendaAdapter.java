@@ -24,15 +24,18 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaViewHolder> {
+public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHolder> {
 
     public static final int ITEM_TYPE_BREAK = 0;
     public static final int ITEM_TYPE_TALK = 1;
+    public static final int ITEM_TYPE_EMPTY_SLOT = 2;
     protected List<AgendaItemViewDto> data = new ArrayList<>();
     protected AppCompatActivity activity;
+    protected View.OnClickListener emptySlotListener;
 
-    public AgendaAdapter(AppCompatActivity activity) {
+    public AgendaAdapter(AppCompatActivity activity, View.OnClickListener emptySlotListener) {
         this.activity = activity;
+        this.emptySlotListener = emptySlotListener;
     }
 
     public void setData(@NonNull List<AgendaItemViewDto> data) {
@@ -50,20 +53,25 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
     }
 
     @Override
-    public AgendaViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        AgendaViewHolder viewHolder;
+    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        BaseViewHolder viewHolder;
         if (ITEM_TYPE_BREAK == viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_agenda_break, parent, false);
             viewHolder = new BreakViewHolder(activity, view);
-        } else {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_agenda_talk, parent, false);
+        } else if (ITEM_TYPE_TALK == viewType) {
+            View view = LayoutInflater.from(activity).inflate(R.layout.item_agenda_talk, parent, false);
             viewHolder = new AgendaTalkViewHolder(activity, view);
+        } else if (ITEM_TYPE_EMPTY_SLOT == viewType) {
+            View view = LayoutInflater.from(activity).inflate(R.layout.item_agenda_empty_slot, parent, false);
+            viewHolder = new EmptySlotViewHolder(activity, view);
+        } else {
+            viewHolder = new BaseViewHolder(new View(activity));
         }
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(AgendaViewHolder holder, int position) {
+    public void onBindViewHolder(BaseViewHolder holder, int position) {
         holder.bindView(data.get(position));
     }
 
@@ -73,6 +81,8 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
             return ITEM_TYPE_BREAK;
         } else if (AgendaItemViewDto.AgendaItemType.TALK == data.get(position).type) {
             return ITEM_TYPE_TALK;
+        } else if (AgendaItemViewDto.AgendaItemType.SLOT == data.get(position).type) {
+            return ITEM_TYPE_EMPTY_SLOT;
         } else {
             throw new IllegalArgumentException("Invalid item type " + data.get(position).type);
         }
@@ -83,7 +93,17 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
         return data.size();
     }
 
-    protected abstract class AgendaViewHolder extends RecyclerView.ViewHolder {
+    protected class BaseViewHolder extends RecyclerView.ViewHolder {
+
+        public BaseViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        public void bindView(AgendaItemViewDto agendaItem) {
+        }
+    }
+
+    protected abstract class AgendaViewHolder extends BaseViewHolder {
 
         protected final AppCompatActivity activity;
 
@@ -93,13 +113,14 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
         @Bind(R.id.current_item_indicator)
         ImageView currentItemIndicatorView;
 
+        @Override
+        public abstract void bindView(AgendaItemViewDto agendaItem);
+
         public AgendaViewHolder(AppCompatActivity activity, View itemView) {
             super(itemView);
             this.activity = activity;
             ButterKnife.bind(this, itemView);
         }
-
-        public abstract void bindView(AgendaItemViewDto agendaItem);
 
         protected void bindSlot(SlotViewDto slotViewDto) {
             SlotViewDto.SlotInTimeZone slotInTimeZone = SlotViewDto.SlotInTimeZone.getSlotInTimezone(slotViewDto);
@@ -123,6 +144,19 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
             return speakersText.toString();
         }
 
+    }
+
+    protected class EmptySlotViewHolder extends AgendaViewHolder {
+
+        public EmptySlotViewHolder(AppCompatActivity activity, View itemView) {
+            super(activity, itemView);
+        }
+
+        @Override
+        public void bindView(AgendaItemViewDto agendaItem) {
+            bindSlot(agendaItem.slot);
+            itemView.setOnClickListener(emptySlotListener);
+        }
     }
 
     protected class BreakViewHolder extends AgendaViewHolder {
@@ -171,7 +205,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.AgendaView
         }
     }
 
-    protected class TalkItemClickListener implements View.OnClickListener {
+    protected static class TalkItemClickListener implements View.OnClickListener {
 
         private final String talkKey;
         private final AppCompatActivity activity;

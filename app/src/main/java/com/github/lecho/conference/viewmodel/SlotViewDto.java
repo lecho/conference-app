@@ -16,6 +16,7 @@ public class SlotViewDto {
     public String to;
     public long fromInMilliseconds;
     public long toInMilliseconds;
+    public boolean isEmpty;
 
     @Override
     public String toString() {

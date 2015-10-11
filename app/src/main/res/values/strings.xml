@@ -36,4 +36,5 @@
     <string name="dialog_slot_conflict_message_part2">"Do you want to replace it?"</string>
     <string name="dialog_slot_conflict_button_positive">Yes</string>
     <string name="dialog_slot_conflict_button_negative">No</string>
+    <string name="text_empty_slot">Empty slot</string>
 </resources>

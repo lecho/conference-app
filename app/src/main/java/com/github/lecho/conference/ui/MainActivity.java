@@ -27,7 +27,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<NavigationViewDto> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<NavigationViewDto>,
+        MyAgendaFragment.OpenStartDrawerCallback {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String ARG_CHECKED_NAV_ITEM_ID = "checked-nav-item-id";
@@ -129,6 +130,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoaderReset(Loader<NavigationViewDto> loader) {
+    }
+
+    @Override
+    public void onOpenDrawer() {
+        drawerLayout.openDrawer(GravityCompat.START);
     }
 
     private class MainActivityNavItemListener implements NavViewController.MenuItemListener {

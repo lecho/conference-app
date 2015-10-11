@@ -8,9 +8,11 @@ public class AgendaItemViewDto {
     public AgendaItemType type;
     public BreakViewDto agendaBreak;
     public TalkViewDto talk;
+    public SlotViewDto slot;
+    public long fromInMilliseconds;
 
     public enum AgendaItemType {
-        BREAK, TALK
+        BREAK, TALK, SLOT,
     }
 
     @Override
@@ -19,6 +21,8 @@ public class AgendaItemViewDto {
                 "type=" + type +
                 ", agendaBreak=" + agendaBreak +
                 ", talk=" + talk +
+                ", slot=" + slot +
+                ", fromInMilliseconds=" + fromInMilliseconds +
                 '}';
     }
 }
