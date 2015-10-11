@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.lecho.conference.R;
+import com.github.lecho.conference.ui.fragment.AboutFragment;
 import com.github.lecho.conference.ui.fragment.MyAgendaFragment;
 import com.github.lecho.conference.ui.fragment.SpeakersFragment;
 import com.github.lecho.conference.ui.fragment.SponsorsFragment;
@@ -177,7 +178,8 @@ public class NavViewController {
                     .setOnMenuItemClickListener(new NavItemClickListener(NAVIGATION_SPONSORS, listener));
             moreSubMenu.add(groupId, itemId, order, R.string.navigation_about)
                     .setIcon(R.drawable.ic_nav_about)
-                    .setCheckable(true);
+                    .setCheckable(true)
+                    .setOnMenuItemClickListener(new NavItemClickListener(NAVIGATION_ABOUT, listener));
         }
 
         /**
@@ -205,6 +207,7 @@ public class NavViewController {
                     fragment = SponsorsFragment.newInstance();
                     break;
                 case NAVIGATION_ABOUT:
+                    fragment = AboutFragment.newInstance();
                     break;
                 default:
                     throw new IllegalArgumentException("Invalid navigation item type: " + navItemType);
