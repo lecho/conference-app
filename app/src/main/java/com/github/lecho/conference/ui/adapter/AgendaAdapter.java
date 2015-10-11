@@ -47,9 +47,16 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
         return data.get(position);
     }
 
-    public void removeItemFromAdapter(int position) {
-        data.remove(position);
+    /**
+     * Visually remove talk item and replace it with empty slot item. This method doesn't modify data in database.
+     *
+     * @param position
+     */
+    public void removeTalk(int position) {
         notifyItemRemoved(position);
+        AgendaItemViewDto item = data.get(position);
+        item.type = AgendaItemViewDto.AgendaItemType.SLOT;
+        notifyItemInserted(position);
     }
 
     @Override

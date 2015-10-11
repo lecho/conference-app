@@ -18,7 +18,10 @@ import com.github.lecho.conference.R;
 import com.github.lecho.conference.ui.adapter.VenueAgendaAdapter;
 import com.github.lecho.conference.ui.loader.AgendaLoader;
 import com.github.lecho.conference.ui.snackbar.SnackbarForTalkHelper;
+import com.github.lecho.conference.viewmodel.AgendaItemViewDto;
 import com.github.lecho.conference.viewmodel.AgendaViewDto;
+
+import java.util.Collections;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -98,5 +101,8 @@ public class VenueAgendaFragment extends Fragment implements LoaderManager.Loade
 
     @Override
     public void onLoaderReset(Loader<AgendaViewDto> loader) {
+        if (loader.getId() == LOADER_ID) {
+            adapter.setData(Collections.<AgendaItemViewDto>emptyList());
+        }
     }
 }

@@ -16,10 +16,12 @@ import android.view.ViewGroup;
 
 import com.github.lecho.conference.R;
 import com.github.lecho.conference.async.TalkAsyncHelper;
-import com.github.lecho.conference.ui.loader.AgendaLoader;
 import com.github.lecho.conference.ui.adapter.AgendaAdapter;
+import com.github.lecho.conference.ui.loader.AgendaLoader;
 import com.github.lecho.conference.viewmodel.AgendaItemViewDto;
 import com.github.lecho.conference.viewmodel.AgendaViewDto;
+
+import java.util.Collections;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -100,6 +102,9 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public void onLoaderReset(Loader<AgendaViewDto> loader) {
+        if (loader.getId() == LOADER_ID) {
+            adapter.setData(Collections.<AgendaItemViewDto>emptyList());
+        }
     }
 
     private class MyAgendaItemTouchCallback extends ItemTouchHelper.SimpleCallback {
@@ -120,7 +125,7 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
             final int position = viewHolder.getAdapterPosition();
             AgendaItemViewDto agendaItemViewDto = adapter.getItem(position);
             TalkAsyncHelper.removeTalkSilent(getActivity().getApplicationContext(), agendaItemViewDto.talk.key);
-            adapter.removeItemFromAdapter(position);
+            adapter.removeTalk(position);
         }
 
         @Override
