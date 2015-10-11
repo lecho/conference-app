@@ -75,10 +75,6 @@ public class NavViewController {
         navMenuController.bind(venueViewDtos);
     }
 
-    public void checkMenuItem(int itemId) {
-        navMenuController.checkMenuItem(itemId);
-    }
-
     static class NavHeaderController {
 
         private static final String NAVIGATION_HEADER_IMAGE = "navigation_header.jpg";
@@ -142,19 +138,12 @@ public class NavViewController {
             this.listener = listener;
         }
 
-        public void checkMenuItem(int itemId) {
-            MenuItem item = navigationMenu.findItem(itemId);
-            if (item == null) {
-                throw new IllegalArgumentException("Could not find item to be checked: " + itemId);
-            }
-            item.setChecked(true);
-        }
-
         public void bind(@NonNull List<VenueViewDto> venueViewDtos) {
             itemId = 0;
             order = 0;
             navigationMenu.clear();
             //MyAgenda
+            navigationMenu.setGroupCheckable(groupId, true, true);
             navigationMenu.add(groupId, itemId++, order++, R.string.navigation_my_agenda)
                     .setIcon(R.drawable.ic_nav_my_agenda)
                     .setCheckable(true)
@@ -165,11 +154,9 @@ public class NavViewController {
             //More
             moreSubMenu = navigationMenu.addSubMenu(groupId, itemId++, order++, R.string.navigation_more);
             bindMoreSubmenu();
-            navigationMenu.setGroupCheckable(groupId, true, true);
         }
 
         private void bindVenuesSubmenu(@NonNull List<VenueViewDto> venueViewDtos) {
-            venuesSubMenu.clear();
             for (VenueViewDto venueViewDto : venueViewDtos) {
                 venuesSubMenu.add(groupId, itemId++, order++, venueViewDto.title)
                         .setIcon(R.drawable.ic_nav_agenda)
@@ -180,7 +167,6 @@ public class NavViewController {
         }
 
         private void bindMoreSubmenu() {
-            moreSubMenu.clear();
             moreSubMenu.add(groupId, itemId++, order++, R.string.navigation_speakers)
                     .setIcon(R.drawable.ic_nav_speakers)
                     .setCheckable(true)
@@ -227,6 +213,9 @@ public class NavViewController {
         }
     }
 
+    /**
+     * As and alternative NavigationView.onNavigationItemSelected()
+     */
     private static class NavItemClickListener implements MenuItem.OnMenuItemClickListener {
 
         @NavItemType
@@ -261,7 +250,7 @@ public class NavViewController {
             }
             Fragment fragment = NavMenuController.getFragmentForItemType(navItemType, venueKey, venueTitle);
             listener.onItemClick(item, fragment);
-            return false;
+            return true;
         }
     }
 

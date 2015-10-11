@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             if (navigationViewDto.eventViewDto.isPresent()) {
                 navViewController.bindHeader(getApplicationContext(), navigationViewDto.eventViewDto.get());
             }
-            navViewController.checkMenuItem(checkedNavItemId);
+            navigationView.setCheckedItem(checkedNavItemId);
         }
     }
 
