@@ -1,8 +1,8 @@
 package com.github.lecho.conference.ui.view;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,7 +14,6 @@ import com.github.lecho.conference.viewmodel.SpeakerViewDto;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Displays speaker's name and avatar. Use this class only from code.
@@ -24,7 +23,7 @@ public class SpeakerForTalkLayout extends LinearLayout {
     private final SpeakerViewDto speakerViewDto;
 
     @Bind(R.id.speaker_avatar)
-    CircleImageView avatarView;
+    ImageView avatarView;
 
     @Bind(R.id.text_speaker_name)
     TextView speakerNameView;

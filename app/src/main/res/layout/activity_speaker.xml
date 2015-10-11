@@ -101,7 +101,7 @@
 
             <android.support.v7.widget.CardView
                 android:id="@+id/card_info"
-                style="@style/CardViewInclude.Light"
+                style="@style/CardViewInclude"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/www_button"
@@ -118,15 +118,12 @@
 
     </android.support.v4.widget.NestedScrollView>
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:id="@+id/speaker_avatar"
         android:layout_width="@dimen/speaker_avatar_big_size"
         android:layout_height="@dimen/speaker_avatar_big_size"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:src="@drawable/ic_dummy_avatar"
-        app:civ_border_color="@color/accent"
-        app:civ_border_width="2dp"
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="bottom|right|end"
         app:layout_behavior="com.github.lecho.conference.ui.view.CircleImageViewBehavior"/>

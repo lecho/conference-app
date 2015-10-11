@@ -2,6 +2,7 @@ package com.github.lecho.conference.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.LoaderManager;
@@ -24,6 +25,9 @@ import com.github.lecho.conference.ui.loader.SpeakerLoader;
 import com.github.lecho.conference.util.Optional;
 import com.github.lecho.conference.util.Utils;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

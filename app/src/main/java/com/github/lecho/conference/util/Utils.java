@@ -9,6 +9,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntegerRes;
@@ -22,7 +23,9 @@ import com.github.lecho.conference.async.ContentUpdateService;
 import com.github.lecho.conference.realmmodel.RealmFacade;
 import com.github.lecho.conference.ui.fragment.SlotConflictDialogFragment;
 import com.github.lecho.conference.viewmodel.TalkViewDto;
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -49,6 +52,26 @@ public class Utils {
     private static final String TWITTER_URI = "twitter://user?screen_name=";
     public static final String PREFS_FILE_NAME = "conference-shared-prefs";
     public static final String PREFS_SCHEMA_VERSION = "schema-version";
+
+    private static Transformation PICASSO_CIRCLE_TRANSFORMATION;
+
+    private static Transformation getTransformation(Context context) {
+        if (PICASSO_CIRCLE_TRANSFORMATION == null) {
+            final int color;
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                color = context.getResources().getColor(R.color.accent);
+            } else {
+                color = context.getColor(R.color.accent);
+            }
+            PICASSO_CIRCLE_TRANSFORMATION = new RoundedTransformationBuilder()
+                    .borderColor(color)
+                    .borderWidthDp(2)
+                    .scaleType(ImageView.ScaleType.CENTER_CROP)
+                    .oval(true)
+                    .build();
+        }
+        return PICASSO_CIRCLE_TRANSFORMATION;
+    }
 
     public static void upgradeSchema(Context context) {
         if (Utils.checkIfSchemaUpgradeNeeded(context)) {
@@ -88,10 +111,13 @@ public class Utils {
     }
 
     private static void loadSpeakerImage(Context context, String fileName, ImageView imageView, @DimenRes int dimen) {
+        //TODO Because I use transformation there is a problem with rounding placeholder and error image so it always
+        // should be some image to load. Don't use placeholder or error image. Transformation is used because
+        // RoundImageView doesn't support Picasso fade in animation and that's looks bad.
         Picasso.with(context.getApplicationContext())
                 .load(ASSETS_SPEAKERS_IMAGES + fileName)
-                .placeholder(R.drawable.ic_dummy_avatar)
-                        //.resizeDimen(dimen, dimen)
+                .resizeDimen(dimen, dimen)
+                .transform(getTransformation(context))
                 .into(imageView);
     }
 

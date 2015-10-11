@@ -3,7 +3,6 @@
     android:id="@+id/speaker_card"
     style="@style/CardViewSelectableItem"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -12,14 +11,12 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <ImageView
             android:id="@+id/speaker_avatar"
             android:layout_width="@dimen/speaker_avatar_small_size"
             android:layout_height="@dimen/speaker_avatar_small_size"
             android:layout_alignParentRight="true"
-            android:src="@drawable/ic_dummy_avatar"
-            app:civ_border_color="@color/accent"
-            app:civ_border_width="2dp"/>
+            android:src="@drawable/ic_dummy_avatar"/>
 
         <TextView
             android:id="@+id/text_speaker_name"
