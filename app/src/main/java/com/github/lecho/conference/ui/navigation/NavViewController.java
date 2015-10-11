@@ -115,8 +115,7 @@ public class NavViewController {
                     .append(eventViewDto.city)
                     .toString();
             eventPlaceView.setText(eventPlaceText);
-            mapButton.setOnClickListener(new MapButtonClickListener(context, eventViewDto.latitude,
-                    eventViewDto.longitude));
+            mapButton.setOnClickListener(new MapButtonClickListener(context, eventViewDto));
         }
 
         public void bindHeaderImage(@NonNull Context context) {
@@ -260,18 +259,17 @@ public class NavViewController {
     private static class MapButtonClickListener implements View.OnClickListener {
 
         private final Context context;
-        private final double latitude;
-        private final double longitude;
+        private final EventViewDto eventViewDto;
 
-        public MapButtonClickListener(Context context, double latitude, double longitude) {
+        public MapButtonClickListener(Context context, EventViewDto eventViewDto) {
             this.context = context;
-            this.latitude = latitude;
-            this.longitude = longitude;
+            this.eventViewDto = eventViewDto;
         }
 
         @Override
         public void onClick(View v) {
-            Utils.launchGMaps(context, latitude, longitude);
+            String address = eventViewDto.street + ", " + eventViewDto.city;
+            Utils.launchGMaps(context, eventViewDto.latitude, eventViewDto.longitude, address);
         }
     }
 

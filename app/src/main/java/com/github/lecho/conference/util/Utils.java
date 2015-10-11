@@ -151,6 +151,28 @@ public class Utils {
         }
     }
 
+    public static boolean launchGMaps(Context context, double latitude, double longitude, String address) {
+        final String GMAPS = "geo:";
+        final String ZOOM = "?z=17&q=";
+        StringBuilder sb = new StringBuilder().append(GMAPS).append(Double.toString(latitude)).append(",")
+                .append(Double.toString(longitude)).append(ZOOM).append(address);
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(sb.toString()));
+            intent.setPackage(GOOGLE_MAPS_PACKAGE);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            ComponentName componentName = intent.resolveActivity(context.getPackageManager());
+            if (null == componentName) {
+                Log.e(TAG, "No activity to handle geo intent");
+                return false;
+            }
+            context.startActivity(intent);
+            return true;
+        } catch (Exception e) {
+            Log.e(TAG, "Could not start google navigation", e);
+            return false;
+        }
+    }
+
     @SuppressLint("DefaultLocale")
     public static boolean openWebBrowser(Context context, final String url) {
         try {
