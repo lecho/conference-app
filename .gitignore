@@ -1,6 +1,7 @@
 # built application files
 *.apk
 *.ap_
+*.log
 
 # files for the dex VM
 *.dex
@@ -36,6 +37,7 @@ proguard/
 /.gradle
 
 #app content
-json-data/
-speakers-images/
-sponsors-images/
+json/
+speakers/
+sponsors/
+headers/
