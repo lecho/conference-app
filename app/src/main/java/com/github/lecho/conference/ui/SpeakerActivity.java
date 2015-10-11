@@ -2,16 +2,16 @@ package com.github.lecho.conference.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -25,16 +25,12 @@ import com.github.lecho.conference.ui.loader.SpeakerLoader;
 import com.github.lecho.conference.util.Optional;
 import com.github.lecho.conference.util.Utils;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
-import com.makeramen.roundedimageview.RoundedTransformationBuilder;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.hdodenhof.circleimageview.CircleImageView;
 
-public class SpeakerActivity extends AppCompatActivity implements LoaderManager
-        .LoaderCallbacks<Optional<SpeakerViewDto>> {
+public class SpeakerActivity extends AppCompatActivity implements
+        LoaderManager.LoaderCallbacks<Optional<SpeakerViewDto>> {
 
     private static final String TAG = SpeakerActivity.class.getSimpleName();
     private static final String ARG_SPEAKER_KEY = "speaker-key";
@@ -201,7 +197,7 @@ public class SpeakerActivity extends AppCompatActivity implements LoaderManager
         }
 
         public void bind(SpeakerViewDto speakerViewDto) {
-            speakerInfoView.setText(speakerViewDto.biography);
+            speakerInfoView.setText(Html.fromHtml(speakerViewDto.biography));
         }
     }
 }
