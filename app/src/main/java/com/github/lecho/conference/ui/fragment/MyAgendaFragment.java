@@ -46,8 +46,8 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getLoaderManager().initLoader(LOADER_ID, null, this);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.title_activity_my_agenda);
+        getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
     @Nullable

@@ -9,7 +9,6 @@ public class AgendaItemViewDto {
     public BreakViewDto agendaBreak;
     public TalkViewDto talk;
     public SlotViewDto slot;
-    public long fromInMilliseconds;
 
     public enum AgendaItemType {
         BREAK, TALK, SLOT,
@@ -22,7 +21,6 @@ public class AgendaItemViewDto {
                 ", agendaBreak=" + agendaBreak +
                 ", talk=" + talk +
                 ", slot=" + slot +
-                ", fromInMilliseconds=" + fromInMilliseconds +
                 '}';
     }
 }

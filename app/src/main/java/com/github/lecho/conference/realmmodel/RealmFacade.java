@@ -196,8 +196,8 @@ public class RealmFacade {
                                                            TalkRealm.TalkViewConverter converter) {
         AgendaItemViewDto agendaItemViewDto = new AgendaItemViewDto();
         agendaItemViewDto.type = AgendaItemViewDto.AgendaItemType.TALK;
-        agendaItemViewDto.fromInMilliseconds = talkRealm.getFromInMilliseconds();
         agendaItemViewDto.talk = converter.convert(talkRealm);
+        agendaItemViewDto.slot = agendaItemViewDto.talk.slot;
         return agendaItemViewDto;
     }
 
@@ -205,8 +205,8 @@ public class RealmFacade {
                                                             BreakRealm.BreakViewConverter converter) {
         AgendaItemViewDto agendaItemViewDto = new AgendaItemViewDto();
         agendaItemViewDto.type = AgendaItemViewDto.AgendaItemType.BREAK;
-        agendaItemViewDto.fromInMilliseconds = breakRealm.getFromInMilliseconds();
         agendaItemViewDto.agendaBreak = converter.convert(breakRealm);
+        agendaItemViewDto.slot = agendaItemViewDto.agendaBreak.slot;
         return agendaItemViewDto;
     }
 
@@ -214,7 +214,6 @@ public class RealmFacade {
                                                            SlotRealm.SlotViewConverter converter) {
         AgendaItemViewDto agendaItemViewDto = new AgendaItemViewDto();
         agendaItemViewDto.type = AgendaItemViewDto.AgendaItemType.SLOT;
-        agendaItemViewDto.fromInMilliseconds = slotRealm.getFromInMilliseconds();
         agendaItemViewDto.slot = converter.convert(slotRealm);
         return agendaItemViewDto;
     }
@@ -413,7 +412,7 @@ public class RealmFacade {
 
         @Override
         public int compare(AgendaItemViewDto lhs, AgendaItemViewDto rhs) {
-            return (int) (lhs.fromInMilliseconds - rhs.fromInMilliseconds);
+            return (int) (lhs.slot.fromInMilliseconds - rhs.slot.fromInMilliseconds);
         }
 
         @Override

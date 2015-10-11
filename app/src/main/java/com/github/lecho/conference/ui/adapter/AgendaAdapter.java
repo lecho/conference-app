@@ -170,9 +170,8 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
 
         @Override
         public void bindView(AgendaItemViewDto agendaItem) {
-            BreakViewDto breakViewDto = agendaItem.agendaBreak;
-            bindSlot(breakViewDto.slot);
-            titleView.setText(breakViewDto.title);
+            bindSlot(agendaItem.slot);
+            titleView.setText(agendaItem.agendaBreak.title);
         }
     }
 
@@ -195,8 +194,8 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
         }
 
         public void bindView(AgendaItemViewDto agendaItem) {
+            bindSlot(agendaItem.slot);
             TalkViewDto talkViewDto = agendaItem.talk;
-            bindSlot(talkViewDto.slot);
             itemView.setOnClickListener(new TalkItemClickListener(activity, talkViewDto.key));
             titleView.setText(talkViewDto.title);
             venueView.setText(talkViewDto.venue.getVenueText(activity));

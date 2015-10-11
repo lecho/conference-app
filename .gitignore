@@ -37,7 +37,7 @@ proguard/
 /.gradle
 
 #app content
-json/
+#json/
 speakers/
 sponsors/
 headers/
