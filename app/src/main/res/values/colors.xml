@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="divider">#DDDDDD</color>
-    <color name="primary">#607D8B</color>
-    <color name="primary_dark">#455A64</color>
-    <color name="primary_ripple">#90A4AE</color>
+    <color name="primary">#009688</color>
+    <color name="primary_dark">#00796B</color>
+    <color name="primary_ripple">#4DB6AC</color>
     <color name="accent">#CDDC39</color>
     <color name="accent_ripple">#DCE775</color>
 
@@ -16,5 +16,5 @@
     <color name="silver">#C0C0C0</color>
     <color name="copper">#CD7F32</color>
 
-    <color name="empty_slot_background">#ECEFF1</color>
+    <color name="empty_slot_background">#EFEBE9</color>
 </resources>
