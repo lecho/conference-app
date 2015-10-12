@@ -126,5 +126,5 @@
         android:layout_marginRight="16dp"
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="bottom|right|end"
-        app:layout_behavior="com.github.lecho.conference.ui.view.CircleImageViewBehavior"/>
+        app:layout_behavior="com.github.lecho.mobilization.ui.view.CircleImageViewBehavior"/>
 </android.support.design.widget.CoordinatorLayout>

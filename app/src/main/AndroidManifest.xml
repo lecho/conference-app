@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-    package="com.github.lecho.conference"
+    package="com.github.lecho.mobilization"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
-        android:name=".ConferenceApplication"
+        android:name="com.github.lecho.mobilization.ConferenceApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:installLocation="auto"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.MainActivity"
+            android:name="com.github.lecho.mobilization.ui.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -19,14 +19,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.TalkActivity">
+            android:name="com.github.lecho.mobilization.ui.TalkActivity">
         </activity>
         <activity
-            android:name=".ui.SpeakerActivity">
+            android:name="com.github.lecho.mobilization.ui.SpeakerActivity">
         </activity>
 
         <service
-            android:name=".async.ContentUpdateService"
+            android:name="com.github.lecho.mobilization.async.ContentUpdateService"
             android:exported="false">
         </service>
     </application>
