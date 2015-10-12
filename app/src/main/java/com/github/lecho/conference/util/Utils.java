@@ -8,12 +8,14 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.DimenRes;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.Pair;
 import android.widget.ImageView;
@@ -40,6 +42,9 @@ import io.realm.Realm;
 public class Utils {
 
     private static final String TAG = Utils.class.getSimpleName();
+
+    private static final int SMALLEST_WIDTH_DP_FOR_TABLET_LAYOUT = 600;
+    private static final int SPAN_COUNT_FOR_TABLET_LAYOUT = 2;
 
     private static final String ASSETS_JSON_FOLDER = "json";
     private static final String ASSETS_SPEAKERS_IMAGES = "file:///android_asset/images/speakers/";
@@ -71,6 +76,15 @@ public class Utils {
                     .build();
         }
         return PICASSO_CIRCLE_TRANSFORMATION;
+    }
+
+    public static RecyclerView.LayoutManager getLayoutManager(Context context) {
+        Configuration configuration = context.getResources().getConfiguration();
+        if (configuration.smallestScreenWidthDp < Utils.SMALLEST_WIDTH_DP_FOR_TABLET_LAYOUT) {
+            return new LinearLayoutManager(context);
+        } else {
+            return new GridLayoutManager(context, SPAN_COUNT_FOR_TABLET_LAYOUT);
+        }
     }
 
     public static void upgradeSchema(Context context) {

@@ -57,7 +57,7 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_agenda, container, false);
         ButterKnife.bind(this, rootView);
-        //TODO Grid for tablet layout
+        //TODO Grid for tablet layout, adjust margins and paddings in layout
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new AgendaAdapter((AppCompatActivity) getActivity(), new StarTalkClickListener(),
                 new EmptySlotClickListener());
