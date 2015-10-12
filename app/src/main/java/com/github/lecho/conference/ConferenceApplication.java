@@ -2,8 +2,6 @@ package com.github.lecho.conference;
 
 import android.app.Application;
 
-import com.squareup.leakcanary.LeakCanary;
-
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -15,12 +13,12 @@ public class ConferenceApplication extends Application {
     /**
      * Always increment schema version.
      */
-    private static final int SCHEMA_VERSION = 3;
+    private static final int SCHEMA_VERSION = 4;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        LeakCanary.install(this);
+        //LeakCanary.install(this);
         RealmConfiguration config = new RealmConfiguration.Builder(getApplicationContext())
                 .name("conference.realm")
                 .schemaVersion(SCHEMA_VERSION)
