@@ -17,23 +17,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:text="9:00 - 10:00"
             android:textStyle="bold"/>
 
         <ImageView
             android:id="@+id/current_item_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/text_time_slot"
             android:layout_toRightOf="@id/text_time_slot"
-            android:src="@drawable/ic_current_agenda_item"
+            android:src="@drawable/ic_current_item"
             android:visibility="gone"/>
 
         <FrameLayout
             android:id="@+id/button_add_to_my_agenda_layout"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
+            android:layout_marginEnd="16dp"
             android:layout_marginRight="-16dp"
             android:layout_marginTop="-16dp">
 
@@ -41,7 +43,8 @@
                 android:id="@+id/button_add_to_my_agenda"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_gravity="top|right"
+                android:layout_gravity="top|end"
+                android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="16dp"
                 android:background="@android:color/transparent"
@@ -56,7 +59,6 @@
             android:layout_below="@id/text_time_slot"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="12dp"
-            android:text="Projektowanie aplikacji iOS - wzorce i triki"
             android:textColor="@color/primary"
             android:textStyle="bold"/>
 
@@ -72,10 +74,11 @@
             style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_below="@id/divider"
             android:layout_marginLeft="8dp"
-            android:text="(EN)"/>
+            android:layout_marginStart="8dp"/>
 
 
         <TextView
@@ -85,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/divider"
             android:layout_toLeftOf="@id/text_language"
-            android:text="Adam Nowak"/>
+            android:layout_toStartOf="@id/text_language"/>
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>

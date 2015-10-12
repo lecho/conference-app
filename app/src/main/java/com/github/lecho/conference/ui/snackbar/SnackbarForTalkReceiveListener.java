@@ -32,7 +32,6 @@ public class SnackbarForTalkReceiveListener implements SnackbarForTalkObserver.O
             default:
                 throw new IllegalArgumentException("Invalid snackbar type: " + snackbarActionType);
         }
-        snackbar.getView().setBackgroundResource(R.color.primary_dark);
         snackbar.show();
     }
 

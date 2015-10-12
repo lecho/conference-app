@@ -16,5 +16,5 @@
     <color name="silver">#C0C0C0</color>
     <color name="copper">#CD7F32</color>
 
-    <color name="agenda_inactive_item_background">#EEEEEE</color>
+    <color name="empty_slot_background">#ECEFF1</color>
 </resources>
