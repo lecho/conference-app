@@ -1,1 +1,30 @@
-{"break-registration":{"title":"Registration","description_html":"If you do not want to miss any presentation please register between 7:30-9:10. However, registration will be opened all day!"},"break-hello-world":{"title":"Hello World","description_html":"This is couple of words about Mobilization. For community by community."},"break-coffee":{"title":"Coffee Break","description_html":""},"break-lunch":{"title":"Lunch Break","description_html":"VIPs (Speakers, Sponsors) have lunch in Congresowa Restaurant on base floor."},"break-no-coffee":{"title":"No Coffee Break","description_html":""},"break-finally":{"title":"Finally","description_html":"Time to give thanks to all the sponsors and the organizer's team"}}
+{
+	"break-registration": {
+		"title": "Registration",
+		"description_html": "If you do not want to miss any presentation please register between 7:30-9:10. However, registration will be opened all day!"
+	},
+	"break-hello-world": {
+		"title": "Hello World",
+		"description_html": "This is couple of words about Mobilization. For community by community."
+	},
+	"break-coffee": {
+		"title": "Coffee Break",
+		"description_html": ""
+	},
+	"break-lunch": {
+		"title": "Lunch Break",
+		"description_html": "VIPs (Speakers, Sponsors) have lunch in Congresowa Restaurant on base floor.<br>Attendees will have soldiers' soup outside the building!"
+	},
+	"break-no-coffee": {
+		"title": "No Coffee Break",
+		"description_html": ""
+	},
+	"break-finally": {
+		"title": "Finally meeting",
+		"description_html": "Time to give thanks to all the sponsors and the organizer's team."
+	},
+	"break-afterparty": {
+		"title": "AfterParty in Indeks Club",
+		"description_html": "Free pizza and beer and follow up talks.<br>5min from conference venue.<br>Stefanowskiego 17 90-452 Łódź"
+	}
+}

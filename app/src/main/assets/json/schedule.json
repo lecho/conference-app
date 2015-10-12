@@ -1,1 +1,162 @@
-{"slot-registration":{"break_key":"break-registration"},"slot-hello-world":{"break_key":"break-hello-world"},"slot-1":{"venue-1":{"talk_key":"talk-potrzeby-biznesowe-a-technologia-w-mobdev-na-przykladzie-seqr"},"venue-2":{"talk_key":"talk-developing-software-for-dedicated-devices-using-agile"},"venue-3":{"talk_key":"talk-html5-goes-for-a-ride-czyli-wyzwania-dla-technologii-webowych-w-przemysle-automotive"},"venue-4":{"talk_key":"talk-android-auto"},"venue-5":{"talk_key":"talk-ux-pitfalls-in-multi-os-apps"}},"slot-coffee-1":{"break_key":"break-coffee"},"slot-2":{"venue-1":{"talk_key":"talk-titanium-develop-native-mobile-apps-with-javascript"},"venue-2":{"talk_key":"talk-espressive-functional-testing-with-espresso"},"venue-3":{"talk_key":"talk-swift-and-objective-c-interoperability"},"venue-4":{"talk_key":"talk-optymalizacja-hierarchii-widokow-na-platformie-android"},"venue-5":{"talk_key":"talk-hacking-bluetooth-smart"}},"slot-coffee-2":{"break_key":"break-coffee"},"slot-3":{"venue-1":{"talk_key":"talk-watch-out-for-the-watch"},"venue-2":{"talk_key":"talk-app-indexing-i-deep-linking-w-aplikacjach-androidowych"},"venue-3":{"talk_key":"talk-modern-ios-app-architecture"},"venue-4":{"talk_key":"talk-czy-ar-i-vr-zmienia-nasza-przyszlosc"},"venue-5":{"talk_key":"talk-angular-js-i-cordova-tworzenie-hybrydowych-aplikacji-mobilnych"}},"slot-coffee-3":{"break_key":"break-coffee"},"slot-4":{"venue-1":{"talk_key":"talk-dont-reinvent-the-wheel-use-libraries-modern-android-stack"},"venue-2":{"talk_key":"talk-kotlin-for-android"},"venue-3":{"talk_key":"talk-behavior-driven-development"},"venue-4":{"talk_key":"talk-clean-architecture"},"venue-5":{"talk_key":"talk-ionic-io-services-for-hybrid-mobile-applications"}},"slot-lunch":{"break_key":"break-lunch"},"slot-5":{"venue-1":{"talk_key":"talk-l-continue"},"venue-2":{"talk_key":"talk-kiedy-zespol-scrumowy-nie-kocha-swojego-produktu-mobilnego"},"venue-3":{"talk_key":"talk-l-continue"},"venue-4":{"talk_key":"talk-czy-nastala-era-continuous-everything"},"venue-5":{"talk_key":"talk-l-continue"}},"slot-6":{"venue-1":{"talk_key":"talk-dagger-2-dependency-injection-w-kodzie-produkcyjnym"},"venue-2":{"talk_key":"talk-qtquick-spotyka-html"},"venue-3":{"talk_key":"talk-unit-testy-w-androidzie-z-uzyciem-biblioteki-spock"},"venue-4":{"talk_key":"talk-reaktywne-programowanie-z-rxjava"},"venue-5":{"talk_key":"talk-no-platformy-natywne"}},"slot-coffee-4":{"break_key":"break-coffee"},"slot-7":{"venue-1":{"talk_key":"talk-hipster-oriented-programming"},"venue-2":{"talk_key":"talk-dobry-zwyczaj-nie-odziedziczaj"},"venue-3":{"talk_key":"talk-android-data-binding-nie-tylko-w-teorii"},"venue-4":{"talk_key":"talk-material-design-with-android-design-library"},"venue-5":{"talk_key":"talk-co-kryje-pianka-czyli-o-nowej-wersjia-androida"}},"slot-coffee-5":{"break_key":"break-coffee"},"slot-8":{"venue-1":{"talk_key":"talk-what-s-in-it-for-us-after-the-indiepocalipse"},"venue-2":{"talk_key":"talk-reactive-ui-on-adroid-with-scala"},"venue-3":{"talk_key":"talk-xamarin-dla-nie-tylko-deweloperow-androida"},"venue-4":{"talk_key":"talk-hunt-me-od-kuchni-jak-powstal-innowacyjny-sposob-na-szukanie-pracy"},"venue-5":{"talk_key":"talk-zwinna-lodz-przedstawia-panel"}},"slot-no-coffee-6":{"break_key":"break-no-coffee"},"slot-finally":{"break_key":"break-finally"}}
+{
+	"slot-registration": {
+		"break_key": "break-registration"
+	},
+	"slot-hello-world": {
+		"break_key": "break-hello-world"
+	},
+	"slot-1": {
+		"venue-seamless": {
+			"talk_key": "talk-potrzeby-biznesowe-a-technologia-w-mobdev-na-przykladzie-seqr"
+		},
+		"venue-tomtom": {
+			"talk_key": "talk-developing-software-for-dedicated-devices-using-agile"
+		},
+		"venue-mobica": {
+			"talk_key": "talk-html5-goes-for-a-ride-czyli-wyzwania-dla-technologii-webowych-w-przemysle-automotive"
+		},
+		"venue-harman": {
+			"talk_key": "talk-android-auto"
+		},
+		"venue-hp": {
+			"talk_key": "talk-ux-pitfalls-in-multi-os-apps"
+		}
+	},
+	"slot-coffee-1": {
+		"break_key": "break-coffee"
+	},
+	"slot-2": {
+		"venue-seamless": {
+			"talk_key": "talk-optymalizacja-hierarchii-widokow-na-platformie-android"
+		},
+		"venue-tomtom": {
+			"talk_key": "talk-hacking-bluetooth-smart"
+		},
+		"venue-mobica": {
+			"talk_key": "talk-modern-ios-app-architecture"
+		},
+		"venue-harman": {
+			"talk_key": "talk-titanium-develop-native-mobile-apps-with-javascript"
+		},
+		"venue-hp": {
+			"talk_key": "talk-espressive-functional-testing-with-espresso"
+		}
+	},
+	"slot-coffee-2": {
+		"break_key": "break-coffee"
+	},
+	"slot-3": {
+		"venue-seamless": {
+			"talk_key": "talk-app-indexing-i-deep-linking-w-aplikacjach-androidowych"
+		},
+		"venue-tomtom": {
+			"talk_key": "talk-watch-out-for-the-watch"
+		},
+		"venue-mobica": {
+			"talk_key": "talk-unit-testy-w-androidzie-z-uzyciem-biblioteki-spock"
+		},
+		"venue-harman": {
+			"talk_key": "talk-czy-ar-i-vr-zmienia-nasza-przyszlosc"
+		},
+		"venue-hp": {
+			"talk_key": "talk-angular-js-i-cordova-tworzenie-hybrydowych-aplikacji-mobilnych"
+		}
+	},
+	"slot-coffee-3": {
+		"break_key": "break-coffee"
+	},
+	"slot-4": {
+		"venue-seamless": {
+			"talk_key": "talk-behavior-driven-development"
+		},
+		"venue-tomtom": {
+			"talk_key": "talk-ionic-io-services-for-hybrid-mobile-applications"
+		},
+		"venue-mobica": {
+			"talk_key": "talk-dont-reinvent-the-wheel-use-libraries-modern-android-stack"
+		},
+		"venue-harman": {
+			"talk_key": "talk-clean-architecture"
+		},
+		"venue-hp": {
+			"talk_key": "talk-kotlin-for-android"
+		}
+	},
+	"slot-lunch": {
+		"break_key": "break-lunch"
+	},
+	"slot-5": {
+		"venue-tomtom": {
+			"talk_key": "talk-kiedy-zespol-scrumowy-nie-kocha-swojego-produktu-mobilnego"
+		},
+		"venue-harman": {
+			"talk_key": "talk-czy-nastala-era-continuous-everything"
+		}
+	},
+	"slot-6": {
+		"venue-seamless": {
+			"talk_key": "talk-reaktywne-programowanie-z-rxjava"
+		},
+		"venue-tomtom": {
+			"talk_key": "talk-no-platformy-natywne"
+		},
+		"venue-mobica": {
+			"talk_key": "talk-swift-and-objective-c-interoperability"
+		},
+		"venue-harman": {
+			"talk_key": "talk-dagger-2-dependency-injection-w-kodzie-produkcyjnym"
+		},
+		"venue-hp": {
+			"talk_key": "talk-qtquick-spotyka-html"
+		}
+	},
+	"slot-coffee-4": {
+		"break_key": "break-coffee"
+	},
+	"slot-7": {
+		"venue-seamless": {
+			"talk_key": "talk-android-data-binding-nie-tylko-w-teorii"
+		},
+		"venue-tomtom": {
+			"talk_key": "talk-dobry-zwyczaj-nie-odziedziczaj"
+		},
+		"venue-mobica": {
+			"talk_key": "talk-hipster-oriented-programming"
+		},
+		"venue-harman": {
+			"talk_key": "talk-co-kryje-pianka-czyli-o-nowej-wersji-androida"
+		},
+		"venue-hp": {
+			"talk_key": "talk-material-design-with-android-design-library"
+		}
+	},
+	"slot-coffee-5": {
+		"break_key": "break-coffee"
+	},
+	"slot-8": {
+		"venue-seamless": {
+			"talk_key": "talk-what-s-in-it-for-us-after-the-indiepocalipse"
+		},
+		"venue-tomtom": {
+			"talk_key": "talk-reactive-ui-on-adroid-with-scala"
+		},
+		"venue-mobica": {
+			"talk_key": "talk-zwinna-lodz-przedstawia-panel"
+		},
+		"venue-harman": {
+			"talk_key": "talk-xamarin-dla-nie-tylko-deweloperow-androida"
+		},
+		"venue-hp": {
+			"talk_key": "talk-hunt-me-od-kuchni-jak-powstal-innowacyjny-sposob-na-szukanie-pracy"
+		}
+	},
+	"slot-no-coffee-6": {
+		"break_key": "break-no-coffee"
+	},
+	"slot-finally": {
+		"break_key": "break-finally"
+	},
+	"slot-afterparty": {
+		"break_key": "break-afterparty"
+	}
+}

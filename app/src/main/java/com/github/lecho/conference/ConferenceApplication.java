@@ -13,7 +13,7 @@ public class ConferenceApplication extends Application {
     /**
      * Always increment schema version.
      */
-    private static final int SCHEMA_VERSION = 4;
+    private static final int SCHEMA_VERSION = 5;
 
     @Override
     public void onCreate() {
