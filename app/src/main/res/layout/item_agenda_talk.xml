@@ -28,6 +28,26 @@
             android:src="@drawable/ic_current_agenda_item"
             android:visibility="gone"/>
 
+        <FrameLayout
+            android:id="@+id/button_add_to_my_agenda_layout"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="-16dp"
+            android:layout_marginTop="-16dp">
+
+            <ImageButton
+                android:id="@+id/button_add_to_my_agenda"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="top|right"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_star_border_accent"/>
+        </FrameLayout>
+
         <TextView
             android:id="@+id/text_venue"
             style="@style/TextAppearance.AppCompat.Small"
@@ -53,7 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_below="@id/text_title"
-            android:background="@drawable/horizontal_divider"/>
+            android:background="@color/divider"/>
 
         <TextView
             android:id="@+id/text_language"

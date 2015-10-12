@@ -7,13 +7,13 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.lecho.conference.R;
 import com.github.lecho.conference.ui.TalkActivity;
 import com.github.lecho.conference.viewmodel.AgendaItemViewDto;
-import com.github.lecho.conference.viewmodel.BreakViewDto;
 import com.github.lecho.conference.viewmodel.SlotViewDto;
 import com.github.lecho.conference.viewmodel.SpeakerViewDto;
 import com.github.lecho.conference.viewmodel.TalkViewDto;
@@ -29,12 +29,15 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
     public static final int ITEM_TYPE_BREAK = 0;
     public static final int ITEM_TYPE_TALK = 1;
     public static final int ITEM_TYPE_EMPTY_SLOT = 2;
-    protected List<AgendaItemViewDto> data = new ArrayList<>();
-    protected AppCompatActivity activity;
-    protected View.OnClickListener emptySlotListener;
+    private List<AgendaItemViewDto> data = new ArrayList<>();
+    private final AppCompatActivity activity;
+    private final AgendaItemClickListener starTalkListener;
+    private final AgendaItemClickListener emptySlotListener;
 
-    public AgendaAdapter(AppCompatActivity activity, View.OnClickListener emptySlotListener) {
+    public AgendaAdapter(AppCompatActivity activity, AgendaItemClickListener starTalkListener,
+                         AgendaItemClickListener emptySlotListener) {
         this.activity = activity;
+        this.starTalkListener = starTalkListener;
         this.emptySlotListener = emptySlotListener;
     }
 
@@ -61,18 +64,16 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        BaseViewHolder viewHolder;
+        BaseViewHolder viewHolder = null;
         if (ITEM_TYPE_BREAK == viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_agenda_break, parent, false);
             viewHolder = new BreakViewHolder(activity, view);
         } else if (ITEM_TYPE_TALK == viewType) {
             View view = LayoutInflater.from(activity).inflate(R.layout.item_agenda_talk, parent, false);
-            viewHolder = new AgendaTalkViewHolder(activity, view);
+            viewHolder = new MyAgendaTalkViewHolder(activity, view);
         } else if (ITEM_TYPE_EMPTY_SLOT == viewType) {
             View view = LayoutInflater.from(activity).inflate(R.layout.item_agenda_empty_slot, parent, false);
             viewHolder = new EmptySlotViewHolder(activity, view);
-        } else {
-            viewHolder = new BaseViewHolder(new View(activity));
         }
         return viewHolder;
     }
@@ -100,17 +101,10 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
         return data.size();
     }
 
-    protected class BaseViewHolder extends RecyclerView.ViewHolder {
-
-        public BaseViewHolder(View itemView) {
-            super(itemView);
-        }
-
-        public void bindView(AgendaItemViewDto agendaItem) {
-        }
-    }
-
-    protected abstract class AgendaViewHolder extends BaseViewHolder {
+    /**
+     * Base agenda item view holder
+     */
+    protected abstract class BaseViewHolder extends RecyclerView.ViewHolder {
 
         protected final AppCompatActivity activity;
 
@@ -120,16 +114,20 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
         @Bind(R.id.current_item_indicator)
         ImageView currentItemIndicatorView;
 
-        @Override
-        public abstract void bindView(AgendaItemViewDto agendaItem);
+        @Bind(R.id.text_title)
+        TextView titleView;
 
-        public AgendaViewHolder(AppCompatActivity activity, View itemView) {
+        public BaseViewHolder(AppCompatActivity activity, View itemView) {
             super(itemView);
             this.activity = activity;
             ButterKnife.bind(this, itemView);
         }
 
-        protected void bindSlot(SlotViewDto slotViewDto) {
+        public void bindView(AgendaItemViewDto agendaItem) {
+            bindSlot(agendaItem.slot);
+        }
+
+        private void bindSlot(SlotViewDto slotViewDto) {
             SlotViewDto.SlotInTimeZone slotInTimeZone = SlotViewDto.SlotInTimeZone.getSlotInTimezone(slotViewDto);
             timeSlotView.setText(slotInTimeZone.getTimeSlotText());
             if (slotInTimeZone.isInCurrentSlot()) {
@@ -150,10 +148,12 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
             }
             return speakersText.toString();
         }
-
     }
 
-    protected class EmptySlotViewHolder extends AgendaViewHolder {
+    /**
+     * View holder for empty slot item
+     */
+    protected class EmptySlotViewHolder extends BaseViewHolder {
 
         public EmptySlotViewHolder(AppCompatActivity activity, View itemView) {
             super(activity, itemView);
@@ -161,15 +161,15 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
 
         @Override
         public void bindView(AgendaItemViewDto agendaItem) {
-            bindSlot(agendaItem.slot);
-            itemView.setOnClickListener(emptySlotListener);
+            super.bindView(agendaItem);
+            itemView.setOnClickListener(new EmptySlotClickListener(getLayoutPosition(), agendaItem));
         }
     }
 
-    protected class BreakViewHolder extends AgendaViewHolder {
-
-        @Bind(R.id.text_title)
-        TextView titleView;
+    /**
+     * View holder for coffee break item
+     */
+    protected class BreakViewHolder extends BaseViewHolder {
 
         public BreakViewHolder(AppCompatActivity activity, View itemView) {
             super(activity, itemView);
@@ -177,15 +177,21 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
 
         @Override
         public void bindView(AgendaItemViewDto agendaItem) {
-            bindSlot(agendaItem.slot);
+            super.bindView(agendaItem);
             titleView.setText(agendaItem.agendaBreak.title);
         }
     }
 
-    protected class AgendaTalkViewHolder extends AgendaViewHolder {
+    /**
+     * Specific venue/track talk view holder
+     */
+    protected class VenueAgendaTalkViewHolder extends BaseViewHolder {
 
-        @Bind(R.id.text_venue)
-        TextView venueView;
+        @Bind(R.id.button_add_to_my_agenda_layout)
+        View addToMyAgendaButtonLayout;
+
+        @Bind(R.id.button_add_to_my_agenda)
+        ImageButton addToMyAgendaButton;
 
         @Bind(R.id.text_title)
         TextView titleView;
@@ -196,22 +202,47 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
         @Bind(R.id.text_speakers)
         TextView speakersView;
 
-        public AgendaTalkViewHolder(AppCompatActivity activity, View itemView) {
+        public VenueAgendaTalkViewHolder(AppCompatActivity activity, View itemView) {
             super(activity, itemView);
         }
 
         public void bindView(AgendaItemViewDto agendaItem) {
-            bindSlot(agendaItem.slot);
+            super.bindView(agendaItem);
             TalkViewDto talkViewDto = agendaItem.talk;
             itemView.setOnClickListener(new TalkItemClickListener(activity, talkViewDto.key));
             titleView.setText(talkViewDto.title);
-            venueView.setText(talkViewDto.venue.getVenueText(activity));
             languageView.setText(talkViewDto.language);
             speakersView.setText(getSpeakersText(talkViewDto));
+            if (talkViewDto.isInMyAgenda) {
+                addToMyAgendaButton.setImageResource(R.drawable.ic_star_accent);
+            } else {
+                addToMyAgendaButton.setImageResource(R.drawable.ic_star_border_accent);
+            }
+            addToMyAgendaButton.setOnClickListener(new StartTalkClickListener(getLayoutPosition(), agendaItem));
+            addToMyAgendaButtonLayout.setOnClickListener(new StarLayoutListener(addToMyAgendaButton));
         }
     }
 
-    protected static class TalkItemClickListener implements View.OnClickListener {
+    protected class MyAgendaTalkViewHolder extends VenueAgendaTalkViewHolder {
+
+        @Bind(R.id.text_venue)
+        TextView venueView;
+
+        public MyAgendaTalkViewHolder(AppCompatActivity activity, View itemView) {
+            super(activity, itemView);
+        }
+
+        public void bindView(AgendaItemViewDto agendaItem) {
+            super.bindView(agendaItem);
+            TalkViewDto talkViewDto = agendaItem.talk;
+            venueView.setText(talkViewDto.venue.getVenueText(activity));
+        }
+    }
+
+    /**
+     * Listener for talk item click
+     */
+    private static class TalkItemClickListener implements View.OnClickListener {
 
         private final String talkKey;
         private final AppCompatActivity activity;
@@ -225,5 +256,66 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
         public void onClick(View v) {
             TalkActivity.startActivity(activity, talkKey);
         }
+    }
+
+    /**
+     * Listener for star/unstar talk button
+     */
+    private class StartTalkClickListener implements View.OnClickListener {
+
+        private final AgendaItemViewDto agendaItem;
+        private final int position;
+
+        public StartTalkClickListener(int position, AgendaItemViewDto agendaItem) {
+            this.position = position;
+            this.agendaItem = agendaItem;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (starTalkListener != null) {
+                starTalkListener.onItemClick(position, agendaItem, v);
+            }
+        }
+    }
+
+    private class StarLayoutListener implements View.OnClickListener {
+
+        private View view;
+
+        public StarLayoutListener(View view) {
+            this.view = view;
+        }
+
+        @Override
+        public void onClick(View v) {
+            view.performClick();
+        }
+    }
+
+    /**
+     * Empty slot click listener
+     */
+    private class EmptySlotClickListener implements View.OnClickListener {
+
+        private final AgendaItemViewDto agendaItem;
+        private final int position;
+
+        public EmptySlotClickListener(int position, AgendaItemViewDto agendaItem) {
+            this.position = position;
+            this.agendaItem = agendaItem;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (emptySlotListener != null) {
+                emptySlotListener.onItemClick(position, agendaItem, v);
+            }
+        }
+    }
+
+
+    public interface AgendaItemClickListener {
+        void onItemClick(int position, AgendaItemViewDto agendaItem, View view);
     }
 }

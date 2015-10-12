@@ -53,6 +53,6 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/text_event_place"
             android:layout_alignParentRight="true"
-            android:background="@drawable/map_button_selector"/>
+            android:background="@drawable/selector_map_button"/>
     </RelativeLayout>
 </RelativeLayout>

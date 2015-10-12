@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/text_author_name"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/github_button_selector"/>
+            android:background="@drawable/selector_github_button"/>
     </RelativeLayout>
 
 </ScrollView>

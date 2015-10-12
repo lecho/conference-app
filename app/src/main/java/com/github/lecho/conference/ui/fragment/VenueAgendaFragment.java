@@ -10,16 +10,20 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.lecho.conference.R;
-import com.github.lecho.conference.ui.adapter.VenueAgendaAdapter;
+import com.github.lecho.conference.async.TalkAsyncHelper;
+import com.github.lecho.conference.ui.adapter.AgendaAdapter;
 import com.github.lecho.conference.ui.loader.AgendaLoader;
 import com.github.lecho.conference.ui.snackbar.SnackbarForTalkHelper;
+import com.github.lecho.conference.util.Utils;
 import com.github.lecho.conference.viewmodel.AgendaItemViewDto;
 import com.github.lecho.conference.viewmodel.AgendaViewDto;
+import com.github.lecho.conference.viewmodel.TalkViewDto;
 
 import java.util.Collections;
 
@@ -33,7 +37,7 @@ public class VenueAgendaFragment extends Fragment implements LoaderManager.Loade
     private static final String ARG_VENUE_KEY = "venue-key";
     private static final String ARG_VENUE_NAME = "venue-name";
     private SnackbarForTalkHelper snackbarForTalkHelper;
-    private VenueAgendaAdapter adapter;
+    private AgendaAdapter adapter;
     private String venueKey;
 
     @Bind(R.id.recycler_view)
@@ -54,7 +58,10 @@ public class VenueAgendaFragment extends Fragment implements LoaderManager.Loade
         venueKey = getArguments().getString(ARG_VENUE_KEY);
         getLoaderManager().initLoader(LOADER_ID, null, this);
         String venueName = getArguments().getString(ARG_VENUE_NAME);
-        StringBuilder title = new StringBuilder(venueName).append(" ").append(getString(R.string.title_activity_track));
+        StringBuilder title = new StringBuilder()
+                .append(venueName)
+                .append(" ")
+                .append(getString(R.string.title_activity_track));
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(title.toString());
     }
 
@@ -66,7 +73,8 @@ public class VenueAgendaFragment extends Fragment implements LoaderManager.Loade
         ButterKnife.bind(this, rootView);
         snackbarForTalkHelper = new SnackbarForTalkHelper(getActivity().getApplicationContext(), container);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new VenueAgendaAdapter((AppCompatActivity) getActivity());
+        adapter = new AgendaAdapter((AppCompatActivity) getActivity(), new StarTalkClickListener(),
+                new EmptySlotClickListener());
         recyclerView.setAdapter(adapter);
         return rootView;
 
@@ -103,6 +111,34 @@ public class VenueAgendaFragment extends Fragment implements LoaderManager.Loade
     public void onLoaderReset(Loader<AgendaViewDto> loader) {
         if (loader.getId() == LOADER_ID) {
             adapter.setData(Collections.<AgendaItemViewDto>emptyList());
+        }
+    }
+
+    private class EmptySlotClickListener implements AgendaAdapter.AgendaItemClickListener {
+
+        @Override
+        public void onItemClick(int position, AgendaItemViewDto agendaItem, View view) {
+            //Do nothing, there should be no empty slot visible for venue agenda
+        }
+    }
+
+    private class StarTalkClickListener implements AgendaAdapter.AgendaItemClickListener {
+
+        @Override
+        public void onItemClick(int position, AgendaItemViewDto agendaItem, View view) {
+            TalkViewDto talkViewDto = agendaItem.talk;
+            if (talkViewDto.isInMyAgenda) {
+                talkViewDto.isInMyAgenda = false;
+                TalkAsyncHelper.removeTalk(getActivity().getApplicationContext(), talkViewDto.key);
+            } else {
+                if (Utils.checkSlotConflict((AppCompatActivity) getActivity(), talkViewDto.key)) {
+                    Log.d(TAG, "Slot conflict for talk with key: " + talkViewDto.key);
+                    return;
+                }
+                talkViewDto.isInMyAgenda = true;
+                TalkAsyncHelper.addTalk(getActivity().getApplicationContext(), talkViewDto.key);
+            }
+            adapter.notifyDataSetChanged();
         }
     }
 }

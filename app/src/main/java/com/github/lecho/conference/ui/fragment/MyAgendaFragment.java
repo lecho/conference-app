@@ -20,6 +20,7 @@ import com.github.lecho.conference.ui.adapter.AgendaAdapter;
 import com.github.lecho.conference.ui.loader.AgendaLoader;
 import com.github.lecho.conference.viewmodel.AgendaItemViewDto;
 import com.github.lecho.conference.viewmodel.AgendaViewDto;
+import com.github.lecho.conference.viewmodel.TalkViewDto;
 
 import java.util.Collections;
 
@@ -34,15 +35,13 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
     public static final String TAG = MyAgendaFragment.class.getSimpleName();
     private static final int LOADER_ID = 0;
     private AgendaAdapter adapter;
-    private ItemTouchHelper itemTouchHelper;
     private OpenDrawerCallback drawerCallback;
 
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
 
     public static MyAgendaFragment newInstance() {
-        MyAgendaFragment fragment = new MyAgendaFragment();
-        return fragment;
+        return new MyAgendaFragment();
     }
 
     @Override
@@ -58,14 +57,13 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_agenda, container, false);
         ButterKnife.bind(this, rootView);
-
         //TODO Grid for tablet layout
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new AgendaAdapter((AppCompatActivity) getActivity(), new EmptySlotClickListener());
+        adapter = new AgendaAdapter((AppCompatActivity) getActivity(), new StarTalkClickListener(),
+                new EmptySlotClickListener());
         recyclerView.setAdapter(adapter);
-        itemTouchHelper = new ItemTouchHelper(new MyAgendaItemTouchCallback());
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new AgendaItemTouchCallback());
         itemTouchHelper.attachToRecyclerView(recyclerView);
-
         return rootView;
     }
 
@@ -83,6 +81,12 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
     public void onDetach() {
         super.onDetach();
         drawerCallback = null;
+    }
+
+    private void removeTalk(int position) {
+        AgendaItemViewDto agendaItemViewDto = adapter.getItem(position);
+        TalkAsyncHelper.removeTalkSilent(getActivity().getApplicationContext(), agendaItemViewDto.talk.key);
+        adapter.removeTalk(position);
     }
 
     @Override
@@ -107,9 +111,9 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
         }
     }
 
-    private class MyAgendaItemTouchCallback extends ItemTouchHelper.SimpleCallback {
+    private class AgendaItemTouchCallback extends ItemTouchHelper.SimpleCallback {
 
-        public MyAgendaItemTouchCallback() {
+        public AgendaItemTouchCallback() {
             super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
         }
 
@@ -123,9 +127,7 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
             //Remove swiped item from list and notify the RecyclerView
             final int position = viewHolder.getAdapterPosition();
-            AgendaItemViewDto agendaItemViewDto = adapter.getItem(position);
-            TalkAsyncHelper.removeTalkSilent(getActivity().getApplicationContext(), agendaItemViewDto.talk.key);
-            adapter.removeTalk(position);
+            removeTalk(position);
         }
 
         @Override
@@ -137,12 +139,24 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
         }
     }
 
-    private class EmptySlotClickListener implements View.OnClickListener {
+    private class EmptySlotClickListener implements AgendaAdapter.AgendaItemClickListener {
 
         @Override
-        public void onClick(View v) {
+        public void onItemClick(int position, AgendaItemViewDto agendaItem, View view) {
             if (drawerCallback != null) {
                 drawerCallback.onOpenDrawer();
+            }
+        }
+    }
+
+    private class StarTalkClickListener implements AgendaAdapter.AgendaItemClickListener {
+
+        @Override
+        public void onItemClick(int position, AgendaItemViewDto agendaItem, View view) {
+            TalkViewDto talkViewDto = agendaItem.talk;
+            if (talkViewDto.isInMyAgenda) {
+                talkViewDto.isInMyAgenda = false;
+                removeTalk(position);
             }
         }
     }

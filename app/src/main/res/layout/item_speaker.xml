@@ -16,8 +16,7 @@
             android:id="@+id/speaker_avatar"
             android:layout_width="@dimen/speaker_avatar_medium_size"
             android:layout_height="@dimen/speaker_avatar_medium_size"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/ic_dummy_avatar"/>
+            android:layout_centerHorizontal="true"/>
 
         <TextView
             android:id="@+id/text_speaker_name"

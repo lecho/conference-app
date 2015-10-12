@@ -85,7 +85,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/web_button_selector"/>
+                android:background="@drawable/selector_web_button"/>
 
             <ImageButton
                 android:id="@+id/twitter_button"
@@ -97,7 +97,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_toEndOf="@id/www_button"
                 android:layout_toRightOf="@id/www_button"
-                android:background="@drawable/twitter_button_selector"/>
+                android:background="@drawable/selector_twitter_button"/>
 
             <android.support.v7.widget.CardView
                 android:id="@+id/card_info"
