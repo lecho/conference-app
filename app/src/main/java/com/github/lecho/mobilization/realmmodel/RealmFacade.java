@@ -270,7 +270,7 @@ public class RealmFacade {
         try {
             VenueRealm.VenueViewConverter venueViewConverter = new VenueRealm.VenueViewConverter();
             realm = Realm.getDefaultInstance();
-            RealmResults<VenueRealm> venuesRealms = realm.where(VenueRealm.class).findAll();
+            RealmResults<VenueRealm> venuesRealms = realm.where(VenueRealm.class).findAllSorted("title");
             List<VenueViewDto> venueViewDtos = new ArrayList<>(venuesRealms.size());
             for (VenueRealm venueRealm : venuesRealms) {
                 venueViewDtos.add(venueViewConverter.convert(venueRealm));
