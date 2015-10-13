@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.async.TalkAsyncHelper;
 import com.github.lecho.mobilization.ui.adapter.AgendaAdapter;
+import com.github.lecho.mobilization.ui.adapter.MyAgendaAdapter;
 import com.github.lecho.mobilization.ui.loader.AgendaLoader;
 import com.github.lecho.mobilization.viewmodel.AgendaItemViewDto;
 import com.github.lecho.mobilization.viewmodel.AgendaViewDto;
@@ -59,7 +60,7 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
         ButterKnife.bind(this, rootView);
         //TODO Grid for tablet layout, adjust margins and paddings in layout
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new AgendaAdapter((AppCompatActivity) getActivity(), new StarTalkClickListener(),
+        adapter = new MyAgendaAdapter((AppCompatActivity) getActivity(), new StarTalkClickListener(),
                 new EmptySlotClickListener());
         recyclerView.setAdapter(adapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new AgendaItemTouchCallback());

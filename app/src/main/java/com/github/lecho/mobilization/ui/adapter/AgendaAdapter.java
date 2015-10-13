@@ -29,10 +29,10 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
     public static final int ITEM_TYPE_BREAK = 0;
     public static final int ITEM_TYPE_TALK = 1;
     public static final int ITEM_TYPE_EMPTY_SLOT = 2;
-    private List<AgendaItemViewDto> data = new ArrayList<>();
-    private final AppCompatActivity activity;
-    private final AgendaItemClickListener starTalkListener;
-    private final AgendaItemClickListener emptySlotListener;
+    protected List<AgendaItemViewDto> data = new ArrayList<>();
+    protected final AppCompatActivity activity;
+    protected final AgendaItemClickListener starTalkListener;
+    protected final AgendaItemClickListener emptySlotListener;
 
     public AgendaAdapter(AppCompatActivity activity, AgendaItemClickListener starTalkListener,
                          AgendaItemClickListener emptySlotListener) {
@@ -70,7 +70,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
             viewHolder = new BreakViewHolder(activity, view);
         } else if (ITEM_TYPE_TALK == viewType) {
             View view = LayoutInflater.from(activity).inflate(R.layout.item_agenda_talk, parent, false);
-            viewHolder = new MyAgendaTalkViewHolder(activity, view);
+            viewHolder = new TalkViewHolder(activity, view);
         } else if (ITEM_TYPE_EMPTY_SLOT == viewType) {
             View view = LayoutInflater.from(activity).inflate(R.layout.item_agenda_empty_slot, parent, false);
             viewHolder = new EmptySlotViewHolder(activity, view);
@@ -185,7 +185,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
     /**
      * Specific venue/track talk view holder
      */
-    protected class VenueAgendaTalkViewHolder extends BaseViewHolder {
+    protected class TalkViewHolder extends BaseViewHolder {
 
         @Bind(R.id.button_add_to_my_agenda_layout)
         View addToMyAgendaButtonLayout;
@@ -202,7 +202,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
         @Bind(R.id.text_speakers)
         TextView speakersView;
 
-        public VenueAgendaTalkViewHolder(AppCompatActivity activity, View itemView) {
+        public TalkViewHolder(AppCompatActivity activity, View itemView) {
             super(activity, itemView);
         }
 
@@ -223,26 +223,10 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
         }
     }
 
-    protected class MyAgendaTalkViewHolder extends VenueAgendaTalkViewHolder {
-
-        @Bind(R.id.text_venue)
-        TextView venueView;
-
-        public MyAgendaTalkViewHolder(AppCompatActivity activity, View itemView) {
-            super(activity, itemView);
-        }
-
-        public void bindView(AgendaItemViewDto agendaItem) {
-            super.bindView(agendaItem);
-            TalkViewDto talkViewDto = agendaItem.talk;
-            venueView.setText(talkViewDto.venue.getVenueText(activity));
-        }
-    }
-
     /**
      * Listener for talk item click
      */
-    private static class TalkItemClickListener implements View.OnClickListener {
+    protected static class TalkItemClickListener implements View.OnClickListener {
 
         private final String talkKey;
         private final AppCompatActivity activity;
@@ -261,7 +245,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
     /**
      * Listener for star/unstar talk button
      */
-    private class StartTalkClickListener implements View.OnClickListener {
+    protected class StartTalkClickListener implements View.OnClickListener {
 
         private final AgendaItemViewDto agendaItem;
         private final int position;
@@ -279,7 +263,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
         }
     }
 
-    private class StarLayoutListener implements View.OnClickListener {
+    protected class StarLayoutListener implements View.OnClickListener {
 
         private View view;
 
@@ -296,7 +280,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
     /**
      * Empty slot click listener
      */
-    private class EmptySlotClickListener implements View.OnClickListener {
+    protected class EmptySlotClickListener implements View.OnClickListener {
 
         private final AgendaItemViewDto agendaItem;
         private final int position;
