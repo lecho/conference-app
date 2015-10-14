@@ -1,6 +1,8 @@
 # conference-app-demo
 Demo conference(agenda) app for Android
 
+[**Google Play Link**](https://play.google.com/store/apps/details?id=com.github.lecho.mobilization)
+
 Demonstrates simple usage of:
 - View injection with [Butter Knife](http://jakewharton.github.io/butterknife/)
 - Loading images with [Picasso](http://square.github.io/picasso/)
