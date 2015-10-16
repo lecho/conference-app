@@ -282,7 +282,7 @@
 	"speaker-michal-wlodarczyk": {
 		"firstname": "Michał",
 		"lastname": "Włodarczyk",
-		"bio_html": "Senior Software Engineer w Open-RnD. Od 3.5 zajmuje się rozwijaniem aplikacji na platformę Android. Uczestnik studiów doktoranckich na Politechnice Łódzkiej, w Katedrze Mikroelektroniki i Technik Informatycznych (wydział Elektroniki, Elektrotechniki, Informatyki i Automatyki). Kierownik przedmiotów \"m-Commerce\" oraz \"Programowanie aplikacji mobilnych\" (prowadzę wykłady i część laboratoriów, układałem program tych przedmiotów). 2 wystąpienia na konferencjach MIXDES w 2014 i 2015 roku. Więcej informacji na moim profilu na <a href='https://pl.linkedin.com/pub/michał-włodarczyk/33/3a4/b08'>LinkedIn</a>",
+		"bio_html": "Senior Software Engineer w firmie Open-RnD. Od 4 zajmuje się rozwijaniem aplikacji mobilnych na platformę Android. Uczestnik studiów doktoranckich na Politechnice Łódzkiej, w Katedrze Mikroelektroniki i Technik Informatycznych (wydział Elektroniki, Elektrotechniki, Informatyki i Automatyki). Odpowiedzialny za przedmioty \"Systemy operacyjne na platformach mobilnych\", \"Przetwarzanie w chmurze dla aplikacji mobilnych\" oraz \"m-Commerce\". Autor licznych publikacji z zakresu biometrii i przetwarzania danych na platformie Android. Więcej informacji na profilu na <a href='https://pl.linkedin.com/pub/michał-włodarczyk/33/3a4/b08'>LinkedIn</a>",
 		"www": "https://pl.linkedin.com/pub/michał-włodarczyk/33/3a4/b08",
 		"twitter": "",
 		"photo_url": "/images/speakers/michal-wlodarczyk.png"
@@ -294,14 +294,6 @@
 		"www": "",
 		"twitter": "",
 		"photo_url": "/images/speakers/michal-szczepanik.png"
-	},
-	"speaker-maciej-schmidt": {
-		"firstname": "Maciej",
-		"lastname": "Schmidt",
-		"bio_html": "Zapalony programista, grafik, freelancer, miłośnik nowoczesnych technologii, w skrócie: informatyczny człowiek orkiestra. Od kilku lat specjalizuje się w technologii Augmented Reality (Rzeczywistości Rozszerzonej) oraz tworzy użytkowe i rozrywkowe aplikacje mobilne. Od 2007 roku prowadzi firmę MASKOM.pl świadczącą zaawansowane rozwiązania informatyczne dla biznesu. W swoim portfolio posiada realizacje m.in. dla sieci ROSSMANN, RTV Euro AGD, PKP S.A. Prelegent na temat Augmented Reality m.in. na Mobilization 4 for Mobile Conference w Łodzi, JUG Zielona Góra, Mobile Trends Conference 2015 w Krakowie, I Kongresie Mobilnym w Warszawie.",
-		"www": "",
-		"twitter": "",
-		"photo_url": "/images/speakers/maciej-schmidt.png"
 	},
 	"speaker-sebastian-gos": {
 		"firstname": "Sebastian",
@@ -355,7 +347,7 @@
 		"firstname": "Filip",
 		"lastname": "Miłoszewski",
 		"bio_html": "Co-founder of Listonic, one of the most popular Polish apps, available on Android, iPhone, Windows Phone and few other platforms. Working on mobile apps since 2007. Speaker on many conferences including: Internet Beta, Mobile Standard, Mobile Trends for Business, Akademia Mediarun, App Academy, Jungle Web, Łódź WiOSłuje, MIT and more.",
-		"www": "l",
+		"www": "",
 		"twitter": "",
 		"photo_url": "/images/speakers/filip-miloszewski.jpg"
 	}

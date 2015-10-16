@@ -149,12 +149,6 @@
 		"speakers_keys": ["speaker-michal-wlodarczyk"],
 		"language": "PL"
 	},
-	"talk-czy-ar-i-vr-zmienia-nasza-przyszlosc": {
-		"title": "Czy AR i VR zmienią naszą przyszłość?",
-		"description_html": "W ostatnim czasie przeżywamy prawdziwy boom na technologie Virtual i Augmented Reality dzięki pojawieniu się łatwo dostępnych „gogli” na telefon takich jak Google Cardboard czy Samsung Gear VR. Czy mobilne zwiedzanie odległych światów dzięki VR lub interaktywne gry z wykorzystaniem AR wzbogacą niedługo naszą percepcję? Przegląd dostępnych urządzeń oraz środowisk programistycznych. Analiza przykładów dobrego użycia i wskazówki jakich błędów uniknąć, aby aplikacja AR/VR odniosła sukces.",
-		"speakers_keys": ["speaker-maciej-schmidt"],
-		"language": "PL"
-	},
 	"talk-potrzeby-biznesowe-a-technologia-w-mobdev-na-przykladzie-seqr": {
 		"title": "Biznes a technologia w mobdev SEQR case study",
 		"description_html": "Specjaliści z dziedziny rozwoju produktu, użyteczności i technologii opowiedzą:- W jaki sposób warto planować rozwój ekosystemu usług płatniczych w sytuacji, gdy potrzeba jak najszybciej adaptować się do zmieniającego się rynku, potrzeb użytkowników i działań konkurencji.<br/>- Jak skalujemy SCRUM by dobrze koordynować pracę wielu zespołów.<br/>- Dlaczego stawiamy na jak najszybsze zmiany (i ewentualne niepowodzenia) i jak się to nam udaje.<br/>- Dotychczasowa implementacja Lean Startup - doświadczone pętle zwrotne między strategią biznesową, UX, a zastosowaną technologią.<br/>- Dlaczego User Experience jest tak ważny - jaką wartość biznesową daje w przypadku SEQR.",
