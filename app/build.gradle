@@ -10,7 +10,7 @@ android {
         }
     }
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "24.0.0"
     defaultConfig {
         applicationId "com.github.lecho.mobilization"
         minSdkVersion 15
