@@ -28,7 +28,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -80,19 +80,19 @@ public class NavViewController {
 
         private static final String NAVIGATION_HEADER_IMAGE = "navigation_header.jpg";
 
-        @Bind(R.id.navigation_header_image)
+        @BindView(R.id.navigation_header_image)
         ImageView headerView;
 
-        @Bind(R.id.text_event_title)
+        @BindView(R.id.text_event_title)
         TextView eventTitleView;
 
-        @Bind(R.id.text_event_date)
+        @BindView(R.id.text_event_date)
         TextView eventDateView;
 
-        @Bind(R.id.text_event_place)
+        @BindView(R.id.text_event_place)
         TextView eventPlaceView;
 
-        @Bind(R.id.map_button)
+        @BindView(R.id.map_button)
         ImageButton mapButton;
 
         public NavHeaderController(@NonNull NavigationView navigationView) {

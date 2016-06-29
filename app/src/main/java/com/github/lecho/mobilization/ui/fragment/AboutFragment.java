@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.util.Utils;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -25,10 +25,10 @@ public class AboutFragment extends Fragment {
     public static final String TAG = AboutFragment.class.getSimpleName();
     public static final String GITHUB_PAGE = "https://github.com/lecho/conference-app-demo";
 
-    @Bind(R.id.text_version)
+    @BindView(R.id.text_version)
     TextView versionView;
 
-    @Bind(R.id.github_button)
+    @BindView(R.id.github_button)
     ImageButton githubButton;
 
     public static AboutFragment newInstance() {

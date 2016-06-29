@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.async.TalkAsyncHelper;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -28,7 +28,7 @@ public class SlotConflictDialogFragment extends AppCompatDialogFragment {
     private String newTalkKey;
     private String oldTalkTitle;
 
-    @Bind(R.id.text_slot_conflict_old_talk_title)
+    @BindView(R.id.text_slot_conflict_old_talk_title)
     TextView oldTalkTitleView;
 
     public static void show(AppCompatActivity activity, String oldTalkKey, String oldTalkTitle, String newTalkKey) {

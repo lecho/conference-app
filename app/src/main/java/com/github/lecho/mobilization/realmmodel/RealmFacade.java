@@ -27,6 +27,7 @@ import java.util.Map;
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * Created by Leszek on 2015-08-04.
@@ -285,8 +286,8 @@ public class RealmFacade {
         try {
             SponsorRealm.SponsorViewConverter sponsorViewConverter = new SponsorRealm.SponsorViewConverter();
             realm = Realm.getDefaultInstance();
-            RealmResults<SponsorRealm> sponsorRealms = realm.where(SponsorRealm.class).findAllSorted("type", true,
-                    "name", true);
+            RealmResults<SponsorRealm> sponsorRealms = realm.where(SponsorRealm.class).findAllSorted(
+                    new String[]{"type", "name"},new Sort[]{Sort.ASCENDING, Sort.ASCENDING});
             List<SponsorViewDto> sponsorViewDtos = new ArrayList<>(sponsorRealms.size());
             for (SponsorRealm sponsorRealm : sponsorRealms) {
                 sponsorViewDtos.add(sponsorViewConverter.convert(sponsorRealm));

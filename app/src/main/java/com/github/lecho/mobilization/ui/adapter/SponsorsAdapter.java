@@ -18,7 +18,7 @@ import com.github.lecho.mobilization.viewmodel.SponsorViewDto;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SponsorsAdapter extends RecyclerView.Adapter<SponsorsAdapter.SponsorViewHolder> {
@@ -56,19 +56,19 @@ public class SponsorsAdapter extends RecyclerView.Adapter<SponsorsAdapter.Sponso
 
         private final Context context;
 
-        @Bind(R.id.sponsor_color)
+        @BindView(R.id.sponsor_color)
         View sponsorColorView;
 
-        @Bind(R.id.text_type)
+        @BindView(R.id.text_type)
         TextView typeView;
 
-        @Bind(R.id.text_name)
+        @BindView(R.id.text_name)
         TextView nameView;
 
-        @Bind(R.id.sponsor_logo)
+        @BindView(R.id.sponsor_logo)
         ImageView logoView;
 
-        @Bind(R.id.text_web_page)
+        @BindView(R.id.text_web_page)
         TextView webPageView;
 
         public SponsorViewHolder(Context context, View itemView) {

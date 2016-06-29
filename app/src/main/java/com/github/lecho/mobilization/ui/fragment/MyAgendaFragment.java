@@ -25,7 +25,7 @@ import com.github.lecho.mobilization.viewmodel.TalkViewDto;
 
 import java.util.Collections;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -38,7 +38,7 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
     private AgendaAdapter adapter;
     private OpenDrawerCallback drawerCallback;
 
-    @Bind(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
     public static MyAgendaFragment newInstance() {

@@ -27,7 +27,7 @@ import com.github.lecho.mobilization.viewmodel.TalkViewDto;
 
 import java.util.Collections;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class VenueAgendaFragment extends Fragment implements LoaderManager.LoaderCallbacks<AgendaViewDto> {
@@ -40,7 +40,7 @@ public class VenueAgendaFragment extends Fragment implements LoaderManager.Loade
     private AgendaAdapter adapter;
     private String venueKey;
 
-    @Bind(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
     public static VenueAgendaFragment newInstance(@NonNull String venueKey, @NonNull String venueName) {

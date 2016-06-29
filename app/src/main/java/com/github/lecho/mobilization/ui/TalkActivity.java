@@ -32,7 +32,7 @@ import com.github.lecho.mobilization.viewmodel.SlotViewDto;
 import com.github.lecho.mobilization.viewmodel.SpeakerViewDto;
 import com.github.lecho.mobilization.viewmodel.TalkViewDto;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TalkActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Optional<TalkViewDto>> {
@@ -47,13 +47,13 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
     private SpeakersCardController speakersCardController;
     private SnackbarForTalkHelper snackbarForTalkHelper;
 
-    @Bind(R.id.main_container)
+    @BindView(R.id.main_container)
     View mainContainerView;
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbarView;
 
-    @Bind(R.id.collapsing_toolbar)
+    @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbarLayout;
 
     public static void startActivity(@NonNull Activity activity, @NonNull String talkKey) {
@@ -153,7 +153,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
 
     protected class FABController {
 
-        @Bind(R.id.button_add_to_my_agenda)
+        @BindView(R.id.button_add_to_my_agenda)
         FloatingActionButton addToMyAgendaButton;
 
         public FABController(View mainContainer) {
@@ -176,16 +176,16 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
 
         private static final String TALK_HEADER_IMAGE = "talk_header.jpg";
 
-        @Bind(R.id.header_image)
+        @BindView(R.id.header_image)
         ImageView headerImageView;
 
-        @Bind(R.id.text_talk_title)
+        @BindView(R.id.text_talk_title)
         TextView talkTitleView;
 
-        @Bind(R.id.text_venue)
+        @BindView(R.id.text_venue)
         TextView talkVenueView;
 
-        @Bind(R.id.text_language)
+        @BindView(R.id.text_language)
         TextView talkLanguageView;
 
         public HeaderController(View view) {
@@ -211,7 +211,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
 
     protected class InfoCardController {
 
-        @Bind(R.id.text_info)
+        @BindView(R.id.text_info)
         TextView talkInfoView;
 
         public InfoCardController(View view) {
@@ -225,7 +225,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
 
     protected class SpeakersCardController {
 
-        @Bind(R.id.speakers_layout)
+        @BindView(R.id.speakers_layout)
         LinearLayout speakersLayout;
 
         public SpeakersCardController(View view) {

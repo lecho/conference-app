@@ -10,7 +10,7 @@ import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.viewmodel.AgendaItemViewDto;
 import com.github.lecho.mobilization.viewmodel.TalkViewDto;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 public class MyAgendaAdapter extends AgendaAdapter {
 
@@ -37,7 +37,7 @@ public class MyAgendaAdapter extends AgendaAdapter {
 
     protected class MyAgendaTalkViewHolder extends TalkViewHolder {
 
-        @Bind(R.id.text_venue)
+        @BindView(R.id.text_venue)
         TextView venueView;
 
         public MyAgendaTalkViewHolder(AppCompatActivity activity, View itemView) {

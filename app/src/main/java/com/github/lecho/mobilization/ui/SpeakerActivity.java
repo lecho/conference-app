@@ -25,7 +25,7 @@ import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.util.Utils;
 import com.github.lecho.mobilization.viewmodel.SpeakerViewDto;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SpeakerActivity extends AppCompatActivity implements
@@ -38,13 +38,13 @@ public class SpeakerActivity extends AppCompatActivity implements
     private HeaderController headerController;
     private InfoCardController infoCardController;
 
-    @Bind(R.id.main_container)
+    @BindView(R.id.main_container)
     View mainContainerView;
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbarView;
 
-    @Bind(R.id.collapsing_toolbar)
+    @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbarLayout;
 
     public static void startActivity(Context context, String speakerKey) {
@@ -125,19 +125,19 @@ public class SpeakerActivity extends AppCompatActivity implements
     protected class HeaderController {
 
         private static final String SPEAKER_HEADER_IMAGE = "speaker_header.jpg";
-        @Bind(R.id.header_image)
+        @BindView(R.id.header_image)
         ImageView headerImageView;
 
-        @Bind(R.id.speaker_avatar)
+        @BindView(R.id.speaker_avatar)
         ImageView avatarView;
 
-        @Bind(R.id.text_speaker_name)
+        @BindView(R.id.text_speaker_name)
         TextView speakerNameView;
 
-        @Bind(R.id.www_button)
+        @BindView(R.id.www_button)
         ImageButton wwwButton;
 
-        @Bind(R.id.twitter_button)
+        @BindView(R.id.twitter_button)
         ImageButton twitterButton;
 
         public HeaderController(View view) {
@@ -188,7 +188,7 @@ public class SpeakerActivity extends AppCompatActivity implements
 
     protected class InfoCardController {
 
-        @Bind(R.id.text_info)
+        @BindView(R.id.text_info)
         TextView speakerInfoView;
 
         public InfoCardController(View view) {

@@ -20,7 +20,7 @@ import com.github.lecho.mobilization.viewmodel.SpeakerViewDto;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SpeakersFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<SpeakerViewDto>> {
@@ -29,7 +29,7 @@ public class SpeakersFragment extends Fragment implements LoaderManager.LoaderCa
     private static final int LOADER_ID = 0;
     private SpeakersAdapter adapter;
 
-    @Bind(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
     public static SpeakersFragment newInstance() {

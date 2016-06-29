@@ -22,7 +22,7 @@ import com.github.lecho.mobilization.ui.navigation.NavViewController;
 import com.github.lecho.mobilization.util.Utils;
 import com.github.lecho.mobilization.viewmodel.NavigationViewDto;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
@@ -36,13 +36,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private NavViewController navViewController;
     private int checkedNavItemId;
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @Bind(R.id.navigation_view)
+    @BindView(R.id.navigation_view)
     NavigationView navigationView;
 
-    @Bind(R.id.drawer_layout)
+    @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
 
     @Override

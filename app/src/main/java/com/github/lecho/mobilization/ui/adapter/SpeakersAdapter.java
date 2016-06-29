@@ -17,7 +17,7 @@ import com.github.lecho.mobilization.viewmodel.SpeakerViewDto;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SpeakersAdapter extends RecyclerView.Adapter<SpeakersAdapter.SpeakerViewHolder> {
@@ -57,10 +57,10 @@ public class SpeakersAdapter extends RecyclerView.Adapter<SpeakersAdapter.Speake
 
         private final Context context;
 
-        @Bind(R.id.speaker_avatar)
+        @BindView(R.id.speaker_avatar)
         ImageView avatarView;
 
-        @Bind(R.id.text_speaker_name)
+        @BindView(R.id.text_speaker_name)
         TextView speakerNameView;
 
         public SpeakerViewHolder(Context context, View itemView) {

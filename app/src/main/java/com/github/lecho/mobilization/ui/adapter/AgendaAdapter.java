@@ -21,7 +21,7 @@ import com.github.lecho.mobilization.viewmodel.TalkViewDto;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHolder> {
@@ -108,13 +108,13 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
 
         protected final AppCompatActivity activity;
 
-        @Bind(R.id.text_time_slot)
+        @BindView(R.id.text_time_slot)
         TextView timeSlotView;
 
-        @Bind(R.id.current_item_indicator)
+        @BindView(R.id.current_item_indicator)
         ImageView currentItemIndicatorView;
 
-        @Bind(R.id.text_title)
+        @BindView(R.id.text_title)
         TextView titleView;
 
         public BaseViewHolder(AppCompatActivity activity, View itemView) {
@@ -187,19 +187,19 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
      */
     protected class TalkViewHolder extends BaseViewHolder {
 
-        @Bind(R.id.button_add_to_my_agenda_layout)
+        @BindView(R.id.button_add_to_my_agenda_layout)
         View addToMyAgendaButtonLayout;
 
-        @Bind(R.id.button_add_to_my_agenda)
+        @BindView(R.id.button_add_to_my_agenda)
         ImageButton addToMyAgendaButton;
 
-        @Bind(R.id.text_title)
+        @BindView(R.id.text_title)
         TextView titleView;
 
-        @Bind(R.id.text_language)
+        @BindView(R.id.text_language)
         TextView languageView;
 
-        @Bind(R.id.text_speakers)
+        @BindView(R.id.text_speakers)
         TextView speakersView;
 
         public TalkViewHolder(AppCompatActivity activity, View itemView) {

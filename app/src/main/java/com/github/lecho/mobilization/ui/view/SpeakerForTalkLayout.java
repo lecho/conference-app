@@ -11,7 +11,7 @@ import com.github.lecho.mobilization.ui.SpeakerActivity;
 import com.github.lecho.mobilization.util.Utils;
 import com.github.lecho.mobilization.viewmodel.SpeakerViewDto;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -22,10 +22,10 @@ public class SpeakerForTalkLayout extends LinearLayout {
 
     private final SpeakerViewDto speakerViewDto;
 
-    @Bind(R.id.speaker_avatar)
+    @BindView(R.id.speaker_avatar)
     ImageView avatarView;
 
-    @Bind(R.id.text_speaker_name)
+    @BindView(R.id.text_speaker_name)
     TextView speakerNameView;
 
     @OnClick

@@ -20,7 +20,7 @@ import com.github.lecho.mobilization.viewmodel.SponsorViewDto;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SponsorsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<SponsorViewDto>> {
@@ -29,7 +29,7 @@ public class SponsorsFragment extends Fragment implements LoaderManager.LoaderCa
     private static final int LOADER_ID = 0;
     private SponsorsAdapter adapter;
 
-    @Bind(R.id.recycler_view)
+    @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
     public static SponsorsFragment newInstance() {
