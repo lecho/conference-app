@@ -4,7 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.github.lecho.mobilization.apimodel.AgendaItemApiDto;
+import com.github.lecho.mobilization.apimodel.AgendaItemApiModel;
 import com.github.lecho.mobilization.apimodel.ApiData;
 import com.github.lecho.mobilization.apimodel.TalkApiDto;
 import com.github.lecho.mobilization.ui.loader.LoaderChangeObserver;
@@ -107,22 +107,22 @@ public class RealmFacade {
      * BREAK -> SLOT(based on schedule.json)
      */
     private void createAgendaRelations(ApiData apiData) {
-        for (Map.Entry<String, AgendaItemApiDto> itemEntry : apiData.agendaMap.entrySet()) {
+        for (Map.Entry<String, AgendaItemApiModel> itemEntry : apiData.agendaMap.entrySet()) {
             String slotKey = itemEntry.getKey();
-            AgendaItemApiDto agendaItemApiDto = itemEntry.getValue();
+            AgendaItemApiModel agendaItemApiModel = itemEntry.getValue();
             SlotRealm slotRealm = slotRealmsMap.get(slotKey);
-            if (TextUtils.isEmpty(agendaItemApiDto.breakKey)) {
-                for (Map.Entry<String, AgendaItemApiDto.TalkItemApiDto> talkEntry : agendaItemApiDto.talks.entrySet()) {
+            if (TextUtils.isEmpty(agendaItemApiModel.breakKey)) {
+                for (Map.Entry<String, AgendaItemApiModel.TalkItemApiDto> talkEntry : agendaItemApiModel.talks.entrySet()) {
                     String venueKey = talkEntry.getKey();
                     VenueRealm venueRealm = venueRealmsMap.get(venueKey);
-                    AgendaItemApiDto.TalkItemApiDto agendaTalkItemApiDto = talkEntry.getValue();
+                    AgendaItemApiModel.TalkItemApiDto agendaTalkItemApiDto = talkEntry.getValue();
                     TalkRealm talkRealm = talkRealmsMap.get(agendaTalkItemApiDto.talkKey);
                     talkRealm.setSlot(slotRealm);
                     talkRealm.setFromInMilliseconds(slotRealm.getFromInMilliseconds());
                     talkRealm.setVenue(venueRealm);
                 }
             } else {
-                BreakRealm breakRealm = breakRealmsMap.get(agendaItemApiDto.breakKey);
+                BreakRealm breakRealm = breakRealmsMap.get(agendaItemApiModel.breakKey);
                 slotRealm.setIsInMyAgenda(true);//Break slot is always in my agenda
                 breakRealm.setSlot(slotRealm);
                 breakRealm.setFromInMilliseconds(slotRealm.getFromInMilliseconds());
