@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by Leszek on 2015-07-24.
  */
-public class SpeakerApiDto {
+public class SpeakerApiModel {
 
     public String firstname;
     public String lastname;
@@ -29,11 +29,11 @@ public class SpeakerApiDto {
                 '}';
     }
 
-    public static class SpeakerApiParser extends BaseApiParser<SpeakerApiDto> {
+    public static class SpeakerApiParser extends BaseApiParser<SpeakerApiModel> {
 
         @Override
-        public Map<String, SpeakerApiDto> fromJson(String json) {
-            Type type = new TypeToken<Map<String, SpeakerApiDto>>() {
+        public Map<String, SpeakerApiModel> fromJson(String json) {
+            Type type = new TypeToken<Map<String, SpeakerApiModel>>() {
             }.getType();
             return parseJson(json, type);
         }

@@ -73,7 +73,7 @@ public class ApiFacade {
                 apiData.slotsMap = new SlotApiModel.SlotApiParser().fromJson(json);
                 break;
             case SPEAKERS:
-                apiData.speakersMap = new SpeakerApiDto.SpeakerApiParser().fromJson(json);
+                apiData.speakersMap = new SpeakerApiModel.SpeakerApiParser().fromJson(json);
                 break;
             case SPONSORS:
                 apiData.sponsorsMap = new SponsorApiDto.SponsorApiParser().fromJson(json);

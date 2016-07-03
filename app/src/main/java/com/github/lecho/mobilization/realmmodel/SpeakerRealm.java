@@ -2,7 +2,7 @@ package com.github.lecho.mobilization.realmmodel;
 
 import android.net.Uri;
 
-import com.github.lecho.mobilization.apimodel.SpeakerApiDto;
+import com.github.lecho.mobilization.apimodel.SpeakerApiModel;
 import com.github.lecho.mobilization.viewmodel.SpeakerViewDto;
 
 import io.realm.RealmObject;
@@ -78,10 +78,10 @@ public class SpeakerRealm extends RealmObject {
         this.photo = photo;
     }
 
-    public static class SpeakerApiConverter extends RealmFacade.ApiToRealmConverter<SpeakerRealm, SpeakerApiDto> {
+    public static class SpeakerApiConverter extends RealmFacade.ApiToRealmConverter<SpeakerRealm, SpeakerApiModel> {
 
         @Override
-        public SpeakerRealm convert(String key, SpeakerApiDto apiDto) {
+        public SpeakerRealm convert(String key, SpeakerApiModel apiDto) {
             SpeakerRealm speakerRealm = new SpeakerRealm();
             speakerRealm.setKey(key);
             speakerRealm.setBiography(apiDto.bioHtml);
