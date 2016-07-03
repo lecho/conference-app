@@ -1,6 +1,6 @@
 package com.github.lecho.mobilization.realmmodel;
 
-import com.github.lecho.mobilization.apimodel.VenueApiDto;
+import com.github.lecho.mobilization.apimodel.VenueApiModel;
 import com.github.lecho.mobilization.viewmodel.VenueViewDto;
 
 import io.realm.RealmObject;
@@ -31,10 +31,10 @@ public class VenueRealm extends RealmObject {
         this.title = title;
     }
 
-    public static class VenueApiConverter extends RealmFacade.ApiToRealmConverter<VenueRealm, VenueApiDto> {
+    public static class VenueApiConverter extends RealmFacade.ApiToRealmConverter<VenueRealm, VenueApiModel> {
 
         @Override
-        public VenueRealm convert(String key, VenueApiDto apiDto) {
+        public VenueRealm convert(String key, VenueApiModel apiDto) {
             VenueRealm venueRealm = new VenueRealm();
             venueRealm.setKey(key);
             venueRealm.setTitle(apiDto.title);

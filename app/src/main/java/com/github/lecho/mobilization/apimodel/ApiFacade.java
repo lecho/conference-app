@@ -82,7 +82,7 @@ public class ApiFacade {
                 apiData.talksMap = new TalkApiModel.TalkApiParser().fromJson(json);
                 break;
             case VENUES:
-                apiData.venuesMap = new VenueApiDto.VenueApiParser().fromJson(json);
+                apiData.venuesMap = new VenueApiModel.VenueApiParser().fromJson(json);
                 break;
         }
         return apiData;

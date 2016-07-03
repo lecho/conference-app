@@ -14,5 +14,5 @@ public class ApiData {
     public Map<String, SpeakerApiModel> speakersMap;
     public Map<String, SponsorApiModel> sponsorsMap;
     public Map<String, TalkApiModel> talksMap;
-    public Map<String, VenueApiDto> venuesMap;
+    public Map<String, VenueApiModel> venuesMap;
 }
