@@ -3,7 +3,7 @@ package com.github.lecho.mobilization.apimodel;
 /**
  * Created by Leszek on 2015-09-28.
  */
-public class LocationApiDto {
+public class LocationApiModel {
 
     public String place;
     public String street;
@@ -15,7 +15,7 @@ public class LocationApiDto {
 
     @Override
     public String toString() {
-        return "LocationApiDto{" +
+        return "LocationApiModel{" +
                 "place='" + place + '\'' +
                 ", street='" + street + '\'' +
                 ", city='" + city + '\'' +

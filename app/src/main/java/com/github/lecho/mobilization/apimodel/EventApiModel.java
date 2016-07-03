@@ -15,7 +15,7 @@ public class EventApiModel {
     public String title;
     public String data;
     public String time;
-    public LocationApiDto location;
+    public LocationApiModel location;
 
     @Override
     public String toString() {
