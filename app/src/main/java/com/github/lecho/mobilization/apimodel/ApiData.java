@@ -12,7 +12,7 @@ public class ApiData {
     public Map<String, BreakApiModel> breaksMap;
     public Map<String, SlotApiModel> slotsMap;
     public Map<String, SpeakerApiModel> speakersMap;
-    public Map<String, SponsorApiDto> sponsorsMap;
+    public Map<String, SponsorApiModel> sponsorsMap;
     public Map<String, TalkApiDto> talksMap;
     public Map<String, VenueApiDto> venuesMap;
 }

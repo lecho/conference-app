@@ -2,7 +2,7 @@ package com.github.lecho.mobilization.realmmodel;
 
 import android.net.Uri;
 
-import com.github.lecho.mobilization.apimodel.SponsorApiDto;
+import com.github.lecho.mobilization.apimodel.SponsorApiModel;
 import com.github.lecho.mobilization.viewmodel.SponsorViewDto;
 
 import io.realm.RealmObject;
@@ -51,10 +51,10 @@ public class SponsorRealm extends RealmObject {
         this.type = type;
     }
 
-    public static class SponsorApiConverter extends RealmFacade.ApiToRealmConverter<SponsorRealm, SponsorApiDto> {
+    public static class SponsorApiConverter extends RealmFacade.ApiToRealmConverter<SponsorRealm, SponsorApiModel> {
 
         @Override
-        public SponsorRealm convert(String key, SponsorApiDto apiDto) {
+        public SponsorRealm convert(String key, SponsorApiModel apiDto) {
             SponsorRealm sponsorRealm = new SponsorRealm();
             sponsorRealm.setName(apiDto.name);
             sponsorRealm.setWwwPage(apiDto.link);

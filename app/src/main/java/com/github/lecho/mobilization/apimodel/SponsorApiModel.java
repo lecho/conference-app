@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Created by Leszek on 2015-07-24.
  */
-public class SponsorApiDto {
+public class SponsorApiModel {
 
     private static final String DIAMON = "diamond";
     private static final String PLATINUM = "platinum";
@@ -26,25 +26,25 @@ public class SponsorApiDto {
     public String link;
     public SponsorType type;
 
-    public static class SponsorApiParser extends BaseApiParser<SponsorApiDto> {
+    public static class SponsorApiParser extends BaseApiParser<SponsorApiModel> {
 
         @Override
-        public Map<String, SponsorApiDto> fromJson(String json) {
+        public Map<String, SponsorApiModel> fromJson(String json) {
             return parseJson(json);
         }
 
-        private Map<String, SponsorApiDto> parseJson(String json) {
-            Map<String, SponsorApiDto> resultMap = new HashMap<>();
-            Type type = new TypeToken<Map<String, List<SponsorApiDto>>>() {
+        private Map<String, SponsorApiModel> parseJson(String json) {
+            Map<String, SponsorApiModel> resultMap = new HashMap<>();
+            Type type = new TypeToken<Map<String, List<SponsorApiModel>>>() {
             }.getType();
             Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
-            Map<String, List<SponsorApiDto>> objectsMap = gson.fromJson(json, type);
-            for (Map.Entry<String, List<SponsorApiDto>> entry : objectsMap.entrySet()) {
+            Map<String, List<SponsorApiModel>> objectsMap = gson.fromJson(json, type);
+            for (Map.Entry<String, List<SponsorApiModel>> entry : objectsMap.entrySet()) {
                 String sponsorTypeString = entry.getKey();
                 SponsorType sponsorType = getSponsorType(sponsorTypeString);
-                for (SponsorApiDto sponsorApiDto : entry.getValue()) {
-                    sponsorApiDto.type = sponsorType;
-                    resultMap.put(sponsorApiDto.name, sponsorApiDto);
+                for (SponsorApiModel sponsorApiModel : entry.getValue()) {
+                    sponsorApiModel.type = sponsorType;
+                    resultMap.put(sponsorApiModel.name, sponsorApiModel);
                 }
             }
             return resultMap;
