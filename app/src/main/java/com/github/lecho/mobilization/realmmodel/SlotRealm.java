@@ -3,7 +3,7 @@ package com.github.lecho.mobilization.realmmodel;
 
 import android.util.Log;
 
-import com.github.lecho.mobilization.apimodel.SlotApiDto;
+import com.github.lecho.mobilization.apimodel.SlotApiModel;
 import com.github.lecho.mobilization.viewmodel.SlotViewDto;
 
 import java.text.DateFormat;
@@ -75,13 +75,13 @@ public class SlotRealm extends RealmObject {
         this.isInMyAgenda = isInMyAgenda;
     }
 
-    public static class SlotApiConverter extends RealmFacade.ApiToRealmConverter<SlotRealm, SlotApiDto> {
+    public static class SlotApiConverter extends RealmFacade.ApiToRealmConverter<SlotRealm, SlotApiModel> {
         private static final String TAG = SlotApiConverter.class.getSimpleName();
         private static final DateFormat dateFormat = new SimpleDateFormat("HH:mm");
         private static final String LOCAL_TIMEZONE = "Poland";
 
         @Override
-        public SlotRealm convert(String key, SlotApiDto apiDto) {
+        public SlotRealm convert(String key, SlotApiModel apiDto) {
             SlotRealm slotRealm = new SlotRealm();
             slotRealm.setKey(key);
             slotRealm.setFrom(apiDto.from);

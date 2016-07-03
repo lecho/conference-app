@@ -70,7 +70,7 @@ public class ApiFacade {
                 apiData.agendaMap = new AgendaItemApiModel.AgendaItemApiParser().fromJson(json);
                 break;
             case SLOTS:
-                apiData.slotsMap = new SlotApiDto.SlotApiParser().fromJson(json);
+                apiData.slotsMap = new SlotApiModel.SlotApiParser().fromJson(json);
                 break;
             case SPEAKERS:
                 apiData.speakersMap = new SpeakerApiDto.SpeakerApiParser().fromJson(json);

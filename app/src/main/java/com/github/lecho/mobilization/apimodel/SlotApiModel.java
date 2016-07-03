@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Created by Leszek on 2015-07-24.
  */
-public class SlotApiDto {
+public class SlotApiModel {
 
     public String from;
     public String to;
@@ -22,11 +22,11 @@ public class SlotApiDto {
                 '}';
     }
 
-    public static class SlotApiParser extends BaseApiParser<SlotApiDto> {
+    public static class SlotApiParser extends BaseApiParser<SlotApiModel> {
 
         @Override
-        public Map<String, SlotApiDto> fromJson(String json) {
-            Type type = new TypeToken<Map<String, SlotApiDto>>() {
+        public Map<String, SlotApiModel> fromJson(String json) {
+            Type type = new TypeToken<Map<String, SlotApiModel>>() {
             }.getType();
             return parseJson(json, type);
         }
