@@ -1,6 +1,6 @@
 package com.github.lecho.mobilization.realmmodel;
 
-import com.github.lecho.mobilization.apimodel.TalkApiDto;
+import com.github.lecho.mobilization.apimodel.TalkApiModel;
 import com.github.lecho.mobilization.viewmodel.TalkViewDto;
 
 import io.realm.RealmList;
@@ -98,10 +98,10 @@ public class TalkRealm extends RealmObject {
         this.fromInMilliseconds = fromInMilliseconds;
     }
 
-    public static class TalkApiConverter extends RealmFacade.ApiToRealmConverter<TalkRealm, TalkApiDto> {
+    public static class TalkApiConverter extends RealmFacade.ApiToRealmConverter<TalkRealm, TalkApiModel> {
 
         @Override
-        public TalkRealm convert(String key, TalkApiDto apiDto) {
+        public TalkRealm convert(String key, TalkApiModel apiDto) {
             TalkRealm talkRealm = new TalkRealm();
             talkRealm.setKey(key);
             talkRealm.setDescription(apiDto.descriptionHtml);

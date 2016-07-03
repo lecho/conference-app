@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Created by Leszek on 2015-07-24.
  */
-public class TalkApiDto {
+public class TalkApiModel {
 
     public String title;
     public String descriptionHtml;
@@ -26,11 +26,11 @@ public class TalkApiDto {
                 '}';
     }
 
-    public static class TalkApiParser extends BaseApiParser<TalkApiDto> {
+    public static class TalkApiParser extends BaseApiParser<TalkApiModel> {
 
         @Override
-        public Map<String, TalkApiDto> fromJson(String json) {
-            Type type = new TypeToken<Map<String, TalkApiDto>>() {
+        public Map<String, TalkApiModel> fromJson(String json) {
+            Type type = new TypeToken<Map<String, TalkApiModel>>() {
             }.getType();
             return parseJson(json, type);
         }

@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.github.lecho.mobilization.apimodel.AgendaItemApiModel;
 import com.github.lecho.mobilization.apimodel.ApiData;
-import com.github.lecho.mobilization.apimodel.TalkApiDto;
+import com.github.lecho.mobilization.apimodel.TalkApiModel;
 import com.github.lecho.mobilization.ui.loader.LoaderChangeObserver;
 import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.viewmodel.AgendaItemViewDto;
@@ -92,8 +92,8 @@ public class RealmFacade {
     private void createTalkSpeakerRelation(ApiData apiData) {
         for (Map.Entry<String, TalkRealm> entry : talkRealmsMap.entrySet()) {
             TalkRealm talkRealm = entry.getValue();
-            TalkApiDto talkApiDto = apiData.talksMap.get(entry.getKey());
-            for (String speakerKey : talkApiDto.speakersKeys) {
+            TalkApiModel talkApiModel = apiData.talksMap.get(entry.getKey());
+            for (String speakerKey : talkApiModel.speakersKeys) {
                 SpeakerRealm speakerRealm = speakerRealmsMap.get(speakerKey);
                 talkRealm.getSpeakers().add(speakerRealm);
                 //TODO set speakers talks for both direction relation
