@@ -1,6 +1,6 @@
 package com.github.lecho.mobilization.realmmodel;
 
-import com.github.lecho.mobilization.apimodel.EventApiDto;
+import com.github.lecho.mobilization.apimodel.EventApiModel;
 import com.github.lecho.mobilization.viewmodel.EventViewDto;
 
 import io.realm.RealmObject;
@@ -103,9 +103,9 @@ public class EventRealm extends RealmObject {
         this.longitude = longitude;
     }
 
-    public static class EventApiConverter extends RealmFacade.ApiToRealmConverter<EventRealm, EventApiDto> {
+    public static class EventApiConverter extends RealmFacade.ApiToRealmConverter<EventRealm, EventApiModel> {
         @Override
-        public EventRealm convert(String key, EventApiDto apiDto) {
+        public EventRealm convert(String key, EventApiModel apiDto) {
             EventRealm eventRealm = new EventRealm();
             eventRealm.setTitle(apiDto.title);
             eventRealm.setDate(apiDto.data);

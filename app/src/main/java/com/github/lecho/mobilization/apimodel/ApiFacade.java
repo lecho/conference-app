@@ -64,7 +64,7 @@ public class ApiFacade {
                 apiData.breaksMap = new BreakApiModel.BreakApiParser().fromJson(json);
                 break;
             case EVENT:
-                apiData.eventsMap = new EventApiDto.EventApiParser().fromJson(json);
+                apiData.eventsMap = new EventApiModel.EventApiParser().fromJson(json);
                 break;
             case AGENDA:
                 apiData.agendaMap = new AgendaItemApiModel.AgendaItemApiParser().fromJson(json);

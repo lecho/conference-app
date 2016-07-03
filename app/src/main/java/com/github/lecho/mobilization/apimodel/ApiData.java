@@ -7,7 +7,7 @@ import java.util.Map;
  */
 public class ApiData {
 
-    public Map<String, EventApiDto> eventsMap;
+    public Map<String, EventApiModel> eventsMap;
     public Map<String, AgendaItemApiModel> agendaMap;
     public Map<String, BreakApiModel> breaksMap;
     public Map<String, SlotApiDto> slotsMap;

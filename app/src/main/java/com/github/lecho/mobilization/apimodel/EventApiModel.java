@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Created by Leszek on 2015-07-24.
  */
-public class EventApiDto {
+public class EventApiModel {
 
     public String title;
     public String data;
@@ -19,7 +19,7 @@ public class EventApiDto {
 
     @Override
     public String toString() {
-        return "EventApiDto{" +
+        return "EventApiModel{" +
                 "title='" + title + '\'' +
                 ", data='" + data + '\'' +
                 ", time='" + time + '\'' +
@@ -27,14 +27,14 @@ public class EventApiDto {
                 '}';
     }
 
-    public static class EventApiParser extends BaseApiParser<EventApiDto> {
+    public static class EventApiParser extends BaseApiParser<EventApiModel> {
 
         @Override
-        public Map<String, EventApiDto> fromJson(String json) {
+        public Map<String, EventApiModel> fromJson(String json) {
             Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
-            EventApiDto eventApiDto = gson.fromJson(json, EventApiDto.class);
-            Map<String, EventApiDto> objectsMap = new HashMap<>();
-            objectsMap.put("key", eventApiDto);
+            EventApiModel eventApiModel = gson.fromJson(json, EventApiModel.class);
+            Map<String, EventApiModel> objectsMap = new HashMap<>();
+            objectsMap.put("key", eventApiModel);
             return objectsMap;
         }
     }
