@@ -1,6 +1,6 @@
 package com.github.lecho.mobilization.realmmodel;
 
-import com.github.lecho.mobilization.apimodel.BreakApiDto;
+import com.github.lecho.mobilization.apimodel.BreakApiModel;
 import com.github.lecho.mobilization.viewmodel.BreakViewDto;
 
 import io.realm.RealmObject;
@@ -61,9 +61,9 @@ public class BreakRealm extends RealmObject {
         this.fromInMilliseconds = fromInMilliseconds;
     }
 
-    public static class BreakApiConverter extends RealmFacade.ApiToRealmConverter<BreakRealm, BreakApiDto> {
+    public static class BreakApiConverter extends RealmFacade.ApiToRealmConverter<BreakRealm, BreakApiModel> {
         @Override
-        public BreakRealm convert(String key, BreakApiDto apiDto) {
+        public BreakRealm convert(String key, BreakApiModel apiDto) {
             BreakRealm breakRealm = new BreakRealm();
             breakRealm.setKey(key);
             breakRealm.setDescription(apiDto.descriptionHtml);

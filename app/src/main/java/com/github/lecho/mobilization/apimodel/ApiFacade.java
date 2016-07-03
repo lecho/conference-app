@@ -61,7 +61,7 @@ public class ApiFacade {
     private ApiData assignParsedData(ApiData apiData, ApiDtoType className, String json) {
         switch (className) {
             case BREAKS:
-                apiData.breaksMap = new BreakApiDto.BreakApiParser().fromJson(json);
+                apiData.breaksMap = new BreakApiModel.BreakApiParser().fromJson(json);
                 break;
             case EVENT:
                 apiData.eventsMap = new EventApiDto.EventApiParser().fromJson(json);

@@ -9,7 +9,7 @@ public class ApiData {
 
     public Map<String, EventApiDto> eventsMap;
     public Map<String, AgendaItemApiModel> agendaMap;
-    public Map<String, BreakApiDto> breaksMap;
+    public Map<String, BreakApiModel> breaksMap;
     public Map<String, SlotApiDto> slotsMap;
     public Map<String, SpeakerApiDto> speakersMap;
     public Map<String, SponsorApiDto> sponsorsMap;

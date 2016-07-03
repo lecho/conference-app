@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by Leszek on 2015-07-24.
  */
-public class BreakApiDto {
+public class BreakApiModel {
 
     public String title;
     public String descriptionHtml;
@@ -21,11 +21,11 @@ public class BreakApiDto {
                 '}';
     }
 
-    public static class BreakApiParser extends BaseApiParser<BreakApiDto> {
+    public static class BreakApiParser extends BaseApiParser<BreakApiModel> {
 
         @Override
-        public Map<String, BreakApiDto> fromJson(String json) {
-            Type type = new TypeToken<Map<String, BreakApiDto>>() {
+        public Map<String, BreakApiModel> fromJson(String json) {
+            Type type = new TypeToken<Map<String, BreakApiModel>>() {
             }.getType();
             return parseJson(json, type);
         }
