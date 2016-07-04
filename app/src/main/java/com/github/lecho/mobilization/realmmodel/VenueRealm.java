@@ -1,7 +1,7 @@
 package com.github.lecho.mobilization.realmmodel;
 
 import com.github.lecho.mobilization.apimodel.VenueApiModel;
-import com.github.lecho.mobilization.viewmodel.VenueViewDto;
+import com.github.lecho.mobilization.viewmodel.VenueViewModel;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -42,14 +42,14 @@ public class VenueRealm extends RealmObject {
         }
     }
 
-    public static class VenueViewConverter extends RealmFacade.RealmToViewConverter<VenueRealm, VenueViewDto> {
+    public static class VenueViewConverter extends RealmFacade.RealmToViewConverter<VenueRealm, VenueViewModel> {
 
         @Override
-        public VenueViewDto convert(VenueRealm realmObject) {
-            VenueViewDto venueViewDto = new VenueViewDto();
-            venueViewDto.key = realmObject.getKey();
-            venueViewDto.title = realmObject.getTitle();
-            return venueViewDto;
+        public VenueViewModel convert(VenueRealm realmObject) {
+            VenueViewModel venueViewModel = new VenueViewModel();
+            venueViewModel.key = realmObject.getKey();
+            venueViewModel.title = realmObject.getTitle();
+            return venueViewModel;
         }
     }
 }

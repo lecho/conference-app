@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.util.Utils;
-import com.github.lecho.mobilization.viewmodel.SponsorViewDto;
+import com.github.lecho.mobilization.viewmodel.SponsorViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,13 +24,13 @@ import butterknife.ButterKnife;
 public class SponsorsAdapter extends RecyclerView.Adapter<SponsorsAdapter.SponsorViewHolder> {
 
     private final Context context;
-    private List<SponsorViewDto> data = new ArrayList<>();
+    private List<SponsorViewModel> data = new ArrayList<>();
 
     public SponsorsAdapter(Context context) {
         this.context = context;
     }
 
-    public void setData(@NonNull List<SponsorViewDto> data) {
+    public void setData(@NonNull List<SponsorViewModel> data) {
         this.data = data;
         notifyDataSetChanged();
     }
@@ -77,18 +77,18 @@ public class SponsorsAdapter extends RecyclerView.Adapter<SponsorsAdapter.Sponso
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindView(SponsorViewDto sponsorViewDto) {
+        public void bindView(SponsorViewModel sponsorViewModel) {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-                sponsorColorView.setBackgroundColor(context.getResources().getColor(sponsorViewDto.type.getColorRes()));
+                sponsorColorView.setBackgroundColor(context.getResources().getColor(sponsorViewModel.type.getColorRes()));
             } else {
-                sponsorColorView.setBackgroundColor(context.getColor(sponsorViewDto.type.getColorRes()));
+                sponsorColorView.setBackgroundColor(context.getColor(sponsorViewModel.type.getColorRes()));
             }
-            typeView.setText(sponsorViewDto.type.getTextRes());
-            nameView.setText(sponsorViewDto.name);
-            webPageView.setText(sponsorViewDto.wwwPage);
-            Utils.loadSponsorImage(context.getApplicationContext(), sponsorViewDto.logo, logoView);
-            if (!TextUtils.isEmpty(sponsorViewDto.wwwPage)) {
-                itemView.setOnClickListener(new SponsorItemClickListener(sponsorViewDto.wwwPage));
+            typeView.setText(sponsorViewModel.type.getTextRes());
+            nameView.setText(sponsorViewModel.name);
+            webPageView.setText(sponsorViewModel.wwwPage);
+            Utils.loadSponsorImage(context.getApplicationContext(), sponsorViewModel.logo, logoView);
+            if (!TextUtils.isEmpty(sponsorViewModel.wwwPage)) {
+                itemView.setOnClickListener(new SponsorItemClickListener(sponsorViewModel.wwwPage));
             }
         }
     }

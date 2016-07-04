@@ -3,7 +3,7 @@ package com.github.lecho.mobilization.realmmodel;
 import android.net.Uri;
 
 import com.github.lecho.mobilization.apimodel.SpeakerApiModel;
-import com.github.lecho.mobilization.viewmodel.SpeakerViewDto;
+import com.github.lecho.mobilization.viewmodel.SpeakerViewModel;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -94,19 +94,19 @@ public class SpeakerRealm extends RealmObject {
         }
     }
 
-    public static class SpeakerViewConverter extends RealmFacade.RealmToViewConverter<SpeakerRealm, SpeakerViewDto> {
+    public static class SpeakerViewConverter extends RealmFacade.RealmToViewConverter<SpeakerRealm, SpeakerViewModel> {
 
         @Override
-        public SpeakerViewDto convert(SpeakerRealm realmObject) {
-            SpeakerViewDto speakerViewDto = new SpeakerViewDto();
-            speakerViewDto.key = realmObject.getKey();
-            speakerViewDto.firstName = realmObject.getFirstName();
-            speakerViewDto.lastName = realmObject.getLastName();
-            speakerViewDto.biography = realmObject.getBiography();
-            speakerViewDto.photo = realmObject.getPhoto();
-            speakerViewDto.twitterProfile = realmObject.getTwitterProfile();
-            speakerViewDto.wwwPage = realmObject.getWebPage();
-            return speakerViewDto;
+        public SpeakerViewModel convert(SpeakerRealm realmObject) {
+            SpeakerViewModel speakerViewModel = new SpeakerViewModel();
+            speakerViewModel.key = realmObject.getKey();
+            speakerViewModel.firstName = realmObject.getFirstName();
+            speakerViewModel.lastName = realmObject.getLastName();
+            speakerViewModel.biography = realmObject.getBiography();
+            speakerViewModel.photo = realmObject.getPhoto();
+            speakerViewModel.twitterProfile = realmObject.getTwitterProfile();
+            speakerViewModel.wwwPage = realmObject.getWebPage();
+            return speakerViewModel;
         }
     }
 }

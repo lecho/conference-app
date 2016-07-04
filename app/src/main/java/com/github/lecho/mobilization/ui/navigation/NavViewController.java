@@ -21,8 +21,8 @@ import com.github.lecho.mobilization.ui.fragment.SponsorsFragment;
 import com.github.lecho.mobilization.ui.fragment.VenueAgendaFragment;
 import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.util.Utils;
-import com.github.lecho.mobilization.viewmodel.EventViewDto;
-import com.github.lecho.mobilization.viewmodel.VenueViewDto;
+import com.github.lecho.mobilization.viewmodel.EventViewModel;
+import com.github.lecho.mobilization.viewmodel.VenueViewModel;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -59,8 +59,8 @@ public class NavViewController {
         this.navMenuController = new NavMenuController(navigationView, listener);
     }
 
-    public void bindHeader(@NonNull Context context, @NonNull EventViewDto eventViewDto) {
-        navHeaderController.bind(context, eventViewDto);
+    public void bindHeader(@NonNull Context context, @NonNull EventViewModel eventViewModel) {
+        navHeaderController.bind(context, eventViewModel);
     }
 
     /**
@@ -72,8 +72,8 @@ public class NavViewController {
         navHeaderController.bindHeaderImage(context);
     }
 
-    public void bindMenu(@NonNull List<VenueViewDto> venueViewDtos) {
-        navMenuController.bind(venueViewDtos);
+    public void bindMenu(@NonNull List<VenueViewModel> venueViewModels) {
+        navMenuController.bind(venueViewModels);
     }
 
     static class NavHeaderController {
@@ -99,23 +99,23 @@ public class NavViewController {
             ButterKnife.bind(this, navigationView);
         }
 
-        public void bind(@NonNull Context context, @NonNull EventViewDto eventViewDto) {
-            eventTitleView.setText(eventViewDto.title);
+        public void bind(@NonNull Context context, @NonNull EventViewModel eventViewModel) {
+            eventTitleView.setText(eventViewModel.title);
             String eventDateText = new StringBuilder()
-                    .append(eventViewDto.date)
+                    .append(eventViewModel.date)
                     .append(", ")
-                    .append(eventViewDto.time)
+                    .append(eventViewModel.time)
                     .toString();
             eventDateView.setText(eventDateText);
             String eventPlaceText = new StringBuilder()
-                    .append(eventViewDto.place)
+                    .append(eventViewModel.place)
                     .append("\n")
-                    .append(eventViewDto.street)
+                    .append(eventViewModel.street)
                     .append(" ")
-                    .append(eventViewDto.city)
+                    .append(eventViewModel.city)
                     .toString();
             eventPlaceView.setText(eventPlaceText);
-            mapButton.setOnClickListener(new MapButtonClickListener(context, eventViewDto));
+            mapButton.setOnClickListener(new MapButtonClickListener(context, eventViewModel));
         }
 
         public void bindHeaderImage(@NonNull Context context) {
@@ -138,7 +138,7 @@ public class NavViewController {
             this.listener = listener;
         }
 
-        public void bind(@NonNull List<VenueViewDto> venueViewDtos) {
+        public void bind(@NonNull List<VenueViewModel> venueViewModels) {
             itemId = 0;
             order = 0;
             navigationMenu.clear();
@@ -150,18 +150,18 @@ public class NavViewController {
                     .setOnMenuItemClickListener(new NavItemClickListener(NAVIGATION_MY_AGENDA, listener));
             //Tracks
             venuesSubMenu = navigationMenu.addSubMenu(groupId, itemId++, order++, R.string.navigation_venues);
-            bindVenuesSubmenu(venueViewDtos);
+            bindVenuesSubmenu(venueViewModels);
             //More
             moreSubMenu = navigationMenu.addSubMenu(groupId, itemId++, order++, R.string.navigation_more);
             bindMoreSubmenu();
         }
 
-        private void bindVenuesSubmenu(@NonNull List<VenueViewDto> venueViewDtos) {
-            for (VenueViewDto venueViewDto : venueViewDtos) {
-                venuesSubMenu.add(groupId, itemId++, order++, venueViewDto.title)
+        private void bindVenuesSubmenu(@NonNull List<VenueViewModel> venueViewModels) {
+            for (VenueViewModel venueViewModel : venueViewModels) {
+                venuesSubMenu.add(groupId, itemId++, order++, venueViewModel.title)
                         .setIcon(R.drawable.ic_nav_agenda)
                         .setCheckable(true)
-                        .setOnMenuItemClickListener(new NavItemClickListener(NAVIGATION_VENUE, venueViewDto,
+                        .setOnMenuItemClickListener(new NavItemClickListener(NAVIGATION_VENUE, venueViewModel,
                                 listener));
             }
         }
@@ -222,7 +222,7 @@ public class NavViewController {
 
         @NavItemType
         private final int navItemType;
-        private Optional<VenueViewDto> venueViewDto;
+        private Optional<VenueViewModel> venueViewDto;
         private final MenuItemListener listener;
 
         public NavItemClickListener(@NavItemType int navItemType,
@@ -235,10 +235,10 @@ public class NavViewController {
             this.listener = listener;
         }
 
-        public NavItemClickListener(@NavItemType int navItemType, @NonNull VenueViewDto venueViewDto,
+        public NavItemClickListener(@NavItemType int navItemType, @NonNull VenueViewModel venueViewModel,
                                     @NonNull MenuItemListener listener) {
             this.navItemType = navItemType;
-            this.venueViewDto = Optional.of(venueViewDto);
+            this.venueViewDto = Optional.of(venueViewModel);
             this.listener = listener;
         }
 
@@ -259,17 +259,17 @@ public class NavViewController {
     private static class MapButtonClickListener implements View.OnClickListener {
 
         private final Context context;
-        private final EventViewDto eventViewDto;
+        private final EventViewModel eventViewModel;
 
-        public MapButtonClickListener(Context context, EventViewDto eventViewDto) {
+        public MapButtonClickListener(Context context, EventViewModel eventViewModel) {
             this.context = context;
-            this.eventViewDto = eventViewDto;
+            this.eventViewModel = eventViewModel;
         }
 
         @Override
         public void onClick(View v) {
-            String address = eventViewDto.street + ", " + eventViewDto.city;
-            Utils.launchGMaps(context, eventViewDto.latitude, eventViewDto.longitude, address);
+            String address = eventViewModel.street + ", " + eventViewModel.city;
+            Utils.launchGMaps(context, eventViewModel.latitude, eventViewModel.longitude, address);
         }
     }
 

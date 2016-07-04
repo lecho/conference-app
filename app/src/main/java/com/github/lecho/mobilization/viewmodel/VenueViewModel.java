@@ -8,7 +8,7 @@ import com.github.lecho.mobilization.R;
 /**
  * Created by Leszek on 2015-07-29.
  */
-public class VenueViewDto {
+public class VenueViewModel {
 
     public String key;
     public String title;
@@ -20,7 +20,7 @@ public class VenueViewDto {
 
     @Override
     public String toString() {
-        return "VenueViewDto{" +
+        return "VenueViewModel{" +
                 "key='" + key + '\'' +
                 ", title='" + title + '\'' +
                 '}';

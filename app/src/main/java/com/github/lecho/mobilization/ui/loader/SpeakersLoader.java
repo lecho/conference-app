@@ -4,14 +4,14 @@ import android.content.Context;
 import android.util.Log;
 
 import com.github.lecho.mobilization.BuildConfig;
-import com.github.lecho.mobilization.viewmodel.SpeakerViewDto;
+import com.github.lecho.mobilization.viewmodel.SpeakerViewModel;
 
 import java.util.List;
 
 /**
  * Created by Leszek on 2015-09-03.
  */
-public class SpeakersLoader extends BaseRealmLoader<List<SpeakerViewDto>> {
+public class SpeakersLoader extends BaseRealmLoader<List<SpeakerViewModel>> {
 
     private static final String TAG = SpeakersLoader.class.getSimpleName();
 
@@ -24,11 +24,11 @@ public class SpeakersLoader extends BaseRealmLoader<List<SpeakerViewDto>> {
     }
 
     @Override
-    public List<SpeakerViewDto> loadInBackground() {
+    public List<SpeakerViewModel> loadInBackground() {
         if (BuildConfig.DEBUG) {
             Log.d(TAG, "Loading speakers data");
         }
-        List<SpeakerViewDto> newData = realmFacade.loadAllSpeakers();
+        List<SpeakerViewModel> newData = realmFacade.loadAllSpeakers();
         return newData;
     }
 }

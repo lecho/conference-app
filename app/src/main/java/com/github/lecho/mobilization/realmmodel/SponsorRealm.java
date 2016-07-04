@@ -3,7 +3,7 @@ package com.github.lecho.mobilization.realmmodel;
 import android.net.Uri;
 
 import com.github.lecho.mobilization.apimodel.SponsorApiModel;
-import com.github.lecho.mobilization.viewmodel.SponsorViewDto;
+import com.github.lecho.mobilization.viewmodel.SponsorViewModel;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -64,17 +64,17 @@ public class SponsorRealm extends RealmObject {
         }
     }
 
-    public static class SponsorViewConverter extends RealmFacade.RealmToViewConverter<SponsorRealm, SponsorViewDto> {
+    public static class SponsorViewConverter extends RealmFacade.RealmToViewConverter<SponsorRealm, SponsorViewModel> {
 
         @Override
-        public SponsorViewDto convert(SponsorRealm realmObject) {
-            SponsorViewDto sponsorViewDto = new SponsorViewDto();
-            sponsorViewDto.name = realmObject.getName();
-            sponsorViewDto.wwwPage = realmObject.getWwwPage();
-            sponsorViewDto.logo = realmObject.getLogo();
+        public SponsorViewModel convert(SponsorRealm realmObject) {
+            SponsorViewModel sponsorViewModel = new SponsorViewModel();
+            sponsorViewModel.name = realmObject.getName();
+            sponsorViewModel.wwwPage = realmObject.getWwwPage();
+            sponsorViewModel.logo = realmObject.getLogo();
             //Realm doesn't support Enums
-            sponsorViewDto.type = getType(realmObject.getType());
-            return sponsorViewDto;
+            sponsorViewModel.type = getType(realmObject.getType());
+            return sponsorViewModel;
         }
 
         private SponsorType getType(int ordinal) {

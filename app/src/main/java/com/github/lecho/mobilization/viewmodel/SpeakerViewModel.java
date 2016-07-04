@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 /**
  * Created by Leszek on 2015-07-29.
  */
-public class SpeakerViewDto {
+public class SpeakerViewModel {
 
     public String key;
     public String firstName;
@@ -22,7 +22,7 @@ public class SpeakerViewDto {
 
     @Override
     public String toString() {
-        return "SpeakerViewDto{" +
+        return "SpeakerViewModel{" +
                 "key='" + key + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +

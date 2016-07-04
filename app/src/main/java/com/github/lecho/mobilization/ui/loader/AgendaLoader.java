@@ -4,12 +4,12 @@ import android.content.Context;
 import android.util.Log;
 
 import com.github.lecho.mobilization.BuildConfig;
-import com.github.lecho.mobilization.viewmodel.AgendaViewDto;
+import com.github.lecho.mobilization.viewmodel.AgendaViewModel;
 
 /**
  * Created by Leszek on 2015-07-29.
  */
-public class AgendaLoader extends BaseRealmLoader<AgendaViewDto> {
+public class AgendaLoader extends BaseRealmLoader<AgendaViewModel> {
 
     private static final String TAG = AgendaLoader.class.getSimpleName();
     private final AgendaLoaderType type;
@@ -34,11 +34,11 @@ public class AgendaLoader extends BaseRealmLoader<AgendaViewDto> {
     }
 
     @Override
-    public AgendaViewDto loadInBackground() {
+    public AgendaViewModel loadInBackground() {
         if (BuildConfig.DEBUG) {
             Log.d(TAG, "Loading agenda data for loader type: " + type.name());
         }
-        AgendaViewDto agendaData = null;
+        AgendaViewModel agendaData = null;
         switch (type) {
             case WHOLE_AGENDA:
                 agendaData = realmFacade.loadWholeAgenda();

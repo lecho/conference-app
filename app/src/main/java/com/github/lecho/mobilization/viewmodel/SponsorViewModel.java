@@ -5,7 +5,7 @@ import com.github.lecho.mobilization.realmmodel.SponsorType;
 /**
  * Created by Leszek on 2015-07-29.
  */
-public class SponsorViewDto {
+public class SponsorViewModel {
 
     public String name;
     public String wwwPage;
@@ -14,7 +14,7 @@ public class SponsorViewDto {
 
     @Override
     public String toString() {
-        return "SponsorViewDto{" +
+        return "SponsorViewModel{" +
                 "name='" + name + '\'' +
                 ", wwwPage='" + wwwPage + '\'' +
                 ", logo='" + logo + '\'' +

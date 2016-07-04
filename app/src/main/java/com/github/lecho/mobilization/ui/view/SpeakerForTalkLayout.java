@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.SpeakerActivity;
 import com.github.lecho.mobilization.util.Utils;
-import com.github.lecho.mobilization.viewmodel.SpeakerViewDto;
+import com.github.lecho.mobilization.viewmodel.SpeakerViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,7 +20,7 @@ import butterknife.OnClick;
  */
 public class SpeakerForTalkLayout extends LinearLayout {
 
-    private final SpeakerViewDto speakerViewDto;
+    private final SpeakerViewModel speakerViewModel;
 
     @BindView(R.id.speaker_avatar)
     ImageView avatarView;
@@ -30,19 +30,19 @@ public class SpeakerForTalkLayout extends LinearLayout {
 
     @OnClick
     public void onClick() {
-        SpeakerActivity.startActivity(getContext(), speakerViewDto.key);
+        SpeakerActivity.startActivity(getContext(), speakerViewModel.key);
     }
 
-    public SpeakerForTalkLayout(Context context, SpeakerViewDto speakerViewDto) {
+    public SpeakerForTalkLayout(Context context, SpeakerViewModel speakerViewModel) {
         super(context);
-        this.speakerViewDto = speakerViewDto;
+        this.speakerViewModel = speakerViewModel;
         LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate(R.layout.speaker_for_talk_layout, this, true);
         ButterKnife.bind(this, this);
     }
 
     public void bind() {
-        Utils.loadSpeakerImageSmall(getContext().getApplicationContext(), speakerViewDto.photo, avatarView);
-        speakerNameView.setText(speakerViewDto.getSpeakerNameText());
+        Utils.loadSpeakerImageSmall(getContext().getApplicationContext(), speakerViewModel.photo, avatarView);
+        speakerNameView.setText(speakerViewModel.getSpeakerNameText());
     }
 }

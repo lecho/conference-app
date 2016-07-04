@@ -20,13 +20,13 @@ import com.github.lecho.mobilization.ui.fragment.MyAgendaFragment;
 import com.github.lecho.mobilization.ui.loader.NavigationViewDataLoader;
 import com.github.lecho.mobilization.ui.navigation.NavViewController;
 import com.github.lecho.mobilization.util.Utils;
-import com.github.lecho.mobilization.viewmodel.NavigationViewDto;
+import com.github.lecho.mobilization.viewmodel.NavigationViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<NavigationViewDto>,
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<NavigationViewModel>,
         MyAgendaFragment.OpenDrawerCallback {
 
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public Loader<NavigationViewDto> onCreateLoader(int id, Bundle args) {
+    public Loader<NavigationViewModel> onCreateLoader(int id, Bundle args) {
         if (id == LOADER_ID) {
             return NavigationViewDataLoader.getLoader(getApplicationContext());
         }
@@ -122,18 +122,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public void onLoadFinished(Loader<NavigationViewDto> loader, NavigationViewDto navigationViewDto) {
+    public void onLoadFinished(Loader<NavigationViewModel> loader, NavigationViewModel navigationViewModel) {
         if (loader.getId() == LOADER_ID) {
-            navViewController.bindMenu(navigationViewDto.venueViewDtos);
-            if (navigationViewDto.eventViewDto.isPresent()) {
-                navViewController.bindHeader(getApplicationContext(), navigationViewDto.eventViewDto.get());
+            navViewController.bindMenu(navigationViewModel.venueViewModels);
+            if (navigationViewModel.eventViewDto.isPresent()) {
+                navViewController.bindHeader(getApplicationContext(), navigationViewModel.eventViewDto.get());
             }
             navigationView.setCheckedItem(checkedNavItemId);
         }
     }
 
     @Override
-    public void onLoaderReset(Loader<NavigationViewDto> loader) {
+    public void onLoaderReset(Loader<NavigationViewModel> loader) {
     }
 
     @Override

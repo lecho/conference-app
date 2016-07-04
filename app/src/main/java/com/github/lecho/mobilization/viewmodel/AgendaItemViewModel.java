@@ -3,12 +3,12 @@ package com.github.lecho.mobilization.viewmodel;
 /**
  * Created by Leszek on 2015-07-29.
  */
-public class AgendaItemViewDto {
+public class AgendaItemViewModel {
 
     public AgendaItemType type;
-    public BreakViewDto agendaBreak;
-    public TalkViewDto talk;
-    public SlotViewDto slot;
+    public BreakViewModel agendaBreak;
+    public TalkViewModel talk;
+    public SlotViewModel slot;
 
     public enum AgendaItemType {
         BREAK, TALK, SLOT,
@@ -16,7 +16,7 @@ public class AgendaItemViewDto {
 
     @Override
     public String toString() {
-        return "AgendaItemViewDto{" +
+        return "AgendaItemViewModel{" +
                 "type=" + type +
                 ", agendaBreak=" + agendaBreak +
                 ", talk=" + talk +

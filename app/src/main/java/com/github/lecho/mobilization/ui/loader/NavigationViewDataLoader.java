@@ -5,16 +5,16 @@ import android.util.Log;
 
 import com.github.lecho.mobilization.BuildConfig;
 import com.github.lecho.mobilization.util.Optional;
-import com.github.lecho.mobilization.viewmodel.EventViewDto;
-import com.github.lecho.mobilization.viewmodel.NavigationViewDto;
-import com.github.lecho.mobilization.viewmodel.VenueViewDto;
+import com.github.lecho.mobilization.viewmodel.EventViewModel;
+import com.github.lecho.mobilization.viewmodel.NavigationViewModel;
+import com.github.lecho.mobilization.viewmodel.VenueViewModel;
 
 import java.util.List;
 
 /**
  * Created by Leszek on 2015-09-03.
  */
-public class NavigationViewDataLoader extends BaseRealmLoader<NavigationViewDto> {
+public class NavigationViewDataLoader extends BaseRealmLoader<NavigationViewModel> {
 
     private static final String TAG = NavigationViewDataLoader.class.getSimpleName();
 
@@ -27,14 +27,14 @@ public class NavigationViewDataLoader extends BaseRealmLoader<NavigationViewDto>
     }
 
     @Override
-    public NavigationViewDto loadInBackground() {
+    public NavigationViewModel loadInBackground() {
         if (BuildConfig.DEBUG) {
             Log.d(TAG, "Loading navigation view data");
         }
-        List<VenueViewDto> venueViewDtos = realmFacade.loadAllVenues();
-        Optional<EventViewDto> eventViewDto = realmFacade.loadEvent();
-        NavigationViewDto newData = new NavigationViewDto();
-        newData.venueViewDtos = venueViewDtos;
+        List<VenueViewModel> venueViewModels = realmFacade.loadAllVenues();
+        Optional<EventViewModel> eventViewDto = realmFacade.loadEvent();
+        NavigationViewModel newData = new NavigationViewModel();
+        newData.venueViewModels = venueViewModels;
         newData.eventViewDto = eventViewDto;
         return newData;
     }

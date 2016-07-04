@@ -1,7 +1,7 @@
 package com.github.lecho.mobilization.realmmodel;
 
 import com.github.lecho.mobilization.apimodel.TalkApiModel;
-import com.github.lecho.mobilization.viewmodel.TalkViewDto;
+import com.github.lecho.mobilization.viewmodel.TalkViewModel;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -111,26 +111,26 @@ public class TalkRealm extends RealmObject {
         }
     }
 
-    public static class TalkViewConverter extends RealmFacade.RealmToViewConverter<TalkRealm, TalkViewDto> {
+    public static class TalkViewConverter extends RealmFacade.RealmToViewConverter<TalkRealm, TalkViewModel> {
 
         private SlotRealm.SlotViewConverter slotViewConverter = new SlotRealm.SlotViewConverter();
         private VenueRealm.VenueViewConverter venueViewConverter = new VenueRealm.VenueViewConverter();
         private SpeakerRealm.SpeakerViewConverter speakerViewConverter = new SpeakerRealm.SpeakerViewConverter();
 
         @Override
-        public TalkViewDto convert(TalkRealm realmObject) {
-            TalkViewDto talkViewDto = new TalkViewDto();
-            talkViewDto.key = realmObject.getKey();
-            talkViewDto.description = realmObject.getDescription();
-            talkViewDto.language = realmObject.getLanguage();
-            talkViewDto.title = realmObject.getTitle();
-            talkViewDto.isInMyAgenda = realmObject.isInMyAgenda();
-            talkViewDto.slot = slotViewConverter.convert(realmObject.getSlot());
-            talkViewDto.venue = venueViewConverter.convert(realmObject.getVenue());
+        public TalkViewModel convert(TalkRealm realmObject) {
+            TalkViewModel talkViewModel = new TalkViewModel();
+            talkViewModel.key = realmObject.getKey();
+            talkViewModel.description = realmObject.getDescription();
+            talkViewModel.language = realmObject.getLanguage();
+            talkViewModel.title = realmObject.getTitle();
+            talkViewModel.isInMyAgenda = realmObject.isInMyAgenda();
+            talkViewModel.slot = slotViewConverter.convert(realmObject.getSlot());
+            talkViewModel.venue = venueViewConverter.convert(realmObject.getVenue());
             for (SpeakerRealm speakerRealm : realmObject.getSpeakers()) {
-                talkViewDto.speakers.add(speakerViewConverter.convert(speakerRealm));
+                talkViewModel.speakers.add(speakerViewConverter.convert(speakerRealm));
             }
-            return talkViewDto;
+            return talkViewModel;
         }
     }
 }

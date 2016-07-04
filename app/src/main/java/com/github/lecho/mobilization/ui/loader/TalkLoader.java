@@ -6,12 +6,12 @@ import android.util.Log;
 
 import com.github.lecho.mobilization.BuildConfig;
 import com.github.lecho.mobilization.util.Optional;
-import com.github.lecho.mobilization.viewmodel.TalkViewDto;
+import com.github.lecho.mobilization.viewmodel.TalkViewModel;
 
 /**
  * Created by Leszek on 2015-09-03.
  */
-public class TalkLoader extends BaseRealmLoader<Optional<TalkViewDto>> {
+public class TalkLoader extends BaseRealmLoader<Optional<TalkViewModel>> {
 
     private static final String TAG = TalkLoader.class.getSimpleName();
     private String talkKey;
@@ -29,11 +29,11 @@ public class TalkLoader extends BaseRealmLoader<Optional<TalkViewDto>> {
     }
 
     @Override
-    public Optional<TalkViewDto> loadInBackground() {
+    public Optional<TalkViewModel> loadInBackground() {
         if (BuildConfig.DEBUG) {
             Log.d(TAG, "Loading talk data");
         }
-        Optional<TalkViewDto> newData = realmFacade.loadTalkByKey(talkKey);
+        Optional<TalkViewModel> newData = realmFacade.loadTalkByKey(talkKey);
         return newData;
     }
 }

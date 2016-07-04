@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.lecho.mobilization.R;
-import com.github.lecho.mobilization.viewmodel.AgendaItemViewDto;
-import com.github.lecho.mobilization.viewmodel.TalkViewDto;
+import com.github.lecho.mobilization.viewmodel.AgendaItemViewModel;
+import com.github.lecho.mobilization.viewmodel.TalkViewModel;
 
 import butterknife.BindView;
 
@@ -44,10 +44,10 @@ public class MyAgendaAdapter extends AgendaAdapter {
             super(activity, itemView);
         }
 
-        public void bindView(AgendaItemViewDto agendaItem) {
+        public void bindView(AgendaItemViewModel agendaItem) {
             super.bindView(agendaItem);
-            TalkViewDto talkViewDto = agendaItem.talk;
-            venueView.setText(talkViewDto.venue.getVenueText(activity));
+            TalkViewModel talkViewModel = agendaItem.talk;
+            venueView.setText(talkViewModel.venue.getVenueText(activity));
         }
     }
 }

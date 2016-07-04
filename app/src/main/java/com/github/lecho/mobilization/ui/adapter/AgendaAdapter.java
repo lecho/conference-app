@@ -13,10 +13,10 @@ import android.widget.TextView;
 
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.TalkActivity;
-import com.github.lecho.mobilization.viewmodel.AgendaItemViewDto;
-import com.github.lecho.mobilization.viewmodel.SlotViewDto;
-import com.github.lecho.mobilization.viewmodel.SpeakerViewDto;
-import com.github.lecho.mobilization.viewmodel.TalkViewDto;
+import com.github.lecho.mobilization.viewmodel.AgendaItemViewModel;
+import com.github.lecho.mobilization.viewmodel.SlotViewModel;
+import com.github.lecho.mobilization.viewmodel.SpeakerViewModel;
+import com.github.lecho.mobilization.viewmodel.TalkViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
     public static final int ITEM_TYPE_BREAK = 0;
     public static final int ITEM_TYPE_TALK = 1;
     public static final int ITEM_TYPE_EMPTY_SLOT = 2;
-    protected List<AgendaItemViewDto> data = new ArrayList<>();
+    protected List<AgendaItemViewModel> data = new ArrayList<>();
     protected final AppCompatActivity activity;
     protected final AgendaItemClickListener starTalkListener;
     protected final AgendaItemClickListener emptySlotListener;
@@ -41,12 +41,12 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
         this.emptySlotListener = emptySlotListener;
     }
 
-    public void setData(@NonNull List<AgendaItemViewDto> data) {
+    public void setData(@NonNull List<AgendaItemViewModel> data) {
         this.data = data;
         notifyDataSetChanged();
     }
 
-    public AgendaItemViewDto getItem(int position) {
+    public AgendaItemViewModel getItem(int position) {
         return data.get(position);
     }
 
@@ -57,8 +57,8 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
      */
     public void removeTalk(int position) {
         notifyItemRemoved(position);
-        AgendaItemViewDto item = data.get(position);
-        item.type = AgendaItemViewDto.AgendaItemType.SLOT;
+        AgendaItemViewModel item = data.get(position);
+        item.type = AgendaItemViewModel.AgendaItemType.SLOT;
         notifyItemInserted(position);
     }
 
@@ -85,11 +85,11 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
 
     @Override
     public int getItemViewType(int position) {
-        if (AgendaItemViewDto.AgendaItemType.BREAK == data.get(position).type) {
+        if (AgendaItemViewModel.AgendaItemType.BREAK == data.get(position).type) {
             return ITEM_TYPE_BREAK;
-        } else if (AgendaItemViewDto.AgendaItemType.TALK == data.get(position).type) {
+        } else if (AgendaItemViewModel.AgendaItemType.TALK == data.get(position).type) {
             return ITEM_TYPE_TALK;
-        } else if (AgendaItemViewDto.AgendaItemType.SLOT == data.get(position).type) {
+        } else if (AgendaItemViewModel.AgendaItemType.SLOT == data.get(position).type) {
             return ITEM_TYPE_EMPTY_SLOT;
         } else {
             throw new IllegalArgumentException("Invalid item type " + data.get(position).type);
@@ -123,12 +123,12 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindView(AgendaItemViewDto agendaItem) {
+        public void bindView(AgendaItemViewModel agendaItem) {
             bindSlot(agendaItem.slot);
         }
 
-        private void bindSlot(SlotViewDto slotViewDto) {
-            SlotViewDto.SlotInTimeZone slotInTimeZone = SlotViewDto.SlotInTimeZone.getSlotInTimezone(slotViewDto);
+        private void bindSlot(SlotViewModel slotViewModel) {
+            SlotViewModel.SlotInTimeZone slotInTimeZone = SlotViewModel.SlotInTimeZone.getSlotInTimezone(slotViewModel);
             timeSlotView.setText(slotInTimeZone.getTimeSlotText());
             if (slotInTimeZone.isInCurrentSlot()) {
                 currentItemIndicatorView.setVisibility(View.VISIBLE);
@@ -138,13 +138,13 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
         }
 
         @NonNull
-        protected String getSpeakersText(TalkViewDto talkViewDto) {
+        protected String getSpeakersText(TalkViewModel talkViewModel) {
             StringBuilder speakersText = new StringBuilder();
-            for (SpeakerViewDto speakerViewDto : talkViewDto.speakers) {
+            for (SpeakerViewModel speakerViewModel : talkViewModel.speakers) {
                 if (!TextUtils.isEmpty(speakersText)) {
                     speakersText.append("\n");
                 }
-                speakersText.append(speakerViewDto.firstName).append(" ").append(speakerViewDto.lastName);
+                speakersText.append(speakerViewModel.firstName).append(" ").append(speakerViewModel.lastName);
             }
             return speakersText.toString();
         }
@@ -160,7 +160,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
         }
 
         @Override
-        public void bindView(AgendaItemViewDto agendaItem) {
+        public void bindView(AgendaItemViewModel agendaItem) {
             super.bindView(agendaItem);
             itemView.setOnClickListener(new EmptySlotClickListener(getLayoutPosition(), agendaItem));
         }
@@ -176,7 +176,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
         }
 
         @Override
-        public void bindView(AgendaItemViewDto agendaItem) {
+        public void bindView(AgendaItemViewModel agendaItem) {
             super.bindView(agendaItem);
             titleView.setText(agendaItem.agendaBreak.title);
         }
@@ -206,14 +206,14 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
             super(activity, itemView);
         }
 
-        public void bindView(AgendaItemViewDto agendaItem) {
+        public void bindView(AgendaItemViewModel agendaItem) {
             super.bindView(agendaItem);
-            TalkViewDto talkViewDto = agendaItem.talk;
-            itemView.setOnClickListener(new TalkItemClickListener(activity, talkViewDto.key));
-            titleView.setText(talkViewDto.title);
-            languageView.setText(talkViewDto.language);
-            speakersView.setText(getSpeakersText(talkViewDto));
-            if (talkViewDto.isInMyAgenda) {
+            TalkViewModel talkViewModel = agendaItem.talk;
+            itemView.setOnClickListener(new TalkItemClickListener(activity, talkViewModel.key));
+            titleView.setText(talkViewModel.title);
+            languageView.setText(talkViewModel.language);
+            speakersView.setText(getSpeakersText(talkViewModel));
+            if (talkViewModel.isInMyAgenda) {
                 addToMyAgendaButton.setImageResource(R.drawable.ic_star_accent);
             } else {
                 addToMyAgendaButton.setImageResource(R.drawable.ic_star_border_accent);
@@ -247,10 +247,10 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
      */
     protected class StartTalkClickListener implements View.OnClickListener {
 
-        private final AgendaItemViewDto agendaItem;
+        private final AgendaItemViewModel agendaItem;
         private final int position;
 
-        public StartTalkClickListener(int position, AgendaItemViewDto agendaItem) {
+        public StartTalkClickListener(int position, AgendaItemViewModel agendaItem) {
             this.position = position;
             this.agendaItem = agendaItem;
         }
@@ -282,10 +282,10 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
      */
     protected class EmptySlotClickListener implements View.OnClickListener {
 
-        private final AgendaItemViewDto agendaItem;
+        private final AgendaItemViewModel agendaItem;
         private final int position;
 
-        public EmptySlotClickListener(int position, AgendaItemViewDto agendaItem) {
+        public EmptySlotClickListener(int position, AgendaItemViewModel agendaItem) {
             this.position = position;
             this.agendaItem = agendaItem;
         }
@@ -300,6 +300,6 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
 
 
     public interface AgendaItemClickListener {
-        void onItemClick(int position, AgendaItemViewDto agendaItem, View view);
+        void onItemClick(int position, AgendaItemViewModel agendaItem, View view);
     }
 }

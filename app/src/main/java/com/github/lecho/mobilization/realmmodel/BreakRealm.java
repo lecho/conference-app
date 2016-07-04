@@ -1,7 +1,7 @@
 package com.github.lecho.mobilization.realmmodel;
 
 import com.github.lecho.mobilization.apimodel.BreakApiModel;
-import com.github.lecho.mobilization.viewmodel.BreakViewDto;
+import com.github.lecho.mobilization.viewmodel.BreakViewModel;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -72,18 +72,18 @@ public class BreakRealm extends RealmObject {
         }
     }
 
-    public static class BreakViewConverter extends RealmFacade.RealmToViewConverter<BreakRealm, BreakViewDto> {
+    public static class BreakViewConverter extends RealmFacade.RealmToViewConverter<BreakRealm, BreakViewModel> {
 
         private SlotRealm.SlotViewConverter slotViewConverter = new SlotRealm.SlotViewConverter();
 
         @Override
-        public BreakViewDto convert(BreakRealm realmObject) {
-            BreakViewDto breakViewDto = new BreakViewDto();
-            breakViewDto.key = realmObject.getKey();
-            breakViewDto.title = realmObject.getTitle();
-            breakViewDto.description = realmObject.getDescription();
-            breakViewDto.slot = slotViewConverter.convert(realmObject.getSlot());
-            return breakViewDto;
+        public BreakViewModel convert(BreakRealm realmObject) {
+            BreakViewModel breakViewModel = new BreakViewModel();
+            breakViewModel.key = realmObject.getKey();
+            breakViewModel.title = realmObject.getTitle();
+            breakViewModel.description = realmObject.getDescription();
+            breakViewModel.slot = slotViewConverter.convert(realmObject.getSlot());
+            return breakViewModel;
         }
     }
 }

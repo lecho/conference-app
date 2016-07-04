@@ -23,13 +23,13 @@ import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.loader.SpeakerLoader;
 import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.util.Utils;
-import com.github.lecho.mobilization.viewmodel.SpeakerViewDto;
+import com.github.lecho.mobilization.viewmodel.SpeakerViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SpeakerActivity extends AppCompatActivity implements
-        LoaderManager.LoaderCallbacks<Optional<SpeakerViewDto>> {
+        LoaderManager.LoaderCallbacks<Optional<SpeakerViewModel>> {
 
     private static final String TAG = SpeakerActivity.class.getSimpleName();
     private static final String ARG_SPEAKER_KEY = "speaker-key";
@@ -98,7 +98,7 @@ public class SpeakerActivity extends AppCompatActivity implements
     }
 
     @Override
-    public Loader<Optional<SpeakerViewDto>> onCreateLoader(int id, Bundle args) {
+    public Loader<Optional<SpeakerViewModel>> onCreateLoader(int id, Bundle args) {
         if (id == LOADER_ID) {
             return SpeakerLoader.getLoader(this, speakerKey);
         }
@@ -106,20 +106,20 @@ public class SpeakerActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onLoadFinished(Loader<Optional<SpeakerViewDto>> loader, Optional<SpeakerViewDto> data) {
+    public void onLoadFinished(Loader<Optional<SpeakerViewModel>> loader, Optional<SpeakerViewModel> data) {
         if (loader.getId() == LOADER_ID) {
             if (!data.isPresent()) {
                 Log.w(TAG, "Speaker data is null for speaker-key: " + speakerKey);
                 return;
             }
-            SpeakerViewDto speakerViewDto = data.get();
-            headerController.bind(speakerViewDto);
-            infoCardController.bind(speakerViewDto);
+            SpeakerViewModel speakerViewModel = data.get();
+            headerController.bind(speakerViewModel);
+            infoCardController.bind(speakerViewModel);
         }
     }
 
     @Override
-    public void onLoaderReset(Loader<Optional<SpeakerViewDto>> loader) {
+    public void onLoaderReset(Loader<Optional<SpeakerViewModel>> loader) {
     }
 
     protected class HeaderController {
@@ -148,38 +148,38 @@ public class SpeakerActivity extends AppCompatActivity implements
             Utils.loadHeaderImage(getApplicationContext(), SPEAKER_HEADER_IMAGE, headerImageView);
         }
 
-        public void bind(final SpeakerViewDto speakerViewDto) {
+        public void bind(final SpeakerViewModel speakerViewModel) {
             ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
-                actionBar.setTitle(speakerViewDto.firstName);
+                actionBar.setTitle(speakerViewModel.firstName);
             }
-            speakerNameView.setText(speakerViewDto.getSpeakerNameText());
-            Utils.loadSpeakerImageBig(getApplicationContext(), speakerViewDto.photo, avatarView);
-            setUpWwwButton(speakerViewDto);
-            setUpTwitterButton(speakerViewDto);
+            speakerNameView.setText(speakerViewModel.getSpeakerNameText());
+            Utils.loadSpeakerImageBig(getApplicationContext(), speakerViewModel.photo, avatarView);
+            setUpWwwButton(speakerViewModel);
+            setUpTwitterButton(speakerViewModel);
         }
 
-        private void setUpWwwButton(final SpeakerViewDto speakerViewDto) {
-            if (TextUtils.isEmpty(speakerViewDto.wwwPage)) {
+        private void setUpWwwButton(final SpeakerViewModel speakerViewModel) {
+            if (TextUtils.isEmpty(speakerViewModel.wwwPage)) {
                 wwwButton.setEnabled(false);
             } else {
                 wwwButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Utils.openWebBrowser(getApplicationContext(), speakerViewDto.wwwPage);
+                        Utils.openWebBrowser(getApplicationContext(), speakerViewModel.wwwPage);
                     }
                 });
             }
         }
 
-        private void setUpTwitterButton(final SpeakerViewDto speakerViewDto) {
-            if (TextUtils.isEmpty(speakerViewDto.twitterProfile)) {
+        private void setUpTwitterButton(final SpeakerViewModel speakerViewModel) {
+            if (TextUtils.isEmpty(speakerViewModel.twitterProfile)) {
                 twitterButton.setEnabled(false);
             } else {
                 twitterButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Utils.openTwitter(getApplicationContext(), speakerViewDto.twitterProfile);
+                        Utils.openTwitter(getApplicationContext(), speakerViewModel.twitterProfile);
                     }
                 });
             }
@@ -195,8 +195,8 @@ public class SpeakerActivity extends AppCompatActivity implements
             ButterKnife.bind(this, view);
         }
 
-        public void bind(SpeakerViewDto speakerViewDto) {
-            speakerInfoView.setText(Html.fromHtml(speakerViewDto.biography));
+        public void bind(SpeakerViewModel speakerViewModel) {
+            speakerInfoView.setText(Html.fromHtml(speakerViewModel.biography));
         }
     }
 }

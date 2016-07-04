@@ -7,8 +7,8 @@ import java.util.List;
 /**
  * Created by Leszek on 2015-09-28.
  */
-public class NavigationViewDto {
+public class NavigationViewModel {
 
-    public List<VenueViewDto> venueViewDtos;
-    public Optional<EventViewDto> eventViewDto;
+    public List<VenueViewModel> venueViewModels;
+    public Optional<EventViewModel> eventViewDto;
 }

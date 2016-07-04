@@ -9,13 +9,13 @@ import com.github.lecho.mobilization.apimodel.ApiData;
 import com.github.lecho.mobilization.apimodel.TalkApiModel;
 import com.github.lecho.mobilization.ui.loader.LoaderChangeObserver;
 import com.github.lecho.mobilization.util.Optional;
-import com.github.lecho.mobilization.viewmodel.AgendaItemViewDto;
-import com.github.lecho.mobilization.viewmodel.AgendaViewDto;
-import com.github.lecho.mobilization.viewmodel.EventViewDto;
-import com.github.lecho.mobilization.viewmodel.SpeakerViewDto;
-import com.github.lecho.mobilization.viewmodel.SponsorViewDto;
-import com.github.lecho.mobilization.viewmodel.TalkViewDto;
-import com.github.lecho.mobilization.viewmodel.VenueViewDto;
+import com.github.lecho.mobilization.viewmodel.AgendaItemViewModel;
+import com.github.lecho.mobilization.viewmodel.AgendaViewModel;
+import com.github.lecho.mobilization.viewmodel.EventViewModel;
+import com.github.lecho.mobilization.viewmodel.SpeakerViewModel;
+import com.github.lecho.mobilization.viewmodel.SponsorViewModel;
+import com.github.lecho.mobilization.viewmodel.TalkViewModel;
+import com.github.lecho.mobilization.viewmodel.VenueViewModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -130,7 +130,7 @@ public class RealmFacade {
         }
     }
 
-    public AgendaViewDto loadWholeAgenda() {
+    public AgendaViewModel loadWholeAgenda() {
         try {
             realm = Realm.getDefaultInstance();
             //TODO: Wait for sorting by linked realm https://github.com/realm/realm-java/issues/672
@@ -142,7 +142,7 @@ public class RealmFacade {
         }
     }
 
-    public AgendaViewDto loadAgendaForVenue(String venueKey) {
+    public AgendaViewModel loadAgendaForVenue(String venueKey) {
         try {
             realm = Realm.getDefaultInstance();
             RealmResults<TalkRealm> talksRealms = realm.where(TalkRealm.class).equalTo("venue.key", venueKey)
@@ -154,7 +154,7 @@ public class RealmFacade {
         }
     }
 
-    public AgendaViewDto loadMyAgenda() {
+    public AgendaViewModel loadMyAgenda() {
         try {
             realm = Realm.getDefaultInstance();
             RealmResults<TalkRealm> talksRealms = realm.where(TalkRealm.class).equalTo("isInMyAgenda", true)
@@ -168,57 +168,57 @@ public class RealmFacade {
         }
     }
 
-    private AgendaViewDto loadAgenda(RealmResults<TalkRealm> talksRealms, RealmResults<BreakRealm> breaksRealms,
-                                     RealmResults<SlotRealm> slotsRealms) {
+    private AgendaViewModel loadAgenda(RealmResults<TalkRealm> talksRealms, RealmResults<BreakRealm> breaksRealms,
+                                       RealmResults<SlotRealm> slotsRealms) {
         TalkRealm.TalkViewConverter talkViewConverter = new TalkRealm.TalkViewConverter();
         BreakRealm.BreakViewConverter breakViewConverter = new BreakRealm.BreakViewConverter();
-        AgendaViewDto agendaViewDto = new AgendaViewDto();
+        AgendaViewModel agendaViewModel = new AgendaViewModel();
         for (TalkRealm talkRealm : talksRealms) {
-            AgendaItemViewDto agendaItemViewDto = convertTalkRealmToAgendaItem(talkRealm, talkViewConverter);
-            agendaViewDto.agendaItems.add(agendaItemViewDto);
+            AgendaItemViewModel agendaItemViewModel = convertTalkRealmToAgendaItem(talkRealm, talkViewConverter);
+            agendaViewModel.agendaItems.add(agendaItemViewModel);
         }
         for (BreakRealm breakRealm : breaksRealms) {
-            AgendaItemViewDto agendaItemViewDto = convertBreakRealmToAgendaItem(breakRealm, breakViewConverter);
-            agendaViewDto.agendaItems.add(agendaItemViewDto);
+            AgendaItemViewModel agendaItemViewModel = convertBreakRealmToAgendaItem(breakRealm, breakViewConverter);
+            agendaViewModel.agendaItems.add(agendaItemViewModel);
         }
         if (slotsRealms != null) {
             SlotRealm.SlotViewConverter slotViewConverter = new SlotRealm.SlotViewConverter();
             for (SlotRealm slotRealm : slotsRealms) {
-                AgendaItemViewDto agendaItemViewDto = convertSlotRealmToAgendaItem(slotRealm, slotViewConverter);
-                agendaViewDto.agendaItems.add(agendaItemViewDto);
+                AgendaItemViewModel agendaItemViewModel = convertSlotRealmToAgendaItem(slotRealm, slotViewConverter);
+                agendaViewModel.agendaItems.add(agendaItemViewModel);
             }
         }
-        Collections.sort(agendaViewDto.agendaItems, new AgendaItemComparator());
-        return agendaViewDto;
+        Collections.sort(agendaViewModel.agendaItems, new AgendaItemComparator());
+        return agendaViewModel;
     }
 
-    private AgendaItemViewDto convertTalkRealmToAgendaItem(TalkRealm talkRealm,
-                                                           TalkRealm.TalkViewConverter converter) {
-        AgendaItemViewDto agendaItemViewDto = new AgendaItemViewDto();
-        agendaItemViewDto.type = AgendaItemViewDto.AgendaItemType.TALK;
-        agendaItemViewDto.talk = converter.convert(talkRealm);
-        agendaItemViewDto.slot = agendaItemViewDto.talk.slot;
-        return agendaItemViewDto;
+    private AgendaItemViewModel convertTalkRealmToAgendaItem(TalkRealm talkRealm,
+                                                             TalkRealm.TalkViewConverter converter) {
+        AgendaItemViewModel agendaItemViewModel = new AgendaItemViewModel();
+        agendaItemViewModel.type = AgendaItemViewModel.AgendaItemType.TALK;
+        agendaItemViewModel.talk = converter.convert(talkRealm);
+        agendaItemViewModel.slot = agendaItemViewModel.talk.slot;
+        return agendaItemViewModel;
     }
 
-    private AgendaItemViewDto convertBreakRealmToAgendaItem(BreakRealm breakRealm,
-                                                            BreakRealm.BreakViewConverter converter) {
-        AgendaItemViewDto agendaItemViewDto = new AgendaItemViewDto();
-        agendaItemViewDto.type = AgendaItemViewDto.AgendaItemType.BREAK;
-        agendaItemViewDto.agendaBreak = converter.convert(breakRealm);
-        agendaItemViewDto.slot = agendaItemViewDto.agendaBreak.slot;
-        return agendaItemViewDto;
+    private AgendaItemViewModel convertBreakRealmToAgendaItem(BreakRealm breakRealm,
+                                                              BreakRealm.BreakViewConverter converter) {
+        AgendaItemViewModel agendaItemViewModel = new AgendaItemViewModel();
+        agendaItemViewModel.type = AgendaItemViewModel.AgendaItemType.BREAK;
+        agendaItemViewModel.agendaBreak = converter.convert(breakRealm);
+        agendaItemViewModel.slot = agendaItemViewModel.agendaBreak.slot;
+        return agendaItemViewModel;
     }
 
-    private AgendaItemViewDto convertSlotRealmToAgendaItem(SlotRealm slotRealm,
-                                                           SlotRealm.SlotViewConverter converter) {
-        AgendaItemViewDto agendaItemViewDto = new AgendaItemViewDto();
-        agendaItemViewDto.type = AgendaItemViewDto.AgendaItemType.SLOT;
-        agendaItemViewDto.slot = converter.convert(slotRealm);
-        return agendaItemViewDto;
+    private AgendaItemViewModel convertSlotRealmToAgendaItem(SlotRealm slotRealm,
+                                                             SlotRealm.SlotViewConverter converter) {
+        AgendaItemViewModel agendaItemViewModel = new AgendaItemViewModel();
+        agendaItemViewModel.type = AgendaItemViewModel.AgendaItemType.SLOT;
+        agendaItemViewModel.slot = converter.convert(slotRealm);
+        return agendaItemViewModel;
     }
 
-    public Optional<TalkViewDto> loadTalkByKey(String talkKey) {
+    public Optional<TalkViewModel> loadTalkByKey(String talkKey) {
         try {
             realm = Realm.getDefaultInstance();
             TalkRealm talkRealm = loadTalkRealmByKey(talkKey);
@@ -239,7 +239,7 @@ public class RealmFacade {
         return realm.where(TalkRealm.class).equalTo("isInMyAgenda", true).equalTo("slot.key", slotKey).findFirst();
     }
 
-    public Optional<SpeakerViewDto> loadSpeakerByKey(String speakerKey) {
+    public Optional<SpeakerViewModel> loadSpeakerByKey(String speakerKey) {
         try {
             realm = Realm.getDefaultInstance();
             SpeakerRealm speakerRealm = realm.where(SpeakerRealm.class).equalTo("key", speakerKey).findFirst();
@@ -252,47 +252,47 @@ public class RealmFacade {
         }
     }
 
-    public List<SpeakerViewDto> loadAllSpeakers() {
+    public List<SpeakerViewModel> loadAllSpeakers() {
         try {
             SpeakerRealm.SpeakerViewConverter speakerViewConverter = new SpeakerRealm.SpeakerViewConverter();
             realm = Realm.getDefaultInstance();
             RealmResults<SpeakerRealm> speakersRealms = realm.where(SpeakerRealm.class).findAllSorted("firstName");
-            List<SpeakerViewDto> speakerViewDtos = new ArrayList<>(speakersRealms.size());
+            List<SpeakerViewModel> speakerViewModels = new ArrayList<>(speakersRealms.size());
             for (SpeakerRealm speakerRealm : speakersRealms) {
-                speakerViewDtos.add(speakerViewConverter.convert(speakerRealm));
+                speakerViewModels.add(speakerViewConverter.convert(speakerRealm));
             }
-            return speakerViewDtos;
+            return speakerViewModels;
         } finally {
             closeRealm();
         }
     }
 
-    public List<VenueViewDto> loadAllVenues() {
+    public List<VenueViewModel> loadAllVenues() {
         try {
             VenueRealm.VenueViewConverter venueViewConverter = new VenueRealm.VenueViewConverter();
             realm = Realm.getDefaultInstance();
             RealmResults<VenueRealm> venuesRealms = realm.where(VenueRealm.class).findAllSorted("title");
-            List<VenueViewDto> venueViewDtos = new ArrayList<>(venuesRealms.size());
+            List<VenueViewModel> venueViewModels = new ArrayList<>(venuesRealms.size());
             for (VenueRealm venueRealm : venuesRealms) {
-                venueViewDtos.add(venueViewConverter.convert(venueRealm));
+                venueViewModels.add(venueViewConverter.convert(venueRealm));
             }
-            return venueViewDtos;
+            return venueViewModels;
         } finally {
             closeRealm();
         }
     }
 
-    public List<SponsorViewDto> loadAllSponsors() {
+    public List<SponsorViewModel> loadAllSponsors() {
         try {
             SponsorRealm.SponsorViewConverter sponsorViewConverter = new SponsorRealm.SponsorViewConverter();
             realm = Realm.getDefaultInstance();
             RealmResults<SponsorRealm> sponsorRealms = realm.where(SponsorRealm.class).findAllSorted(
                     new String[]{"type", "name"},new Sort[]{Sort.ASCENDING, Sort.ASCENDING});
-            List<SponsorViewDto> sponsorViewDtos = new ArrayList<>(sponsorRealms.size());
+            List<SponsorViewModel> sponsorViewModels = new ArrayList<>(sponsorRealms.size());
             for (SponsorRealm sponsorRealm : sponsorRealms) {
-                sponsorViewDtos.add(sponsorViewConverter.convert(sponsorRealm));
+                sponsorViewModels.add(sponsorViewConverter.convert(sponsorRealm));
             }
-            return sponsorViewDtos;
+            return sponsorViewModels;
         } finally {
             closeRealm();
         }
@@ -332,7 +332,7 @@ public class RealmFacade {
         }
     }
 
-    public Optional<TalkViewDto> checkIfTalkConflicted(String talkKey) {
+    public Optional<TalkViewModel> checkIfTalkConflicted(String talkKey) {
         try {
             realm = Realm.getDefaultInstance();
             TalkRealm talkRealm = loadTalkRealmByKey(talkKey);
@@ -368,7 +368,7 @@ public class RealmFacade {
         }
     }
 
-    public Optional<EventViewDto> loadEvent() {
+    public Optional<EventViewModel> loadEvent() {
         try {
             realm = Realm.getDefaultInstance();
             EventRealm eventRealm = realm.where(EventRealm.class).findFirst();
@@ -408,10 +408,10 @@ public class RealmFacade {
         public abstract V convert(R realmObject);
     }
 
-    private static class AgendaItemComparator implements Comparator<AgendaItemViewDto> {
+    private static class AgendaItemComparator implements Comparator<AgendaItemViewModel> {
 
         @Override
-        public int compare(AgendaItemViewDto lhs, AgendaItemViewDto rhs) {
+        public int compare(AgendaItemViewModel lhs, AgendaItemViewModel rhs) {
             return (int) (lhs.slot.fromInMilliseconds - rhs.slot.fromInMilliseconds);
         }
 

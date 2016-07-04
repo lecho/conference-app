@@ -21,16 +21,16 @@ import com.github.lecho.mobilization.ui.adapter.AgendaAdapter;
 import com.github.lecho.mobilization.ui.loader.AgendaLoader;
 import com.github.lecho.mobilization.ui.snackbar.SnackbarForTalkHelper;
 import com.github.lecho.mobilization.util.Utils;
-import com.github.lecho.mobilization.viewmodel.AgendaItemViewDto;
-import com.github.lecho.mobilization.viewmodel.AgendaViewDto;
-import com.github.lecho.mobilization.viewmodel.TalkViewDto;
+import com.github.lecho.mobilization.viewmodel.AgendaItemViewModel;
+import com.github.lecho.mobilization.viewmodel.AgendaViewModel;
+import com.github.lecho.mobilization.viewmodel.TalkViewModel;
 
 import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class VenueAgendaFragment extends Fragment implements LoaderManager.LoaderCallbacks<AgendaViewDto> {
+public class VenueAgendaFragment extends Fragment implements LoaderManager.LoaderCallbacks<AgendaViewModel> {
 
     public static final String TAG = VenueAgendaFragment.class.getSimpleName();
     private static final int LOADER_ID = 0;
@@ -93,7 +93,7 @@ public class VenueAgendaFragment extends Fragment implements LoaderManager.Loade
     }
 
     @Override
-    public Loader<AgendaViewDto> onCreateLoader(int id, Bundle args) {
+    public Loader<AgendaViewModel> onCreateLoader(int id, Bundle args) {
         if (id == LOADER_ID) {
             return AgendaLoader.getVenueAgendaLoader(getActivity(), venueKey);
         }
@@ -101,23 +101,23 @@ public class VenueAgendaFragment extends Fragment implements LoaderManager.Loade
     }
 
     @Override
-    public void onLoadFinished(Loader<AgendaViewDto> loader, AgendaViewDto agendaViewDto) {
+    public void onLoadFinished(Loader<AgendaViewModel> loader, AgendaViewModel agendaViewModel) {
         if (loader.getId() == LOADER_ID) {
-            adapter.setData(agendaViewDto.agendaItems);
+            adapter.setData(agendaViewModel.agendaItems);
         }
     }
 
     @Override
-    public void onLoaderReset(Loader<AgendaViewDto> loader) {
+    public void onLoaderReset(Loader<AgendaViewModel> loader) {
         if (loader.getId() == LOADER_ID) {
-            adapter.setData(Collections.<AgendaItemViewDto>emptyList());
+            adapter.setData(Collections.<AgendaItemViewModel>emptyList());
         }
     }
 
     private class EmptySlotClickListener implements AgendaAdapter.AgendaItemClickListener {
 
         @Override
-        public void onItemClick(int position, AgendaItemViewDto agendaItem, View view) {
+        public void onItemClick(int position, AgendaItemViewModel agendaItem, View view) {
             //Do nothing, there should be no empty slot visible for venue agenda
         }
     }
@@ -125,18 +125,18 @@ public class VenueAgendaFragment extends Fragment implements LoaderManager.Loade
     private class StarTalkClickListener implements AgendaAdapter.AgendaItemClickListener {
 
         @Override
-        public void onItemClick(int position, AgendaItemViewDto agendaItem, View view) {
-            TalkViewDto talkViewDto = agendaItem.talk;
-            if (talkViewDto.isInMyAgenda) {
-                talkViewDto.isInMyAgenda = false;
-                TalkAsyncHelper.removeTalk(getActivity().getApplicationContext(), talkViewDto.key);
+        public void onItemClick(int position, AgendaItemViewModel agendaItem, View view) {
+            TalkViewModel talkViewModel = agendaItem.talk;
+            if (talkViewModel.isInMyAgenda) {
+                talkViewModel.isInMyAgenda = false;
+                TalkAsyncHelper.removeTalk(getActivity().getApplicationContext(), talkViewModel.key);
             } else {
-                if (Utils.checkSlotConflict((AppCompatActivity) getActivity(), talkViewDto.key)) {
-                    Log.d(TAG, "Slot conflict for talk with key: " + talkViewDto.key);
+                if (Utils.checkSlotConflict((AppCompatActivity) getActivity(), talkViewModel.key)) {
+                    Log.d(TAG, "Slot conflict for talk with key: " + talkViewModel.key);
                     return;
                 }
-                talkViewDto.isInMyAgenda = true;
-                TalkAsyncHelper.addTalk(getActivity().getApplicationContext(), talkViewDto.key);
+                talkViewModel.isInMyAgenda = true;
+                TalkAsyncHelper.addTalk(getActivity().getApplicationContext(), talkViewModel.key);
             }
             adapter.notifyDataSetChanged();
         }

@@ -19,9 +19,9 @@ import com.github.lecho.mobilization.async.TalkAsyncHelper;
 import com.github.lecho.mobilization.ui.adapter.AgendaAdapter;
 import com.github.lecho.mobilization.ui.adapter.MyAgendaAdapter;
 import com.github.lecho.mobilization.ui.loader.AgendaLoader;
-import com.github.lecho.mobilization.viewmodel.AgendaItemViewDto;
-import com.github.lecho.mobilization.viewmodel.AgendaViewDto;
-import com.github.lecho.mobilization.viewmodel.TalkViewDto;
+import com.github.lecho.mobilization.viewmodel.AgendaItemViewModel;
+import com.github.lecho.mobilization.viewmodel.AgendaViewModel;
+import com.github.lecho.mobilization.viewmodel.TalkViewModel;
 
 import java.util.Collections;
 
@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Leszek on 2015-07-08.
  */
-public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCallbacks<AgendaViewDto> {
+public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCallbacks<AgendaViewModel> {
 
     public static final String TAG = MyAgendaFragment.class.getSimpleName();
     private static final int LOADER_ID = 0;
@@ -85,13 +85,13 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     private void removeTalk(int position) {
-        AgendaItemViewDto agendaItemViewDto = adapter.getItem(position);
-        TalkAsyncHelper.removeTalkSilent(getActivity().getApplicationContext(), agendaItemViewDto.talk.key);
+        AgendaItemViewModel agendaItemViewModel = adapter.getItem(position);
+        TalkAsyncHelper.removeTalkSilent(getActivity().getApplicationContext(), agendaItemViewModel.talk.key);
         adapter.removeTalk(position);
     }
 
     @Override
-    public Loader<AgendaViewDto> onCreateLoader(int id, Bundle args) {
+    public Loader<AgendaViewModel> onCreateLoader(int id, Bundle args) {
         if (id == LOADER_ID) {
             return AgendaLoader.getMyAgendaLoader(getActivity());
         }
@@ -99,16 +99,16 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     @Override
-    public void onLoadFinished(Loader<AgendaViewDto> loader, AgendaViewDto agendaViewDto) {
+    public void onLoadFinished(Loader<AgendaViewModel> loader, AgendaViewModel agendaViewModel) {
         if (loader.getId() == LOADER_ID) {
-            adapter.setData(agendaViewDto.agendaItems);
+            adapter.setData(agendaViewModel.agendaItems);
         }
     }
 
     @Override
-    public void onLoaderReset(Loader<AgendaViewDto> loader) {
+    public void onLoaderReset(Loader<AgendaViewModel> loader) {
         if (loader.getId() == LOADER_ID) {
-            adapter.setData(Collections.<AgendaItemViewDto>emptyList());
+            adapter.setData(Collections.<AgendaItemViewModel>emptyList());
         }
     }
 
@@ -143,7 +143,7 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
     private class EmptySlotClickListener implements AgendaAdapter.AgendaItemClickListener {
 
         @Override
-        public void onItemClick(int position, AgendaItemViewDto agendaItem, View view) {
+        public void onItemClick(int position, AgendaItemViewModel agendaItem, View view) {
             if (drawerCallback != null) {
                 drawerCallback.onOpenDrawer();
             }
@@ -153,10 +153,10 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
     private class StarTalkClickListener implements AgendaAdapter.AgendaItemClickListener {
 
         @Override
-        public void onItemClick(int position, AgendaItemViewDto agendaItem, View view) {
-            TalkViewDto talkViewDto = agendaItem.talk;
-            if (talkViewDto.isInMyAgenda) {
-                talkViewDto.isInMyAgenda = false;
+        public void onItemClick(int position, AgendaItemViewModel agendaItem, View view) {
+            TalkViewModel talkViewModel = agendaItem.talk;
+            if (talkViewModel.isInMyAgenda) {
+                talkViewModel.isInMyAgenda = false;
                 removeTalk(position);
             }
         }

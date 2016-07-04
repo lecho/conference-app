@@ -24,7 +24,7 @@ import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.async.ContentUpdateService;
 import com.github.lecho.mobilization.realmmodel.RealmFacade;
 import com.github.lecho.mobilization.ui.fragment.SlotConflictDialogFragment;
-import com.github.lecho.mobilization.viewmodel.TalkViewDto;
+import com.github.lecho.mobilization.viewmodel.TalkViewModel;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
@@ -160,9 +160,9 @@ public class Utils {
      */
     public static boolean checkSlotConflict(AppCompatActivity activity, String talkKey) {
         RealmFacade realmFacade = new RealmFacade(activity.getApplicationContext());
-        Optional<TalkViewDto> optionalConflictedTalk = realmFacade.checkIfTalkConflicted(talkKey);
+        Optional<TalkViewModel> optionalConflictedTalk = realmFacade.checkIfTalkConflicted(talkKey);
         if (optionalConflictedTalk.isPresent()) {
-            TalkViewDto conflictedTalk = optionalConflictedTalk.get();
+            TalkViewModel conflictedTalk = optionalConflictedTalk.get();
             SlotConflictDialogFragment.show(activity, conflictedTalk.key, conflictedTalk.title, talkKey);
             return true;
         }

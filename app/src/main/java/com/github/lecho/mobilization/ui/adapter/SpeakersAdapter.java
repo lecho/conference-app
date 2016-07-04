@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.SpeakerActivity;
 import com.github.lecho.mobilization.util.Utils;
-import com.github.lecho.mobilization.viewmodel.SpeakerViewDto;
+import com.github.lecho.mobilization.viewmodel.SpeakerViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +23,13 @@ import butterknife.ButterKnife;
 public class SpeakersAdapter extends RecyclerView.Adapter<SpeakersAdapter.SpeakerViewHolder> {
 
     private final Context context;
-    private List<SpeakerViewDto> data = new ArrayList<>();
+    private List<SpeakerViewModel> data = new ArrayList<>();
 
     public SpeakersAdapter(Context context) {
         this.context = context;
     }
 
-    public void setData(@NonNull List<SpeakerViewDto> data) {
+    public void setData(@NonNull List<SpeakerViewModel> data) {
         this.data = data;
         notifyDataSetChanged();
     }
@@ -69,10 +69,10 @@ public class SpeakersAdapter extends RecyclerView.Adapter<SpeakersAdapter.Speake
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindView(SpeakerViewDto speakerViewDto) {
-            speakerNameView.setText(speakerViewDto.getSpeakerNameText());
-            itemView.setOnClickListener(new SpeakerItemClickListener(context, speakerViewDto.key));
-            Utils.loadSpeakerImageMedium(context.getApplicationContext(), speakerViewDto.photo, avatarView);
+        public void bindView(SpeakerViewModel speakerViewModel) {
+            speakerNameView.setText(speakerViewModel.getSpeakerNameText());
+            itemView.setOnClickListener(new SpeakerItemClickListener(context, speakerViewModel.key));
+            Utils.loadSpeakerImageMedium(context.getApplicationContext(), speakerViewModel.photo, avatarView);
         }
     }
 

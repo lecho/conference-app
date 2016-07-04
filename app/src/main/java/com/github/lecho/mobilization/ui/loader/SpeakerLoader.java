@@ -5,12 +5,12 @@ import android.util.Log;
 
 import com.github.lecho.mobilization.BuildConfig;
 import com.github.lecho.mobilization.util.Optional;
-import com.github.lecho.mobilization.viewmodel.SpeakerViewDto;
+import com.github.lecho.mobilization.viewmodel.SpeakerViewModel;
 
 /**
  * Created by Leszek on 2015-09-03.
  */
-public class SpeakerLoader extends BaseRealmLoader<Optional<SpeakerViewDto>> {
+public class SpeakerLoader extends BaseRealmLoader<Optional<SpeakerViewModel>> {
 
     private static final String TAG = SpeakerLoader.class.getSimpleName();
     private String speakerKey;
@@ -25,11 +25,11 @@ public class SpeakerLoader extends BaseRealmLoader<Optional<SpeakerViewDto>> {
     }
 
     @Override
-    public Optional<SpeakerViewDto> loadInBackground() {
+    public Optional<SpeakerViewModel> loadInBackground() {
         if (BuildConfig.DEBUG) {
             Log.d(TAG, "Loading speaker data");
         }
-        Optional<SpeakerViewDto> newData = realmFacade.loadSpeakerByKey(speakerKey);
+        Optional<SpeakerViewModel> newData = realmFacade.loadSpeakerByKey(speakerKey);
         return newData;
     }
 }

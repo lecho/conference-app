@@ -6,13 +6,13 @@ import java.util.List;
 /**
  * Created by Leszek on 2015-07-29.
  */
-public class AgendaViewDto {
+public class AgendaViewModel {
 
-    public List<AgendaItemViewDto> agendaItems = new ArrayList<>();
+    public List<AgendaItemViewModel> agendaItems = new ArrayList<>();
 
     @Override
     public String toString() {
-        return "AgendaViewDto{" +
+        return "AgendaViewModel{" +
                 "agendaItems=" + agendaItems +
                 '}';
     }

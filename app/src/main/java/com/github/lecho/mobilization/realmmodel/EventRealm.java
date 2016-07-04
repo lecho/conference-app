@@ -1,7 +1,7 @@
 package com.github.lecho.mobilization.realmmodel;
 
 import com.github.lecho.mobilization.apimodel.EventApiModel;
-import com.github.lecho.mobilization.viewmodel.EventViewDto;
+import com.github.lecho.mobilization.viewmodel.EventViewModel;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -121,22 +121,22 @@ public class EventRealm extends RealmObject {
         }
     }
 
-    public static class EventViewConverter extends RealmFacade.RealmToViewConverter<EventRealm, EventViewDto> {
+    public static class EventViewConverter extends RealmFacade.RealmToViewConverter<EventRealm, EventViewModel> {
 
         @Override
-        public EventViewDto convert(EventRealm realmObject) {
-            EventViewDto eventViewDto = new EventViewDto();
-            eventViewDto.title = realmObject.getTitle();
-            eventViewDto.city = realmObject.getCity();
-            eventViewDto.country = realmObject.getCountry();
-            eventViewDto.date = realmObject.getDate();
-            eventViewDto.latitude = realmObject.getLatitude();
-            eventViewDto.longitude = realmObject.getLongitude();
-            eventViewDto.place = realmObject.getPlace();
-            eventViewDto.street = realmObject.getStreet();
-            eventViewDto.time = realmObject.getTime();
-            eventViewDto.zip = realmObject.getZip();
-            return eventViewDto;
+        public EventViewModel convert(EventRealm realmObject) {
+            EventViewModel eventViewModel = new EventViewModel();
+            eventViewModel.title = realmObject.getTitle();
+            eventViewModel.city = realmObject.getCity();
+            eventViewModel.country = realmObject.getCountry();
+            eventViewModel.date = realmObject.getDate();
+            eventViewModel.latitude = realmObject.getLatitude();
+            eventViewModel.longitude = realmObject.getLongitude();
+            eventViewModel.place = realmObject.getPlace();
+            eventViewModel.street = realmObject.getStreet();
+            eventViewModel.time = realmObject.getTime();
+            eventViewModel.zip = realmObject.getZip();
+            return eventViewModel;
         }
     }
 }

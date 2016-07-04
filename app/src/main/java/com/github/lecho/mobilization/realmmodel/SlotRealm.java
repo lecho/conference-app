@@ -4,7 +4,7 @@ package com.github.lecho.mobilization.realmmodel;
 import android.util.Log;
 
 import com.github.lecho.mobilization.apimodel.SlotApiModel;
-import com.github.lecho.mobilization.viewmodel.SlotViewDto;
+import com.github.lecho.mobilization.viewmodel.SlotViewModel;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -102,18 +102,18 @@ public class SlotRealm extends RealmObject {
         }
     }
 
-    public static class SlotViewConverter extends RealmFacade.RealmToViewConverter<SlotRealm, SlotViewDto> {
+    public static class SlotViewConverter extends RealmFacade.RealmToViewConverter<SlotRealm, SlotViewModel> {
 
         @Override
-        public SlotViewDto convert(SlotRealm realmObject) {
-            SlotViewDto slotViewDto = new SlotViewDto();
-            slotViewDto.key = realmObject.getKey();
-            slotViewDto.from = realmObject.getFrom();
-            slotViewDto.to = realmObject.getTo();
-            slotViewDto.fromInMilliseconds = realmObject.getFromInMilliseconds();
-            slotViewDto.toInMilliseconds = realmObject.getToInMilliseconds();
-            slotViewDto.isEmpty = realmObject.isInMyAgenda();
-            return slotViewDto;
+        public SlotViewModel convert(SlotRealm realmObject) {
+            SlotViewModel slotViewModel = new SlotViewModel();
+            slotViewModel.key = realmObject.getKey();
+            slotViewModel.from = realmObject.getFrom();
+            slotViewModel.to = realmObject.getTo();
+            slotViewModel.fromInMilliseconds = realmObject.getFromInMilliseconds();
+            slotViewModel.toInMilliseconds = realmObject.getToInMilliseconds();
+            slotViewModel.isEmpty = realmObject.isInMyAgenda();
+            return slotViewModel;
         }
     }
 }

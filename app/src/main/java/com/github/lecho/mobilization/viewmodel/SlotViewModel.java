@@ -9,7 +9,7 @@ import java.util.TimeZone;
 /**
  * Created by Leszek on 2015-07-29.
  */
-public class SlotViewDto {
+public class SlotViewModel {
 
     public String key;
     public String from;
@@ -20,7 +20,7 @@ public class SlotViewDto {
 
     @Override
     public String toString() {
-        return "SlotViewDto{" +
+        return "SlotViewModel{" +
                 "key='" + key + '\'' +
                 ", from='" + from + '\'' +
                 ", to='" + to + '\'' +
@@ -48,17 +48,17 @@ public class SlotViewDto {
             this.currentMinute = currentMinute;
         }
 
-        public static SlotInTimeZone getSlotInTimezone(SlotViewDto slotViewDto) {
+        public static SlotInTimeZone getSlotInTimezone(SlotViewModel slotViewModel) {
             Calendar calendar = Calendar.getInstance();
             TimeZone defaultTZ = TimeZone.getDefault();
             if (!defaultTZ.getID().equals(calendar.getTimeZone().getID())) {
                 calendar.setTimeZone(defaultTZ);
             }
             calendar.setTimeZone(TimeZone.getDefault());
-            calendar.setTimeInMillis(slotViewDto.fromInMilliseconds);
+            calendar.setTimeInMillis(slotViewModel.fromInMilliseconds);
             final int fromHour = calendar.get(Calendar.HOUR_OF_DAY);
             final int fromMinute = calendar.get(Calendar.MINUTE);
-            calendar.setTimeInMillis(slotViewDto.toInMilliseconds);
+            calendar.setTimeInMillis(slotViewModel.toInMilliseconds);
             final int toHour = calendar.get(Calendar.HOUR_OF_DAY);
             final int toMinute = calendar.get(Calendar.MINUTE);
             calendar.setTime(new Date());

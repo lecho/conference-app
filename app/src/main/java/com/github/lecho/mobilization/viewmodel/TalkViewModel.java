@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Leszek on 2015-07-29.
  */
-public class TalkViewDto {
+public class TalkViewModel {
 
     private static final String POLISH = "PL";
     private static final String ENGLISH = "EN";
@@ -20,9 +20,9 @@ public class TalkViewDto {
     public String description;
     public String language;
     public boolean isInMyAgenda;
-    public SlotViewDto slot;
-    public VenueViewDto venue;
-    public List<SpeakerViewDto> speakers = new ArrayList<>();
+    public SlotViewModel slot;
+    public VenueViewModel venue;
+    public List<SpeakerViewModel> speakers = new ArrayList<>();
 
     @NonNull
     public String getLanguageLong(Context context) {
@@ -37,7 +37,7 @@ public class TalkViewDto {
 
     @Override
     public String toString() {
-        return "TalkViewDto{" +
+        return "TalkViewModel{" +
                 "key='" + key + '\'' +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +

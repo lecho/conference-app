@@ -16,14 +16,14 @@ import android.view.ViewGroup;
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.loader.SpeakersLoader;
 import com.github.lecho.mobilization.ui.adapter.SpeakersAdapter;
-import com.github.lecho.mobilization.viewmodel.SpeakerViewDto;
+import com.github.lecho.mobilization.viewmodel.SpeakerViewModel;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SpeakersFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<SpeakerViewDto>> {
+public class SpeakersFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<SpeakerViewModel>> {
 
     public static final String TAG = SpeakersFragment.class.getSimpleName();
     private static final int LOADER_ID = 0;
@@ -58,7 +58,7 @@ public class SpeakersFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     @Override
-    public Loader<List<SpeakerViewDto>> onCreateLoader(int id, Bundle args) {
+    public Loader<List<SpeakerViewModel>> onCreateLoader(int id, Bundle args) {
         if (id == LOADER_ID) {
             return SpeakersLoader.getLoader(getActivity().getApplicationContext());
         }
@@ -66,13 +66,13 @@ public class SpeakersFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     @Override
-    public void onLoadFinished(Loader<List<SpeakerViewDto>> loader, List<SpeakerViewDto> data) {
+    public void onLoadFinished(Loader<List<SpeakerViewModel>> loader, List<SpeakerViewModel> data) {
         if (loader.getId() == LOADER_ID) {
             adapter.setData(data);
         }
     }
 
     @Override
-    public void onLoaderReset(Loader<List<SpeakerViewDto>> loader) {
+    public void onLoaderReset(Loader<List<SpeakerViewModel>> loader) {
     }
 }

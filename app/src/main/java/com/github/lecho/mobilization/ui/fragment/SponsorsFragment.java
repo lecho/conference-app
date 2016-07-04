@@ -16,14 +16,14 @@ import android.view.ViewGroup;
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.adapter.SponsorsAdapter;
 import com.github.lecho.mobilization.ui.loader.SponsorsLoader;
-import com.github.lecho.mobilization.viewmodel.SponsorViewDto;
+import com.github.lecho.mobilization.viewmodel.SponsorViewModel;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SponsorsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<SponsorViewDto>> {
+public class SponsorsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<SponsorViewModel>> {
 
     public static final String TAG = SponsorsFragment.class.getSimpleName();
     private static final int LOADER_ID = 0;
@@ -58,7 +58,7 @@ public class SponsorsFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     @Override
-    public Loader<List<SponsorViewDto>> onCreateLoader(int id, Bundle args) {
+    public Loader<List<SponsorViewModel>> onCreateLoader(int id, Bundle args) {
         if (id == LOADER_ID) {
             return SponsorsLoader.getLoader(getActivity().getApplicationContext());
         }
@@ -66,13 +66,13 @@ public class SponsorsFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     @Override
-    public void onLoadFinished(Loader<List<SponsorViewDto>> loader, List<SponsorViewDto> data) {
+    public void onLoadFinished(Loader<List<SponsorViewModel>> loader, List<SponsorViewModel> data) {
         if (loader.getId() == LOADER_ID) {
             adapter.setData(data);
         }
     }
 
     @Override
-    public void onLoaderReset(Loader<List<SponsorViewDto>> loader) {
+    public void onLoaderReset(Loader<List<SponsorViewModel>> loader) {
     }
 }

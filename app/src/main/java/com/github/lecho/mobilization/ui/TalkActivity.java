@@ -28,14 +28,14 @@ import com.github.lecho.mobilization.ui.snackbar.SnackbarForTalkHelper;
 import com.github.lecho.mobilization.ui.view.SpeakerForTalkLayout;
 import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.util.Utils;
-import com.github.lecho.mobilization.viewmodel.SlotViewDto;
-import com.github.lecho.mobilization.viewmodel.SpeakerViewDto;
-import com.github.lecho.mobilization.viewmodel.TalkViewDto;
+import com.github.lecho.mobilization.viewmodel.SlotViewModel;
+import com.github.lecho.mobilization.viewmodel.SpeakerViewModel;
+import com.github.lecho.mobilization.viewmodel.TalkViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TalkActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Optional<TalkViewDto>> {
+public class TalkActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Optional<TalkViewModel>> {
 
     private static final String TAG = TalkActivity.class.getSimpleName();
     private static final String ARG_TALK_KEY = "talk-key";
@@ -122,7 +122,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public Loader<Optional<TalkViewDto>> onCreateLoader(int id, Bundle args) {
+    public Loader<Optional<TalkViewModel>> onCreateLoader(int id, Bundle args) {
         if (id == LOADER_ID) {
             Log.w(TAG, "Create talk loader for key: " + talkKey);
             return TalkLoader.getLoader(this, talkKey);
@@ -131,24 +131,24 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public void onLoadFinished(Loader<Optional<TalkViewDto>> loader, Optional<TalkViewDto> data) {
+    public void onLoadFinished(Loader<Optional<TalkViewModel>> loader, Optional<TalkViewModel> data) {
         if (loader.getId() == LOADER_ID) {
             Log.w(TAG, "Loaded talk data: " + talkKey);
             if (!data.isPresent()) {
                 Log.w(TAG, "Talk data is null for talk-key: " + talkKey);
                 return;
             }
-            TalkViewDto talkViewDto = data.get();
-            fabController.bind(talkViewDto);
-            headerController.bind(talkViewDto);
-            infoCardController.bind(talkViewDto);
-            speakersCardController.bind(talkViewDto);
+            TalkViewModel talkViewModel = data.get();
+            fabController.bind(talkViewModel);
+            headerController.bind(talkViewModel);
+            infoCardController.bind(talkViewModel);
+            speakersCardController.bind(talkViewModel);
 
         }
     }
 
     @Override
-    public void onLoaderReset(Loader<Optional<TalkViewDto>> loader) {
+    public void onLoaderReset(Loader<Optional<TalkViewModel>> loader) {
     }
 
     protected class FABController {
@@ -160,14 +160,14 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
             ButterKnife.bind(this, mainContainer);
         }
 
-        public void bind(TalkViewDto talkViewDto) {
-            if (talkViewDto.isInMyAgenda) {
+        public void bind(TalkViewModel talkViewModel) {
+            if (talkViewModel.isInMyAgenda) {
                 addToMyAgendaButton.setImageResource(R.drawable.ic_star_accent_big);
             } else {
                 addToMyAgendaButton.setImageResource(R.drawable.ic_star_border_accent_big);
             }
             addToMyAgendaButton.setOnClickListener(new AddToMyAgendaClickListener(getApplicationContext(),
-                    talkViewDto));
+                    talkViewModel));
             addToMyAgendaButton.show();
         }
     }
@@ -196,16 +196,16 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
             Utils.loadHeaderImage(getApplicationContext(), TALK_HEADER_IMAGE, headerImageView);
         }
 
-        public void bind(TalkViewDto talkViewDto) {
+        public void bind(TalkViewModel talkViewModel) {
             ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
-                SlotViewDto.SlotInTimeZone slotInTimeZone = SlotViewDto.SlotInTimeZone.getSlotInTimezone(talkViewDto
+                SlotViewModel.SlotInTimeZone slotInTimeZone = SlotViewModel.SlotInTimeZone.getSlotInTimezone(talkViewModel
                         .slot);
                 actionBar.setTitle(slotInTimeZone.getTimeSlotText());
             }
-            talkTitleView.setText(talkViewDto.title);
-            talkVenueView.setText(talkViewDto.venue.getVenueText(getApplicationContext()));
-            talkLanguageView.setText(talkViewDto.getLanguageLong(getApplicationContext()));
+            talkTitleView.setText(talkViewModel.title);
+            talkVenueView.setText(talkViewModel.venue.getVenueText(getApplicationContext()));
+            talkLanguageView.setText(talkViewModel.getLanguageLong(getApplicationContext()));
         }
     }
 
@@ -218,8 +218,8 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
             ButterKnife.bind(this, view);
         }
 
-        public void bind(TalkViewDto talkViewDto) {
-            talkInfoView.setText(Html.fromHtml(talkViewDto.description));
+        public void bind(TalkViewModel talkViewModel) {
+            talkInfoView.setText(Html.fromHtml(talkViewModel.description));
         }
     }
 
@@ -232,10 +232,10 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
             ButterKnife.bind(this, view);
         }
 
-        public void bind(TalkViewDto talkViewDto) {
+        public void bind(TalkViewModel talkViewModel) {
             speakersLayout.removeAllViews();
-            for (SpeakerViewDto speakerViewDto : talkViewDto.speakers) {
-                SpeakerForTalkLayout speakerForTalkLayout = new SpeakerForTalkLayout(TalkActivity.this, speakerViewDto);
+            for (SpeakerViewModel speakerViewModel : talkViewModel.speakers) {
+                SpeakerForTalkLayout speakerForTalkLayout = new SpeakerForTalkLayout(TalkActivity.this, speakerViewModel);
                 speakerForTalkLayout.bind();
                 speakersLayout.addView(speakerForTalkLayout);
             }
@@ -244,29 +244,29 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private class AddToMyAgendaClickListener implements View.OnClickListener {
 
-        private TalkViewDto talkViewDto;
+        private TalkViewModel talkViewModel;
         private Context context;
 
-        public AddToMyAgendaClickListener(Context context, TalkViewDto talkViewDto) {
+        public AddToMyAgendaClickListener(Context context, TalkViewModel talkViewModel) {
             this.context = context;
-            this.talkViewDto = talkViewDto;
+            this.talkViewModel = talkViewModel;
         }
 
         @Override
         public void onClick(View v) {
             FloatingActionButton floatingActionButton = (FloatingActionButton) v;
-            if (talkViewDto.isInMyAgenda) {
+            if (talkViewModel.isInMyAgenda) {
                 floatingActionButton.setImageResource(R.drawable.ic_star_border_accent_big);
-                talkViewDto.isInMyAgenda = false;
-                TalkAsyncHelper.removeTalk(context.getApplicationContext(), talkViewDto.key);
+                talkViewModel.isInMyAgenda = false;
+                TalkAsyncHelper.removeTalk(context.getApplicationContext(), talkViewModel.key);
             } else {
-                if (Utils.checkSlotConflict(TalkActivity.this, talkViewDto.key)) {
-                    Log.d(TAG, "Slot conflict for talk with key: " + talkViewDto.key);
+                if (Utils.checkSlotConflict(TalkActivity.this, talkViewModel.key)) {
+                    Log.d(TAG, "Slot conflict for talk with key: " + talkViewModel.key);
                     return;
                 }
                 floatingActionButton.setImageResource(R.drawable.ic_star_accent_big);
-                talkViewDto.isInMyAgenda = true;
-                TalkAsyncHelper.addTalk(context.getApplicationContext(), talkViewDto.key);
+                talkViewModel.isInMyAgenda = true;
+                TalkAsyncHelper.addTalk(context.getApplicationContext(), talkViewModel.key);
             }
         }
     }
