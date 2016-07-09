@@ -17,7 +17,7 @@ public class SponsorRealm extends RealmObject {
     private String name;
     private String logo;
     private String wwwPage;
-    private int type;
+    private String type;
 
     public String getName() {
         return name;
@@ -43,11 +43,11 @@ public class SponsorRealm extends RealmObject {
         this.wwwPage = wwwPage;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -58,7 +58,7 @@ public class SponsorRealm extends RealmObject {
             SponsorRealm sponsorRealm = new SponsorRealm();
             sponsorRealm.setName(apiModel.name);
             sponsorRealm.setWwwPage(apiModel.link);
-            sponsorRealm.setType(getSponsorType(apiModel.type).ordinal());
+            sponsorRealm.setType(getSponsorType(apiModel.type).name());
             sponsorRealm.setLogo(Uri.parse(apiModel.logoUrl).getLastPathSegment());
             return sponsorRealm;
         }
@@ -89,17 +89,8 @@ public class SponsorRealm extends RealmObject {
             sponsorViewModel.wwwPage = realmObject.getWwwPage();
             sponsorViewModel.logo = realmObject.getLogo();
             //Realm doesn't support Enums
-            sponsorViewModel.type = getType(realmObject.getType());
+            sponsorViewModel.type = SponsorType.valueOf(realmObject.getType());
             return sponsorViewModel;
-        }
-
-        private SponsorType getType(int ordinal) {
-            for (SponsorType sponsorType : SponsorType.values()) {
-                if (sponsorType.ordinal() == ordinal) {
-                    return sponsorType;
-                }
-            }
-            throw new IllegalArgumentException("Invalid sponsor type, ordinal: " + ordinal);
         }
     }
 }
