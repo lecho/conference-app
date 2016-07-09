@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class SponsorApiModel {
 
-    private static final String DIAMON = "diamond";
+    private static final String DIAMOND = "diamond";
     private static final String PLATINUM = "platinum";
     private static final String GOLD = "gold";
     private static final String SILVER = "silver";
@@ -51,7 +51,7 @@ public class SponsorApiModel {
         }
 
         private SponsorType getSponsorType(String sponsorTypeString) {
-            if (DIAMON.equals(sponsorTypeString)) {
+            if (DIAMOND.equals(sponsorTypeString)) {
                 return SponsorType.DIAMOND;
             } else if (PLATINUM.equals(sponsorTypeString)) {
                 return SponsorType.PLATINUM;
