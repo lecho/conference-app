@@ -24,7 +24,7 @@ public class SponsorApiModel {
     public String name;
     public String logoUrl;
     public String link;
-    public SponsorType type;
+    public String type;
 
     public static class SponsorApiParser extends BaseApiParser<SponsorApiModel> {
 
@@ -40,30 +40,12 @@ public class SponsorApiModel {
             Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
             Map<String, List<SponsorApiModel>> objectsMap = gson.fromJson(json, type);
             for (Map.Entry<String, List<SponsorApiModel>> entry : objectsMap.entrySet()) {
-                String sponsorTypeString = entry.getKey();
-                SponsorType sponsorType = getSponsorType(sponsorTypeString);
                 for (SponsorApiModel sponsorApiModel : entry.getValue()) {
-                    sponsorApiModel.type = sponsorType;
+                    sponsorApiModel.type = entry.getKey();
                     resultMap.put(sponsorApiModel.name, sponsorApiModel);
                 }
             }
             return resultMap;
-        }
-
-        private SponsorType getSponsorType(String sponsorTypeString) {
-            if (DIAMOND.equals(sponsorTypeString)) {
-                return SponsorType.DIAMOND;
-            } else if (PLATINUM.equals(sponsorTypeString)) {
-                return SponsorType.PLATINUM;
-            } else if (GOLD.equals(sponsorTypeString)) {
-                return SponsorType.GOLD;
-            } else if (SILVER.equals(sponsorTypeString)) {
-                return SponsorType.SILVER;
-            } else if (COPPER.equals(sponsorTypeString)) {
-                return SponsorType.COPPER;
-            } else {
-                return SponsorType.OTHER;
-            }
         }
     }
 }

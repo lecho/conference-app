@@ -54,13 +54,29 @@ public class SponsorRealm extends RealmObject {
     public static class SponsorApiConverter extends RealmFacade.ApiToRealmConverter<SponsorRealm, SponsorApiModel> {
 
         @Override
-        public SponsorRealm convert(String key, SponsorApiModel apiDto) {
+        public SponsorRealm convert(String key, SponsorApiModel apiModel) {
             SponsorRealm sponsorRealm = new SponsorRealm();
-            sponsorRealm.setName(apiDto.name);
-            sponsorRealm.setWwwPage(apiDto.link);
-            sponsorRealm.setType(apiDto.type.ordinal());
-            sponsorRealm.setLogo(Uri.parse(apiDto.logoUrl).getLastPathSegment());
+            sponsorRealm.setName(apiModel.name);
+            sponsorRealm.setWwwPage(apiModel.link);
+            sponsorRealm.setType(getSponsorType(apiModel.type).ordinal());
+            sponsorRealm.setLogo(Uri.parse(apiModel.logoUrl).getLastPathSegment());
             return sponsorRealm;
+        }
+
+        private SponsorType getSponsorType(String sponsorTypeString) {
+            if (SponsorType.DIAMOND.equals(sponsorTypeString)) {
+                return SponsorType.DIAMOND;
+            } else if (SponsorType.PLATINUM.equals(sponsorTypeString)) {
+                return SponsorType.PLATINUM;
+            } else if (SponsorType.GOLD.equals(sponsorTypeString)) {
+                return SponsorType.GOLD;
+            } else if (SponsorType.SILVER.equals(sponsorTypeString)) {
+                return SponsorType.SILVER;
+            } else if (SponsorType.COPPER.equals(sponsorTypeString)) {
+                return SponsorType.COPPER;
+            } else {
+                return SponsorType.OTHER;
+            }
         }
     }
 
