@@ -287,7 +287,7 @@ public class RealmFacade {
             SponsorRealm.SponsorViewConverter sponsorViewConverter = new SponsorRealm.SponsorViewConverter();
             realm = Realm.getDefaultInstance();
             RealmResults<SponsorRealm> sponsorRealms = realm.where(SponsorRealm.class).findAllSorted(
-                    new String[]{"type", "name"},new Sort[]{Sort.ASCENDING, Sort.ASCENDING});
+                    new String[]{"priority", "name"},new Sort[]{Sort.ASCENDING, Sort.ASCENDING});
             List<SponsorViewModel> sponsorViewModels = new ArrayList<>(sponsorRealms.size());
             for (SponsorRealm sponsorRealm : sponsorRealms) {
                 sponsorViewModels.add(sponsorViewConverter.convert(sponsorRealm));
@@ -297,7 +297,6 @@ public class RealmFacade {
             closeRealm();
         }
     }
-
 
     public void addTalkToMyAgenda(String talkKey) {
         changeTalkFavoriteState(talkKey, true, true);
