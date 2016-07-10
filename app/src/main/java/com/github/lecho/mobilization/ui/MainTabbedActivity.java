@@ -1,22 +1,20 @@
 package com.github.lecho.mobilization.ui;
 
-import android.support.design.widget.TabLayout;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.TextView;
 
 import com.github.lecho.mobilization.R;
@@ -38,8 +36,11 @@ public class MainTabbedActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.container);
         viewPager.setAdapter(pagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
+        //TODO: workaround for issue https://code.google.com/p/android/issues/detail?id=213359
+        PagerTabStrip pagerTabStrip = (PagerTabStrip) findViewById(R.id.pager_title_strip);
+        ((ViewPager.LayoutParams) pagerTabStrip.getLayoutParams()).isDecor = true;
+//        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+//        tabLayout.setupWithViewPager(viewPager);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -130,24 +131,22 @@ public class MainTabbedActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 6;
+            return 5;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "TomTom";
                 case 1:
-                    return "SECTION 2";
+                    return "Mobica";
                 case 2:
-                    return "SECTION 3";
+                    return "Harman";
                 case 3:
-                    return "SECTION 3";
+                    return "Transition Technologies";
                 case 4:
-                    return "SECTION 3";
-                case 5:
-                    return "SECTION 3";
+                    return "Allegro";
             }
             return null;
         }
