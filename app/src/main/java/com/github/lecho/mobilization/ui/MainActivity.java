@@ -1,5 +1,6 @@
 package com.github.lecho.mobilization.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -147,7 +148,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         public void onItemClick(@NonNull MenuItem item, @NonNull Fragment fragment) {
             checkedNavItemId = item.getItemId();
             drawerLayout.closeDrawer(DRAWER_GRAVITY);
-            replaceFragment(fragment);
+            //replaceFragment(fragment);
+            Intent i = new Intent(MainActivity.this, MainTabbedActivity.class);
+            startActivity(i);
         }
     }
 }
