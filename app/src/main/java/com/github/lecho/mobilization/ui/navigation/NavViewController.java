@@ -96,7 +96,7 @@ public class NavViewController {
         ImageButton mapButton;
 
         public NavHeaderController(@NonNull NavigationView navigationView) {
-            ButterKnife.bind(this, navigationView);
+            ButterKnife.bind(this, navigationView.getHeaderView(0));
         }
 
         public void bind(@NonNull Context context, @NonNull EventViewModel eventViewModel) {
