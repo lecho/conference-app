@@ -10,10 +10,6 @@ import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.fragment.VenueAgendaFragment;
@@ -49,8 +45,6 @@ public class MainTabbedActivity extends AppCompatActivity implements LoaderManag
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
-//        pagerAdapter = new VenuePagerAdapter(getSupportFragmentManager());
-//        viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
@@ -69,7 +63,6 @@ public class MainTabbedActivity extends AppCompatActivity implements LoaderManag
         if (loader.getId() == LOADER_ID) {
             pagerAdapter = new VenuePagerAdapter(getSupportFragmentManager(), navigationViewModel);
             viewPager.setAdapter(pagerAdapter);
-//            tabLayout.setupWithViewPager(viewPager);
         }
     }
 
@@ -77,43 +70,7 @@ public class MainTabbedActivity extends AppCompatActivity implements LoaderManag
     public void onLoaderReset(Loader<NavigationViewModel> loader) {
     }
 
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main_tabbed, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
-        }
-    }
-
-    public class VenuePagerAdapter extends FragmentPagerAdapter {
+    private static class VenuePagerAdapter extends FragmentPagerAdapter {
 
         private NavigationViewModel navigationViewModel;
 
