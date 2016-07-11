@@ -1,77 +1,82 @@
 package com.github.lecho.mobilization.ui;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.lecho.mobilization.R;
+import com.github.lecho.mobilization.ui.fragment.VenueAgendaFragment;
+import com.github.lecho.mobilization.ui.loader.NavigationViewDataLoader;
+import com.github.lecho.mobilization.viewmodel.NavigationViewModel;
+import com.github.lecho.mobilization.viewmodel.VenueViewModel;
 
-public class MainTabbedActivity extends AppCompatActivity {
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    private SectionsPagerAdapter pagerAdapter;
-    private ViewPager viewPager;
+public class MainTabbedActivity extends AppCompatActivity implements LoaderManager
+        .LoaderCallbacks<NavigationViewModel> {
+
+    private static final String TAG = MainTabbedActivity.class.getSimpleName();
+    private static final String ARG_CHECKED_TAB_INDEX = "checked-tab-index";
+    private static final int LOADER_ID = 0;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.view_pager)
+    ViewPager viewPager;
+
+    @BindView(R.id.tab_layout)
+    TabLayout tabLayout;
+
+    private VenuePagerAdapter pagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_tabbed);
+        ButterKnife.bind(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        pagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-        viewPager = (ViewPager) findViewById(R.id.container);
-        viewPager.setAdapter(pagerAdapter);
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+//        pagerAdapter = new VenuePagerAdapter(getSupportFragmentManager());
+//        viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main_tabbed, menu);
-        return true;
+        getSupportLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    public Loader<NavigationViewModel> onCreateLoader(int id, Bundle args) {
+        if (id == LOADER_ID) {
+            return NavigationViewDataLoader.getLoader(getApplicationContext());
         }
-
-        return super.onOptionsItemSelected(item);
+        return null;
     }
+
+    @Override
+    public void onLoadFinished(Loader<NavigationViewModel> loader, NavigationViewModel navigationViewModel) {
+        if (loader.getId() == LOADER_ID) {
+            pagerAdapter = new VenuePagerAdapter(getSupportFragmentManager(), navigationViewModel);
+            viewPager.setAdapter(pagerAdapter);
+//            tabLayout.setupWithViewPager(viewPager);
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<NavigationViewModel> loader) {
+    }
+
 
     /**
      * A placeholder fragment containing a simple view.
@@ -108,44 +113,32 @@ public class MainTabbedActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class VenuePagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
+        private NavigationViewModel navigationViewModel;
+
+        public VenuePagerAdapter(FragmentManager fragmentManager, NavigationViewModel navigationViewModel) {
+            super(fragmentManager);
+            this.navigationViewModel = navigationViewModel;
         }
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            VenueViewModel venueViewModel = navigationViewModel.venueViewModels.get(position);
+            String venueKey = venueViewModel.key;
+            String venueTitle = venueViewModel.title;
+            return VenueAgendaFragment.newInstance(venueKey, venueTitle);
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 5;
+            return navigationViewModel.venueViewModels.size();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "TomTom";
-                case 1:
-                    return "Mobica";
-                case 2:
-                    return "Harman";
-                case 3:
-                    return "Transition Technologies";
-                case 4:
-                    return "Allegro";
-            }
-            return null;
+            VenueViewModel venueViewModel = navigationViewModel.venueViewModels.get(position);
+            return venueViewModel.title;
         }
     }
 }
