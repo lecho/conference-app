@@ -18,6 +18,7 @@ import android.view.MenuItem;
 
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.fragment.MyAgendaFragment;
+import com.github.lecho.mobilization.ui.fragment.VenuesTabbedFragment;
 import com.github.lecho.mobilization.ui.loader.NavigationViewDataLoader;
 import com.github.lecho.mobilization.ui.navigation.NavViewController;
 import com.github.lecho.mobilization.util.Utils;
@@ -62,7 +63,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
 
         if (savedInstanceState == null) {
-            replaceFragment(MyAgendaFragment.newInstance());
+            //replaceFragment(MyAgendaFragment.newInstance());
+            replaceFragment(VenuesTabbedFragment.newInstance());
             Utils.upgradeSchema(getApplicationContext());
             checkedNavItemId = 0;
         } else {
