@@ -7,11 +7,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.github.lecho.mobilization.R;
+import com.github.lecho.mobilization.ui.controller.VenueAgendaController;
 import com.github.lecho.mobilization.ui.fragment.VenueAgendaFragment;
 import com.github.lecho.mobilization.ui.loader.NavigationViewDataLoader;
 import com.github.lecho.mobilization.viewmodel.NavigationViewModel;
@@ -36,7 +41,7 @@ public class MainTabbedActivity extends AppCompatActivity implements LoaderManag
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
 
-    private VenuePagerAdapter pagerAdapter;
+    private VenuePagerAdapter2 pagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +66,55 @@ public class MainTabbedActivity extends AppCompatActivity implements LoaderManag
     @Override
     public void onLoadFinished(Loader<NavigationViewModel> loader, NavigationViewModel navigationViewModel) {
         if (loader.getId() == LOADER_ID) {
-            pagerAdapter = new VenuePagerAdapter(getSupportFragmentManager(), navigationViewModel);
+            pagerAdapter = new VenuePagerAdapter2(navigationViewModel);
             viewPager.setAdapter(pagerAdapter);
         }
     }
 
     @Override
     public void onLoaderReset(Loader<NavigationViewModel> loader) {
+    }
+
+    private class VenuePagerAdapter2 extends PagerAdapter {
+
+        private NavigationViewModel navigationViewModel;
+
+        public VenuePagerAdapter2(NavigationViewModel navigationViewModel) {
+            this.navigationViewModel = navigationViewModel;
+        }
+
+        @Override
+        public int getCount() {
+            return navigationViewModel.venueViewModels.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            VenueViewModel venueViewModel = navigationViewModel.venueViewModels.get(position);
+            return venueViewModel.title;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup collection, int position, Object view) {
+            collection.removeView((View) view);
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup collection, int position) {
+            VenueViewModel venueViewModel = navigationViewModel.venueViewModels.get(position);
+            String venueKey = venueViewModel.key;
+            String venueTitle = venueViewModel.title;
+            VenueAgendaController venueAgendaController = new VenueAgendaController(MainTabbedActivity.this,
+                    venueKey, venueTitle);
+            View view = venueAgendaController.getView(LayoutInflater.from(getApplicationContext()), collection, position);
+            collection.addView(view);
+            return view;
+        }
     }
 
     private static class VenuePagerAdapter extends FragmentPagerAdapter {

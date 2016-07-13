@@ -280,7 +280,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
     /**
      * Empty slot click listener
      */
-    protected class EmptySlotClickListener implements View.OnClickListener {
+    public class EmptySlotClickListener implements View.OnClickListener {
 
         private final AgendaItemViewModel agendaItem;
         private final int position;
