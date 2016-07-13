@@ -150,9 +150,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         public void onItemClick(@NonNull MenuItem item, @NonNull Fragment fragment) {
             checkedNavItemId = item.getItemId();
             drawerLayout.closeDrawer(DRAWER_GRAVITY);
-            //replaceFragment(fragment);
-            Intent i = new Intent(MainActivity.this, MainTabbedActivity.class);
-            startActivity(i);
+            replaceFragment(fragment);
         }
     }
 }

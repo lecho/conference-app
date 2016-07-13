@@ -28,11 +28,6 @@
             android:exported="false">
         </service>
 
-        <activity
-            android:name=".ui.MainTabbedActivity"
-            android:label="@string/title_activity_main_tabbed"
-            android:theme="@style/AppTheme">
-        </activity>
     </application>
 
 </manifest>
