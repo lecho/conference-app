@@ -21,10 +21,10 @@ import com.github.lecho.mobilization.viewmodel.VenueViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class VenuesTabbedFragment extends Fragment implements LoaderManager
+public class VenuesFragment extends Fragment implements LoaderManager
         .LoaderCallbacks<NavigationViewModel> {
 
-    public static final String TAG = VenuesTabbedFragment.class.getSimpleName();
+    public static final String TAG = VenuesFragment.class.getSimpleName();
     private static final int LOADER_ID = 0;
 
     @BindView(R.id.view_pager)
@@ -35,8 +35,8 @@ public class VenuesTabbedFragment extends Fragment implements LoaderManager
 
     private VenuePagerAdapter pagerAdapter;
 
-    public static VenuesTabbedFragment newInstance() {
-        VenuesTabbedFragment fragment = new VenuesTabbedFragment();
+    public static VenuesFragment newInstance() {
+        VenuesFragment fragment = new VenuesFragment();
         return fragment;
     }
 
@@ -48,7 +48,7 @@ public class VenuesTabbedFragment extends Fragment implements LoaderManager
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_venues_tabbed, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_venues, container, false);
         ButterKnife.bind(this, rootView);
         tabLayout.setupWithViewPager(viewPager);
         getLoaderManager().initLoader(LOADER_ID, null, this);

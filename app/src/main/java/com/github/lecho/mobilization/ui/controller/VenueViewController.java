@@ -1,5 +1,6 @@
 package com.github.lecho.mobilization.ui.controller;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
@@ -12,7 +13,7 @@ import android.view.View;
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.async.TalkAsyncHelper;
 import com.github.lecho.mobilization.ui.adapter.AgendaAdapter;
-import com.github.lecho.mobilization.ui.fragment.VenuesTabbedFragment;
+import com.github.lecho.mobilization.ui.fragment.VenuesFragment;
 import com.github.lecho.mobilization.ui.loader.AgendaLoader;
 import com.github.lecho.mobilization.util.Utils;
 import com.github.lecho.mobilization.viewmodel.AgendaItemViewModel;
@@ -31,7 +32,7 @@ import butterknife.ButterKnife;
 public class VenueViewController {
 
     private static final int BASE_LOADER_ID = 10;
-    private final Context context;
+    private final Activity activity;
     private final int venuePosition;
     private final VenueViewModel venueViewModel;
     private final LoaderManager loaderManager;
@@ -40,21 +41,21 @@ public class VenueViewController {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
-    public VenueViewController(Context context, LoaderManager loaderManager, RecyclerView.LayoutManager
+    public VenueViewController(Activity activity, LoaderManager loaderManager, RecyclerView.LayoutManager
             layoutManager, View view, VenueViewModel venueViewModel, int venuePosition) {
         ButterKnife.bind(this, view);
-        this.context = context;
+        this.activity = activity;
         this.loaderManager = loaderManager;
         this.venueViewModel = venueViewModel;
         this.venuePosition = venuePosition;
-        adapter = new AgendaAdapter((AppCompatActivity) context, new StarTalkClickListener(), null);
+        adapter = new AgendaAdapter((AppCompatActivity) activity, new StarTalkClickListener(), null);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
     }
 
     public void bindView() {
         final int loaderId = BASE_LOADER_ID + venuePosition;
-        VenueLoaderCallbacks venueLoaderCallbacks = new VenueLoaderCallbacks(context, loaderId, venueViewModel.key);
+        VenueLoaderCallbacks venueLoaderCallbacks = new VenueLoaderCallbacks(activity, loaderId, venueViewModel.key);
         loaderManager.initLoader(loaderId, null, venueLoaderCallbacks);
     }
 
@@ -100,14 +101,14 @@ public class VenueViewController {
             TalkViewModel talkViewModel = agendaItem.talk;
             if (talkViewModel.isInMyAgenda) {
                 talkViewModel.isInMyAgenda = false;
-                TalkAsyncHelper.removeTalk(context.getApplicationContext(), talkViewModel.key);
+                TalkAsyncHelper.removeTalk(activity.getApplicationContext(), talkViewModel.key);
             } else {
-                if (Utils.checkSlotConflict((AppCompatActivity) context, talkViewModel.key)) {
-                    Log.d(VenuesTabbedFragment.TAG, "Slot conflict for talk with key: " + talkViewModel.key);
+                if (Utils.checkSlotConflict((AppCompatActivity) activity, talkViewModel.key)) {
+                    Log.d(VenuesFragment.TAG, "Slot conflict for talk with key: " + talkViewModel.key);
                     return;
                 }
                 talkViewModel.isInMyAgenda = true;
-                TalkAsyncHelper.addTalk(context.getApplicationContext(), talkViewModel.key);
+                TalkAsyncHelper.addTalk(activity.getApplicationContext(), talkViewModel.key);
             }
             adapter.notifyDataSetChanged();
         }

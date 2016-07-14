@@ -4,7 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              tools:context="com.github.lecho.mobilization.ui.fragment.VenuesTabbedFragment">
+              tools:context=".ui.fragment.VenuesFragment">
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
