@@ -1,5 +1,6 @@
 package com.github.lecho.mobilization.ui.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -23,10 +24,10 @@ import butterknife.ButterKnife;
 
 public class SponsorsAdapter extends RecyclerView.Adapter<SponsorsAdapter.SponsorViewHolder> {
 
-    private final Context context;
+    private final Activity context;
     private List<SponsorViewModel> data = new ArrayList<>();
 
-    public SponsorsAdapter(Context context) {
+    public SponsorsAdapter(Activity context) {
         this.context = context;
     }
 

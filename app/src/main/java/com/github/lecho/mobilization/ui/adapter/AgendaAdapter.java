@@ -1,7 +1,7 @@
 package com.github.lecho.mobilization.ui.adapter;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -30,11 +30,11 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
     public static final int ITEM_TYPE_TALK = 1;
     public static final int ITEM_TYPE_EMPTY_SLOT = 2;
     protected List<AgendaItemViewModel> data = new ArrayList<>();
-    protected final AppCompatActivity activity;
+    protected final Activity activity;
     protected final AgendaItemClickListener starTalkListener;
     protected final AgendaItemClickListener emptySlotListener;
 
-    public AgendaAdapter(AppCompatActivity activity, AgendaItemClickListener starTalkListener,
+    public AgendaAdapter(Activity activity, AgendaItemClickListener starTalkListener,
                          AgendaItemClickListener emptySlotListener) {
         this.activity = activity;
         this.starTalkListener = starTalkListener;
@@ -106,7 +106,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
      */
     protected abstract class BaseViewHolder extends RecyclerView.ViewHolder {
 
-        protected final AppCompatActivity activity;
+        protected final Activity activity;
 
         @BindView(R.id.text_time_slot)
         TextView timeSlotView;
@@ -117,7 +117,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
         @BindView(R.id.text_title)
         TextView titleView;
 
-        public BaseViewHolder(AppCompatActivity activity, View itemView) {
+        public BaseViewHolder(Activity activity, View itemView) {
             super(itemView);
             this.activity = activity;
             ButterKnife.bind(this, itemView);
@@ -155,7 +155,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
      */
     protected class EmptySlotViewHolder extends BaseViewHolder {
 
-        public EmptySlotViewHolder(AppCompatActivity activity, View itemView) {
+        public EmptySlotViewHolder(Activity activity, View itemView) {
             super(activity, itemView);
         }
 
@@ -171,7 +171,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
      */
     protected class BreakViewHolder extends BaseViewHolder {
 
-        public BreakViewHolder(AppCompatActivity activity, View itemView) {
+        public BreakViewHolder(Activity activity, View itemView) {
             super(activity, itemView);
         }
 
@@ -202,7 +202,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
         @BindView(R.id.text_speakers)
         TextView speakersView;
 
-        public TalkViewHolder(AppCompatActivity activity, View itemView) {
+        public TalkViewHolder(Activity activity, View itemView) {
             super(activity, itemView);
         }
 
@@ -229,9 +229,9 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
     protected static class TalkItemClickListener implements View.OnClickListener {
 
         private final String talkKey;
-        private final AppCompatActivity activity;
+        private final Activity activity;
 
-        public TalkItemClickListener(AppCompatActivity activity, String talkKey) {
+        public TalkItemClickListener(Activity activity, String talkKey) {
             this.talkKey = talkKey;
             this.activity = activity;
         }

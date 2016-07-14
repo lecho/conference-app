@@ -1,5 +1,6 @@
 package com.github.lecho.mobilization.ui.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -22,10 +23,10 @@ import butterknife.ButterKnife;
 
 public class SpeakersAdapter extends RecyclerView.Adapter<SpeakersAdapter.SpeakerViewHolder> {
 
-    private final Context context;
+    private final Activity context;
     private List<SpeakerViewModel> data = new ArrayList<>();
 
-    public SpeakersAdapter(Context context) {
+    public SpeakersAdapter(Activity context) {
         this.context = context;
     }
 

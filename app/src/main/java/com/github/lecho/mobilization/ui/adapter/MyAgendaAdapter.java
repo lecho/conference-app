@@ -1,5 +1,6 @@
 package com.github.lecho.mobilization.ui.adapter;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +41,7 @@ public class MyAgendaAdapter extends AgendaAdapter {
         @BindView(R.id.text_venue)
         TextView venueView;
 
-        public MyAgendaTalkViewHolder(AppCompatActivity activity, View itemView) {
+        public MyAgendaTalkViewHolder(Activity activity, View itemView) {
             super(activity, itemView);
         }
 
