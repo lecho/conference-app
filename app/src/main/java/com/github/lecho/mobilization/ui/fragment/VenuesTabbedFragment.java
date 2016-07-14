@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.lecho.mobilization.R;
+import com.github.lecho.mobilization.ui.controller.VenueViewController;
 import com.github.lecho.mobilization.ui.loader.NavigationViewDataLoader;
 import com.github.lecho.mobilization.viewmodel.NavigationViewModel;
 import com.github.lecho.mobilization.viewmodel.VenueViewModel;

@@ -1,4 +1,4 @@
-package com.github.lecho.mobilization.ui.fragment;
+package com.github.lecho.mobilization.ui.controller;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import android.view.View;
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.async.TalkAsyncHelper;
 import com.github.lecho.mobilization.ui.adapter.AgendaAdapter;
+import com.github.lecho.mobilization.ui.fragment.VenuesTabbedFragment;
 import com.github.lecho.mobilization.ui.loader.AgendaLoader;
 import com.github.lecho.mobilization.util.Utils;
 import com.github.lecho.mobilization.viewmodel.AgendaItemViewModel;
@@ -27,7 +28,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Leszek on 14.07.2016.
  */
-class VenueViewController {
+public class VenueViewController {
 
     private static final int BASE_LOADER_ID = 10;
     private final Context context;
