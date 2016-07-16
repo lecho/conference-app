@@ -18,6 +18,8 @@ import com.github.lecho.mobilization.ui.loader.NavigationViewDataLoader;
 import com.github.lecho.mobilization.viewmodel.NavigationViewModel;
 import com.github.lecho.mobilization.viewmodel.VenueViewModel;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -66,7 +68,7 @@ public class VenuesFragment extends Fragment implements LoaderManager
     @Override
     public void onLoadFinished(Loader<NavigationViewModel> loader, NavigationViewModel navigationViewModel) {
         if (loader.getId() == LOADER_ID) {
-            pagerAdapter = new VenuePagerAdapter(navigationViewModel);
+            pagerAdapter = new VenuePagerAdapter(navigationViewModel.venueViewModels);
             viewPager.setAdapter(pagerAdapter);
         }
     }
@@ -77,15 +79,15 @@ public class VenuesFragment extends Fragment implements LoaderManager
 
     private class VenuePagerAdapter extends PagerAdapter {
 
-        private NavigationViewModel navigationViewModel;
+        private List<VenueViewModel> venues;
 
-        public VenuePagerAdapter(NavigationViewModel navigationViewModel) {
-            this.navigationViewModel = navigationViewModel;
+        public VenuePagerAdapter(List<VenueViewModel> venueViewModels) {
+            this.venues = venueViewModels;
         }
 
         @Override
         public int getCount() {
-            return navigationViewModel.venueViewModels.size();
+            return venues.size();
         }
 
         @Override
@@ -95,7 +97,7 @@ public class VenuesFragment extends Fragment implements LoaderManager
 
         @Override
         public CharSequence getPageTitle(int position) {
-            VenueViewModel venueViewModel = navigationViewModel.venueViewModels.get(position);
+            VenueViewModel venueViewModel = venues.get(position);
             return venueViewModel.title;
         }
 
@@ -106,10 +108,9 @@ public class VenuesFragment extends Fragment implements LoaderManager
 
         @Override
         public Object instantiateItem(ViewGroup collection, int position) {
-            VenueViewModel venueViewModel = navigationViewModel.venueViewModels.get(position);
             View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_agenda, collection, false);
             VenueViewController controller = new VenueViewController(getActivity(), getLoaderManager(), new
-                    LinearLayoutManager(getContext()), view, venueViewModel, position);
+                    LinearLayoutManager(getContext()), venues.get(position), view, position);
             controller.bindView();
             collection.addView(view);
             return view;

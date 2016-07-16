@@ -33,28 +33,28 @@ public class VenueViewController {
 
     private static final int BASE_LOADER_ID = 10;
     private final Activity activity;
-    private final int venuePosition;
     private final VenueViewModel venueViewModel;
     private final LoaderManager loaderManager;
-    private AgendaAdapter adapter;
+    private final AgendaAdapter adapter;
+    private final int position;
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
     public VenueViewController(Activity activity, LoaderManager loaderManager, RecyclerView.LayoutManager
-            layoutManager, View view, VenueViewModel venueViewModel, int venuePosition) {
+            layoutManager, VenueViewModel venueViewModel, View view, int position) {
         ButterKnife.bind(this, view);
         this.activity = activity;
         this.loaderManager = loaderManager;
         this.venueViewModel = venueViewModel;
-        this.venuePosition = venuePosition;
-        adapter = new AgendaAdapter((AppCompatActivity) activity, new StarTalkClickListener(), null);
+        this.position = position;
+        adapter = new AgendaAdapter(activity, new StarTalkClickListener(), null);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
     }
 
     public void bindView() {
-        final int loaderId = BASE_LOADER_ID + venuePosition;
+        final int loaderId = BASE_LOADER_ID + position;
         VenueLoaderCallbacks venueLoaderCallbacks = new VenueLoaderCallbacks(activity, loaderId, venueViewModel.key);
         loaderManager.initLoader(loaderId, null, venueLoaderCallbacks);
     }
