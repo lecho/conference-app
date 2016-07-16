@@ -32,4 +32,7 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <style name="VenueTab" parent="TextAppearance.Design.Tab">
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

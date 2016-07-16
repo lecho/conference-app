@@ -10,7 +10,12 @@
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabMode="scrollable"/>
+        android:background="@color/primary"
+        app:tabMode="scrollable"
+        app:tabTextAppearance="@style/VenueTab"
+        app:tabTextColor="@color/white_70alpha"
+        app:tabIndicatorColor="@color/white"
+        app:tabSelectedTextColor="@color/white"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager"
