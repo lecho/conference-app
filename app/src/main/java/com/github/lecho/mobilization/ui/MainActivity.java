@@ -18,16 +18,19 @@ import android.view.MenuItem;
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.fragment.MyAgendaFragment;
 import com.github.lecho.mobilization.ui.fragment.VenuesFragment;
-import com.github.lecho.mobilization.ui.loader.NavigationViewDataLoader;
+import com.github.lecho.mobilization.ui.loader.EventViewDataLoader;
+import com.github.lecho.mobilization.ui.loader.VenuesViewDataLoader;
 import com.github.lecho.mobilization.ui.navigation.NavViewController;
+import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.util.Utils;
+import com.github.lecho.mobilization.viewmodel.EventViewModel;
 import com.github.lecho.mobilization.viewmodel.NavigationViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<NavigationViewModel>,
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Optional<EventViewModel>>,
         MyAgendaFragment.OpenDrawerCallback {
 
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -62,8 +65,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
 
         if (savedInstanceState == null) {
-            //replaceFragment(MyAgendaFragment.newInstance());
-            replaceFragment(VenuesFragment.newInstance());
+            replaceFragment(MyAgendaFragment.newInstance());
             Utils.upgradeSchema(getApplicationContext());
             checkedNavItemId = 0;
         } else {
@@ -116,26 +118,26 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public Loader<NavigationViewModel> onCreateLoader(int id, Bundle args) {
+    public Loader<Optional<EventViewModel>> onCreateLoader(int id, Bundle args) {
         if (id == LOADER_ID) {
-            return NavigationViewDataLoader.getLoader(getApplicationContext());
+            return EventViewDataLoader.getLoader(getApplicationContext());
         }
         return null;
     }
 
     @Override
-    public void onLoadFinished(Loader<NavigationViewModel> loader, NavigationViewModel navigationViewModel) {
+    public void onLoadFinished(Loader<Optional<EventViewModel>> loader, Optional<EventViewModel> eventViewModelOptional) {
         if (loader.getId() == LOADER_ID) {
-            navViewController.bindMenu(navigationViewModel.venueViewModels);
-            if (navigationViewModel.eventViewDto.isPresent()) {
-                navViewController.bindHeader(getApplicationContext(), navigationViewModel.eventViewDto.get());
+            navViewController.bindMenu();
+            if (eventViewModelOptional.isPresent()) {
+                navViewController.bindHeader(getApplicationContext(), eventViewModelOptional.get());
             }
             navigationView.setCheckedItem(checkedNavItemId);
         }
     }
 
     @Override
-    public void onLoaderReset(Loader<NavigationViewModel> loader) {
+    public void onLoaderReset(Loader<Optional<EventViewModel>> loader) {
     }
 
     @Override

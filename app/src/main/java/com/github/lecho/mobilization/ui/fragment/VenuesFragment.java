@@ -14,8 +14,7 @@ import android.view.ViewGroup;
 
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.controller.VenueViewController;
-import com.github.lecho.mobilization.ui.loader.NavigationViewDataLoader;
-import com.github.lecho.mobilization.viewmodel.NavigationViewModel;
+import com.github.lecho.mobilization.ui.loader.VenuesViewDataLoader;
 import com.github.lecho.mobilization.viewmodel.VenueViewModel;
 
 import java.util.List;
@@ -24,7 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class VenuesFragment extends Fragment implements LoaderManager
-        .LoaderCallbacks<NavigationViewModel> {
+        .LoaderCallbacks<List<VenueViewModel>> {
 
     public static final String TAG = VenuesFragment.class.getSimpleName();
     private static final int LOADER_ID = 0;
@@ -58,23 +57,23 @@ public class VenuesFragment extends Fragment implements LoaderManager
     }
 
     @Override
-    public Loader<NavigationViewModel> onCreateLoader(int id, Bundle args) {
+    public Loader<List<VenueViewModel>> onCreateLoader(int id, Bundle args) {
         if (id == LOADER_ID) {
-            return NavigationViewDataLoader.getLoader(getActivity().getApplicationContext());
+            return VenuesViewDataLoader.getLoader(getActivity().getApplicationContext());
         }
         return null;
     }
 
     @Override
-    public void onLoadFinished(Loader<NavigationViewModel> loader, NavigationViewModel navigationViewModel) {
+    public void onLoadFinished(Loader<List<VenueViewModel>> loader, List<VenueViewModel> venuesViewModel) {
         if (loader.getId() == LOADER_ID) {
-            pagerAdapter = new VenuePagerAdapter(navigationViewModel.venueViewModels);
+            pagerAdapter = new VenuePagerAdapter(venuesViewModel);
             viewPager.setAdapter(pagerAdapter);
         }
     }
 
     @Override
-    public void onLoaderReset(Loader<NavigationViewModel> loader) {
+    public void onLoaderReset(Loader<List<VenueViewModel>> loader) {
     }
 
     private class VenuePagerAdapter extends PagerAdapter {
