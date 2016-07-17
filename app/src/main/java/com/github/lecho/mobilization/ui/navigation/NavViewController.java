@@ -5,9 +5,7 @@ import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -18,16 +16,12 @@ import com.github.lecho.mobilization.ui.fragment.AboutFragment;
 import com.github.lecho.mobilization.ui.fragment.MyAgendaFragment;
 import com.github.lecho.mobilization.ui.fragment.SpeakersFragment;
 import com.github.lecho.mobilization.ui.fragment.SponsorsFragment;
-import com.github.lecho.mobilization.ui.fragment.VenueAgendaFragment;
 import com.github.lecho.mobilization.ui.fragment.VenuesFragment;
-import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.util.Utils;
 import com.github.lecho.mobilization.viewmodel.EventViewModel;
-import com.github.lecho.mobilization.viewmodel.VenueViewModel;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
