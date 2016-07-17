@@ -1,7 +1,9 @@
 package com.github.lecho.mobilization.ui;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,12 +21,10 @@ import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.fragment.MyAgendaFragment;
 import com.github.lecho.mobilization.ui.fragment.VenuesFragment;
 import com.github.lecho.mobilization.ui.loader.EventViewDataLoader;
-import com.github.lecho.mobilization.ui.loader.VenuesViewDataLoader;
 import com.github.lecho.mobilization.ui.navigation.NavViewController;
 import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.util.Utils;
 import com.github.lecho.mobilization.viewmodel.EventViewModel;
-import com.github.lecho.mobilization.viewmodel.NavigationViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final int LOADER_ID = 0;
     private NavViewController navViewController;
     private int checkedNavItemId;
+
+    @BindView(R.id.appbar)
+    AppBarLayout appBar;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -116,6 +119,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void replaceFragment(@NonNull Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_container, fragment).commit();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (fragment instanceof VenuesFragment) {
+                appBar.setElevation(0);
+            } else {
+                appBar.setElevation(getResources().getDimension(R.dimen.appbar_elevation));
+            }
+        }
     }
 
     @Override

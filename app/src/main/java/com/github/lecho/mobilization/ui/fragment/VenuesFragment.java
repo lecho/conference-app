@@ -1,5 +1,7 @@
 package com.github.lecho.mobilization.ui.fragment;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -7,12 +9,15 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.lecho.mobilization.R;
+import com.github.lecho.mobilization.ui.MainActivity;
 import com.github.lecho.mobilization.ui.controller.VenueViewController;
 import com.github.lecho.mobilization.ui.loader.VenuesViewDataLoader;
 import com.github.lecho.mobilization.viewmodel.VenueViewModel;
@@ -46,9 +51,11 @@ public class VenuesFragment extends Fragment implements LoaderManager
         super.onCreate(savedInstanceState);
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.title_activity_tracks);
         View rootView = inflater.inflate(R.layout.fragment_venues, container, false);
         ButterKnife.bind(this, rootView);
         tabLayout.setupWithViewPager(viewPager);

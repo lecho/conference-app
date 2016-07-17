@@ -6,6 +6,7 @@
 
     <string name="title_activity_my_agenda">My Agenda</string>
     <string name="title_activity_track">Track</string>
+    <string name="title_activity_tracks">Tracks</string>
     <string name="title_activity_speakers">Speakers</string>
     <string name="title_activity_sponsors">Sponsors</string>
     <string name="title_activity_about">About</string>
