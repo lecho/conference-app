@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         ButterKnife.bind(this);
         navViewController = new NavViewController(navigationView, new MainActivityNavItemListener());
         navViewController.bindHeaderImage(getApplicationContext());
+        navViewController.bindMenu();
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -128,7 +129,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<Optional<EventViewModel>> loader, Optional<EventViewModel> eventViewModelOptional) {
         if (loader.getId() == LOADER_ID) {
-            navViewController.bindMenu();
             if (eventViewModelOptional.isPresent()) {
                 navViewController.bindHeader(getApplicationContext(), eventViewModelOptional.get());
             }

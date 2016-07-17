@@ -4,7 +4,7 @@
 
         <item
             android:id="@+id/nav_my_agenda"
-            android:checked="false"
+            android:checked="true"
             android:icon="@drawable/ic_nav_my_agenda"
             android:title="@string/navigation_my_agenda" />
 
