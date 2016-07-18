@@ -71,7 +71,7 @@ public class SlotConflictDialogFragment extends AppCompatDialogFragment {
 
         @Override
         public void onClick(DialogInterface dialog, int which) {
-            TalkAsyncHelper.replaceTalk(getContext().getApplicationContext(), oldTalkKey, newTalkKey);
+            TalkAsyncHelper.replaceTalk(oldTalkKey, newTalkKey);
         }
     }
 

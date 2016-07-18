@@ -166,8 +166,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
             } else {
                 addToMyAgendaButton.setImageResource(R.drawable.ic_star_border_accent_big);
             }
-            addToMyAgendaButton.setOnClickListener(new AddToMyAgendaClickListener(getApplicationContext(),
-                    talkViewModel));
+            addToMyAgendaButton.setOnClickListener(new AddToMyAgendaClickListener(talkViewModel));
             addToMyAgendaButton.show();
         }
     }
@@ -245,10 +244,8 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
     private class AddToMyAgendaClickListener implements View.OnClickListener {
 
         private TalkViewModel talkViewModel;
-        private Context context;
 
-        public AddToMyAgendaClickListener(Context context, TalkViewModel talkViewModel) {
-            this.context = context;
+        public AddToMyAgendaClickListener(TalkViewModel talkViewModel) {
             this.talkViewModel = talkViewModel;
         }
 
@@ -258,7 +255,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
             if (talkViewModel.isInMyAgenda) {
                 floatingActionButton.setImageResource(R.drawable.ic_star_border_accent_big);
                 talkViewModel.isInMyAgenda = false;
-                TalkAsyncHelper.removeTalk(context.getApplicationContext(), talkViewModel.key);
+                TalkAsyncHelper.removeTalk(talkViewModel.key);
             } else {
                 if (Utils.checkSlotConflict(TalkActivity.this, talkViewModel.key)) {
                     Log.d(TAG, "Slot conflict for talk with key: " + talkViewModel.key);
@@ -266,7 +263,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
                 }
                 floatingActionButton.setImageResource(R.drawable.ic_star_accent_big);
                 talkViewModel.isInMyAgenda = true;
-                TalkAsyncHelper.addTalk(context.getApplicationContext(), talkViewModel.key);
+                TalkAsyncHelper.addTalk(talkViewModel.key);
             }
         }
     }

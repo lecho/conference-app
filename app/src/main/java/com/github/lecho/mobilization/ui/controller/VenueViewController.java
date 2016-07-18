@@ -101,14 +101,14 @@ public class VenueViewController {
             TalkViewModel talkViewModel = agendaItem.talk;
             if (talkViewModel.isInMyAgenda) {
                 talkViewModel.isInMyAgenda = false;
-                TalkAsyncHelper.removeTalk(activity.getApplicationContext(), talkViewModel.key);
+                TalkAsyncHelper.removeTalk(talkViewModel.key);
             } else {
                 if (Utils.checkSlotConflict((AppCompatActivity) activity, talkViewModel.key)) {
                     Log.d(VenuesFragment.TAG, "Slot conflict for talk with key: " + talkViewModel.key);
                     return;
                 }
                 talkViewModel.isInMyAgenda = true;
-                TalkAsyncHelper.addTalk(activity.getApplicationContext(), talkViewModel.key);
+                TalkAsyncHelper.addTalk(talkViewModel.key);
             }
             adapter.notifyDataSetChanged();
         }

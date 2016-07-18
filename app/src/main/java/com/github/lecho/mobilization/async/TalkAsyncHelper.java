@@ -1,39 +1,35 @@
 package com.github.lecho.mobilization.async;
 
-import android.content.Context;
 import android.os.AsyncTask;
 
 import com.github.lecho.mobilization.realmmodel.RealmFacade;
-import com.github.lecho.mobilization.ui.snackbar.SnackbarForTalkObserver;
 
 /**
  * Created by Leszek on 2015-10-05.
  */
 public class TalkAsyncHelper {
 
-    public static void addTalk(Context context, String talkKey) {
-        new AddTalkTask(context, talkKey).execute();
+    public static void addTalk(String talkKey) {
+        new AddTalkTask(talkKey).execute();
     }
 
-    public static void removeTalk(Context context, String talkKey) {
-        new RemoveTalkTask(context, talkKey).execute();
+    public static void removeTalk(String talkKey) {
+        new RemoveTalkTask(talkKey).execute();
     }
 
-    public static void removeTalkSilent(Context context, String talkKey) {
-        new RemoveTalkTaskSilent(context, talkKey).execute();
+    public static void removeTalkSilent(String talkKey) {
+        new RemoveTalkTaskSilent(talkKey).execute();
     }
 
-    public static void replaceTalk(Context context, String oldTalkKey, String newTalkKey) {
-        new ReplaceTalkTask(context, oldTalkKey, newTalkKey).execute();
+    public static void replaceTalk(String oldTalkKey, String newTalkKey) {
+        new ReplaceTalkTask(oldTalkKey, newTalkKey).execute();
     }
 
     private static class AddTalkTask extends AsyncTask<Void, Void, Void> {
 
-        private final Context context;
         private final String talkKey;
 
-        private AddTalkTask(Context context, String talkKey) {
-            this.context = context;
+        private AddTalkTask(String talkKey) {
             this.talkKey = talkKey;
         }
 
@@ -47,11 +43,9 @@ public class TalkAsyncHelper {
 
     private static class RemoveTalkTask extends AsyncTask<Void, Void, Void> {
 
-        private final Context context;
         private final String talkKey;
 
-        private RemoveTalkTask(Context context, String talkKey) {
-            this.context = context;
+        private RemoveTalkTask(String talkKey) {
             this.talkKey = talkKey;
         }
 
@@ -65,11 +59,9 @@ public class TalkAsyncHelper {
 
     private static class RemoveTalkTaskSilent extends AsyncTask<Void, Void, Void> {
 
-        private final Context context;
         private final String talkKey;
 
-        private RemoveTalkTaskSilent(Context context, String talkKey) {
-            this.context = context;
+        private RemoveTalkTaskSilent(String talkKey) {
             this.talkKey = talkKey;
         }
 
@@ -83,12 +75,10 @@ public class TalkAsyncHelper {
 
     private static class ReplaceTalkTask extends AsyncTask<Void, Void, Void> {
 
-        private final Context context;
         private final String oldTalkKey;
         private final String newTalkKey;
 
-        private ReplaceTalkTask(Context context, String oldTalkKey, String newTalkKey) {
-            this.context = context;
+        private ReplaceTalkTask(String oldTalkKey, String newTalkKey) {
             this.oldTalkKey = oldTalkKey;
             this.newTalkKey = newTalkKey;
         }

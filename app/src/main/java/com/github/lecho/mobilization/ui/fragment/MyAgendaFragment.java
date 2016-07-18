@@ -86,7 +86,7 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
 
     private void removeTalk(int position) {
         AgendaItemViewModel agendaItemViewModel = adapter.getItem(position);
-        TalkAsyncHelper.removeTalkSilent(getActivity().getApplicationContext(), agendaItemViewModel.talk.key);
+        TalkAsyncHelper.removeTalkSilent(agendaItemViewModel.talk.key);
         adapter.removeTalk(position);
     }
 
