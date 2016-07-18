@@ -4,7 +4,12 @@ import android.content.Context;
 import android.util.Log;
 
 import com.github.lecho.mobilization.BuildConfig;
+import com.github.lecho.mobilization.rx.DatabaseUpdatedEvent;
+import com.github.lecho.mobilization.rx.MyAgendaUpdatedEvent;
+import com.github.lecho.mobilization.rx.RxBus;
 import com.github.lecho.mobilization.viewmodel.AgendaViewModel;
+
+import rx.Subscription;
 
 /**
  * Created by Leszek on 2015-07-29.
@@ -14,6 +19,7 @@ public class AgendaLoader extends BaseRealmLoader<AgendaViewModel> {
     private static final String TAG = AgendaLoader.class.getSimpleName();
     private final AgendaLoaderType type;
     private final String venueKey;
+    private Subscription agendaUpdateSubscription;
 
     public static AgendaLoader getWholeAgendaLoader(Context context) {
         return new AgendaLoader(context, AgendaLoaderType.WHOLE_AGENDA, null);
@@ -55,5 +61,21 @@ public class AgendaLoader extends BaseRealmLoader<AgendaViewModel> {
 
     public enum AgendaLoaderType {
         MY_AGENDA, VENUE_AGENDA, WHOLE_AGENDA
+    }
+
+    protected void registerObserver() {
+        super.registerObserver();
+        if (agendaUpdateSubscription == null) {
+            agendaUpdateSubscription = RxBus.subscribe(MyAgendaUpdatedEvent.class, databaseUpdatedEvent ->
+                    AgendaLoader.this.onContentChanged());
+        }
+    }
+
+    protected void unregisterObserver() {
+        super.unregisterObserver();
+        if (agendaUpdateSubscription != null) {
+            agendaUpdateSubscription.unsubscribe();
+            agendaUpdateSubscription = null;
+        }
     }
 }

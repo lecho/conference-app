@@ -7,7 +7,9 @@ import android.util.Log;
 import com.github.lecho.mobilization.apimodel.AgendaItemApiModel;
 import com.github.lecho.mobilization.apimodel.ApiData;
 import com.github.lecho.mobilization.apimodel.TalkApiModel;
-import com.github.lecho.mobilization.ui.loader.LoaderChangeObserver;
+import com.github.lecho.mobilization.rx.MyAgendaUpdatedEvent;
+import com.github.lecho.mobilization.rx.DatabaseUpdatedEvent;
+import com.github.lecho.mobilization.rx.RxBus;
 import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.viewmodel.AgendaItemViewModel;
 import com.github.lecho.mobilization.viewmodel.AgendaViewModel;
@@ -62,6 +64,7 @@ public class RealmFacade {
             realm.copyToRealmOrUpdate(speakerRealmsMap.values());
             realm.copyToRealmOrUpdate(sponsorRealmMap.values());
             realm.commitTransaction();
+            RxBus.post(new DatabaseUpdatedEvent());
         } catch (Exception e) {
             if (realm != null) {
                 realm.cancelTransaction();
@@ -69,7 +72,6 @@ public class RealmFacade {
             Log.e(TAG, "Could not save api data to realm", e);
         } finally {
             closeRealm();
-            LoaderChangeObserver.emitBroadcast(context.getApplicationContext());
         }
     }
 
@@ -310,7 +312,7 @@ public class RealmFacade {
         changeTalkFavoriteState(talkKey, false, false);
     }
 
-    private void changeTalkFavoriteState(String talkKey, boolean isInMyAgenda, boolean emitContentBroadcast) {
+    private void changeTalkFavoriteState(String talkKey, boolean isInMyAgenda, boolean postUpdateEvent) {
         try {
             realm = Realm.getDefaultInstance();
             TalkRealm talkRealm = loadTalkRealmByKey(talkKey);
@@ -318,8 +320,8 @@ public class RealmFacade {
             talkRealm.setIsInMyAgenda(isInMyAgenda);
             talkRealm.getSlot().setIsInMyAgenda(isInMyAgenda);
             realm.commitTransaction();
-            if (emitContentBroadcast) {
-                LoaderChangeObserver.emitBroadcast(context.getApplicationContext());
+            if(postUpdateEvent) {
+                RxBus.post(new MyAgendaUpdatedEvent());
             }
         } catch (Exception e) {
             if (realm != null) {
@@ -356,7 +358,7 @@ public class RealmFacade {
             newTalkRealm.setIsInMyAgenda(true);
             newTalkRealm.getSlot().setIsInMyAgenda(true);
             realm.commitTransaction();
-            LoaderChangeObserver.emitBroadcast(context.getApplicationContext());
+            RxBus.post(new MyAgendaUpdatedEvent());
         } catch (Exception e) {
             if (realm != null) {
                 realm.cancelTransaction();

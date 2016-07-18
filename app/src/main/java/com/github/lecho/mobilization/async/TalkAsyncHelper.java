@@ -41,8 +41,6 @@ public class TalkAsyncHelper {
         protected Void doInBackground(Void... params) {
             RealmFacade realmFacade = new RealmFacade(context);
             realmFacade.addTalkToMyAgenda(talkKey);
-            SnackbarForTalkObserver.emitBroadcast(context, talkKey, SnackbarForTalkObserver.SnackbarActionType
-                    .TALK_ADDED);
             return null;
         }
     }
@@ -61,8 +59,6 @@ public class TalkAsyncHelper {
         protected Void doInBackground(Void... params) {
             RealmFacade realmFacade = new RealmFacade(context);
             realmFacade.removeTalkFromMyAgenda(talkKey);
-            SnackbarForTalkObserver.emitBroadcast(context, talkKey, SnackbarForTalkObserver.SnackbarActionType
-                    .TALK_REMOVED);
             return null;
         }
     }
@@ -81,8 +77,6 @@ public class TalkAsyncHelper {
         protected Void doInBackground(Void... params) {
             RealmFacade realmFacade = new RealmFacade(context);
             realmFacade.removeTalkFromMyAgendaSilent(talkKey);
-            SnackbarForTalkObserver.emitBroadcast(context, talkKey, SnackbarForTalkObserver.SnackbarActionType
-                    .TALK_REMOVED);
             return null;
         }
     }
@@ -103,8 +97,6 @@ public class TalkAsyncHelper {
         protected Void doInBackground(Void... params) {
             RealmFacade realmFacade = new RealmFacade(context);
             realmFacade.replaceTalk(oldTalkKey, newTalkKey);
-            SnackbarForTalkObserver.emitBroadcast(context, newTalkKey, SnackbarForTalkObserver.SnackbarActionType
-                    .TALK_ADDED);
             return null;
         }
     }

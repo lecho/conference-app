@@ -6,6 +6,10 @@ import android.util.Log;
 
 import com.github.lecho.mobilization.BuildConfig;
 import com.github.lecho.mobilization.realmmodel.RealmFacade;
+import com.github.lecho.mobilization.rx.DatabaseUpdatedEvent;
+import com.github.lecho.mobilization.rx.RxBus;
+
+import rx.Subscription;
 
 /**
  * Created by Leszek on 2015-09-03.
@@ -13,9 +17,9 @@ import com.github.lecho.mobilization.realmmodel.RealmFacade;
 public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
 
     private static final String TAG = BaseRealmLoader.class.getSimpleName();
+    protected Subscription dbaUpdateSubscription;
     protected T data;
     protected final RealmFacade realmFacade;
-    protected LoaderChangeObserver contentChangeObserver;
 
     protected BaseRealmLoader(Context context) {
         super(context.getApplicationContext());
@@ -118,17 +122,17 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
         oldData = null;
     }
 
-    private void registerObserver() {
-        if (contentChangeObserver == null) {
-            contentChangeObserver = new LoaderChangeObserver(this);
-            contentChangeObserver.register(getContext());
+    protected void registerObserver() {
+        if (dbaUpdateSubscription == null) {
+            dbaUpdateSubscription = RxBus.subscribe(DatabaseUpdatedEvent.class, databaseUpdatedEvent -> BaseRealmLoader.this
+                    .onContentChanged());
         }
     }
 
-    private void unregisterObserver() {
-        if (contentChangeObserver != null) {
-            contentChangeObserver.unregister(getContext());
-            contentChangeObserver = null;
+    protected void unregisterObserver() {
+        if (dbaUpdateSubscription != null) {
+            dbaUpdateSubscription.unsubscribe();
+            dbaUpdateSubscription = null;
         }
     }
 }
