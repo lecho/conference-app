@@ -37,7 +37,6 @@ import io.realm.Sort;
 public class RealmFacade {
 
     public static final String TAG = RealmFacade.class.getSimpleName();
-    private final Context context;
     private Realm realm;
     private Map<String, EventRealm> eventRealmsMap;
     private Map<String, SlotRealm> slotRealmsMap;
@@ -47,8 +46,7 @@ public class RealmFacade {
     private Map<String, SpeakerRealm> speakerRealmsMap;
     private Map<String, SponsorRealm> sponsorRealmMap;
 
-    public RealmFacade(Context context) {
-        this.context = context.getApplicationContext();
+    public RealmFacade() {
     }
 
     public void saveData(final ApiData apiData) {
@@ -333,7 +331,7 @@ public class RealmFacade {
         }
     }
 
-    public Optional<TalkViewModel> checkIfTalkConflicted(String talkKey) {
+    public Optional<TalkViewModel> getConflictedTalk(String talkKey) {
         try {
             realm = Realm.getDefaultInstance();
             TalkRealm talkRealm = loadTalkRealmByKey(talkKey);

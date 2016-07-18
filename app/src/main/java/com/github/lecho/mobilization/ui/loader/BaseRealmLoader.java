@@ -23,7 +23,7 @@ public abstract class BaseRealmLoader<T> extends AsyncTaskLoader<T> {
 
     protected BaseRealmLoader(Context context) {
         super(context.getApplicationContext());
-        this.realmFacade = new RealmFacade(getContext());
+        this.realmFacade = new RealmFacade();
     }
 
     @Override

@@ -159,8 +159,8 @@ public class Utils {
      * @return true if there is slot conflict
      */
     public static boolean checkSlotConflict(AppCompatActivity activity, String talkKey) {
-        RealmFacade realmFacade = new RealmFacade(activity.getApplicationContext());
-        Optional<TalkViewModel> optionalConflictedTalk = realmFacade.checkIfTalkConflicted(talkKey);
+        RealmFacade realmFacade = new RealmFacade();
+        Optional<TalkViewModel> optionalConflictedTalk = realmFacade.getConflictedTalk(talkKey);
         if (optionalConflictedTalk.isPresent()) {
             TalkViewModel conflictedTalk = optionalConflictedTalk.get();
             SlotConflictDialogFragment.show(activity, conflictedTalk.key, conflictedTalk.title, talkKey);

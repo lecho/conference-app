@@ -39,7 +39,7 @@ public class TalkAsyncHelper {
 
         @Override
         protected Void doInBackground(Void... params) {
-            RealmFacade realmFacade = new RealmFacade(context);
+            RealmFacade realmFacade = new RealmFacade();
             realmFacade.addTalkToMyAgenda(talkKey);
             return null;
         }
@@ -57,7 +57,7 @@ public class TalkAsyncHelper {
 
         @Override
         protected Void doInBackground(Void... params) {
-            RealmFacade realmFacade = new RealmFacade(context);
+            RealmFacade realmFacade = new RealmFacade();
             realmFacade.removeTalkFromMyAgenda(talkKey);
             return null;
         }
@@ -75,7 +75,7 @@ public class TalkAsyncHelper {
 
         @Override
         protected Void doInBackground(Void... params) {
-            RealmFacade realmFacade = new RealmFacade(context);
+            RealmFacade realmFacade = new RealmFacade();
             realmFacade.removeTalkFromMyAgendaSilent(talkKey);
             return null;
         }
@@ -95,7 +95,7 @@ public class TalkAsyncHelper {
 
         @Override
         protected Void doInBackground(Void... params) {
-            RealmFacade realmFacade = new RealmFacade(context);
+            RealmFacade realmFacade = new RealmFacade();
             realmFacade.replaceTalk(oldTalkKey, newTalkKey);
             return null;
         }

@@ -22,7 +22,7 @@ public class ContentUpdateService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         ApiFacade apiFacade = new ApiFacade();
         ApiData apiData = apiFacade.parseJsonFilesFromAssets(getApplicationContext());
-        RealmFacade realmFacade = new RealmFacade(getApplicationContext());
+        RealmFacade realmFacade = new RealmFacade();
         realmFacade.saveData(apiData);
     }
 }
