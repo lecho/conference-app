@@ -1,14 +1,13 @@
 package com.github.lecho.mobilization.realmmodel;
 
-import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.github.lecho.mobilization.apimodel.AgendaItemApiModel;
 import com.github.lecho.mobilization.apimodel.ApiData;
 import com.github.lecho.mobilization.apimodel.TalkApiModel;
-import com.github.lecho.mobilization.rx.MyAgendaUpdatedEvent;
 import com.github.lecho.mobilization.rx.DatabaseUpdatedEvent;
+import com.github.lecho.mobilization.rx.MyAgendaUpdatedEvent;
 import com.github.lecho.mobilization.rx.RxBus;
 import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.viewmodel.AgendaItemViewModel;
@@ -287,7 +286,7 @@ public class RealmFacade {
             SponsorRealm.SponsorViewConverter sponsorViewConverter = new SponsorRealm.SponsorViewConverter();
             realm = Realm.getDefaultInstance();
             RealmResults<SponsorRealm> sponsorRealms = realm.where(SponsorRealm.class).findAllSorted(
-                    new String[]{"priority", "name"},new Sort[]{Sort.ASCENDING, Sort.ASCENDING});
+                    new String[]{"priority", "name"}, new Sort[]{Sort.ASCENDING, Sort.ASCENDING});
             List<SponsorViewModel> sponsorViewModels = new ArrayList<>(sponsorRealms.size());
             for (SponsorRealm sponsorRealm : sponsorRealms) {
                 sponsorViewModels.add(sponsorViewConverter.convert(sponsorRealm));
@@ -318,7 +317,7 @@ public class RealmFacade {
             talkRealm.setIsInMyAgenda(isInMyAgenda);
             talkRealm.getSlot().setIsInMyAgenda(isInMyAgenda);
             realm.commitTransaction();
-            if(postUpdateEvent) {
+            if (postUpdateEvent) {
                 RxBus.post(new MyAgendaUpdatedEvent());
             }
         } catch (Exception e) {
