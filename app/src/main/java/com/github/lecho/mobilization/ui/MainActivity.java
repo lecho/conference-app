@@ -1,11 +1,13 @@
 package com.github.lecho.mobilization.ui;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -16,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.fragment.MyAgendaFragment;
@@ -30,15 +33,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Optional<EventViewModel>>,
-        MyAgendaFragment.OpenDrawerCallback {
+public class MainActivity extends AppCompatActivity implements MyAgendaFragment.OpenDrawerCallback {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String ARG_CHECKED_NAV_ITEM_ID = "checked-nav-item-id";
     private static int DRAWER_GRAVITY = GravityCompat.START;
     private static final int LOADER_ID = 0;
-    private NavViewController navViewController;
-    private int checkedNavItemId;
+    private NavigationViewManager navigationViewManager;
 
     @BindView(R.id.appbar)
     AppBarLayout appBar;
@@ -49,17 +50,66 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @BindView(R.id.navigation_view)
     NavigationView navigationView;
 
-    @BindView(R.id.drawer_layout)
+    @BindView(R.id.main_container)
     DrawerLayout drawerLayout;
+
+    //TODO make it possible to easly switch between navigation drawer and botom navigation bar
+    static class NavigationViewManager implements LoaderManager.LoaderCallbacks<Optional<EventViewModel>> {
+
+        private FragmentActivity activity;
+        private NavViewController navViewController;
+        private NavViewController.MenuItemListener navItemListener;
+        private int checkedNavItemId;
+
+        @BindView(R.id.navigation_view)
+        NavigationView navigationView;
+
+        public NavigationViewManager(FragmentActivity activity, NavViewController.MenuItemListener navItemListener) {
+            this.activity = activity;
+            this.navItemListener = navItemListener;
+        }
+
+        public void start(View view) {
+            ButterKnife.bind(this, view);
+            navViewController = new NavViewController(navigationView, navItemListener);
+            navViewController.bindHeaderImage(activity.getApplicationContext());
+            navViewController.bindMenu();
+            activity.getSupportLoaderManager().initLoader(LOADER_ID, null, this);
+        }
+
+        //TODO save checkedNavItem
+        public void setCheckedNavItemId(int checkedNavItemId) {
+            this.checkedNavItemId = checkedNavItemId;
+        }
+
+        @Override
+        public Loader<Optional<EventViewModel>> onCreateLoader(int id, Bundle args) {
+            if (id == LOADER_ID) {
+                return EventViewDataLoader.getLoader(activity.getApplicationContext());
+            }
+            return null;
+        }
+
+        @Override
+        public void onLoadFinished(Loader<Optional<EventViewModel>> loader, Optional<EventViewModel> eventViewModelOptional) {
+            if (loader.getId() == LOADER_ID) {
+                if (eventViewModelOptional.isPresent()) {
+                    navViewController.bindHeader(activity.getApplicationContext(), eventViewModelOptional.get());
+                }
+                navigationView.setCheckedItem(checkedNavItemId);
+            }
+        }
+
+        @Override
+        public void onLoaderReset(Loader<Optional<EventViewModel>> loader) {
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        navViewController = new NavViewController(navigationView, new MainActivityNavItemListener());
-        navViewController.bindHeaderImage(getApplicationContext());
-        navViewController.bindMenu();
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -75,7 +125,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         } else {
             checkedNavItemId = savedInstanceState.getInt(ARG_CHECKED_NAV_ITEM_ID);
         }
-        getSupportLoaderManager().initLoader(LOADER_ID, null, this);
+
+        navigationViewManager = new NavigationViewManager(this, new MainActivityNavItemListener());
+        navigationViewManager.start(drawerLayout);
     }
 
     @Override
@@ -128,27 +180,27 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
     }
 
-    @Override
-    public Loader<Optional<EventViewModel>> onCreateLoader(int id, Bundle args) {
-        if (id == LOADER_ID) {
-            return EventViewDataLoader.getLoader(getApplicationContext());
-        }
-        return null;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Optional<EventViewModel>> loader, Optional<EventViewModel> eventViewModelOptional) {
-        if (loader.getId() == LOADER_ID) {
-            if (eventViewModelOptional.isPresent()) {
-                navViewController.bindHeader(getApplicationContext(), eventViewModelOptional.get());
-            }
-            navigationView.setCheckedItem(checkedNavItemId);
-        }
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Optional<EventViewModel>> loader) {
-    }
+//    @Override
+//    public Loader<Optional<EventViewModel>> onCreateLoader(int id, Bundle args) {
+//        if (id == LOADER_ID) {
+//            return EventViewDataLoader.getLoader(getApplicationContext());
+//        }
+//        return null;
+//    }
+//
+//    @Override
+//    public void onLoadFinished(Loader<Optional<EventViewModel>> loader, Optional<EventViewModel> eventViewModelOptional) {
+//        if (loader.getId() == LOADER_ID) {
+//            if (eventViewModelOptional.isPresent()) {
+//                navViewController.bindHeader(getApplicationContext(), eventViewModelOptional.get());
+//            }
+//            navigationView.setCheckedItem(checkedNavItemId);
+//        }
+//    }
+//
+//    @Override
+//    public void onLoaderReset(Loader<Optional<EventViewModel>> loader) {
+//    }
 
     @Override
     public void onOpenDrawer() {
