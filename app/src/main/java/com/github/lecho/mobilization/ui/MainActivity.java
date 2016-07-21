@@ -1,6 +1,5 @@
 package com.github.lecho.mobilization.ui;
 
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,6 +24,7 @@ import com.github.lecho.mobilization.ui.fragment.MyAgendaFragment;
 import com.github.lecho.mobilization.ui.fragment.VenuesFragment;
 import com.github.lecho.mobilization.ui.loader.EventViewDataLoader;
 import com.github.lecho.mobilization.ui.navigation.NavViewController;
+import com.github.lecho.mobilization.ui.navigation.NavigationItemListener;
 import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.util.Utils;
 import com.github.lecho.mobilization.viewmodel.EventViewModel;
@@ -36,10 +36,8 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements MyAgendaFragment.OpenDrawerCallback {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    private static final String ARG_CHECKED_NAV_ITEM_ID = "checked-nav-item-id";
     private static int DRAWER_GRAVITY = GravityCompat.START;
-    private static final int LOADER_ID = 0;
-    private NavigationViewManager navigationViewManager;
+    private NavViewController navViewController;
 
     @BindView(R.id.appbar)
     AppBarLayout appBar;
@@ -52,58 +50,6 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
 
     @BindView(R.id.main_container)
     DrawerLayout drawerLayout;
-
-    //TODO make it possible to easly switch between navigation drawer and botom navigation bar
-    static class NavigationViewManager implements LoaderManager.LoaderCallbacks<Optional<EventViewModel>> {
-
-        private FragmentActivity activity;
-        private NavViewController navViewController;
-        private NavViewController.MenuItemListener navItemListener;
-        private int checkedNavItemId;
-
-        @BindView(R.id.navigation_view)
-        NavigationView navigationView;
-
-        public NavigationViewManager(FragmentActivity activity, NavViewController.MenuItemListener navItemListener) {
-            this.activity = activity;
-            this.navItemListener = navItemListener;
-        }
-
-        public void start(View view) {
-            ButterKnife.bind(this, view);
-            navViewController = new NavViewController(navigationView, navItemListener);
-            navViewController.bindHeaderImage(activity.getApplicationContext());
-            navViewController.bindMenu();
-            activity.getSupportLoaderManager().initLoader(LOADER_ID, null, this);
-        }
-
-        //TODO save checkedNavItem
-        public void setCheckedNavItemId(int checkedNavItemId) {
-            this.checkedNavItemId = checkedNavItemId;
-        }
-
-        @Override
-        public Loader<Optional<EventViewModel>> onCreateLoader(int id, Bundle args) {
-            if (id == LOADER_ID) {
-                return EventViewDataLoader.getLoader(activity.getApplicationContext());
-            }
-            return null;
-        }
-
-        @Override
-        public void onLoadFinished(Loader<Optional<EventViewModel>> loader, Optional<EventViewModel> eventViewModelOptional) {
-            if (loader.getId() == LOADER_ID) {
-                if (eventViewModelOptional.isPresent()) {
-                    navViewController.bindHeader(activity.getApplicationContext(), eventViewModelOptional.get());
-                }
-                navigationView.setCheckedItem(checkedNavItemId);
-            }
-        }
-
-        @Override
-        public void onLoaderReset(Loader<Optional<EventViewModel>> loader) {
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,37 +67,27 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
         if (savedInstanceState == null) {
             replaceFragment(MyAgendaFragment.newInstance());
             Utils.upgradeSchema(getApplicationContext());
-            checkedNavItemId = 0;
-        } else {
-            checkedNavItemId = savedInstanceState.getInt(ARG_CHECKED_NAV_ITEM_ID);
         }
 
-        navigationViewManager = new NavigationViewManager(this, new MainActivityNavItemListener());
-        navigationViewManager.start(drawerLayout);
+        navViewController = new NavViewController(this, drawerLayout, new MainActivityNavItemListener());
+        navViewController.start(savedInstanceState);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(ARG_CHECKED_NAV_ITEM_ID, checkedNavItemId);
+        navViewController.onSaveInstanceState(outState);
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         //Workaround:/ https://code.google.com/p/android/issues/detail?id=183334
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (drawerLayout.isDrawerOpen(DRAWER_GRAVITY)) {
-                drawerLayout.closeDrawer(DRAWER_GRAVITY);
-            } else {
-                onBackPressed();
-            }
+        boolean isEventHandled = navViewController.onKeyDown(keyCode, event);
+        if(isEventHandled){
             return true;
-        } else if (keyCode == KeyEvent.KEYCODE_MENU) {
-            if (drawerLayout.isDrawerOpen(DRAWER_GRAVITY)) {
-                drawerLayout.closeDrawer(DRAWER_GRAVITY);
-            } else {
-                drawerLayout.openDrawer(DRAWER_GRAVITY);
-            }
+        }
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            onBackPressed();
             return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -180,39 +116,15 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
         }
     }
 
-//    @Override
-//    public Loader<Optional<EventViewModel>> onCreateLoader(int id, Bundle args) {
-//        if (id == LOADER_ID) {
-//            return EventViewDataLoader.getLoader(getApplicationContext());
-//        }
-//        return null;
-//    }
-//
-//    @Override
-//    public void onLoadFinished(Loader<Optional<EventViewModel>> loader, Optional<EventViewModel> eventViewModelOptional) {
-//        if (loader.getId() == LOADER_ID) {
-//            if (eventViewModelOptional.isPresent()) {
-//                navViewController.bindHeader(getApplicationContext(), eventViewModelOptional.get());
-//            }
-//            navigationView.setCheckedItem(checkedNavItemId);
-//        }
-//    }
-//
-//    @Override
-//    public void onLoaderReset(Loader<Optional<EventViewModel>> loader) {
-//    }
-
     @Override
     public void onOpenDrawer() {
         drawerLayout.openDrawer(DRAWER_GRAVITY);
     }
 
-    private class MainActivityNavItemListener implements NavViewController.MenuItemListener {
+    private class MainActivityNavItemListener implements NavigationItemListener {
 
         @Override
-        public void onItemClick(@NonNull MenuItem item, @NonNull Fragment fragment) {
-            checkedNavItemId = item.getItemId();
-            drawerLayout.closeDrawer(DRAWER_GRAVITY);
+        public void onItemClick(int itemId, @NonNull Fragment fragment) {
             replaceFragment(fragment);
         }
     }
