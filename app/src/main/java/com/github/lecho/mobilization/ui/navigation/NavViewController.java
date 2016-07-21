@@ -31,21 +31,6 @@ import butterknife.ButterKnife;
  */
 public class NavViewController {
 
-    /**
-     * Int def with different types of navigation items, alternative to enum.
-     * Note. IntDef causes problems when storing int the bundle.
-     */
-    @Retention(RetentionPolicy.CLASS)
-    @IntDef({NAVIGATION_MY_AGENDA, NAVIGATION_VENUE, NAVIGATION_SPEAKERS, NAVIGATION_SPONSORS, NAVIGATION_ABOUT})
-    public @interface NavItemType {
-    }
-
-    private static final int NAVIGATION_MY_AGENDA = 0;
-    private static final int NAVIGATION_VENUE = 1;
-    private static final int NAVIGATION_SPEAKERS = 2;
-    private static final int NAVIGATION_SPONSORS = 3;
-    private static final int NAVIGATION_ABOUT = 4;
-
     private final NavHeaderController navHeaderController;
     private final NavMenuController navMenuController;
 
