@@ -1,15 +1,14 @@
 package com.github.lecho.mobilization.ui;
 
+import android.animation.AnimatorInflater;
+import android.animation.StateListAnimator;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -17,17 +16,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.fragment.MyAgendaFragment;
 import com.github.lecho.mobilization.ui.fragment.VenuesFragment;
-import com.github.lecho.mobilization.ui.loader.EventViewDataLoader;
 import com.github.lecho.mobilization.ui.navigation.NavViewController;
 import com.github.lecho.mobilization.ui.navigation.NavigationItemListener;
-import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.util.Utils;
-import com.github.lecho.mobilization.viewmodel.EventViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -83,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         //Workaround:/ https://code.google.com/p/android/issues/detail?id=183334
         boolean isEventHandled = navViewController.onKeyDown(keyCode, event);
-        if(isEventHandled){
+        if (isEventHandled) {
             return true;
         }
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -98,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
         int id = item.getItemId();
         switch (id) {
             case android.R.id.home:
-                drawerLayout.openDrawer(DRAWER_GRAVITY);
+                navViewController.open();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -107,15 +102,26 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
     public void replaceFragment(@NonNull Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_container, fragment).commit();
+        showAppBarShadow();
+    }
+
+    public void showAppBarShadow() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            if (fragment instanceof VenuesFragment) {
-                appBar.setElevation(0);
-            } else {
-                appBar.setElevation(getResources().getDimension(R.dimen.appbar_elevation));
-            }
+            StateListAnimator animator = AnimatorInflater.loadStateListAnimator(getApplicationContext(), R.drawable
+                    .selector_appbar_shadow);
+            appBar.setStateListAnimator(animator);
         }
     }
 
+    public void hideAppBarShadow() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            StateListAnimator animator = AnimatorInflater.loadStateListAnimator(getApplicationContext(), R.drawable
+                    .selector_appbar_no_shadow);
+            appBar.setStateListAnimator(animator);
+        }
+    }
+
+    //TODO Get rid of this method
     @Override
     public void onOpenDrawer() {
         drawerLayout.openDrawer(DRAWER_GRAVITY);

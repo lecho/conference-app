@@ -68,6 +68,10 @@ public class NavViewController implements LoaderManager.LoaderCallbacks<Optional
         activity.getSupportLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
+    public void open(){
+        drawerLayout.openDrawer(DRAWER_GRAVITY);
+    }
+
     public void onSaveInstanceState(Bundle outState) {
         outState.putInt(ARG_CHECKED_NAV_ITEM_ID, checkedNavItemId);
     }
