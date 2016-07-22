@@ -1,7 +1,5 @@
 package com.github.lecho.mobilization.ui.fragment;
 
-import android.animation.AnimatorInflater;
-import android.animation.StateListAnimator;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;

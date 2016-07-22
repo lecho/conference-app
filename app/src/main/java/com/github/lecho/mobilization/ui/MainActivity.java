@@ -6,20 +6,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.fragment.MyAgendaFragment;
-import com.github.lecho.mobilization.ui.fragment.VenuesFragment;
 import com.github.lecho.mobilization.ui.navigation.NavViewController;
 import com.github.lecho.mobilization.ui.navigation.NavigationItemListener;
 import com.github.lecho.mobilization.util.Utils;
@@ -31,7 +28,6 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements MyAgendaFragment.OpenDrawerCallback {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    private static int DRAWER_GRAVITY = GravityCompat.START;
     private NavViewController navViewController;
 
     @BindView(R.id.appbar)
@@ -40,11 +36,8 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.navigation_view)
-    NavigationView navigationView;
-
     @BindView(R.id.main_container)
-    DrawerLayout drawerLayout;
+    View mainContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
             Utils.upgradeSchema(getApplicationContext());
         }
 
-        navViewController = new NavViewController(this, drawerLayout, new MainActivityNavItemListener());
+        navViewController = new NavViewController(this, mainContainer, new MainActivityNavItemListener());
         navViewController.start(savedInstanceState);
     }
 
@@ -124,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
     //TODO Get rid of this method
     @Override
     public void onOpenDrawer() {
-        drawerLayout.openDrawer(DRAWER_GRAVITY);
+        navViewController.open();
     }
 
     private class MainActivityNavItemListener implements NavigationItemListener {
