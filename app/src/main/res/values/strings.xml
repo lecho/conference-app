@@ -17,6 +17,7 @@
     <string name="navigation_speakers">Speakers</string>
     <string name="navigation_sponsors">Sponsors</string>
     <string name="navigation_about">About</string>
+    <string name="navigation_event">Event</string>
 
     <string name="info_card_title">Info</string>
     <string name="speakers_card_title">Speakers</string>

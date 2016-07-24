@@ -2,6 +2,7 @@ package com.github.lecho.mobilization.ui;
 
 import android.animation.AnimatorInflater;
 import android.animation.StateListAnimator;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,6 +16,8 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.fragment.MyAgendaFragment;
 import com.github.lecho.mobilization.ui.navigation.NavViewController;
@@ -23,7 +26,6 @@ import com.github.lecho.mobilization.util.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import it.sephiroth.android.library.bottomnavigation.BottomNavigation;
 
 
 public class MainActivity extends AppCompatActivity implements MyAgendaFragment.OpenDrawerCallback {
@@ -39,9 +41,6 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
 
     @BindView(R.id.main_container)
     View mainContainer;
-
-    @BindView(R.id.bottom_bar)
-    BottomNavigation bottomBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +58,13 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
 
         //navViewController = new NavViewController(this, mainContainer, new MainActivityNavItemListener());
         //navViewController.start(savedInstanceState);
+
+        AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
+        AHBottomNavigationAdapter navigationAdapter = new AHBottomNavigationAdapter(this, R.menu.menu_bottom_bar);
+        navigationAdapter.setupWithBottomNavigation(bottomNavigation, null);
+
+        bottomNavigation.setAccentColor(getResources().getColor(R.color.primary));
+//        bottomNavigation.setInactiveColor(getResources().getColor(R.color.primary));
     }
 
     private void setUpHomeButton() {
