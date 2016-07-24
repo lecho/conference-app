@@ -44,7 +44,7 @@ public class NavViewController implements LoaderManager.LoaderCallbacks<Optional
     private final NavHeaderController navHeaderController;
     private final NavMenuController navMenuController;
 
-    @BindView(R.id.navigation_view)
+    //@BindView(R.id.navigation_view)
     NavigationView navigationView;
 
     @BindView(R.id.main_container)

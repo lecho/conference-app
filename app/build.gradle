@@ -16,7 +16,7 @@ android {
     buildToolsVersion "24.0.0"
     defaultConfig {
         applicationId "com.github.lecho.mobilization"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 24
         versionCode 3
         versionName "1.2"
@@ -54,4 +54,5 @@ dependencies {
     compile 'com.android.support:support-v4:24.1.1'
     compile 'io.reactivex:rxjava:1.1.7'
     compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'it.sephiroth.android.library.bottomnavigation:bottom-navigation:1.0.7'
 }

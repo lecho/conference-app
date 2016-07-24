@@ -23,6 +23,7 @@ import com.github.lecho.mobilization.util.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import it.sephiroth.android.library.bottomnavigation.BottomNavigation;
 
 
 public class MainActivity extends AppCompatActivity implements MyAgendaFragment.OpenDrawerCallback {
@@ -39,6 +40,9 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
     @BindView(R.id.main_container)
     View mainContainer;
 
+    @BindView(R.id.bottom_bar)
+    BottomNavigation bottomBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,34 +50,38 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        setUpHomeButton();
 
         if (savedInstanceState == null) {
             replaceFragment(MyAgendaFragment.newInstance());
             Utils.upgradeSchema(getApplicationContext());
         }
 
-        navViewController = new NavViewController(this, mainContainer, new MainActivityNavItemListener());
-        navViewController.start(savedInstanceState);
+        //navViewController = new NavViewController(this, mainContainer, new MainActivityNavItemListener());
+        //navViewController.start(savedInstanceState);
+    }
+
+    private void setUpHomeButton() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        navViewController.onSaveInstanceState(outState);
+        //navViewController.onSaveInstanceState(outState);
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         //Workaround:/ https://code.google.com/p/android/issues/detail?id=183334
-        boolean isEventHandled = navViewController.onKeyDown(keyCode, event);
-        if (isEventHandled) {
-            return true;
-        }
+        //boolean isEventHandled = navViewController.onKeyDown(keyCode, event);
+        //if (isEventHandled) {
+        //    return true;
+        //}
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             onBackPressed();
             return true;
@@ -86,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
         int id = item.getItemId();
         switch (id) {
             case android.R.id.home:
-                navViewController.open();
+                //navViewController.open();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -117,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
     //TODO Get rid of this method
     @Override
     public void onOpenDrawer() {
-        navViewController.open();
+        //navViewController.open();
     }
 
     private class MainActivityNavItemListener implements NavigationItemListener {
