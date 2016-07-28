@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Leszek on 2015-10-10.
  */
-public class NavViewController implements LoaderManager.LoaderCallbacks<Optional<EventViewModel>> {
+public class NavigationDrawerController implements LoaderManager.LoaderCallbacks<Optional<EventViewModel>> {
 
     private static final String ARG_CHECKED_NAV_ITEM_ID = "checked-nav-item-id";
     private static int DRAWER_GRAVITY = GravityCompat.START;
@@ -50,7 +50,7 @@ public class NavViewController implements LoaderManager.LoaderCallbacks<Optional
     @BindView(R.id.main_container)
     DrawerLayout drawerLayout;
 
-    public NavViewController(FragmentActivity activity, View mainContainer, NavigationItemListener navItemListener) {
+    public NavigationDrawerController(FragmentActivity activity, View mainContainer, NavigationItemListener navItemListener) {
         ButterKnife.bind(this, mainContainer);
         this.activity = activity;
         this.navHeaderController = new NavHeaderController(navigationView);

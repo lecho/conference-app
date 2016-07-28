@@ -2,7 +2,6 @@ package com.github.lecho.mobilization.ui;
 
 import android.animation.AnimatorInflater;
 import android.animation.StateListAnimator;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,7 +19,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.fragment.MyAgendaFragment;
-import com.github.lecho.mobilization.ui.navigation.NavViewController;
+import com.github.lecho.mobilization.ui.navigation.NavigationDrawerController;
 import com.github.lecho.mobilization.ui.navigation.NavigationItemListener;
 import com.github.lecho.mobilization.util.Utils;
 
@@ -31,7 +30,7 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements MyAgendaFragment.OpenDrawerCallback {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    private NavViewController navViewController;
+    private NavigationDrawerController navViewController;
 
     @BindView(R.id.appbar)
     AppBarLayout appBar;
@@ -56,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
             Utils.upgradeSchema(getApplicationContext());
         }
 
-        //navViewController = new NavViewController(this, mainContainer, new MainActivityNavItemListener());
+        //navViewController = new NavigationDrawerController(this, mainContainer, new MainActivityNavItemListener());
         //navViewController.start(savedInstanceState);
 
         AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
