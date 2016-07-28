@@ -19,7 +19,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.fragment.MyAgendaFragment;
-import com.github.lecho.mobilization.ui.navigation.NavigationDrawerController;
+import com.github.lecho.mobilization.ui.navigation.NavigationController;
 import com.github.lecho.mobilization.ui.navigation.NavigationItemListener;
 import com.github.lecho.mobilization.util.Utils;
 
@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements MyAgendaFragment.OpenDrawerCallback {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    private NavigationDrawerController navViewController;
+    private NavigationController navViewController;
 
     @BindView(R.id.appbar)
     AppBarLayout appBar;

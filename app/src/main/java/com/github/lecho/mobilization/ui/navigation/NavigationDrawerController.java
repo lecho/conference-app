@@ -34,7 +34,8 @@ import butterknife.ButterKnife;
 /**
  * Created by Leszek on 2015-10-10.
  */
-public class NavigationDrawerController implements LoaderManager.LoaderCallbacks<Optional<EventViewModel>> {
+public class NavigationDrawerController implements NavigationController,
+        LoaderManager.LoaderCallbacks<Optional<EventViewModel>> {
 
     private static final String ARG_CHECKED_NAV_ITEM_ID = "checked-nav-item-id";
     private static int DRAWER_GRAVITY = GravityCompat.START;
@@ -57,6 +58,7 @@ public class NavigationDrawerController implements LoaderManager.LoaderCallbacks
         this.navMenuController = new NavMenuController(drawerLayout, navigationView, navItemListener);
     }
 
+    @Override
     public void start(Bundle savedInstanceState) {
         bindHeaderImage(activity.getApplicationContext());
         bindMenu();
@@ -68,14 +70,17 @@ public class NavigationDrawerController implements LoaderManager.LoaderCallbacks
         activity.getSupportLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
+    @Override
     public void open(){
         drawerLayout.openDrawer(DRAWER_GRAVITY);
     }
 
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putInt(ARG_CHECKED_NAV_ITEM_ID, checkedNavItemId);
     }
 
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         //Workaround:/ https://code.google.com/p/android/issues/detail?id=183334
         if (keyCode == KeyEvent.KEYCODE_BACK) {
