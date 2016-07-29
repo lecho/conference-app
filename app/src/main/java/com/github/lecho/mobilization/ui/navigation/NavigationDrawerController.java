@@ -51,11 +51,11 @@ public class NavigationDrawerController implements NavigationController,
     @BindView(R.id.main_container)
     DrawerLayout drawerLayout;
 
-    public NavigationDrawerController(FragmentActivity activity, View mainContainer, NavigationItemListener navItemListener) {
+    public NavigationDrawerController(FragmentActivity activity, View mainContainer, NavigationItemListener navigationItemListener) {
         ButterKnife.bind(this, mainContainer);
         this.activity = activity;
         this.navHeaderController = new NavHeaderController(navigationView);
-        this.navMenuController = new NavMenuController(drawerLayout, navigationView, navItemListener);
+        this.navMenuController = new NavMenuController(drawerLayout, navigationView, navigationItemListener);
     }
 
     @Override
@@ -200,7 +200,7 @@ public class NavigationDrawerController implements NavigationController,
                 @Override
                 public boolean onNavigationItemSelected(MenuItem item) {
 
-                    Fragment fragment;
+                    final Fragment fragment;
                     switch (item.getItemId()) {
                         case R.id.nav_my_agenda:
                             fragment = MyAgendaFragment.newInstance();
