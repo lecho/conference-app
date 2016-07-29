@@ -19,6 +19,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.fragment.MyAgendaFragment;
+import com.github.lecho.mobilization.ui.navigation.BottomNavigationController;
 import com.github.lecho.mobilization.ui.navigation.NavigationController;
 import com.github.lecho.mobilization.ui.navigation.NavigationItemListener;
 import com.github.lecho.mobilization.util.Utils;
@@ -30,7 +31,7 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements MyAgendaFragment.OpenDrawerCallback {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    private NavigationController navViewController;
+    private NavigationController navigationController;
 
     @BindView(R.id.appbar)
     AppBarLayout appBar;
@@ -55,15 +56,8 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
             Utils.upgradeSchema(getApplicationContext());
         }
 
-        //navViewController = new NavigationDrawerController(this, mainContainer, new MainActivityNavItemListener());
-        //navViewController.start(savedInstanceState);
-
-        AHBottomNavigation bottomNavigation = (AHBottomNavigation) findViewById(R.id.bottom_navigation);
-        AHBottomNavigationAdapter navigationAdapter = new AHBottomNavigationAdapter(this, R.menu.menu_bottom_bar);
-        navigationAdapter.setupWithBottomNavigation(bottomNavigation, null);
-
-        bottomNavigation.setAccentColor(getResources().getColor(R.color.primary));
-//        bottomNavigation.setInactiveColor(getResources().getColor(R.color.primary));
+        navigationController = new BottomNavigationController(this, mainContainer, new MainActivityNavItemListener());
+        navigationController.start(savedInstanceState);
     }
 
     private void setUpHomeButton() {
@@ -77,16 +71,16 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        //navViewController.onSaveInstanceState(outState);
+        navigationController.onSaveInstanceState(outState);
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         //Workaround:/ https://code.google.com/p/android/issues/detail?id=183334
-        //boolean isEventHandled = navViewController.onKeyDown(keyCode, event);
-        //if (isEventHandled) {
-        //    return true;
-        //}
+        boolean isEventHandled = navigationController.onKeyDown(keyCode, event);
+        if (isEventHandled) {
+            return true;
+        }
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             onBackPressed();
             return true;
@@ -99,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
         int id = item.getItemId();
         switch (id) {
             case android.R.id.home:
-                //navViewController.open();
+                navigationController.open();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -130,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
     //TODO Get rid of this method
     @Override
     public void onOpenDrawer() {
-        //navViewController.open();
+        navigationController.open();
     }
 
     private class MainActivityNavItemListener implements NavigationItemListener {
