@@ -20,14 +20,16 @@ import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.MainActivity;
 import com.github.lecho.mobilization.ui.controller.VenueViewController;
 import com.github.lecho.mobilization.ui.loader.VenuesViewDataLoader;
+import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.viewmodel.VenueViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class VenuesFragment extends Fragment implements LoaderManager
+public class VenuesFragment extends Fragment implements Scrollable, LoaderManager
         .LoaderCallbacks<List<VenueViewModel>> {
 
     public static final String TAG = VenuesFragment.class.getSimpleName();
@@ -89,12 +91,23 @@ public class VenuesFragment extends Fragment implements LoaderManager
     public void onLoaderReset(Loader<List<VenueViewModel>> loader) {
     }
 
+    @Override
+    public void scrollToTop() {
+        final int currentPosition = viewPager.getCurrentItem();
+        final Optional<VenueViewController> venueViewController = pagerAdapter.getVenueViewController(currentPosition);
+        if (venueViewController.isPresent()) {
+            venueViewController.get().scrollToTop();
+        }
+    }
+
     private class VenuePagerAdapter extends PagerAdapter {
 
         private List<VenueViewModel> venues;
+        private VenueViewController[] controllers;
 
         public VenuePagerAdapter(List<VenueViewModel> venueViewModels) {
             this.venues = venueViewModels;
+            this.controllers = new VenueViewController[venues.size()];
         }
 
         @Override
@@ -116,6 +129,7 @@ public class VenuesFragment extends Fragment implements LoaderManager
         @Override
         public void destroyItem(ViewGroup collection, int position, Object view) {
             collection.removeView((View) view);
+            controllers[position] = null;
         }
 
         @Override
@@ -125,8 +139,12 @@ public class VenuesFragment extends Fragment implements LoaderManager
                     LinearLayoutManager(getContext()), venues.get(position), view, position);
             controller.bindView();
             collection.addView(view);
+            controllers[position] = controller;
             return view;
         }
-    }
 
+        public Optional<VenueViewController> getVenueViewController(int position) {
+            return Optional.of(controllers[position]);
+        }
+    }
 }

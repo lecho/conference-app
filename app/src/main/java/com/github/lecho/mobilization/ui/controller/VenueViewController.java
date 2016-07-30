@@ -13,6 +13,7 @@ import android.view.View;
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.async.TalkAsyncHelper;
 import com.github.lecho.mobilization.ui.adapter.AgendaAdapter;
+import com.github.lecho.mobilization.ui.fragment.Scrollable;
 import com.github.lecho.mobilization.ui.fragment.VenuesFragment;
 import com.github.lecho.mobilization.ui.loader.AgendaLoader;
 import com.github.lecho.mobilization.util.Utils;
@@ -29,7 +30,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Leszek on 14.07.2016.
  */
-public class VenueViewController {
+public class VenueViewController implements Scrollable {
 
     private static final int BASE_LOADER_ID = 10;
     private final Activity activity;
@@ -57,6 +58,11 @@ public class VenueViewController {
         final int loaderId = BASE_LOADER_ID + position;
         VenueLoaderCallbacks venueLoaderCallbacks = new VenueLoaderCallbacks(activity, loaderId, venueViewModel.key);
         loaderManager.initLoader(loaderId, null, venueLoaderCallbacks);
+    }
+
+    @Override
+    public void scrollToTop() {
+        recyclerView.smoothScrollToPosition(0);
     }
 
     private class VenueLoaderCallbacks implements LoaderManager.LoaderCallbacks<AgendaViewModel> {

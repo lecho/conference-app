@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Leszek on 2015-07-08.
  */
-public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCallbacks<AgendaViewModel> {
+public class MyAgendaFragment extends Fragment implements Scrollable, LoaderManager.LoaderCallbacks<AgendaViewModel> {
 
     public static final String TAG = MyAgendaFragment.class.getSimpleName();
     private static final int LOADER_ID = 0;
@@ -110,6 +110,11 @@ public class MyAgendaFragment extends Fragment implements LoaderManager.LoaderCa
         if (loader.getId() == LOADER_ID) {
             adapter.setData(Collections.<AgendaItemViewModel>emptyList());
         }
+    }
+
+    @Override
+    public void scrollToTop() {
+        recyclerView.smoothScrollToPosition(0);
     }
 
     private class AgendaItemTouchCallback extends ItemTouchHelper.SimpleCallback {

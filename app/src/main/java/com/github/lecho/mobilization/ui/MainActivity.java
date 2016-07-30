@@ -15,10 +15,9 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.fragment.MyAgendaFragment;
+import com.github.lecho.mobilization.ui.fragment.Scrollable;
 import com.github.lecho.mobilization.ui.navigation.BottomNavigationController;
 import com.github.lecho.mobilization.ui.navigation.NavigationController;
 import com.github.lecho.mobilization.ui.navigation.NavigationItemListener;
@@ -49,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
+        //TODO home button depends on navigation implementation(maybe remove it)
         setUpHomeButton();
 
         if (savedInstanceState == null) {
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
         int id = item.getItemId();
         switch (id) {
             case android.R.id.home:
-                navigationController.open();
+                navigationController.show();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
     //TODO Get rid of this method
     @Override
     public void onOpenDrawer() {
-        navigationController.open();
+        navigationController.show();
     }
 
     private class MainActivityNavItemListener implements NavigationItemListener {
@@ -132,6 +132,14 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
         @Override
         public void onItemClick(int itemId, @NonNull Fragment fragment) {
             replaceFragment(fragment);
+        }
+
+        @Override
+        public void onItemReselected(int itemId) {
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.content_container);
+            if (fragment instanceof Scrollable) {
+                ((Scrollable)fragment).scrollToTop();
+            }
         }
     }
 }

@@ -53,8 +53,13 @@ public class BottomNavigationController implements NavigationController {
     }
 
     @Override
-    public void open() {
-        //do nothing, bottom navigation is always opened.
+    public void show() {
+        //do nothing, bottom navigation is always visible.
+    }
+
+    @Override
+    public void openItem(int position) {
+
     }
 
     @Override
@@ -72,7 +77,15 @@ public class BottomNavigationController implements NavigationController {
 
         @Override
         public boolean onTabSelected(int position, boolean wasSelected) {
-            //TODO use wasSelected flag
+            if (wasSelected) {
+                reselectTab(position);
+            } else {
+                selectTab(position);
+            }
+            return true;
+        }
+
+        private void selectTab(int position) {
             final Fragment fragment;
             switch (position) {
                 case 0:
@@ -88,7 +101,10 @@ public class BottomNavigationController implements NavigationController {
                     throw new IllegalArgumentException("Invalid navigation item position: " + position);
             }
             navigationItemListener.onItemClick(position, fragment);
-            return true;
+        }
+
+        private void reselectTab(int position) {
+            navigationItemListener.onItemReselected(position);
         }
     }
 }

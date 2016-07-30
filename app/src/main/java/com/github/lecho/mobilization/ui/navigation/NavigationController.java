@@ -10,7 +10,9 @@ public interface NavigationController {
 
     public void start(Bundle savedInstanceState);
 
-    public void open();
+    public void show();
+
+    public void openItem(int position);
 
     public void onSaveInstanceState(Bundle outState);
 

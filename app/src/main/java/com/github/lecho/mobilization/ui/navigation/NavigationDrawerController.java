@@ -71,8 +71,13 @@ public class NavigationDrawerController implements NavigationController,
     }
 
     @Override
-    public void open(){
+    public void show(){
         drawerLayout.openDrawer(DRAWER_GRAVITY);
+    }
+
+    @Override
+    public void openItem(int position) {
+
     }
 
     @Override
