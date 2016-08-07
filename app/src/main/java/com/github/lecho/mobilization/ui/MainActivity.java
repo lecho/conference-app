@@ -20,6 +20,7 @@ import com.github.lecho.mobilization.ui.fragment.MyAgendaFragment;
 import com.github.lecho.mobilization.ui.fragment.Scrollable;
 import com.github.lecho.mobilization.ui.navigation.BottomNavigationController;
 import com.github.lecho.mobilization.ui.navigation.NavigationController;
+import com.github.lecho.mobilization.ui.navigation.NavigationDrawerController;
 import com.github.lecho.mobilization.ui.navigation.NavigationItemListener;
 import com.github.lecho.mobilization.util.Utils;
 
@@ -49,24 +50,33 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
 
         setSupportActionBar(toolbar);
         //TODO home button depends on navigation implementation(maybe remove it)
-        setUpHomeButton();
+        //setUpHomeButton();
 
         if (savedInstanceState == null) {
             replaceFragment(MyAgendaFragment.newInstance());
             Utils.upgradeSchema(getApplicationContext());
         }
 
-        navigationController = new BottomNavigationController(this, mainContainer, new MainActivityNavItemListener());
+        setUpNavigation(savedInstanceState);
+    }
+
+    private void setUpNavigation(Bundle savedInstanceState) {
+        final boolean isNavigationDrawerEnabled = getResources().getBoolean(R.bool.is_navigation_drawer_enabled);
+        if (isNavigationDrawerEnabled) {
+            navigationController = new NavigationDrawerController(this, mainContainer, new MainActivityNavItemListener());
+        } else {
+            navigationController = new BottomNavigationController(this, mainContainer, new MainActivityNavItemListener());
+        }
         navigationController.start(savedInstanceState);
     }
 
-    private void setUpHomeButton() {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-    }
+//    private void setUpHomeButton() {
+//        ActionBar actionBar = getSupportActionBar();
+//        if (actionBar != null) {
+//            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+//            actionBar.setDisplayHomeAsUpEnabled(true);
+//        }
+//    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
