@@ -38,24 +38,20 @@ public class NavigationDrawerController implements NavigationController,
         LoaderManager.LoaderCallbacks<Optional<EventViewModel>> {
 
     private static final String ARG_CHECKED_NAV_ITEM_ID = "checked-nav-item-id";
-    private static int DRAWER_GRAVITY = GravityCompat.START;
     private static final int LOADER_ID = 0;
     private final FragmentActivity activity;
     private int checkedNavItemId;
     private final NavHeaderController navHeaderController;
     private final NavMenuController navMenuController;
 
-    //@BindView(R.id.navigation_view)
+    @BindView(R.id.navigation_view)
     NavigationView navigationView;
-
-    @BindView(R.id.main_container)
-    DrawerLayout drawerLayout;
 
     public NavigationDrawerController(FragmentActivity activity, View mainContainer, NavigationItemListener navigationItemListener) {
         ButterKnife.bind(this, mainContainer);
         this.activity = activity;
         this.navHeaderController = new NavHeaderController(navigationView);
-        this.navMenuController = new NavMenuController(drawerLayout, navigationView, navigationItemListener);
+        this.navMenuController = new NavMenuController(navigationView, navigationItemListener);
     }
 
     @Override
@@ -72,7 +68,6 @@ public class NavigationDrawerController implements NavigationController,
 
     @Override
     public void show(){
-        drawerLayout.openDrawer(DRAWER_GRAVITY);
     }
 
     @Override
@@ -87,22 +82,6 @@ public class NavigationDrawerController implements NavigationController,
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        //Workaround:/ https://code.google.com/p/android/issues/detail?id=183334
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (drawerLayout.isDrawerOpen(DRAWER_GRAVITY)) {
-                drawerLayout.closeDrawer(DRAWER_GRAVITY);
-                return true;
-            } else {
-                return false;
-            }
-        } else if (keyCode == KeyEvent.KEYCODE_MENU) {
-            if (drawerLayout.isDrawerOpen(DRAWER_GRAVITY)) {
-                drawerLayout.closeDrawer(DRAWER_GRAVITY);
-            } else {
-                drawerLayout.openDrawer(DRAWER_GRAVITY);
-            }
-            return true;
-        }
         return false;
     }
 
@@ -189,13 +168,10 @@ public class NavigationDrawerController implements NavigationController,
 
     private static class NavMenuController {
 
-        private final DrawerLayout drawerLayout;
         private final NavigationView navigationView;
         private final NavigationItemListener listener;
 
-        public NavMenuController(@NonNull DrawerLayout drawerLayout, @NonNull NavigationView navigationView,
-                                 @NonNull NavigationItemListener listener) {
-            this.drawerLayout = drawerLayout;
+        public NavMenuController(@NonNull NavigationView navigationView, @NonNull NavigationItemListener listener) {
             this.navigationView = navigationView;
             this.listener = listener;
         }
@@ -225,7 +201,6 @@ public class NavigationDrawerController implements NavigationController,
                         default:
                             throw new IllegalArgumentException("Invalid navigation item: " + item);
                     }
-                    drawerLayout.closeDrawer(DRAWER_GRAVITY);
                     listener.onItemClick(item.getItemId(), fragment);
                     return true;
                 }
