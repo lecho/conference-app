@@ -39,7 +39,7 @@ public class EventFragment extends Fragment implements LoaderManager.LoaderCallb
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getLoaderManager().initLoader(LOADER_ID, null, this);
-        //((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.title_activity_speakers);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.title_activity_event);
     }
 
     @Override

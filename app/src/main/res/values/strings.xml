@@ -10,6 +10,7 @@
     <string name="title_activity_speakers">Speakers</string>
     <string name="title_activity_sponsors">Sponsors</string>
     <string name="title_activity_about">About</string>
+    <string name="title_activity_event">Event</string>
 
     <string name="navigation_my_agenda">My agenda</string>
     <string name="navigation_venues">Tracks</string>
