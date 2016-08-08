@@ -49,8 +49,6 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
-        //TODO home button depends on navigation implementation(maybe remove it)
-        //setUpHomeButton();
 
         if (savedInstanceState == null) {
             replaceFragment(MyAgendaFragment.newInstance());
@@ -69,14 +67,6 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
         }
         navigationController.start(savedInstanceState);
     }
-
-//    private void setUpHomeButton() {
-//        ActionBar actionBar = getSupportActionBar();
-//        if (actionBar != null) {
-//            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-//            actionBar.setDisplayHomeAsUpEnabled(true);
-//        }
-//    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
