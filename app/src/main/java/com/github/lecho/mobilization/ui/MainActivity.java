@@ -75,20 +75,6 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        //Workaround:/ https://code.google.com/p/android/issues/detail?id=183334
-        boolean isEventHandled = navigationController.onKeyDown(keyCode, event);
-        if (isEventHandled) {
-            return true;
-        }
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            onBackPressed();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {

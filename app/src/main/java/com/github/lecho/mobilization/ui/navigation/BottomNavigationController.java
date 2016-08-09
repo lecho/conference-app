@@ -67,12 +67,6 @@ public class BottomNavigationController implements NavigationController {
 
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        //TODO return to home view
-        return false;
-    }
-
     private class BottomNavigationItemListener implements AHBottomNavigation.OnTabSelectedListener {
 
         @Override

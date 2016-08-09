@@ -16,5 +16,4 @@ public interface NavigationController {
 
     public void onSaveInstanceState(Bundle outState);
 
-    public boolean onKeyDown(int keyCode, KeyEvent event);
 }

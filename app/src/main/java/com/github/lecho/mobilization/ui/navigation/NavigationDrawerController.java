@@ -80,11 +80,6 @@ public class NavigationDrawerController implements NavigationController,
         outState.putInt(ARG_CHECKED_NAV_ITEM_ID, checkedNavItemId);
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return false;
-    }
-
     private void bindHeader(@NonNull Context context, @NonNull EventViewModel eventViewModel) {
         navHeaderController.bind(context, eventViewModel);
     }
