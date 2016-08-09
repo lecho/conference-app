@@ -22,12 +22,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class SponsorsFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<SponsorViewModel>> {
 
     public static final String TAG = SponsorsFragment.class.getSimpleName();
     private static final int LOADER_ID = 0;
     private SponsorsAdapter adapter;
+    private Unbinder unbinder;
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -49,12 +51,18 @@ public class SponsorsFragment extends Fragment implements LoaderManager.LoaderCa
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_speakers, container, false);
-        ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new SponsorsAdapter(getActivity());
         recyclerView.setAdapter(adapter);
         return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     @Override

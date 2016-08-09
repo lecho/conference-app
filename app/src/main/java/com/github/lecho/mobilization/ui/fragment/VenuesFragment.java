@@ -28,6 +28,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class VenuesFragment extends Fragment implements Scrollable, LoaderManager
         .LoaderCallbacks<List<VenueViewModel>> {
@@ -35,6 +36,7 @@ public class VenuesFragment extends Fragment implements Scrollable, LoaderManage
     public static final String TAG = VenuesFragment.class.getSimpleName();
     private static final int LOADER_ID = 0;
     private VenuePagerAdapter pagerAdapter;
+    private Unbinder unbinder;
 
     @BindView(R.id.view_pager)
     ViewPager viewPager;
@@ -57,9 +59,15 @@ public class VenuesFragment extends Fragment implements Scrollable, LoaderManage
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_venues, container, false);
-        ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
         tabLayout.setupWithViewPager(viewPager);
         return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     @Override

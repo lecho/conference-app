@@ -16,6 +16,7 @@ import com.github.lecho.mobilization.util.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by Leszek on 2015-07-08.
@@ -24,6 +25,7 @@ public class AboutFragment extends Fragment {
 
     public static final String TAG = AboutFragment.class.getSimpleName();
     public static final String GITHUB_PAGE = "https://github.com/lecho/conference-app-demo";
+    private Unbinder unbinder;
 
     @BindView(R.id.text_version)
     TextView versionView;
@@ -47,7 +49,7 @@ public class AboutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_about, container, false);
-        ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
         Pair<String, Integer> version = Utils.getAppVersionAndBuild(getContext());
         versionView.setText(version.first);
         githubButton.setOnClickListener(new View.OnClickListener() {
@@ -57,5 +59,11 @@ public class AboutFragment extends Fragment {
             }
         });
         return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

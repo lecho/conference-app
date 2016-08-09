@@ -27,6 +27,7 @@ import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by Leszek on 2015-07-08.
@@ -37,6 +38,7 @@ public class MyAgendaFragment extends Fragment implements Scrollable, LoaderMana
     private static final int LOADER_ID = 0;
     private AgendaAdapter adapter;
     private OpenDrawerCallback drawerCallback;
+    private Unbinder unbinder;
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -57,7 +59,7 @@ public class MyAgendaFragment extends Fragment implements Scrollable, LoaderMana
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.fragment_agenda, container, false);
-        ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
         //TODO Grid for tablet layout, adjust margins and paddings in layout
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new MyAgendaAdapter((AppCompatActivity) getActivity(), new StarTalkClickListener(),
@@ -66,6 +68,12 @@ public class MyAgendaFragment extends Fragment implements Scrollable, LoaderMana
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new AgendaItemTouchCallback());
         itemTouchHelper.attachToRecyclerView(recyclerView);
         return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     @Override

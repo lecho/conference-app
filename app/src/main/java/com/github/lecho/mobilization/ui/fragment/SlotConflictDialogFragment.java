@@ -14,6 +14,7 @@ import com.github.lecho.mobilization.async.TalkAsyncHelper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by Leszek on 2015-10-04.
@@ -27,6 +28,7 @@ public class SlotConflictDialogFragment extends AppCompatDialogFragment {
     private String oldTalkKey;
     private String newTalkKey;
     private String oldTalkTitle;
+    private Unbinder unbinder;
 
     @BindView(R.id.text_slot_conflict_old_talk_title)
     TextView oldTalkTitleView;
@@ -57,7 +59,7 @@ public class SlotConflictDialogFragment extends AppCompatDialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final AppCompatActivity activity = (AppCompatActivity) getActivity();
         View view = activity.getLayoutInflater().inflate(R.layout.dialog_fragment_slot_conflict, null, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
         oldTalkTitleView.setText(oldTalkTitle);
         return new AlertDialog.Builder(activity.getSupportActionBar().getThemedContext())
                 .setView(view)
@@ -65,6 +67,12 @@ public class SlotConflictDialogFragment extends AppCompatDialogFragment {
                 .setPositiveButton(R.string.dialog_slot_conflict_button_positive, new PositiveClickListener())
                 .setNegativeButton(R.string.dialog_slot_conflict_button_negative, new NegativeClickListener())
                 .create();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     private class PositiveClickListener implements DialogInterface.OnClickListener {
