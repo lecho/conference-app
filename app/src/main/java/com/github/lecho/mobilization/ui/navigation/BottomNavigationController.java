@@ -11,6 +11,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.fragment.AboutFragment;
+import com.github.lecho.mobilization.ui.fragment.EventFragment;
 import com.github.lecho.mobilization.ui.fragment.MyAgendaFragment;
 import com.github.lecho.mobilization.ui.fragment.SpeakersFragment;
 import com.github.lecho.mobilization.ui.fragment.SponsorsFragment;
@@ -89,7 +90,7 @@ public class BottomNavigationController implements NavigationController {
                     fragment = VenuesFragment.newInstance();
                     break;
                 case 2:
-                    fragment = SpeakersFragment.newInstance();
+                    fragment = EventFragment.newInstance();
                     break;
                 default:
                     throw new IllegalArgumentException("Invalid navigation item position: " + position);

@@ -20,8 +20,8 @@ public class EventFragment extends Fragment implements LoaderManager.LoaderCallb
     public static final String TAG = SpeakersFragment.class.getSimpleName();
     private static final int LOADER_ID = 0;
 
-    public static SpeakersFragment newInstance() {
-        SpeakersFragment fragment = new SpeakersFragment();
+    public static EventFragment newInstance() {
+        EventFragment fragment = new EventFragment();
         return fragment;
     }
 

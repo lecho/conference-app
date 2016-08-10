@@ -23,7 +23,6 @@ import com.github.lecho.mobilization.ui.loader.VenuesViewDataLoader;
 import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.viewmodel.VenueViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
