@@ -9,16 +9,31 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.loader.EventViewDataLoader;
 import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.viewmodel.EventViewModel;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 public class EventFragment extends Fragment implements LoaderManager.LoaderCallbacks<Optional<EventViewModel>> {
 
     public static final String TAG = SpeakersFragment.class.getSimpleName();
     private static final int LOADER_ID = 0;
+    private Unbinder unbinder;
+
+    @BindView(R.id.button_sponsors)
+    Button sponsorsButton;
+
+    @BindView(R.id.button_speakers)
+    Button speakersButton;
+
+    @BindView(R.id.button_mobile_app)
+    Button aboutAppButton;
 
     public static EventFragment newInstance() {
         EventFragment fragment = new EventFragment();
@@ -32,7 +47,15 @@ public class EventFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_event, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_event, container, false);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     @Override
