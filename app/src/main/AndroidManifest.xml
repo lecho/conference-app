@@ -28,6 +28,11 @@
             android:exported="false">
         </service>
 
+        <activity
+            android:name=".ui.SpeakersActivity"
+            android:label="@string/title_activity_speakers"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>

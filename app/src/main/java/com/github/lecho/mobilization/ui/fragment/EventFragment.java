@@ -1,5 +1,6 @@
 package com.github.lecho.mobilization.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.github.lecho.mobilization.R;
+import com.github.lecho.mobilization.ui.SpeakersActivity;
 import com.github.lecho.mobilization.ui.loader.EventViewDataLoader;
 import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.viewmodel.EventViewModel;
@@ -49,6 +51,7 @@ public class EventFragment extends Fragment implements LoaderManager.LoaderCallb
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_event, container, false);
         unbinder = ButterKnife.bind(this, rootView);
+        speakersButton.setOnClickListener(view -> startActivity(SpeakersActivity.class));
         return rootView;
     }
 
@@ -63,6 +66,11 @@ public class EventFragment extends Fragment implements LoaderManager.LoaderCallb
         super.onActivityCreated(savedInstanceState);
         getLoaderManager().initLoader(LOADER_ID, null, this);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.title_activity_event);
+    }
+
+    private void startActivity(Class activityClass){
+        Intent intent = new Intent(getActivity(), activityClass);
+        startActivity(intent);
     }
 
     @Override
