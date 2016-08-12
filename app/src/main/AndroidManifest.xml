@@ -33,6 +33,11 @@
             android:label="@string/title_activity_speakers"
             android:theme="@style/AppTheme">
         </activity>
+        <activity
+            android:name=".ui.SponsorsActivity"
+            android:label="@string/title_activity_sponsors"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>

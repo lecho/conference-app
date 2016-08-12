@@ -14,6 +14,7 @@ import android.widget.Button;
 
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.SpeakersActivity;
+import com.github.lecho.mobilization.ui.SponsorsActivity;
 import com.github.lecho.mobilization.ui.loader.EventViewDataLoader;
 import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.viewmodel.EventViewModel;
@@ -51,6 +52,7 @@ public class EventFragment extends Fragment implements LoaderManager.LoaderCallb
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_event, container, false);
         unbinder = ButterKnife.bind(this, rootView);
+        sponsorsButton.setOnClickListener(view -> startActivity(SponsorsActivity.class));
         speakersButton.setOnClickListener(view -> startActivity(SpeakersActivity.class));
         return rootView;
     }
