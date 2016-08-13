@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:background="@color/white"
     tools:context=".ui.MainActivity">
 
     <RelativeLayout
@@ -15,20 +16,25 @@
         android:orientation="vertical"
         android:paddingBottom="16dp">
 
-        <ImageView
-            android:id="@+id/header_image"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/header_image_height"
+        <TextView
+            android:id="@+id/event_title"
             android:layout_alignParentTop="true"
-            android:background="@color/accent"
-            android:scaleType="centerCrop"/>
+            android:layout_width="wrap_content"
+            android:layout_marginTop="72dp"
+            android:text="Mobilization VI"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="72dp"
+            android:textSize="32sp"
+            android:fontFamily="sans-serif-light"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
 
         <Button
             android:id="@+id/button_sponsors"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/header_image"
+            android:layout_below="@id/event_title"
             android:textAllCaps="false"
             android:gravity="center"
             android:text="Sponsors"/>
