@@ -80,7 +80,6 @@
             android:layout_height="56dp"
             android:layout_below="@id/button_map"
             android:layout_centerHorizontal="true"
-            android:layout_margin="8dp"
             android:text="Sponsors"
             android:textAllCaps="false"/>
 
@@ -91,7 +90,6 @@
             android:layout_height="56dp"
             android:layout_below="@id/button_sponsors"
             android:layout_centerHorizontal="true"
-            android:layout_margin="8dp"
             android:text="Speakers"/>
 
         <Button
@@ -101,7 +99,6 @@
             android:layout_height="56dp"
             android:layout_below="@id/button_speakers"
             android:layout_centerHorizontal="true"
-            android:layout_margin="8dp"
             android:text="About app"/>
     </RelativeLayout>
 
