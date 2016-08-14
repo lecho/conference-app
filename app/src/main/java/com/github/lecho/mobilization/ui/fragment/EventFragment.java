@@ -29,6 +29,9 @@ public class EventFragment extends Fragment implements LoaderManager.LoaderCallb
     private static final int LOADER_ID = 0;
     private Unbinder unbinder;
 
+    @BindView(R.id.button_map)
+    Button mapButton;
+
     @BindView(R.id.button_sponsors)
     Button sponsorsButton;
 

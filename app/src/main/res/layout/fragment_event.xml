@@ -33,13 +33,11 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="32sp"/>
         <TextView
-            android:id="@+id/text_1"
+            android:id="@+id/text_event_title_part2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
             android:layout_toRightOf="@id/text_event_title"
-            android:layout_marginTop="72dp"
+            android:layout_alignTop="@id/text_event_title"
             android:text="VI"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="18sp"/>
@@ -64,7 +62,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
 
         <Button
-            android:id="@+id/button_google_maps"
+            android:id="@+id/button_map"
             style="@style/ButtonWithBorder"
             android:layout_width="wrap_content"
             android:layout_height="56dp"
@@ -80,7 +78,7 @@
             style="@style/ButtonWithBorder"
             android:layout_width="180dp"
             android:layout_height="56dp"
-            android:layout_below="@id/button_google_maps"
+            android:layout_below="@id/button_map"
             android:layout_centerHorizontal="true"
             android:layout_margin="8dp"
             android:text="Sponsors"
