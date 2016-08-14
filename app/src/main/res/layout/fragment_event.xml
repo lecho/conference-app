@@ -16,48 +16,94 @@
         android:orientation="vertical"
         android:paddingBottom="16dp">
 
+        <ImageView
+            android:id="@+id/image_map"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"/>
+
         <TextView
-            android:id="@+id/event_title"
+            android:id="@+id/text_event_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="72dp"
             android:layout_marginTop="72dp"
             android:fontFamily="sans-serif-light"
-            android:text="Mobilization VI"
+            android:text="Mobilization"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="32sp"/>
+        <TextView
+            android:id="@+id/text_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@id/text_event_title"
+            android:layout_marginTop="72dp"
+            android:text="VI"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/text_event_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_event_title"
+            android:layout_centerHorizontal="true"
+            android:text="00 Oct 2015, 7:30 - 17:30"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+        <TextView
+            android:id="@+id/text_event_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_event_date"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:text="Some-Place Al. Politechniki 4, Łódź"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
 
         <Button
-            android:layout_margin="8dp"
+            android:id="@+id/button_google_maps"
+            style="@style/ButtonWithBorder"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/text_event_place"
+            android:layout_marginRight="8dp"
+            android:text="Map"
+            android:layout_marginBottom="16dp"
+            android:textAllCaps="false"/>
+
+        <Button
             android:id="@+id/button_sponsors"
             style="@style/ButtonWithBorder"
             android:layout_width="180dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/event_title"
+            android:layout_height="56dp"
+            android:layout_below="@id/button_google_maps"
             android:layout_centerHorizontal="true"
+            android:layout_margin="8dp"
             android:text="Sponsors"
             android:textAllCaps="false"/>
 
         <Button
             android:id="@+id/button_speakers"
-            android:layout_margin="8dp"
             style="@style/ButtonWithBorder"
             android:layout_width="180dp"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:layout_below="@id/button_sponsors"
             android:layout_centerHorizontal="true"
+            android:layout_margin="8dp"
             android:text="Speakers"/>
 
         <Button
             android:id="@+id/button_mobile_app"
-            android:layout_margin="8dp"
             style="@style/ButtonWithBorder"
             android:layout_width="180dp"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:layout_below="@id/button_speakers"
             android:layout_centerHorizontal="true"
+            android:layout_margin="8dp"
             android:text="About app"/>
     </RelativeLayout>
 
