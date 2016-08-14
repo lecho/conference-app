@@ -63,15 +63,14 @@
 
         <Button
             android:id="@+id/button_map"
-            style="@style/ButtonWithBorder"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="56dp"
             android:layout_alignParentRight="true"
             android:layout_below="@id/text_event_place"
             android:layout_marginRight="8dp"
             android:text="Map"
-            android:layout_marginBottom="16dp"
-            android:textAllCaps="false"/>
+            android:layout_marginBottom="16dp"/>
 
         <Button
             android:id="@+id/button_sponsors"
@@ -80,8 +79,7 @@
             android:layout_height="56dp"
             android:layout_below="@id/button_map"
             android:layout_centerHorizontal="true"
-            android:text="Sponsors"
-            android:textAllCaps="false"/>
+            android:text="Sponsors"/>
 
         <Button
             android:id="@+id/button_speakers"
