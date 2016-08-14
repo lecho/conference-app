@@ -4,6 +4,7 @@
     <color name="primary">#009688</color>
     <color name="primary_dark">#00796B</color>
     <color name="primary_ripple">#4DB6AC</color>
+    <color name="primary_70alpha">#B3009688</color>
     <color name="accent">#CDDC39</color>
     <color name="accent_ripple">#DCE775</color>
 

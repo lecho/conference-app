@@ -50,7 +50,6 @@ public class MyAgendaFragment extends Fragment implements Scrollable, LoaderMana
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.title_activity_my_agenda);
         getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 

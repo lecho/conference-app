@@ -1,17 +1,10 @@
 package com.github.lecho.mobilization.ui;
 
-import android.animation.AnimatorInflater;
-import android.animation.StateListAnimator;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -33,12 +26,6 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
     private static final String TAG = MainActivity.class.getSimpleName();
     private NavigationController navigationController;
 
-    @BindView(R.id.appbar)
-    AppBarLayout appBar;
-
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-
     @BindView(R.id.main_container)
     View mainContainer;
 
@@ -47,8 +34,6 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-        setSupportActionBar(toolbar);
 
         if (savedInstanceState == null) {
             replaceFragment(MyAgendaFragment.newInstance());
@@ -88,23 +73,6 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
     public void replaceFragment(@NonNull Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_container, fragment).commit();
-        showAppBarShadow();
-    }
-
-    public void showAppBarShadow() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            StateListAnimator animator = AnimatorInflater.loadStateListAnimator(getApplicationContext(), R.drawable
-                    .selector_appbar_shadow);
-            appBar.setStateListAnimator(animator);
-        }
-    }
-
-    public void hideAppBarShadow() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            StateListAnimator animator = AnimatorInflater.loadStateListAnimator(getApplicationContext(), R.drawable
-                    .selector_appbar_no_shadow);
-            appBar.setStateListAnimator(animator);
-        }
     }
 
     //TODO Get rid of this method
@@ -124,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
         public void onItemReselected(int itemId) {
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.content_container);
             if (fragment instanceof Scrollable) {
-                ((Scrollable)fragment).scrollToTop();
+                ((Scrollable) fragment).scrollToTop();
             }
         }
     }

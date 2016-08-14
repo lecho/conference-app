@@ -73,9 +73,7 @@ public class VenuesFragment extends Fragment implements Scrollable, LoaderManage
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         final AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.getSupportActionBar().setTitle(R.string.title_activity_tracks);
         getLoaderManager().initLoader(LOADER_ID, null, this);
-        ((MainActivity) getActivity()).hideAppBarShadow();
     }
 
     @Override

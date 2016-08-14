@@ -61,7 +61,7 @@ public class SlotConflictDialogFragment extends AppCompatDialogFragment {
         View view = activity.getLayoutInflater().inflate(R.layout.dialog_fragment_slot_conflict, null, false);
         unbinder = ButterKnife.bind(this, view);
         oldTalkTitleView.setText(oldTalkTitle);
-        return new AlertDialog.Builder(activity.getSupportActionBar().getThemedContext())
+        return new AlertDialog.Builder(activity)
                 .setView(view)
                 .setTitle(R.string.dialog_slot_conflict_title)
                 .setPositiveButton(R.string.dialog_slot_conflict_button_positive, new PositiveClickListener())
