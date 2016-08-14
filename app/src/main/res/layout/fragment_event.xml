@@ -6,8 +6,8 @@
     android:id="@+id/nested_scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:background="@color/white"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ui.MainActivity">
 
     <RelativeLayout
@@ -18,45 +18,46 @@
 
         <TextView
             android:id="@+id/event_title"
-            android:layout_alignParentTop="true"
             android:layout_width="wrap_content"
-            android:layout_marginTop="72dp"
-            android:text="Mobilization VI"
-            android:layout_centerHorizontal="true"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginBottom="72dp"
-            android:textSize="32sp"
+            android:layout_marginTop="72dp"
             android:fontFamily="sans-serif-light"
-            android:textAppearance="?android:attr/textAppearanceLarge"/>
+            android:text="Mobilization VI"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="32sp"/>
 
         <Button
+            android:layout_margin="8dp"
             android:id="@+id/button_sponsors"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="match_parent"
+            style="@style/ButtonWithBorder"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/event_title"
-            android:textAllCaps="false"
-            android:gravity="center"
-            android:text="Sponsors"/>
+            android:layout_centerHorizontal="true"
+            android:text="Sponsors"
+            android:textAllCaps="false"/>
 
         <Button
             android:id="@+id/button_speakers"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="match_parent"
+            android:layout_margin="8dp"
+            style="@style/ButtonWithBorder"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:textAllCaps="false"
             android:layout_below="@id/button_sponsors"
-            android:gravity="center"
+            android:layout_centerHorizontal="true"
             android:text="Speakers"/>
 
         <Button
             android:id="@+id/button_mobile_app"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:textAllCaps="false"
-            android:layout_width="match_parent"
+            android:layout_margin="8dp"
+            style="@style/ButtonWithBorder"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/button_speakers"
-            android:gravity="center"
+            android:layout_centerHorizontal="true"
             android:text="About app"/>
     </RelativeLayout>
 

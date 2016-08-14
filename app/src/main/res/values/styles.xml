@@ -35,4 +35,11 @@
     <style name="VenueTab" parent="TextAppearance.Design.Tab">
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="ButtonWithBorder" parent="Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:textColor">@color/primary</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:foreground">@drawable/button_border_shape</item>
+    </style>
+
 </resources>
