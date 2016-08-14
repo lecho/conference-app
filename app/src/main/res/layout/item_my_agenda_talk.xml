@@ -32,18 +32,18 @@
 
         <FrameLayout
             android:id="@+id/button_add_to_my_agenda_layout"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true">
 
             <ImageButton
                 android:id="@+id/button_add_to_my_agenda"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:scaleType="fitCenter"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:scaleType="centerInside"
                 android:background="@android:color/transparent"
-                android:src="@drawable/ic_star_border_accent"/>
+                android:src="@drawable/ic_star_border_32"/>
         </FrameLayout>
 
         <TextView

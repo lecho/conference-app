@@ -1,7 +1,6 @@
 package com.github.lecho.mobilization.ui;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -162,9 +161,9 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
 
         public void bind(TalkViewModel talkViewModel) {
             if (talkViewModel.isInMyAgenda) {
-                addToMyAgendaButton.setImageResource(R.drawable.ic_star_accent_big);
+                addToMyAgendaButton.setImageResource(R.drawable.ic_star_24);
             } else {
-                addToMyAgendaButton.setImageResource(R.drawable.ic_star_border_accent_big);
+                addToMyAgendaButton.setImageResource(R.drawable.ic_star_border_24);
             }
             addToMyAgendaButton.setOnClickListener(new AddToMyAgendaClickListener(talkViewModel));
             addToMyAgendaButton.show();
@@ -253,7 +252,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
         public void onClick(View v) {
             FloatingActionButton floatingActionButton = (FloatingActionButton) v;
             if (talkViewModel.isInMyAgenda) {
-                floatingActionButton.setImageResource(R.drawable.ic_star_border_accent_big);
+                floatingActionButton.setImageResource(R.drawable.ic_star_border_24);
                 talkViewModel.isInMyAgenda = false;
                 TalkAsyncHelper.removeTalk(talkViewModel.key);
             } else {
@@ -261,7 +260,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
                     Log.d(TAG, "Slot conflict for talk with key: " + talkViewModel.key);
                     return;
                 }
-                floatingActionButton.setImageResource(R.drawable.ic_star_accent_big);
+                floatingActionButton.setImageResource(R.drawable.ic_star_24);
                 talkViewModel.isInMyAgenda = true;
                 TalkAsyncHelper.addTalk(talkViewModel.key);
             }

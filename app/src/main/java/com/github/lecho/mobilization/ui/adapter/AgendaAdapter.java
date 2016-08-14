@@ -214,9 +214,9 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
             languageView.setText(talkViewModel.language);
             speakersView.setText(getSpeakersText(talkViewModel));
             if (talkViewModel.isInMyAgenda) {
-                addToMyAgendaButton.setImageResource(R.drawable.ic_star_accent);
+                addToMyAgendaButton.setImageResource(R.drawable.ic_star_32);
             } else {
-                addToMyAgendaButton.setImageResource(R.drawable.ic_star_border_accent);
+                addToMyAgendaButton.setImageResource(R.drawable.ic_star_border_32);
             }
             addToMyAgendaButton.setOnClickListener(new StartTalkClickListener(getLayoutPosition(), agendaItem));
             addToMyAgendaButtonLayout.setOnClickListener(new StarLayoutListener(addToMyAgendaButton));
