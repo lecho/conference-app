@@ -16,27 +16,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:textStyle="bold"/>
+        android:fontFamily="sans-serif-light"
+        android:text="9:00 - 10:00"/>
 
     <ImageView
         android:id="@+id/current_item_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/text_time_slot"
         android:layout_toRightOf="@id/text_time_slot"
         android:src="@drawable/ic_current_item"
         android:visibility="gone"/>
 
     <TextView
         android:id="@+id/text_title"
-        style="@style/TextAppearance.AppCompat.Small"
+        style="@style/TextAppearance.AppCompat.Medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/text_time_slot"
         android:layout_marginBottom="8dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-light"
         android:ellipsize="end"
         android:singleLine="true"
-        android:textStyle="bold"/>
-
+        android:text="Lunch break"/>
 </RelativeLayout>
