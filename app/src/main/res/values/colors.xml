@@ -10,6 +10,8 @@
     <color name="window_background">#FFF5F5F5</color>
     <color name="white">#FFFFFF</color>
     <color name="white_70alpha">#B3FFFFFF</color>
+    <color name="darker_gray">#CCCCCC</color>
+
 
     <color name="diamond">#7D1242</color>
     <color name="platinum">#E5E4E2</color>
