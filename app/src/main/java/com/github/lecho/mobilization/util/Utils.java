@@ -64,9 +64,9 @@ public class Utils {
         if (PICASSO_CIRCLE_TRANSFORMATION == null) {
             final int color;
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-                color = context.getResources().getColor(R.color.accent);
+                color = context.getResources().getColor(R.color.black);
             } else {
-                color = context.getColor(R.color.accent);
+                color = context.getColor(R.color.black);
             }
             PICASSO_CIRCLE_TRANSFORMATION = new RoundedTransformationBuilder()
                     .borderColor(color)
@@ -128,6 +128,7 @@ public class Utils {
         //TODO Because I use transformation there is a problem with rounding placeholder and error image so it always
         // should be some image to load. Don't use placeholder or error image. Transformation is used because
         // RoundImageView doesn't support Picasso fade in animation and that's looks bad.
+        //TODO Maybe use Glide library
         Picasso.with(context.getApplicationContext())
                 .load(ASSETS_SPEAKERS_IMAGES + fileName)
                 .resizeDimen(dimen, dimen)

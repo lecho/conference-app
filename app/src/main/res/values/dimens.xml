@@ -10,8 +10,8 @@
     <dimen name="fab_compat_margin_bottom">-60dp</dimen>
     <dimen name="header_image_height">192dp</dimen>
     <dimen name="speaker_avatar_big_size">128dp</dimen>
-    <dimen name="speaker_avatar_medium_size">64dp</dimen>
-    <dimen name="speaker_avatar_small_size">48dp</dimen>
+    <dimen name="speaker_avatar_medium_size">72dp</dimen>
+    <dimen name="speaker_avatar_small_size">64dp</dimen>
     <dimen name="main_avatar_min_distance_from_toolbar">128dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>

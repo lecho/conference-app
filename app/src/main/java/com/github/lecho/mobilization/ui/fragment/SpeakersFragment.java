@@ -1,6 +1,7 @@
 package com.github.lecho.mobilization.ui.fragment;
 
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,7 +18,13 @@ import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.loader.SpeakersLoader;
 import com.github.lecho.mobilization.ui.adapter.SpeakersAdapter;
 import com.github.lecho.mobilization.viewmodel.SpeakerViewModel;
+import com.karumi.dividers.DividerBuilder;
+import com.karumi.dividers.DividerItemDecoration;
+import com.karumi.dividers.Layer;
+import com.karumi.dividers.LayersBuilder;
+import com.karumi.dividers.selector.AllItemsSelector;
 
+import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
@@ -43,7 +50,6 @@ public class SpeakersFragment extends Fragment implements LoaderManager.LoaderCa
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getLoaderManager().initLoader(LOADER_ID, null, this);
-        //((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.title_activity_speakers);
     }
 
     @Nullable
@@ -56,7 +62,17 @@ public class SpeakersFragment extends Fragment implements LoaderManager.LoaderCa
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new SpeakersAdapter(getActivity());
         recyclerView.setAdapter(adapter);
+        setUpDivider();
         return rootView;
+    }
+
+    private void setUpDivider() {
+        Drawable exampleDrawable = getResources().getDrawable(R.drawable.divider_recycler_view);
+        Collection<Layer> layers = LayersBuilder.with(
+                new Layer(new AllItemsSelector(), DividerBuilder.get().with(exampleDrawable).build()))
+                .build();
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(layers);
+        recyclerView.addItemDecoration(itemDecoration);
     }
 
     @Override
