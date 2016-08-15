@@ -26,8 +26,8 @@
 
     <ImageView
         android:id="@+id/sponsor_logo"
-        android:layout_width="144dp"
-        android:layout_height="96dp"
+        android:layout_width="96dp"
+        android:layout_height="64dp"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="16dp"
