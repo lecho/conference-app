@@ -10,6 +10,10 @@
     <style name="AppTheme" parent="AppTheme.Base">
     </style>
 
+    <style name="AgendaItem">
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+    </style>
+
     <style name="CardViewItem" parent="CardView.Light">
         <item name="android:layout_marginBottom">0dp</item>
         <item name="android:layout_marginLeft">0dp</item>

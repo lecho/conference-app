@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    style="@style/CardViewSelectableItem"
+    style="@style/AgendaItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
-    app:cardBackgroundColor="@color/empty_slot_background">
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/text_time_slot"
