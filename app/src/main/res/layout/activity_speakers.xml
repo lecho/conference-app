@@ -22,6 +22,12 @@
             android:background="@color/window_background"
             app:layout_scrollFlags="scroll|enterAlways|snap"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_gravity="bottom"
+            android:background="@color/darker_gray"/>
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
