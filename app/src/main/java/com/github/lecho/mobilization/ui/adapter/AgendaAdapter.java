@@ -187,9 +187,6 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
      */
     protected class TalkViewHolder extends BaseViewHolder {
 
-        @BindView(R.id.button_add_to_my_agenda_layout)
-        View addToMyAgendaButtonLayout;
-
         @BindView(R.id.button_add_to_my_agenda)
         ImageButton addToMyAgendaButton;
 
@@ -219,7 +216,6 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
                 addToMyAgendaButton.setImageResource(R.drawable.ic_star_border_32);
             }
             addToMyAgendaButton.setOnClickListener(new StartTalkClickListener(getLayoutPosition(), agendaItem));
-            addToMyAgendaButtonLayout.setOnClickListener(new StarLayoutListener(addToMyAgendaButton));
         }
     }
 
@@ -263,20 +259,6 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
         }
     }
 
-    protected class StarLayoutListener implements View.OnClickListener {
-
-        private View view;
-
-        public StarLayoutListener(View view) {
-            this.view = view;
-        }
-
-        @Override
-        public void onClick(View v) {
-            view.performClick();
-        }
-    }
-
     /**
      * Empty slot click listener
      */
@@ -297,7 +279,6 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
             }
         }
     }
-
 
     public interface AgendaItemClickListener {
         void onItemClick(int position, AgendaItemViewModel agendaItem, View view);
