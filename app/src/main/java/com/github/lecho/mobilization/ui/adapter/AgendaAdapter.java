@@ -136,18 +136,6 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
                 currentItemIndicatorView.setVisibility(View.GONE);
             }
         }
-
-        @NonNull
-        protected String getSpeakersText(TalkViewModel talkViewModel) {
-            StringBuilder speakersText = new StringBuilder();
-            for (SpeakerViewModel speakerViewModel : talkViewModel.speakers) {
-                if (!TextUtils.isEmpty(speakersText)) {
-                    speakersText.append("\n");
-                }
-                speakersText.append(speakerViewModel.firstName).append(" ").append(speakerViewModel.lastName);
-            }
-            return speakersText.toString();
-        }
     }
 
     /**
@@ -208,8 +196,8 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
             TalkViewModel talkViewModel = agendaItem.talk;
             itemView.setOnClickListener(new TalkItemClickListener(activity, talkViewModel.key));
             titleView.setText(talkViewModel.title);
-            languageView.setText(talkViewModel.language);
-            speakersView.setText(getSpeakersText(talkViewModel));
+            languageView.setText(talkViewModel.getLanguageInBrackets());
+            speakersView.setText(talkViewModel.getSpeakersText(activity));
             if (talkViewModel.isInMyAgenda) {
                 addToMyAgendaButton.setImageResource(R.drawable.ic_star_32);
             } else {

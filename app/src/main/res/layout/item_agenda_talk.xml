@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/text_time_slot"
         android:layout_marginBottom="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="sans-serif-light"
         android:text="Projektowanie aplikacji iOS - wzorce i triki które każdy programista znać powinien"
         android:textColor="@color/primary"/>
@@ -52,6 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@id/text_title"
+        android:layout_marginRight="4dp"
         android:layout_marginLeft="8dp"
         android:text="(EN)"/>
 

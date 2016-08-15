@@ -11,7 +11,7 @@
     </style>
 
     <style name="AgendaItem">
-        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
     </style>
 
     <style name="CardViewItem" parent="CardView.Light">

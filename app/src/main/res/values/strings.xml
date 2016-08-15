@@ -44,6 +44,7 @@
     <string name="about_author_name">Leszek Wach</string>
     <string name="about_version_label">"Version "</string>
     <string name="about_open_source_licences">Open Source Licences</string>
+    <string name="speakers_prefix">By\u0020</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -15,7 +15,8 @@ public class VenueViewModel {
 
     @NonNull
     public String getVenueText(Context context) {
-        return new StringBuilder(title).append(" ").append(context.getString(R.string.title_activity_track)).toString();
+        return new StringBuilder("(").append(title).append(" ").append(context.getString(R.string.title_activity_track))
+                .append(")").toString();
     }
 
     @Override
