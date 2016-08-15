@@ -11,10 +11,10 @@
     </style>
 
     <style name="CardViewItem" parent="CardView.Light">
-        <item name="android:layout_marginBottom">8dp</item>
-        <item name="android:layout_marginLeft">16dp</item>
-        <item name="android:layout_marginRight">16dp</item>
-        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:layout_marginRight">0dp</item>
+        <item name="android:layout_marginTop">0dp</item>
     </style>
 
     <style name="CardViewSelectableItem" parent="CardViewItem">
