@@ -2,7 +2,6 @@ package com.github.lecho.mobilization.ui.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -79,11 +78,7 @@ public class SponsorsAdapter extends RecyclerView.Adapter<SponsorsAdapter.Sponso
         }
 
         public void bindView(SponsorViewModel sponsorViewModel) {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-                sponsorColorView.setBackgroundColor(context.getResources().getColor(sponsorViewModel.type.getColorRes()));
-            } else {
-                sponsorColorView.setBackgroundColor(context.getColor(sponsorViewModel.type.getColorRes()));
-            }
+            sponsorColorView.setBackgroundResource(sponsorViewModel.type.getDrawable());
             typeView.setText(sponsorViewModel.type.getTextRes());
             nameView.setText(sponsorViewModel.name);
             webPageView.setText(sponsorViewModel.wwwPage);
