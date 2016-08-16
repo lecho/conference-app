@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.NestedScrollView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class EventFragment extends Fragment implements LoaderManager.LoaderCallbacks<Optional<EventViewModel>> {
+public class EventFragment extends Fragment implements Scrollable, LoaderManager
+        .LoaderCallbacks<Optional<EventViewModel>> {
 
     public static final String TAG = SpeakersFragment.class.getSimpleName();
     private static final int LOADER_ID = 0;
@@ -39,6 +41,9 @@ public class EventFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @BindView(R.id.button_mobile_app)
     Button aboutAppButton;
+
+    @BindView(R.id.nested_scroll_view)
+    NestedScrollView nestedScrollView;
 
     public static EventFragment newInstance() {
         EventFragment fragment = new EventFragment();
@@ -93,5 +98,10 @@ public class EventFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public void onLoaderReset(Loader<Optional<EventViewModel>> loader) {
+    }
+
+    @Override
+    public void scrollToTop() {
+        nestedScrollView.smoothScrollTo(0, 0);
     }
 }
