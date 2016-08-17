@@ -49,6 +49,7 @@ public class BottomNavigationController implements NavigationController {
             //noinspection deprecation
             accentColor = activity.getResources().getColor(R.color.primary);
         }
+        bottomNavigation.setBehaviorTranslationEnabled(false);
         bottomNavigation.setAccentColor(accentColor);
         bottomNavigation.setOnTabSelectedListener(new BottomNavigationItemListener());
     }
