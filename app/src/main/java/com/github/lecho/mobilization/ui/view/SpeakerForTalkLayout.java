@@ -37,7 +37,7 @@ public class SpeakerForTalkLayout extends LinearLayout {
         super(context);
         this.speakerViewModel = speakerViewModel;
         LayoutInflater inflater = LayoutInflater.from(context);
-        inflater.inflate(R.layout.speaker_for_talk_layout, this, true);
+        inflater.inflate(R.layout.include_speaker, this, true);
         ButterKnife.bind(this, this);
     }
 

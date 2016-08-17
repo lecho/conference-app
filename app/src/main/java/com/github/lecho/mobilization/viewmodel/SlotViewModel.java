@@ -74,7 +74,7 @@ public class SlotViewModel {
             slotTextBuilder = appendValueInXXFormat(slotTextBuilder, fromHour);
             slotTextBuilder.append(":");
             slotTextBuilder = appendValueInXXFormat(slotTextBuilder, fromMinute);
-            slotTextBuilder.append("-");
+            slotTextBuilder.append(" - ");
             slotTextBuilder = appendValueInXXFormat(slotTextBuilder, toHour);
             slotTextBuilder.append(":");
             slotTextBuilder = appendValueInXXFormat(slotTextBuilder, toMinute);

@@ -105,12 +105,23 @@
                 android:text="Programowanie reaktywne jako lekarstwo na ból głowy związany z kodem asynchronicznym. W czasie mojej prezentacji przedstawię fundamentalne idee stojące za tym paradygmatem oraz zademonstruję od podstaw jak"
                 style="@style/TextAppearance.AppCompat.Medium"/>
 
+            <TextView
+                android:id="@+id/text_speakers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_description"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="24dp"
+                android:text="@string/speakers_layout_title"
+                style="@style/TextAppearance.AppCompat.Medium"/>
+
             <LinearLayout
                 android:id="@+id/speakers_layout"
                 android:layout_width="match_parent"
-                android:layout_marginTop="24dp"
+                android:divider="@drawable/divider_recycler_view"
+                android:showDividers="middle|beginning|end"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/text_description"
+                android:layout_below="@id/text_speakers"
                 android:orientation="vertical">
             </LinearLayout>
         </RelativeLayout>

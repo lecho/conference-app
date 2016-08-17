@@ -21,7 +21,7 @@
     <string name="navigation_event">Event</string>
 
     <string name="info_card_title">Info</string>
-    <string name="speakers_card_title">Speakers</string>
+    <string name="speakers_layout_title">Speakers</string>
 
     <string name="sponsor_type_diamond">DIAMOND SPONSOR</string>
     <string name="sponsor_type_platinum">PLATINUM SPONSOR</string>
