@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -42,8 +41,8 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
     private String talkKey;
     private FABController fabController;
     private HeaderController headerController;
-    private InfoCardController infoCardController;
-    private SpeakersCardController speakersCardController;
+    private DescriptionController descriptionController;
+    private SpeakersController speakersController;
     private SnackbarForTalkHelper snackbarForTalkHelper;
 
     @BindView(R.id.main_container)
@@ -51,9 +50,6 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @BindView(R.id.toolbar)
     Toolbar toolbarView;
-
-    @BindView(R.id.collapsing_toolbar)
-    CollapsingToolbarLayout collapsingToolbarLayout;
 
     public static void startActivity(@NonNull Activity activity, @NonNull String talkKey) {
         Intent intent = new Intent(activity, TalkActivity.class);
@@ -69,13 +65,11 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
 
         fabController = new FABController(mainContainerView);
         headerController = new HeaderController(mainContainerView);
-        headerController.bindHeaderImage();
-        infoCardController = new InfoCardController(mainContainerView);
-        speakersCardController = new SpeakersCardController(mainContainerView);
+        descriptionController = new DescriptionController(mainContainerView);
+        speakersController = new SpeakersController(mainContainerView);
         snackbarForTalkHelper = new SnackbarForTalkHelper(getApplicationContext(), toolbarView);
 
         setSupportActionBar(toolbarView);
-        collapsingToolbarLayout.setTitleEnabled(false);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -140,8 +134,8 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
             TalkViewModel talkViewModel = data.get();
             fabController.bind(talkViewModel);
             headerController.bind(talkViewModel);
-            infoCardController.bind(talkViewModel);
-            speakersCardController.bind(talkViewModel);
+            descriptionController.bind(talkViewModel);
+            speakersController.bind(talkViewModel);
 
         }
     }
@@ -174,10 +168,10 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
 
         private static final String TALK_HEADER_IMAGE = "talk_header.jpg";
 
-        @BindView(R.id.header_image)
-        ImageView headerImageView;
+        @BindView(R.id.text_time_slot)
+        TextView timeSlotView;
 
-        @BindView(R.id.text_talk_title)
+        @BindView(R.id.text_title)
         TextView talkTitleView;
 
         @BindView(R.id.text_venue)
@@ -190,43 +184,36 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
             ButterKnife.bind(this, view);
         }
 
-        public void bindHeaderImage() {
-            Utils.loadHeaderImage(getApplicationContext(), TALK_HEADER_IMAGE, headerImageView);
-        }
-
         public void bind(TalkViewModel talkViewModel) {
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                SlotViewModel.SlotInTimeZone slotInTimeZone = SlotViewModel.SlotInTimeZone.getSlotInTimezone(talkViewModel
-                        .slot);
-                actionBar.setTitle(slotInTimeZone.getTimeSlotText());
-            }
+            SlotViewModel.SlotInTimeZone slotInTimeZone = SlotViewModel.SlotInTimeZone.getSlotInTimezone(talkViewModel
+                    .slot);
+            timeSlotView.setText(slotInTimeZone.getTimeSlotText());
             talkTitleView.setText(talkViewModel.title);
             talkVenueView.setText(talkViewModel.venue.getVenueText(getApplicationContext()));
-            talkLanguageView.setText(talkViewModel.getLanguageLong(getApplicationContext()));
+            talkLanguageView.setText(talkViewModel.getLanguageInBrackets());
         }
     }
 
-    protected class InfoCardController {
+    protected class DescriptionController {
 
-        @BindView(R.id.text_info)
-        TextView talkInfoView;
+        @BindView(R.id.text_description)
+        TextView talkDescriptionView;
 
-        public InfoCardController(View view) {
+        public DescriptionController(View view) {
             ButterKnife.bind(this, view);
         }
 
         public void bind(TalkViewModel talkViewModel) {
-            talkInfoView.setText(Html.fromHtml(talkViewModel.description));
+            talkDescriptionView.setText(Html.fromHtml(talkViewModel.description));
         }
     }
 
-    protected class SpeakersCardController {
+    protected class SpeakersController {
 
         @BindView(R.id.speakers_layout)
         LinearLayout speakersLayout;
 
-        public SpeakersCardController(View view) {
+        public SpeakersController(View view) {
             ButterKnife.bind(this, view);
         }
 
