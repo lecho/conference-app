@@ -3,17 +3,13 @@ package com.github.lecho.mobilization.ui.view;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
-import android.graphics.Matrix;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.ImageView;
 
 import com.github.lecho.mobilization.R;
@@ -23,39 +19,37 @@ import java.util.List;
 /**
  * Created by Leszek on 2015-10-07.
  */
-public class CircleImageViewBehavior extends CoordinatorLayout.Behavior<ImageView> {
+public class AvatarImageViewBehavior extends CoordinatorLayout.Behavior<ImageView> {
 
-    private Rect mTmpRect;
+    private Rect rect;
     private boolean isHiding;
 
-    public CircleImageViewBehavior() {
+    public AvatarImageViewBehavior() {
     }
 
-    public CircleImageViewBehavior(Context context, AttributeSet attrs) {
+    public AvatarImageViewBehavior(Context context, AttributeSet attrs) {
         super();
     }
 
     @Override
     public boolean onDependentViewChanged(CoordinatorLayout parent, ImageView child, View dependency) {
-        if (dependency instanceof AppBarLayout) {
-            this.updateVisibility(parent, (AppBarLayout) dependency, child);
-        }
+        this.updateVisibility(parent, dependency, child);
         return false;
     }
 
-    private boolean updateVisibility(CoordinatorLayout parent, AppBarLayout appBarLayout, ImageView child) {
+    private boolean updateVisibility(CoordinatorLayout parent, View dependant, ImageView child) {
         CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) child.getLayoutParams();
-        if (lp.getAnchorId() != appBarLayout.getId()) {
+        if (lp.getAnchorId() != dependant.getId()) {
             return false;
         } else {
-            if (this.mTmpRect == null) {
-                this.mTmpRect = new Rect();
+            if (this.rect == null) {
+                this.rect = new Rect();
             }
 
-            Rect rect = this.mTmpRect;
-            ViewGroupUtilsHoneycomb.getDescendantRect(parent, appBarLayout, rect);
-            if (rect.bottom <= child.getContext().getResources().getDimensionPixelSize(R.dimen
-                    .main_avatar_min_distance_from_toolbar)) {
+            rect.set(0, 0, dependant.getWidth(), dependant.getHeight());
+            parent.offsetDescendantRectToMyCoords(dependant, rect);
+            int imageSize = child.getContext().getResources().getDimensionPixelSize(R.dimen.speaker_avatar_big_size);
+            if (rect.top <= imageSize / 2) {
                 hide(child);
             } else {
                 show(child);
@@ -72,7 +66,7 @@ public class CircleImageViewBehavior extends CoordinatorLayout.Behavior<ImageVie
 
         for (int count = dependencies.size(); i < count; ++i) {
             View dependency = (View) dependencies.get(i);
-            if (dependency instanceof AppBarLayout && updateVisibility(parent, (AppBarLayout) dependency, child)) {
+            if (updateVisibility(parent, dependency, child)) {
                 break;
             }
         }
@@ -124,56 +118,6 @@ public class CircleImageViewBehavior extends CoordinatorLayout.Behavior<ImageVie
                 view.setAlpha(1.0F);
                 view.setScaleY(1.0F);
                 view.setScaleX(1.0F);
-            }
-        }
-
-    }
-
-    private static class ViewGroupUtilsHoneycomb {
-        private static final ThreadLocal<Matrix> sMatrix = new ThreadLocal();
-        private static final ThreadLocal<RectF> sRectF = new ThreadLocal();
-        private static final Matrix IDENTITY = new Matrix();
-
-        ViewGroupUtilsHoneycomb() {
-        }
-
-        static void getDescendantRect(ViewGroup parent, View descendant, Rect out) {
-            out.set(0, 0, descendant.getWidth(), descendant.getHeight());
-            offsetDescendantRect(parent, descendant, out);
-        }
-
-        public static void offsetDescendantRect(ViewGroup group, View child, Rect rect) {
-            Matrix m = sMatrix.get();
-            if (m == null) {
-                m = new Matrix();
-                sMatrix.set(m);
-            } else {
-                m.set(IDENTITY);
-            }
-
-            offsetDescendantMatrix(group, child, m);
-            RectF rectF = sRectF.get();
-            if (rectF == null) {
-                rectF = new RectF();
-            }
-
-            rectF.set(rect);
-            m.mapRect(rectF);
-            rect.set((int) (rectF.left + 0.5F), (int) (rectF.top + 0.5F), (int) (rectF.right + 0.5F), (int) (rectF
-                    .bottom + 0.5F));
-        }
-
-        static void offsetDescendantMatrix(ViewParent target, View view, Matrix m) {
-            ViewParent parent = view.getParent();
-            if (parent instanceof View && parent != target) {
-                View vp = (View) parent;
-                offsetDescendantMatrix(target, vp, m);
-                m.preTranslate((float) (-vp.getScrollX()), (float) (-vp.getScrollY()));
-            }
-
-            m.preTranslate((float) view.getLeft(), (float) view.getTop());
-            if (!view.getMatrix().isIdentity()) {
-                m.preConcat(view.getMatrix());
             }
         }
     }
