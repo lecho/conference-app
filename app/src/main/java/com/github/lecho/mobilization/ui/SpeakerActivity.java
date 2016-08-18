@@ -2,20 +2,18 @@ package com.github.lecho.mobilization.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.text.TextUtils;
+import android.text.Spanned;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -44,9 +42,6 @@ public class SpeakerActivity extends AppCompatActivity implements
     @BindView(R.id.toolbar)
     Toolbar toolbarView;
 
-    @BindView(R.id.collapsing_toolbar)
-    CollapsingToolbarLayout collapsingToolbarLayout;
-
     public static void startActivity(Context context, String speakerKey) {
         Intent intent = new Intent(context, SpeakerActivity.class);
         intent.putExtra(ARG_SPEAKER_KEY, speakerKey);
@@ -60,11 +55,9 @@ public class SpeakerActivity extends AppCompatActivity implements
         ButterKnife.bind(this);
 
         headerController = new HeaderController(mainContainerView);
-        headerController.bindHeaderImage();
         infoCardController = new InfoCardController(mainContainerView);
 
         setSupportActionBar(toolbarView);
-        collapsingToolbarLayout.setTitleEnabled(false);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -73,18 +66,6 @@ public class SpeakerActivity extends AppCompatActivity implements
 
         speakerKey = getIntent().getStringExtra(ARG_SPEAKER_KEY);
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        //Workaround:/ https://code.google.com/p/android/issues/detail?id=183334
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            onBackPressed();
-            return true;
-        } else if (keyCode == KeyEvent.KEYCODE_MENU) {
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -125,78 +106,74 @@ public class SpeakerActivity extends AppCompatActivity implements
     protected class HeaderController {
 
         private static final String SPEAKER_HEADER_IMAGE = "speaker_header.jpg";
-        @BindView(R.id.header_image)
-        ImageView headerImageView;
 
-        @BindView(R.id.speaker_avatar)
+        @BindView(R.id.image_avatar)
         ImageView avatarView;
 
         @BindView(R.id.text_speaker_name)
         TextView speakerNameView;
 
-        @BindView(R.id.www_button)
-        ImageButton wwwButton;
-
-        @BindView(R.id.twitter_button)
-        ImageButton twitterButton;
+//        @BindView(R.id.www_button)
+//        ImageButton wwwButton;
+//
+//        @BindView(R.id.twitter_button)
+//        ImageButton twitterButton;
 
         public HeaderController(View view) {
             ButterKnife.bind(this, view);
         }
 
-        public void bindHeaderImage() {
-            Utils.loadHeaderImage(getApplicationContext(), SPEAKER_HEADER_IMAGE, headerImageView);
-        }
-
         public void bind(final SpeakerViewModel speakerViewModel) {
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setTitle(speakerViewModel.firstName);
-            }
             speakerNameView.setText(speakerViewModel.getSpeakerNameText());
             Utils.loadSpeakerImageBig(getApplicationContext(), speakerViewModel.photo, avatarView);
-            setUpWwwButton(speakerViewModel);
-            setUpTwitterButton(speakerViewModel);
+            //setUpWwwButton(speakerViewModel);
+            //setUpTwitterButton(speakerViewModel);
         }
 
-        private void setUpWwwButton(final SpeakerViewModel speakerViewModel) {
-            if (TextUtils.isEmpty(speakerViewModel.wwwPage)) {
-                wwwButton.setEnabled(false);
-            } else {
-                wwwButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Utils.openWebBrowser(getApplicationContext(), speakerViewModel.wwwPage);
-                    }
-                });
-            }
-        }
-
-        private void setUpTwitterButton(final SpeakerViewModel speakerViewModel) {
-            if (TextUtils.isEmpty(speakerViewModel.twitterProfile)) {
-                twitterButton.setEnabled(false);
-            } else {
-                twitterButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Utils.openTwitter(getApplicationContext(), speakerViewModel.twitterProfile);
-                    }
-                });
-            }
-        }
+//        private void setUpWwwButton(final SpeakerViewModel speakerViewModel) {
+//            if (TextUtils.isEmpty(speakerViewModel.wwwPage)) {
+//                wwwButton.setEnabled(false);
+//            } else {
+//                wwwButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Utils.openWebBrowser(getApplicationContext(), speakerViewModel.wwwPage);
+//                    }
+//                });
+//            }
+//        }
+//
+//        private void setUpTwitterButton(final SpeakerViewModel speakerViewModel) {
+//            if (TextUtils.isEmpty(speakerViewModel.twitterProfile)) {
+//                twitterButton.setEnabled(false);
+//            } else {
+//                twitterButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Utils.openTwitter(getApplicationContext(), speakerViewModel.twitterProfile);
+//                    }
+//                });
+//            }
+//        }
     }
 
     protected class InfoCardController {
 
-        @BindView(R.id.text_info)
-        TextView speakerInfoView;
+        @BindView(R.id.text_description)
+        TextView speakerDescriptionView;
 
         public InfoCardController(View view) {
             ButterKnife.bind(this, view);
         }
 
         public void bind(SpeakerViewModel speakerViewModel) {
-            speakerInfoView.setText(Html.fromHtml(speakerViewModel.biography));
+            final Spanned speakerDescription;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                speakerDescription = Html.fromHtml(speakerViewModel.biography, Html.FROM_HTML_MODE_COMPACT);
+            } else {
+                speakerDescription = Html.fromHtml(speakerViewModel.biography);
+            }
+            speakerDescriptionView.setText(speakerDescription);
         }
     }
 }

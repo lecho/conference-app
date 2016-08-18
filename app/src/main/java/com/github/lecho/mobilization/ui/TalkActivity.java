@@ -93,18 +93,6 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        //Workaround:/ https://code.google.com/p/android/issues/detail?id=183334
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            onBackPressed();
-            return true;
-        } else if (keyCode == KeyEvent.KEYCODE_MENU) {
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
