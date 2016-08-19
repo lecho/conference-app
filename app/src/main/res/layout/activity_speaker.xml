@@ -44,20 +44,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <View
-                android:id="@+id/avatar_anchor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="96dp"
-                android:layout_marginBottom="72dp"
-                android:layout_centerHorizontal="true"/>
+            <ImageView
+                android:id="@+id/image_avatar"
+                android:layout_width="@dimen/speaker_avatar_big_size"
+                android:layout_height="@dimen/speaker_avatar_big_size"
+                android:elevation="4dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/anna_sperka"/>
 
             <TextView
                 android:id="@+id/text_speaker_name"
                 style="@style/TextAppearance.AppCompat.Large"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/avatar_anchor"
+                android:layout_below="@id/image_avatar"
                 android:layout_centerHorizontal="true"
                 android:ellipsize="end"
                 android:fontFamily="sans-serif-light"
@@ -77,17 +79,5 @@
                 android:text="Programowanie reaktywne jako lekarstwo na ból głowy związany z kodem asynchronicznym. W czasie mojej prezentacji przedstawię fundamentalne idee stojące za tym paradygmatem oraz zademonstruję od podstaw jak"/>
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
-
-    <ImageView
-        android:id="@+id/image_avatar"
-        android:layout_width="@dimen/speaker_avatar_big_size"
-        android:layout_height="@dimen/speaker_avatar_big_size"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:elevation="4dp"
-        android:src="@drawable/anna_sperka"
-        app:layout_anchor="@id/avatar_anchor"
-        app:layout_anchorGravity="center"
-        app:layout_behavior="com.github.lecho.mobilization.ui.view.AvatarImageViewBehavior"/>
 
 </android.support.design.widget.CoordinatorLayout>
