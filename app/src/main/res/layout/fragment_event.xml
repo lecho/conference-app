@@ -73,7 +73,7 @@
 
         <Button
             android:id="@+id/button_sponsors"
-            style="@style/ButtonWithBorder"
+            style="@style/StandardButton"
             android:layout_width="180dp"
             android:layout_height="56dp"
             android:layout_below="@id/button_map"
@@ -82,7 +82,7 @@
 
         <Button
             android:id="@+id/button_speakers"
-            style="@style/ButtonWithBorder"
+            style="@style/StandardButton"
             android:layout_width="180dp"
             android:layout_height="56dp"
             android:layout_below="@id/button_sponsors"
@@ -91,7 +91,7 @@
 
         <Button
             android:id="@+id/button_mobile_app"
-            style="@style/ButtonWithBorder"
+            style="@style/StandardButton"
             android:layout_width="180dp"
             android:layout_height="56dp"
             android:layout_below="@id/button_speakers"

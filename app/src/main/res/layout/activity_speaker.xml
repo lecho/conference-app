@@ -48,10 +48,10 @@
                 android:id="@+id/image_avatar"
                 android:layout_width="@dimen/speaker_avatar_big_size"
                 android:layout_height="@dimen/speaker_avatar_big_size"
-                android:elevation="4dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
                 android:layout_centerHorizontal="true"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
+                android:elevation="4dp"
                 android:src="@drawable/anna_sperka"/>
 
             <TextView
@@ -68,16 +68,51 @@
                 android:text="Anna Maria Sperka"
                 android:textColor="@color/primary"/>
 
+            <LinearLayout
+                android:id="@+id/layout_buttons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_speaker_name"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_twitter"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/SpeakerButton"
+                    android:drawableLeft="@drawable/ic_star_24"
+                    android:text="\@leszek.wachd"/>
+
+                <Button
+                    android:id="@+id/button_github"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/SpeakerButton"
+                    android:drawableLeft="@drawable/ic_star_24"
+                    android:text="github"/>
+
+                <Button
+                    android:id="@+id/button_webpage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    style="@style/SpeakerButton"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_star_24"
+                    android:text="website"/>
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/text_description"
                 style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/text_speaker_name"
-                android:layout_marginTop="24dp"
+                android:layout_below="@id/layout_buttons"
+                android:layout_marginTop="16dp"
                 android:fontFamily="sans-serif-light"
                 android:text="Programowanie reaktywne jako lekarstwo na ból głowy związany z kodem asynchronicznym. W czasie mojej prezentacji przedstawię fundamentalne idee stojące za tym paradygmatem oraz zademonstruję od podstaw jak"/>
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
-
 </android.support.design.widget.CoordinatorLayout>

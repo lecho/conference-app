@@ -1,5 +1,5 @@
 <resources>
-    <style name="ButtonWithBorder">
+    <style name="StandardButton">
         <item name="android:background">@drawable/button_border_material</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Widget.Button</item>
         <item name="android:stateListAnimator">@null</item>
