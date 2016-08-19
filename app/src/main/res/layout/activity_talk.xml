@@ -106,12 +106,13 @@
                 style="@style/TextAppearance.AppCompat.Medium"/>
 
             <TextView
-                android:id="@+id/text_speakers"
+                android:id="@+id/text_speaker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_description"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
                 android:text="@string/speakers_layout_title"
                 style="@style/TextAppearance.AppCompat.Medium"/>
 
@@ -121,7 +122,7 @@
                 android:divider="@drawable/divider_recycler_view"
                 android:showDividers="middle|beginning|end"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/text_speakers"
+                android:layout_below="@id/text_speaker"
                 android:orientation="vertical">
             </LinearLayout>
         </RelativeLayout>

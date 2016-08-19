@@ -3,7 +3,6 @@ package com.github.lecho.mobilization.ui.adapter;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.TalkActivity;
 import com.github.lecho.mobilization.viewmodel.AgendaItemViewModel;
 import com.github.lecho.mobilization.viewmodel.SlotViewModel;
-import com.github.lecho.mobilization.viewmodel.SpeakerViewModel;
 import com.github.lecho.mobilization.viewmodel.TalkViewModel;
 
 import java.util.ArrayList;
@@ -184,7 +182,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
         @BindView(R.id.text_language)
         TextView languageView;
 
-        @BindView(R.id.text_speakers)
+        @BindView(R.id.text_speaker)
         TextView speakersView;
 
         public TalkViewHolder(Activity activity, View itemView) {
