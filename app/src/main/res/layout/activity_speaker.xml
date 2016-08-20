@@ -82,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     style="@style/SpeakerButton"
-                    android:drawableLeft="@drawable/ic_star_24"
+                    android:drawableLeft="@drawable/ic_twitter"
                     android:text="\@leszek.wachd"/>
 
                 <Button
@@ -91,16 +91,16 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     style="@style/SpeakerButton"
-                    android:drawableLeft="@drawable/ic_star_24"
+                    android:drawableLeft="@drawable/ic_github"
                     android:text="github"/>
 
                 <Button
-                    android:id="@+id/button_webpage"
+                    android:id="@+id/button_website"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     style="@style/SpeakerButton"
                     android:layout_weight="1"
-                    android:drawableLeft="@drawable/ic_star_24"
+                    android:drawableLeft="@drawable/ic_website"
                     android:text="website"/>
             </LinearLayout>
 
