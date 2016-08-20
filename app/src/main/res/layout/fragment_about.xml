@@ -66,13 +66,15 @@
             android:layout_centerHorizontal="true"
             android:text="@string/about_author_name"/>
 
-        <ImageButton
-            android:id="@+id/github_button"
+        <Button
+            android:id="@+id/button_website"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/text_author_name"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/selector_github_button"/>
+            android:layout_height="wrap_content"
+            style="@style/LightButton"
+            android:layout_below="@id/text_author_name"
+            android:drawableLeft="@drawable/ic_github"
+            android:text="lecho"/>
     </RelativeLayout>
 
 </ScrollView>

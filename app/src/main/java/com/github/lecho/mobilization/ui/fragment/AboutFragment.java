@@ -30,7 +30,7 @@ public class AboutFragment extends Fragment {
     @BindView(R.id.text_version)
     TextView versionView;
 
-    @BindView(R.id.github_button)
+    @BindView(R.id.button_twitter)
     ImageButton githubButton;
 
     public static AboutFragment newInstance() {
