@@ -24,7 +24,7 @@
         android:visibility="gone"/>
 
     <ImageButton
-        android:id="@+id/button_add_to_my_agenda"
+        android:id="@+id/fab"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_alignParentRight="true"

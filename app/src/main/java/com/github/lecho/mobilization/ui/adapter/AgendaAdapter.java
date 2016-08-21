@@ -173,7 +173,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
      */
     protected class TalkViewHolder extends BaseViewHolder {
 
-        @BindView(R.id.button_add_to_my_agenda)
+        @BindView(R.id.fab)
         ImageButton addToMyAgendaButton;
 
         @BindView(R.id.text_title)
