@@ -32,7 +32,7 @@ public class SpeakerForTalkLayout extends FrameLayout {
 
     @OnClick
     public void onClick() {
-        SpeakerActivity.startActivityWithTransition(getActivity(), speakerViewModel.key, avatarView);
+        SpeakerActivity.startActivity(getActivity(), speakerViewModel.key);
     }
 
     public SpeakerForTalkLayout(Context context, SpeakerViewModel speakerViewModel) {

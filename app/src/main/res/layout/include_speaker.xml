@@ -11,8 +11,7 @@
         android:id="@+id/image_avatar"
         android:layout_width="@dimen/speaker_avatar_small_size"
         android:layout_height="@dimen/speaker_avatar_small_size"
-        android:layout_alignParentRight="true"
-        android:transitionName="@string/speaker_avatar"/>
+        android:layout_alignParentRight="true"/>
 
     <TextView
         android:id="@+id/text_speaker_name"

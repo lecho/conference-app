@@ -78,9 +78,9 @@
                 android:id="@+id/fab_anchor"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_alignTop="@id/text_time_slot"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"/>
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@id/text_time_slot"/>
 
             <TextView
                 android:id="@+id/text_title"

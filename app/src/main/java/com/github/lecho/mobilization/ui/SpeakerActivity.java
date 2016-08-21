@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
@@ -47,18 +46,10 @@ public class SpeakerActivity extends AppCompatActivity implements
     @BindView(R.id.toolbar)
     Toolbar toolbarView;
 
-    public static void startActivity(Activity activity, String speakerKey) {
+    public static void startActivity(@NonNull Activity activity, @NonNull String speakerKey) {
         Intent intent = new Intent(activity, SpeakerActivity.class);
         intent.putExtra(ARG_SPEAKER_KEY, speakerKey);
         activity.startActivity(intent);
-    }
-
-    public static void startActivityWithTransition(Activity activity, String speakerKey, View avatarView) {
-        Intent intent = new Intent(activity, SpeakerActivity.class);
-        intent.putExtra(ARG_SPEAKER_KEY, speakerKey);
-        ActivityOptionsCompat options = ActivityOptionsCompat
-                .makeSceneTransitionAnimation(activity, avatarView, activity.getString(R.string.speaker_avatar));
-        activity.startActivity(intent, options.toBundle());
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.github.lecho.mobilization.ui.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -72,7 +71,7 @@ public class SpeakersAdapter extends RecyclerView.Adapter<SpeakersAdapter.Speake
 
         public void bindView(SpeakerViewModel speakerViewModel) {
             speakerNameView.setText(speakerViewModel.getSpeakerNameText());
-            itemView.setOnClickListener(new SpeakerItemClickListener(activity, speakerViewModel.key, avatarView));
+            itemView.setOnClickListener(new SpeakerItemClickListener(activity, speakerViewModel.key));
             Utils.loadSpeakerImageMedium(activity.getApplicationContext(), speakerViewModel.photo, avatarView);
         }
     }
@@ -81,17 +80,15 @@ public class SpeakersAdapter extends RecyclerView.Adapter<SpeakersAdapter.Speake
 
         private final Activity activity;
         private final String speakerKey;
-        private final View avatarView;
 
-        public SpeakerItemClickListener(Activity activity, String speakerKey, View avatarView) {
+        public SpeakerItemClickListener(Activity activity, String speakerKey) {
             this.activity = activity;
             this.speakerKey = speakerKey;
-            this.avatarView = avatarView;
         }
 
         @Override
         public void onClick(View v) {
-            SpeakerActivity.startActivityWithTransition(activity, speakerKey, avatarView);
+            SpeakerActivity.startActivity(activity, speakerKey);
         }
     }
 }

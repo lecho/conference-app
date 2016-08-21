@@ -1,14 +1,5 @@
 <resources>
 
-    <style name="AppTheme" parent="AppTheme.Base">
-        <item name="android:windowEnterTransition">@transition/fade_transition</item>
-        <item name="android:windowExitTransition">@transition/fade_transition</item>
-        <item name="android:windowActivityTransitions">true</item>
-        <item name="android:windowAllowEnterTransitionOverlap">true</item>
-        <item name="android:windowSharedElementEnterTransition">@transition/transform_speaker_avatar</item>
-        <item name="android:windowSharedElementExitTransition">@transition/transform_speaker_avatar</item>
-    </style>
-
     <style name="StandardButton">
         <item name="android:background">@drawable/shape_button_border</item>
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Widget.Button</item>
