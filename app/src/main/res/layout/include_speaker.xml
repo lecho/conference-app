@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/SelectableItem"
     android:layout_width="match_parent"
-    android:background="?attr/selectableItemBackground"
-    android:paddingTop="8dp"
+    android:layout_height="wrap_content"
     android:paddingBottom="8dp"
-    android:layout_height="wrap_content">
+    android:paddingTop="8dp">
 
     <ImageView
         android:id="@+id/speaker_avatar"
@@ -20,9 +20,9 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/speaker_avatar"
+        android:ellipsize="end"
         android:fontFamily="sans-serif-light"
         android:maxLines="1"
-        android:ellipsize="end"
         android:text="Jan Nowak"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 </RelativeLayout>

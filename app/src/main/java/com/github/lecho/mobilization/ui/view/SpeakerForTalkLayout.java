@@ -2,8 +2,8 @@ package com.github.lecho.mobilization.ui.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.lecho.mobilization.R;
@@ -18,7 +18,7 @@ import butterknife.OnClick;
 /**
  * Displays speaker's name and avatar. Use this class only from code.
  */
-public class SpeakerForTalkLayout extends LinearLayout {
+public class SpeakerForTalkLayout extends FrameLayout {
 
     private final SpeakerViewModel speakerViewModel;
 
@@ -35,10 +35,10 @@ public class SpeakerForTalkLayout extends LinearLayout {
 
     public SpeakerForTalkLayout(Context context, SpeakerViewModel speakerViewModel) {
         super(context);
-        this.speakerViewModel = speakerViewModel;
         LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate(R.layout.include_speaker, this, true);
         ButterKnife.bind(this, this);
+        this.speakerViewModel = speakerViewModel;
     }
 
     public void bind() {
