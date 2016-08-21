@@ -1,11 +1,12 @@
 package com.github.lecho.mobilization.ui;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
@@ -46,10 +47,18 @@ public class SpeakerActivity extends AppCompatActivity implements
     @BindView(R.id.toolbar)
     Toolbar toolbarView;
 
-    public static void startActivity(Context context, String speakerKey) {
-        Intent intent = new Intent(context, SpeakerActivity.class);
+    public static void startActivity(Activity activity, String speakerKey) {
+        Intent intent = new Intent(activity, SpeakerActivity.class);
         intent.putExtra(ARG_SPEAKER_KEY, speakerKey);
-        context.startActivity(intent);
+        activity.startActivity(intent);
+    }
+
+    public static void startActivityWithTransition(Activity activity, String speakerKey, View avatarView) {
+        Intent intent = new Intent(activity, SpeakerActivity.class);
+        intent.putExtra(ARG_SPEAKER_KEY, speakerKey);
+        ActivityOptionsCompat options = ActivityOptionsCompat
+                .makeSceneTransitionAnimation(activity, avatarView, activity.getString(R.string.speaker_avatar));
+        activity.startActivity(intent, options.toBundle());
     }
 
     @Override
@@ -76,7 +85,7 @@ public class SpeakerActivity extends AppCompatActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                supportFinishAfterTransition();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -172,10 +181,10 @@ public class SpeakerActivity extends AppCompatActivity implements
         }
 
         @NonNull
-        private String getUserLoginFromUrl (final String url, final String defaultValue){
+        private String getUserLoginFromUrl(final String url, final String defaultValue) {
             Uri uri = Uri.parse(url);
             final String userLogin = uri.getLastPathSegment();
-            if(TextUtils.isEmpty(userLogin)){
+            if (TextUtils.isEmpty(userLogin)) {
                 return defaultValue;
             }
             return userLogin;

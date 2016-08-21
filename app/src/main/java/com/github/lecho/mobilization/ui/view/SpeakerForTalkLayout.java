@@ -1,6 +1,8 @@
 package com.github.lecho.mobilization.ui.view;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -22,7 +24,7 @@ public class SpeakerForTalkLayout extends FrameLayout {
 
     private final SpeakerViewModel speakerViewModel;
 
-    @BindView(R.id.speaker_avatar)
+    @BindView(R.id.image_avatar)
     ImageView avatarView;
 
     @BindView(R.id.text_speaker_name)
@@ -30,7 +32,7 @@ public class SpeakerForTalkLayout extends FrameLayout {
 
     @OnClick
     public void onClick() {
-        SpeakerActivity.startActivity(getContext(), speakerViewModel.key);
+        SpeakerActivity.startActivityWithTransition(getActivity(), speakerViewModel.key, avatarView);
     }
 
     public SpeakerForTalkLayout(Context context, SpeakerViewModel speakerViewModel) {
@@ -44,5 +46,16 @@ public class SpeakerForTalkLayout extends FrameLayout {
     public void bind() {
         Utils.loadSpeakerImageSmall(getContext().getApplicationContext(), speakerViewModel.photo, avatarView);
         speakerNameView.setText(speakerViewModel.getSpeakerNameText());
+    }
+
+    private Activity getActivity() {
+        Context context = getContext();
+        while (context instanceof ContextWrapper) {
+            if (context instanceof Activity) {
+                return (Activity)context;
+            }
+            context = ((ContextWrapper)context).getBaseContext();
+        }
+        return null;
     }
 }

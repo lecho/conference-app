@@ -67,9 +67,14 @@ public class SpeakersFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     private void setUpDivider() {
-        Drawable exampleDrawable = getResources().getDrawable(R.drawable.divider_recycler_view);
+        final Drawable divider;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            divider = getResources().getDrawable(R.drawable.divider_recycler_view, null);
+        } else{
+            divider = getResources().getDrawable(R.drawable.divider_recycler_view);
+        }
         Collection<Layer> layers = LayersBuilder.with(
-                new Layer(new AllItemsSelector(), DividerBuilder.get().with(exampleDrawable).build()))
+                new Layer(new AllItemsSelector(), DividerBuilder.get().with(divider).build()))
                 .build();
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(layers);
         recyclerView.addItemDecoration(itemDecoration);

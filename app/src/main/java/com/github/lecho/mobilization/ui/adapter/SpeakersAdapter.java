@@ -23,11 +23,11 @@ import butterknife.ButterKnife;
 
 public class SpeakersAdapter extends RecyclerView.Adapter<SpeakersAdapter.SpeakerViewHolder> {
 
-    private final Activity context;
+    private final Activity activity;
     private List<SpeakerViewModel> data = new ArrayList<>();
 
-    public SpeakersAdapter(Activity context) {
-        this.context = context;
+    public SpeakersAdapter(Activity activity) {
+        this.activity = activity;
     }
 
     public void setData(@NonNull List<SpeakerViewModel> data) {
@@ -40,7 +40,7 @@ public class SpeakersAdapter extends RecyclerView.Adapter<SpeakersAdapter.Speake
     public SpeakerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         SpeakerViewHolder viewHolder;
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_speaker, parent, false);
-        viewHolder = new SpeakerViewHolder(context, view);
+        viewHolder = new SpeakerViewHolder(activity, view);
         return viewHolder;
     }
 
@@ -56,40 +56,42 @@ public class SpeakersAdapter extends RecyclerView.Adapter<SpeakersAdapter.Speake
 
     protected class SpeakerViewHolder extends RecyclerView.ViewHolder {
 
-        private final Context context;
+        private final Activity activity;
 
-        @BindView(R.id.speaker_avatar)
+        @BindView(R.id.image_avatar)
         ImageView avatarView;
 
         @BindView(R.id.text_speaker_name)
         TextView speakerNameView;
 
-        public SpeakerViewHolder(Context context, View itemView) {
+        public SpeakerViewHolder(Activity activity, View itemView) {
             super(itemView);
-            this.context = context;
+            this.activity = activity;
             ButterKnife.bind(this, itemView);
         }
 
         public void bindView(SpeakerViewModel speakerViewModel) {
             speakerNameView.setText(speakerViewModel.getSpeakerNameText());
-            itemView.setOnClickListener(new SpeakerItemClickListener(context, speakerViewModel.key));
-            Utils.loadSpeakerImageMedium(context.getApplicationContext(), speakerViewModel.photo, avatarView);
+            itemView.setOnClickListener(new SpeakerItemClickListener(activity, speakerViewModel.key, avatarView));
+            Utils.loadSpeakerImageMedium(activity.getApplicationContext(), speakerViewModel.photo, avatarView);
         }
     }
 
     protected class SpeakerItemClickListener implements View.OnClickListener {
 
-        private final Context context;
+        private final Activity activity;
         private final String speakerKey;
+        private final View avatarView;
 
-        public SpeakerItemClickListener(Context context, String speakerKey) {
-            this.context = context;
+        public SpeakerItemClickListener(Activity activity, String speakerKey, View avatarView) {
+            this.activity = activity;
             this.speakerKey = speakerKey;
+            this.avatarView = avatarView;
         }
 
         @Override
         public void onClick(View v) {
-            SpeakerActivity.startActivity(context, speakerKey);
+            SpeakerActivity.startActivityWithTransition(activity, speakerKey, avatarView);
         }
     }
 }

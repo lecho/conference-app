@@ -8,10 +8,11 @@
     android:paddingTop="8dp">
 
     <ImageView
-        android:id="@+id/speaker_avatar"
+        android:id="@+id/image_avatar"
         android:layout_width="@dimen/speaker_avatar_small_size"
         android:layout_height="@dimen/speaker_avatar_small_size"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true"
+        android:transitionName="@string/speaker_avatar"/>
 
     <TextView
         android:id="@+id/text_speaker_name"
@@ -19,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_toLeftOf="@id/speaker_avatar"
+        android:layout_toLeftOf="@id/image_avatar"
         android:ellipsize="end"
         android:fontFamily="sans-serif-light"
         android:maxLines="1"
