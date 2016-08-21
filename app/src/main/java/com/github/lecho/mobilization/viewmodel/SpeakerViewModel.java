@@ -11,8 +11,9 @@ public class SpeakerViewModel {
     public String firstName;
     public String lastName;
     public String biography;
-    public String wwwPage;
-    public String twitterProfile;
+    public String website;
+    public String twitter;
+    public String github;
     public String photo;
 
     @NonNull
@@ -27,8 +28,9 @@ public class SpeakerViewModel {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", biography='" + biography + '\'' +
-                ", wwwPage='" + wwwPage + '\'' +
-                ", twitterProfile='" + twitterProfile + '\'' +
+                ", website='" + website + '\'' +
+                ", twitter='" + twitter + '\'' +
+                ", github='" + github + '\'' +
                 ", photo='" + photo + '\'' +
                 '}';
     }

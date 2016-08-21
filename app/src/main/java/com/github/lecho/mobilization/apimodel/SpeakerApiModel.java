@@ -15,6 +15,7 @@ public class SpeakerApiModel {
     public String bioHtml;
     public String www;
     public String twitter;
+    public String github;
     public String photoUrl;
 
     @Override
@@ -24,7 +25,8 @@ public class SpeakerApiModel {
                 ", lastname='" + lastname + '\'' +
                 ", biography='" + bioHtml + '\'' +
                 ", www='" + www + '\'' +
-                ", twitterProfile='" + twitter + '\'' +
+                ", twitter='" + twitter + '\'' +
+                ", github='" + github + '\'' +
                 ", photoUrl='" + photoUrl + '\'' +
                 '}';
     }

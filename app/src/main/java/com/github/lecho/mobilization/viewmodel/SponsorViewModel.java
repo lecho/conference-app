@@ -16,7 +16,7 @@ public class SponsorViewModel {
     public String toString() {
         return "SponsorViewModel{" +
                 "name='" + name + '\'' +
-                ", wwwPage='" + wwwPage + '\'' +
+                ", website='" + wwwPage + '\'' +
                 ", logo='" + logo + '\'' +
                 ", type=" + type +
                 '}';

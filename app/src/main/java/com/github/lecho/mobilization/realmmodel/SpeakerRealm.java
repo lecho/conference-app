@@ -18,8 +18,9 @@ public class SpeakerRealm extends RealmObject {
     private String firstName;
     private String lastName;
     private String biography;
-    private String webPage;
-    private String twitterProfile;
+    private String website;
+    private String github;
+    private String twitter;
     private String photo;
 
     public String getKey() {
@@ -54,20 +55,28 @@ public class SpeakerRealm extends RealmObject {
         this.biography = biography;
     }
 
-    public String getWebPage() {
-        return webPage;
+    public String getWebsite() {
+        return website;
     }
 
-    public void setWebPage(String webPage) {
-        this.webPage = webPage;
+    public void setWebsite(String website) {
+        this.website = website;
     }
 
-    public String getTwitterProfile() {
-        return twitterProfile;
+    public String getTwitter() {
+        return twitter;
     }
 
-    public void setTwitterProfile(String twitterProfile) {
-        this.twitterProfile = twitterProfile;
+    public void setTwitter(String twitter) {
+        this.twitter = twitter;
+    }
+
+    public String getGithub() {
+        return github;
+    }
+
+    public void setGithub(String github) {
+        this.github = github;
     }
 
     public String getPhoto() {
@@ -88,8 +97,9 @@ public class SpeakerRealm extends RealmObject {
             speakerRealm.setFirstName(apiDto.firstname);
             speakerRealm.setLastName(apiDto.lastname);
             speakerRealm.setPhoto(Uri.parse(apiDto.photoUrl).getLastPathSegment());
-            speakerRealm.setTwitterProfile(apiDto.twitter);
-            speakerRealm.setWebPage(apiDto.www);
+            speakerRealm.setTwitter(apiDto.twitter);
+            speakerRealm.setGithub(apiDto.github);
+            speakerRealm.setWebsite(apiDto.www);
             return speakerRealm;
         }
     }
@@ -104,8 +114,9 @@ public class SpeakerRealm extends RealmObject {
             speakerViewModel.lastName = realmObject.getLastName();
             speakerViewModel.biography = realmObject.getBiography();
             speakerViewModel.photo = realmObject.getPhoto();
-            speakerViewModel.twitterProfile = realmObject.getTwitterProfile();
-            speakerViewModel.wwwPage = realmObject.getWebPage();
+            speakerViewModel.twitter = realmObject.getTwitter();
+            speakerViewModel.github = realmObject.getGithub();
+            speakerViewModel.website = realmObject.getWebsite();
             return speakerViewModel;
         }
     }

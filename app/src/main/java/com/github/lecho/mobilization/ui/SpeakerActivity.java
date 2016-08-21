@@ -2,8 +2,10 @@ package com.github.lecho.mobilization.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
@@ -11,9 +13,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -105,19 +109,21 @@ public class SpeakerActivity extends AppCompatActivity implements
 
     protected class HeaderController {
 
-        private static final String SPEAKER_HEADER_IMAGE = "speaker_header.jpg";
-
         @BindView(R.id.image_avatar)
         ImageView avatarView;
 
         @BindView(R.id.text_speaker_name)
         TextView speakerNameView;
 
-//        @BindView(R.id.www_button)
-//        ImageButton wwwButton;
-//
-//        @BindView(R.id.twitter_button)
-//        ImageButton twitterButton;
+        @BindView(R.id.button_twitter)
+        Button twitterButton;
+
+        @BindView(R.id.button_github)
+        Button githubButton;
+
+        @BindView(R.id.button_website)
+        Button websiteButton;
+
 
         public HeaderController(View view) {
             ButterKnife.bind(this, view);
@@ -126,35 +132,54 @@ public class SpeakerActivity extends AppCompatActivity implements
         public void bind(final SpeakerViewModel speakerViewModel) {
             speakerNameView.setText(speakerViewModel.getSpeakerNameText());
             Utils.loadSpeakerImageBig(getApplicationContext(), speakerViewModel.photo, avatarView);
-            //setUpWwwButton(speakerViewModel);
-            //setUpTwitterButton(speakerViewModel);
+            setUpWebsiteButton(speakerViewModel);
+            setUpTwitterButton(speakerViewModel);
+            setUpGithubButton(speakerViewModel);
         }
 
-//        private void setUpWwwButton(final SpeakerViewModel speakerViewModel) {
-//            if (TextUtils.isEmpty(speakerViewModel.wwwPage)) {
-//                wwwButton.setEnabled(false);
-//            } else {
-//                wwwButton.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Utils.openWebBrowser(getApplicationContext(), speakerViewModel.wwwPage);
-//                    }
-//                });
-//            }
-//        }
-//
-//        private void setUpTwitterButton(final SpeakerViewModel speakerViewModel) {
-//            if (TextUtils.isEmpty(speakerViewModel.twitterProfile)) {
-//                twitterButton.setEnabled(false);
-//            } else {
-//                twitterButton.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Utils.openTwitter(getApplicationContext(), speakerViewModel.twitterProfile);
-//                    }
-//                });
-//            }
-//        }
+        private void setUpTwitterButton(final SpeakerViewModel speakerViewModel) {
+            final String twitterUrl = speakerViewModel.twitter;
+            if (TextUtils.isEmpty(twitterUrl)) {
+                twitterButton.setVisibility(View.GONE);
+            } else {
+                final String twitterUser = getUserLoginFromUrl(twitterUrl, getString(R.string.twitter));
+                twitterButton.setText(twitterUser);
+                twitterButton.setVisibility(View.VISIBLE);
+                twitterButton.setOnClickListener(v -> Utils.openTwitter(getApplicationContext(), twitterUrl));
+            }
+        }
+
+        private void setUpGithubButton(final SpeakerViewModel speakerViewModel) {
+            final String githubUrl = speakerViewModel.github;
+            if (TextUtils.isEmpty(githubUrl)) {
+                githubButton.setVisibility(View.GONE);
+            } else {
+                final String githubUser = getUserLoginFromUrl(githubUrl, getString(R.string.github));
+                twitterButton.setText(githubUser);
+                githubButton.setVisibility(View.VISIBLE);
+                githubButton.setOnClickListener(v -> Utils.openWebBrowser(getApplicationContext(), githubUrl));
+            }
+        }
+
+        private void setUpWebsiteButton(final SpeakerViewModel speakerViewModel) {
+            if (TextUtils.isEmpty(speakerViewModel.website)) {
+                websiteButton.setVisibility(View.GONE);
+            } else {
+                websiteButton.setVisibility(View.VISIBLE);
+                websiteButton.setOnClickListener(v -> Utils.openWebBrowser(getApplicationContext(), speakerViewModel
+                        .website));
+            }
+        }
+
+        @NonNull
+        private String getUserLoginFromUrl (final String url, final String defaultValue){
+            Uri uri = Uri.parse(url);
+            final String userLogin = uri.getLastPathSegment();
+            if(TextUtils.isEmpty(userLogin)){
+                return defaultValue;
+            }
+            return userLogin;
+        }
     }
 
     protected class InfoCardController {
