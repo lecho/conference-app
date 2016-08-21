@@ -34,9 +34,9 @@
         android:id="@+id/nested_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <RelativeLayout
@@ -48,19 +48,20 @@
                 android:id="@+id/text_time_slot"
                 style="@style/TextAppearance.AppCompat.Large"
                 android:layout_width="wrap_content"
-                android:layout_marginTop="48dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:fontFamily="sans-serif-light"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="48dp"
+                android:fontFamily="sans-serif-light"
                 android:text="9:00 - 10:00"/>
+
             <TextView
                 android:id="@+id/text_venue"
                 style="@style/TextAppearance.AppCompat.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@id/text_time_slot"
+                android:layout_centerHorizontal="true"
                 android:text="(Mobica Track)"/>
 
             <TextView
@@ -68,80 +69,80 @@
                 style="@style/TextAppearance.AppCompat.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@id/text_venue"
+                android:layout_centerHorizontal="true"
                 android:layout_marginBottom="16dp"
                 android:text="(EN)"/>
 
             <View
                 android:id="@+id/fab_anchor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/text_time_slot"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"/>
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignTop="@id/text_time_slot"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"/>
 
             <TextView
                 android:id="@+id/text_title"
+                style="@style/TextAppearance.AppCompat.Large"
                 android:layout_width="wrap_content"
-                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_language"
                 android:layout_centerHorizontal="true"
                 android:ellipsize="end"
                 android:fontFamily="sans-serif-light"
+                android:gravity="center"
                 android:maxLines="3"
                 android:text="Projektowanie aplikacji iOS - wzorce i triki które każdy programista znać powinien dasf af fdasf asd f"
-                style="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/primary"/>
 
             <TextView
                 android:id="@+id/text_description"
+                style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_title"
                 android:layout_marginTop="24dp"
                 android:fontFamily="sans-serif-light"
-                android:text="Programowanie reaktywne jako lekarstwo na ból głowy związany z kodem asynchronicznym. W czasie mojej prezentacji przedstawię fundamentalne idee stojące za tym paradygmatem oraz zademonstruję od podstaw jak"
-                style="@style/TextAppearance.AppCompat.Medium"/>
+                android:text="Programowanie reaktywne jako lekarstwo na ból głowy związany z kodem asynchronicznym. W czasie mojej prezentacji przedstawię fundamentalne idee stojące za tym paradygmatem oraz zademonstruję od podstaw jak"/>
 
             <TextView
                 android:id="@+id/text_speaker"
+                style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_description"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="24dp"
                 android:layout_marginBottom="8dp"
-                android:text="@string/speakers_layout_title"
-                style="@style/TextAppearance.AppCompat.Medium"/>
+                android:layout_marginTop="24dp"
+                android:text="@string/speakers_layout_title"/>
 
             <LinearLayout
                 android:id="@+id/speakers_layout"
                 android:layout_width="match_parent"
-                android:divider="@drawable/divider_recycler_view"
-                android:showDividers="middle|beginning|end"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_speaker"
-                android:orientation="vertical">
+                android:divider="@drawable/divider_recycler_view"
+                android:orientation="vertical"
+                android:showDividers="middle|beginning|end">
             </LinearLayout>
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/button_add_to_my_agenda"
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/fab_compat_margin_right"
         android:layout_marginEnd="@dimen/fab_compat_margin_right"
+        android:layout_marginRight="@dimen/fab_compat_margin_right"
         android:clickable="true"
         app:backgroundTint="@color/primary"
         app:borderWidth="0dp"
         app:elevation="4dp"
         app:layout_anchor="@id/fab_anchor"
-        app:layout_anchorGravity="bottom|right|end"
+        app:layout_anchorGravity="center_vertical|right|end"
+        app:layout_behavior="com.github.lecho.mobilization.ui.view.FabBehavior"
         app:pressedTranslationZ="8dp"
-        app:rippleColor="@color/primary_ripple"
-       app:layout_behavior="com.github.lecho.mobilization.ui.view.ScrollAwareFabBehaviour"/>
+        app:rippleColor="@color/primary_ripple"/>
 
 </android.support.design.widget.CoordinatorLayout>

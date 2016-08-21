@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -13,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -134,8 +132,8 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
 
     protected class FABController {
 
-        @BindView(R.id.button_add_to_my_agenda)
-        FloatingActionButton addToMyAgendaButton;
+        @BindView(R.id.fab)
+        FloatingActionButton fab;
 
         public FABController(View mainContainer) {
             ButterKnife.bind(this, mainContainer);
@@ -143,12 +141,12 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
 
         public void bind(TalkViewModel talkViewModel) {
             if (talkViewModel.isInMyAgenda) {
-                addToMyAgendaButton.setImageResource(R.drawable.ic_star_24);
+                fab.setImageResource(R.drawable.ic_star_24);
             } else {
-                addToMyAgendaButton.setImageResource(R.drawable.ic_star_border_24);
+                fab.setImageResource(R.drawable.ic_star_border_24);
             }
-            addToMyAgendaButton.setOnClickListener(new AddToMyAgendaClickListener(talkViewModel));
-            addToMyAgendaButton.show();
+            fab.setOnClickListener(new FabClickListener(talkViewModel));
+            fab.show();
         }
     }
 
@@ -215,11 +213,11 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
         }
     }
 
-    private class AddToMyAgendaClickListener implements View.OnClickListener {
+    private class FabClickListener implements View.OnClickListener {
 
         private TalkViewModel talkViewModel;
 
-        public AddToMyAgendaClickListener(TalkViewModel talkViewModel) {
+        public FabClickListener(TalkViewModel talkViewModel) {
             this.talkViewModel = talkViewModel;
         }
 
