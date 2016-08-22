@@ -38,6 +38,11 @@
             android:label="@string/title_activity_sponsors"
             android:theme="@style/AppTheme">
         </activity>
+        <activity
+            android:name=".ui.AboutAppActivity"
+            android:label="@string/title_activity_about"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>

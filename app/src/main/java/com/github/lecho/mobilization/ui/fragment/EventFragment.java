@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.lecho.mobilization.R;
+import com.github.lecho.mobilization.ui.AboutAppActivity;
 import com.github.lecho.mobilization.ui.SpeakersActivity;
 import com.github.lecho.mobilization.ui.SponsorsActivity;
 import com.github.lecho.mobilization.ui.loader.EventViewDataLoader;
@@ -73,6 +74,7 @@ public class EventFragment extends Fragment implements Scrollable, LoaderManager
         unbinder = ButterKnife.bind(this, rootView);
         sponsorsButton.setOnClickListener(view -> startActivity(SponsorsActivity.class));
         speakersButton.setOnClickListener(view -> startActivity(SpeakersActivity.class));
+        aboutAppButton.setOnClickListener(view -> startActivity(AboutAppActivity.class));
         Utils.loadHeaderImage(getContext(), Utils.MAP_IMAGE, mapImage);
         return rootView;
     }
