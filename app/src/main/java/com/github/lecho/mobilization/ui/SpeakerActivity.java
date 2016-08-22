@@ -38,7 +38,7 @@ public class SpeakerActivity extends AppCompatActivity implements
     private static final int LOADER_ID = 0;
     private String speakerKey;
     private HeaderController headerController;
-    private InfoCardController infoCardController;
+    private DescriptionController descriptionController;
 
     @BindView(R.id.main_container)
     View mainContainerView;
@@ -59,7 +59,7 @@ public class SpeakerActivity extends AppCompatActivity implements
         ButterKnife.bind(this);
 
         headerController = new HeaderController(mainContainerView);
-        infoCardController = new InfoCardController(mainContainerView);
+        descriptionController = new DescriptionController(mainContainerView);
 
         setSupportActionBar(toolbarView);
         ActionBar actionBar = getSupportActionBar();
@@ -99,7 +99,7 @@ public class SpeakerActivity extends AppCompatActivity implements
             }
             SpeakerViewModel speakerViewModel = data.get();
             headerController.bind(speakerViewModel);
-            infoCardController.bind(speakerViewModel);
+            descriptionController.bind(speakerViewModel);
         }
     }
 
@@ -143,9 +143,9 @@ public class SpeakerActivity extends AppCompatActivity implements
                 twitterButton.setVisibility(View.GONE);
             } else {
                 final String twitterUser = getUserLoginFromUrl(twitterUrl, getString(R.string.twitter));
-                twitterButton.setText(twitterUser);
+                twitterButton.setText("@" + twitterUser);
                 twitterButton.setVisibility(View.VISIBLE);
-                twitterButton.setOnClickListener(v -> Utils.openTwitter(getApplicationContext(), twitterUrl));
+                twitterButton.setOnClickListener(v -> Utils.openTwitter(getApplicationContext(), twitterUser));
             }
         }
 
@@ -182,12 +182,12 @@ public class SpeakerActivity extends AppCompatActivity implements
         }
     }
 
-    protected class InfoCardController {
+    protected class DescriptionController {
 
         @BindView(R.id.text_description)
         TextView speakerDescriptionView;
 
-        public InfoCardController(View view) {
+        public DescriptionController(View view) {
             ButterKnife.bind(this, view);
         }
 
