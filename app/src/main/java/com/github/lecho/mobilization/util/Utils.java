@@ -58,6 +58,8 @@ public class Utils {
     public static final String PREFS_FILE_NAME = "conference-shared-prefs";
     public static final String PREFS_SCHEMA_VERSION = "schema-version";
 
+    public static final String MAP_IMAGE = "map.jpg";
+
     private static Transformation PICASSO_CIRCLE_TRANSFORMATION;
 
     private static Transformation getTransformation(Context context) {

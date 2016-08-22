@@ -139,20 +139,8 @@ public class NavigationDrawerController implements NavigationController,
 
         public void bind(@NonNull Context context, @NonNull EventViewModel eventViewModel) {
             eventTitleView.setText(eventViewModel.title);
-            String eventDateText = new StringBuilder()
-                    .append(eventViewModel.date)
-                    .append(", ")
-                    .append(eventViewModel.time)
-                    .toString();
-            eventDateView.setText(eventDateText);
-            String eventPlaceText = new StringBuilder()
-                    .append(eventViewModel.place)
-                    .append("\n")
-                    .append(eventViewModel.street)
-                    .append(" ")
-                    .append(eventViewModel.city)
-                    .toString();
-            eventPlaceView.setText(eventPlaceText);
+            eventDateView.setText(eventViewModel.getDate());
+            eventPlaceView.setText(eventViewModel.getPlace());
             mapButton.setOnClickListener(new MapButtonClickListener(context, eventViewModel));
         }
 
@@ -215,8 +203,7 @@ public class NavigationDrawerController implements NavigationController,
 
         @Override
         public void onClick(View v) {
-            String address = eventViewModel.street + ", " + eventViewModel.city;
-            Utils.launchGMaps(context, eventViewModel.latitude, eventViewModel.longitude, address);
+            Utils.launchGMaps(context, eventViewModel.latitude, eventViewModel.longitude, eventViewModel.getAddress());
         }
     }
 }

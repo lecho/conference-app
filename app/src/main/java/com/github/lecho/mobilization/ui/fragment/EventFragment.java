@@ -11,12 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.SpeakersActivity;
 import com.github.lecho.mobilization.ui.SponsorsActivity;
 import com.github.lecho.mobilization.ui.loader.EventViewDataLoader;
 import com.github.lecho.mobilization.util.Optional;
+import com.github.lecho.mobilization.util.Utils;
 import com.github.lecho.mobilization.viewmodel.EventViewModel;
 
 import butterknife.BindView;
@@ -30,8 +33,17 @@ public class EventFragment extends Fragment implements Scrollable, LoaderManager
     private static final int LOADER_ID = 0;
     private Unbinder unbinder;
 
+    @BindView(R.id.image_map)
+    ImageView mapImage;
+
     @BindView(R.id.button_map)
     Button mapButton;
+
+    @BindView(R.id.text_event_date)
+    TextView eventDateView;
+
+    @BindView(R.id.text_event_place)
+    TextView eventPlaceView;
 
     @BindView(R.id.button_sponsors)
     Button sponsorsButton;
@@ -61,6 +73,7 @@ public class EventFragment extends Fragment implements Scrollable, LoaderManager
         unbinder = ButterKnife.bind(this, rootView);
         sponsorsButton.setOnClickListener(view -> startActivity(SponsorsActivity.class));
         speakersButton.setOnClickListener(view -> startActivity(SpeakersActivity.class));
+        Utils.loadHeaderImage(getContext(), Utils.MAP_IMAGE, mapImage);
         return rootView;
     }
 
@@ -92,7 +105,13 @@ public class EventFragment extends Fragment implements Scrollable, LoaderManager
     @Override
     public void onLoadFinished(Loader<Optional<EventViewModel>> loader, Optional<EventViewModel> data) {
         if (loader.getId() == LOADER_ID) {
-            //TODO
+            if(data.isPresent()) {
+                EventViewModel event = data.get();
+                eventDateView.setText(event.getDate());
+                eventPlaceView.setText(event.getPlace());
+                mapButton.setOnClickListener(view -> Utils.launchGMaps(getActivity(), event.latitude, event
+                        .longitude, event.getAddress()));
+            }
         }
     }
 

@@ -18,7 +18,7 @@
         <ImageView
             android:id="@+id/image_map"
             android:layout_width="match_parent"
-            android:layout_height="240dp"/>
+            android:layout_height="@dimen/header_image_height"/>
 
         <TextView
             android:id="@+id/text_event_title"
@@ -28,8 +28,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="72dp"
             android:fontFamily="sans-serif-light"
-            android:text="Mobilization"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/event_name"
+            style="@style/TextAppearance.AppCompat.Large"
             android:textSize="32sp"/>
         <TextView
             android:id="@+id/text_event_title_part2"
@@ -37,8 +37,8 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/text_event_title"
             android:layout_alignTop="@id/text_event_title"
-            android:text="VI"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/event_version"
+            style="@style/TextAppearance.AppCompat.Large"
             android:textSize="18sp"/>
 
         <TextView
@@ -47,8 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/text_event_title"
             android:layout_centerHorizontal="true"
-            android:text="00 Oct 2015, 7:30 - 17:30"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+            style="@style/TextAppearance.AppCompat.Small"/>
 
         <TextView
             android:id="@+id/text_event_place"
@@ -57,18 +56,19 @@
             android:layout_below="@id/text_event_date"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="16dp"
-            android:text="Some-Place Al. Politechniki 4, Łódź"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
+            style="@style/TextAppearance.AppCompat.Small"/>
 
         <Button
             android:id="@+id/button_map"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_below="@id/text_event_place"
             android:layout_marginRight="8dp"
-            android:text="Map"
+            android:layout_marginEnd="8dp"
+            android:text="@string/map"
             android:layout_marginBottom="16dp"/>
 
         <Button
@@ -78,7 +78,7 @@
             android:layout_height="56dp"
             android:layout_below="@id/button_map"
             android:layout_centerHorizontal="true"
-            android:text="Sponsors"/>
+            android:text="@string/title_activity_sponsors"/>
 
         <Button
             android:id="@+id/button_speakers"
@@ -87,7 +87,7 @@
             android:layout_height="56dp"
             android:layout_below="@id/button_sponsors"
             android:layout_centerHorizontal="true"
-            android:text="Speakers"/>
+            android:text="@string/title_activity_speakers"/>
 
         <Button
             android:id="@+id/button_mobile_app"
@@ -96,7 +96,7 @@
             android:layout_height="56dp"
             android:layout_below="@id/button_speakers"
             android:layout_centerHorizontal="true"
-            android:text="About app"/>
+            android:text="@string/title_activity_about"/>
     </RelativeLayout>
 
 </android.support.v4.widget.NestedScrollView>
