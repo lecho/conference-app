@@ -8,28 +8,30 @@
 
     <TextView
         android:id="@+id/text_slot_conflict_message1"
+        style="@style/TextAppearance.AppCompat.Medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/dialog_slot_conflict_message_part1"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
+        android:text="@string/dialog_slot_conflict_message_part1"/>
 
     <TextView
         android:id="@+id/text_slot_conflict_old_talk_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/text_slot_conflict_message1"
-        android:text="Bla bal kdajklfjdeij fa fkldas"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-        android:textColor="@color/primary"
-        android:textStyle="bold"/>
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-light"
+        android:maxLines="3"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/primary"/>
 
     <TextView
         android:id="@+id/text_slot_conflict_message2"
+        style="@style/TextAppearance.AppCompat.Medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/text_slot_conflict_old_talk_title"
         android:layout_marginTop="8dp"
-        android:text="@string/dialog_slot_conflict_message_part2"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
+        android:text="@string/dialog_slot_conflict_message_part2"/>
 
 </RelativeLayout>
