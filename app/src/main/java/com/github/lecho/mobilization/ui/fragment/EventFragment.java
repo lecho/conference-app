@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -38,7 +39,7 @@ public class EventFragment extends Fragment implements Scrollable, LoaderManager
     ImageView mapImage;
 
     @BindView(R.id.button_map)
-    Button mapButton;
+    ImageButton mapButton;
 
     @BindView(R.id.text_event_date)
     TextView eventDateView;
