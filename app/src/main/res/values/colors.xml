@@ -13,6 +13,7 @@
     <color name="darker_gray">#CCCCCC</color>
     <color name="darker_gray_alpha">#60CCCCCC</color>
     <color name="black">#000000</color>
+    <color name="black_alpha">#60000000</color>
 
     <color name="diamond">#7D1242</color>
     <color name="platinum">#E5E4E2</color>
