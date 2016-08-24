@@ -32,6 +32,8 @@ import io.realm.Sort;
 
 /**
  * Created by Leszek on 2015-08-04.
+ * <p>
+ * Warning! This class is not thread safe!
  */
 public class RealmFacade {
 
@@ -236,6 +238,25 @@ public class RealmFacade {
 
     private TalkRealm loadFavoriteTalkRealmBySlot(String slotKey) {
         return realm.where(TalkRealm.class).equalTo("isInMyAgenda", true).equalTo("slot.key", slotKey).findFirst();
+    }
+
+    public List<TalkViewModel> loadTalksBySlotSortedByVenue(String slotKey) {
+        try {
+            realm = Realm.getDefaultInstance();
+            RealmResults<VenueRealm> venuesRealms = realm.where(VenueRealm.class).findAllSorted("title");
+            TalkRealm.TalkViewConverter talkViewConverter = new TalkRealm.TalkViewConverter();
+            List<TalkViewModel> talkViewModels = new ArrayList<>();
+            for (VenueRealm venueRealm : venuesRealms) {
+                TalkRealm talkRealm = realm.where(TalkRealm.class).equalTo("venue.key", venueRealm.getKey()).equalTo
+                        ("slot.key", slotKey).findFirst();
+                if(talkRealm != null){
+                    talkViewModels.add(talkViewConverter.convert(talkRealm));
+                }
+            }
+            return talkViewModels;
+        }finally {
+            closeRealm();
+        }
     }
 
     public Optional<SpeakerViewModel> loadSpeakerByKey(String speakerKey) {
