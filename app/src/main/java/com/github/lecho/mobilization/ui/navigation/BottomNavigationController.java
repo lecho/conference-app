@@ -4,17 +4,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.view.KeyEvent;
 import android.view.View;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter;
 import com.github.lecho.mobilization.R;
-import com.github.lecho.mobilization.ui.fragment.AboutFragment;
 import com.github.lecho.mobilization.ui.fragment.EventFragment;
 import com.github.lecho.mobilization.ui.fragment.MyAgendaFragment;
-import com.github.lecho.mobilization.ui.fragment.SpeakersFragment;
-import com.github.lecho.mobilization.ui.fragment.SponsorsFragment;
 import com.github.lecho.mobilization.ui.fragment.VenuesFragment;
 
 import butterknife.BindView;
