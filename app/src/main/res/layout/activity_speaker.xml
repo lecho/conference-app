@@ -77,7 +77,7 @@
                 <Button
                     android:id="@+id/button_twitter"
                     style="@style/SpeakerButton"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/ic_twitter"
@@ -86,7 +86,7 @@
                 <Button
                     android:id="@+id/button_github"
                     style="@style/SpeakerButton"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/ic_github"
@@ -95,7 +95,7 @@
                 <Button
                     android:id="@+id/button_website"
                     style="@style/SpeakerButton"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/ic_website"
