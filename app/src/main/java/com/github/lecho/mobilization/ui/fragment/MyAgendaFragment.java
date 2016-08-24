@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.async.TalkAsyncHelper;
+import com.github.lecho.mobilization.ui.SameSlotActivity;
 import com.github.lecho.mobilization.ui.adapter.AgendaAdapter;
 import com.github.lecho.mobilization.ui.adapter.MyAgendaAdapter;
 import com.github.lecho.mobilization.ui.loader.AgendaLoader;
@@ -44,7 +45,6 @@ public class MyAgendaFragment extends Fragment implements Scrollable, LoaderMana
     public static final String TAG = MyAgendaFragment.class.getSimpleName();
     private static final int LOADER_ID = 0;
     private AgendaAdapter adapter;
-    private OpenDrawerCallback drawerCallback;
     private Unbinder unbinder;
 
     @BindView(R.id.recycler_view)
@@ -64,7 +64,7 @@ public class MyAgendaFragment extends Fragment implements Scrollable, LoaderMana
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View rootView = inflater.inflate(R.layout.fragment_agenda, container, false);
+        View rootView = inflater.inflate(R.layout.recycler_view, container, false);
         unbinder = ButterKnife.bind(this, rootView);
         //TODO Grid for tablet layout, adjust margins and paddings in layout
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -95,17 +95,11 @@ public class MyAgendaFragment extends Fragment implements Scrollable, LoaderMana
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        try {
-            drawerCallback = (OpenDrawerCallback) getActivity();
-        } catch (Exception e) {
-            throw new ClassCastException(getActivity().toString() + " must implement OpenDrawerCallback");
-        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        drawerCallback = null;
     }
 
     private void removeTalk(int position) {
@@ -173,9 +167,7 @@ public class MyAgendaFragment extends Fragment implements Scrollable, LoaderMana
 
         @Override
         public void onItemClick(int position, AgendaItemViewModel agendaItem, View view) {
-            if (drawerCallback != null) {
-                drawerCallback.onOpenDrawer();
-            }
+            SameSlotActivity.startActivity(getActivity(), agendaItem.slot.key);
         }
     }
 
@@ -189,9 +181,5 @@ public class MyAgendaFragment extends Fragment implements Scrollable, LoaderMana
                 removeTalk(position);
             }
         }
-    }
-
-    public interface OpenDrawerCallback {
-        void onOpenDrawer();
     }
 }
