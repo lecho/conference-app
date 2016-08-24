@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.lecho.mobilization.R;
-import com.github.lecho.mobilization.ui.MainActivity;
 import com.github.lecho.mobilization.ui.controller.VenueViewController;
 import com.github.lecho.mobilization.ui.loader.VenuesViewDataLoader;
 import com.github.lecho.mobilization.util.Optional;
@@ -139,7 +138,7 @@ public class VenuesFragment extends Fragment implements Scrollable, LoaderManage
 
         @Override
         public Object instantiateItem(ViewGroup collection, int position) {
-            View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_agenda, collection, false);
+            View view = LayoutInflater.from(getContext()).inflate(R.layout.recycler_view, collection, false);
             VenueViewController controller = new VenueViewController(getActivity(), getLoaderManager(), new
                     LinearLayoutManager(getContext()), venues.get(position), view, position);
             controller.bindView();

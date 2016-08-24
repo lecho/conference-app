@@ -43,6 +43,8 @@
             android:label="@string/title_activity_about"
             android:theme="@style/AppTheme">
         </activity>
+        <activity android:name=".ui.SameSlotActivity">
+        </activity>
     </application>
 
 </manifest>

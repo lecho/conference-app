@@ -22,7 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends AppCompatActivity implements MyAgendaFragment.OpenDrawerCallback {
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private NavigationController navigationController;
@@ -76,12 +76,6 @@ public class MainActivity extends AppCompatActivity implements MyAgendaFragment.
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
         transaction.replace(R.id.content_container, fragment).commit();
-    }
-
-    //TODO Get rid of this method
-    @Override
-    public void onOpenDrawer() {
-        navigationController.show();
     }
 
     private class MainActivityNavItemListener implements NavigationItemListener {
