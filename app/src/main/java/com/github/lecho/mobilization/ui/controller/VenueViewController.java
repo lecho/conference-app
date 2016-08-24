@@ -126,6 +126,8 @@ public class VenueViewController implements Scrollable {
                 talkViewModel.isInMyAgenda = false;
                 TalkAsyncHelper.removeTalk(talkViewModel.key);
             } else {
+                //TODO use optimistic result and move checking slot conflict off main thread, then use RxBus to trigger
+                //T dialog if necessary.
                 if (Utils.checkSlotConflict((AppCompatActivity) activity, talkViewModel.key)) {
                     Log.d(VenuesFragment.TAG, "Slot conflict for talk with key: " + talkViewModel.key);
                     return;
