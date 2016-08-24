@@ -32,13 +32,10 @@ import io.realm.Sort;
 
 /**
  * Created by Leszek on 2015-08-04.
- * <p>
- * Warning! This class is not thread safe!
  */
 public class RealmFacade {
 
     public static final String TAG = RealmFacade.class.getSimpleName();
-    private Realm realm;
     private Map<String, EventRealm> eventRealmsMap;
     private Map<String, SlotRealm> slotRealmsMap;
     private Map<String, BreakRealm> breakRealmsMap;
@@ -52,6 +49,7 @@ public class RealmFacade {
 
     public void saveData(final ApiData apiData) {
         convertApiDataToRealm(apiData);
+        Realm realm = null;
         try {
             realm = Realm.getDefaultInstance();
             realm.beginTransaction();
@@ -70,7 +68,7 @@ public class RealmFacade {
             }
             Log.e(TAG, "Could not save api data to realm", e);
         } finally {
-            closeRealm();
+            closeRealm(realm);
         }
     }
 
@@ -132,6 +130,7 @@ public class RealmFacade {
     }
 
     public AgendaViewModel loadWholeAgenda() {
+        Realm realm = null;
         try {
             realm = Realm.getDefaultInstance();
             //TODO: Wait for sorting by linked realm https://github.com/realm/realm-java/issues/672
@@ -139,11 +138,12 @@ public class RealmFacade {
             RealmResults<BreakRealm> breaksRealms = realm.where(BreakRealm.class).findAllSorted("fromInMilliseconds");
             return loadAgenda(talksRealms, breaksRealms, null);
         } finally {
-            closeRealm();
+            closeRealm(realm);
         }
     }
 
     public AgendaViewModel loadAgendaForVenue(String venueKey) {
+        Realm realm = null;
         try {
             realm = Realm.getDefaultInstance();
             RealmResults<TalkRealm> talksRealms = realm.where(TalkRealm.class).equalTo("venue.key", venueKey)
@@ -151,11 +151,12 @@ public class RealmFacade {
             RealmResults<BreakRealm> breaksRealms = realm.where(BreakRealm.class).findAllSorted("fromInMilliseconds");
             return loadAgenda(talksRealms, breaksRealms, null);
         } finally {
-            closeRealm();
+            closeRealm(realm);
         }
     }
 
     public AgendaViewModel loadMyAgenda() {
+        Realm realm = null;
         try {
             realm = Realm.getDefaultInstance();
             RealmResults<TalkRealm> talksRealms = realm.where(TalkRealm.class).equalTo("isInMyAgenda", true)
@@ -165,7 +166,7 @@ public class RealmFacade {
                     .findAllSorted("fromInMilliseconds");
             return loadAgenda(talksRealms, breaksRealms, slotsRealms);
         } finally {
-            closeRealm();
+            closeRealm(realm);
         }
     }
 
@@ -220,27 +221,29 @@ public class RealmFacade {
     }
 
     public Optional<TalkViewModel> loadTalkByKey(String talkKey) {
+        Realm realm = null;
         try {
             realm = Realm.getDefaultInstance();
-            TalkRealm talkRealm = loadTalkRealmByKey(talkKey);
+            TalkRealm talkRealm = loadTalkRealmByKey(realm, talkKey);
             if (talkRealm == null) {
                 return Optional.empty();
             }
             return Optional.of(new TalkRealm.TalkViewConverter().convert(talkRealm));
         } finally {
-            closeRealm();
+            closeRealm(realm);
         }
     }
 
-    private TalkRealm loadTalkRealmByKey(String talkKey) {
+    private TalkRealm loadTalkRealmByKey(Realm realm, String talkKey) {
         return realm.where(TalkRealm.class).equalTo("key", talkKey).findFirst();
     }
 
-    private TalkRealm loadFavoriteTalkRealmBySlot(String slotKey) {
+    private TalkRealm loadFavoriteTalkRealmBySlot(Realm realm, String slotKey) {
         return realm.where(TalkRealm.class).equalTo("isInMyAgenda", true).equalTo("slot.key", slotKey).findFirst();
     }
 
     public List<TalkViewModel> loadTalksBySlotSortedByVenue(String slotKey) {
+        Realm realm = null;
         try {
             realm = Realm.getDefaultInstance();
             RealmResults<VenueRealm> venuesRealms = realm.where(VenueRealm.class).findAllSorted("title");
@@ -249,17 +252,18 @@ public class RealmFacade {
             for (VenueRealm venueRealm : venuesRealms) {
                 TalkRealm talkRealm = realm.where(TalkRealm.class).equalTo("venue.key", venueRealm.getKey()).equalTo
                         ("slot.key", slotKey).findFirst();
-                if(talkRealm != null){
+                if (talkRealm != null) {
                     talkViewModels.add(talkViewConverter.convert(talkRealm));
                 }
             }
             return talkViewModels;
-        }finally {
-            closeRealm();
+        } finally {
+            closeRealm(realm);
         }
     }
 
     public Optional<SpeakerViewModel> loadSpeakerByKey(String speakerKey) {
+        Realm realm = null;
         try {
             realm = Realm.getDefaultInstance();
             SpeakerRealm speakerRealm = realm.where(SpeakerRealm.class).equalTo("key", speakerKey).findFirst();
@@ -268,11 +272,12 @@ public class RealmFacade {
             }
             return Optional.of(new SpeakerRealm.SpeakerViewConverter().convert(speakerRealm));
         } finally {
-            closeRealm();
+            closeRealm(realm);
         }
     }
 
     public List<SpeakerViewModel> loadAllSpeakers() {
+        Realm realm = null;
         try {
             SpeakerRealm.SpeakerViewConverter speakerViewConverter = new SpeakerRealm.SpeakerViewConverter();
             realm = Realm.getDefaultInstance();
@@ -283,11 +288,12 @@ public class RealmFacade {
             }
             return speakerViewModels;
         } finally {
-            closeRealm();
+            closeRealm(realm);
         }
     }
 
     public List<VenueViewModel> loadAllVenues() {
+        Realm realm = null;
         try {
             VenueRealm.VenueViewConverter venueViewConverter = new VenueRealm.VenueViewConverter();
             realm = Realm.getDefaultInstance();
@@ -298,11 +304,12 @@ public class RealmFacade {
             }
             return venueViewModels;
         } finally {
-            closeRealm();
+            closeRealm(realm);
         }
     }
 
     public List<SponsorViewModel> loadAllSponsors() {
+        Realm realm = null;
         try {
             SponsorRealm.SponsorViewConverter sponsorViewConverter = new SponsorRealm.SponsorViewConverter();
             realm = Realm.getDefaultInstance();
@@ -314,7 +321,7 @@ public class RealmFacade {
             }
             return sponsorViewModels;
         } finally {
-            closeRealm();
+            closeRealm(realm);
         }
     }
 
@@ -331,9 +338,10 @@ public class RealmFacade {
     }
 
     private void changeTalkFavoriteState(String talkKey, boolean isInMyAgenda, boolean postUpdateEvent) {
+        Realm realm = null;
         try {
             realm = Realm.getDefaultInstance();
-            TalkRealm talkRealm = loadTalkRealmByKey(talkKey);
+            TalkRealm talkRealm = loadTalkRealmByKey(realm, talkKey);
             realm.beginTransaction();
             talkRealm.setIsInMyAgenda(isInMyAgenda);
             talkRealm.getSlot().setIsInMyAgenda(isInMyAgenda);
@@ -347,29 +355,31 @@ public class RealmFacade {
             }
             Log.e(TAG, "Could not add talk to my agenda", e);
         } finally {
-            closeRealm();
+            closeRealm(realm);
         }
     }
 
     public Optional<TalkViewModel> getConflictedTalk(String talkKey) {
+        Realm realm = null;
         try {
             realm = Realm.getDefaultInstance();
-            TalkRealm talkRealm = loadTalkRealmByKey(talkKey);
-            TalkRealm conflictedTalk = loadFavoriteTalkRealmBySlot(talkRealm.getSlot().getKey());
+            TalkRealm talkRealm = loadTalkRealmByKey(realm, talkKey);
+            TalkRealm conflictedTalk = loadFavoriteTalkRealmBySlot(realm, talkRealm.getSlot().getKey());
             if (conflictedTalk == null) {
                 return Optional.empty();
             }
             return Optional.of(new TalkRealm.TalkViewConverter().convert(conflictedTalk));
         } finally {
-            closeRealm();
+            closeRealm(realm);
         }
     }
 
     public void replaceTalk(String oldTalkKey, String newTalkKey) {
+        Realm realm = null;
         try {
             realm = Realm.getDefaultInstance();
-            TalkRealm oldTalkRealm = loadTalkRealmByKey(oldTalkKey);
-            TalkRealm newTalkRealm = loadTalkRealmByKey(newTalkKey);
+            TalkRealm oldTalkRealm = loadTalkRealmByKey(realm, oldTalkKey);
+            TalkRealm newTalkRealm = loadTalkRealmByKey(realm, newTalkKey);
             realm.beginTransaction();
             oldTalkRealm.setIsInMyAgenda(false);
             oldTalkRealm.getSlot().setIsInMyAgenda(false);
@@ -383,11 +393,12 @@ public class RealmFacade {
             }
             Log.e(TAG, "Could not replace talks, old talk: " + oldTalkKey + ", new talk: " + newTalkKey, e);
         } finally {
-            closeRealm();
+            closeRealm(realm);
         }
     }
 
     public Optional<EventViewModel> loadEvent() {
+        Realm realm = null;
         try {
             realm = Realm.getDefaultInstance();
             EventRealm eventRealm = realm.where(EventRealm.class).findFirst();
@@ -396,11 +407,11 @@ public class RealmFacade {
             }
             return Optional.of(new EventRealm.EventViewConverter().convert(eventRealm));
         } finally {
-            closeRealm();
+            closeRealm(realm);
         }
     }
 
-    private void closeRealm() {
+    private void closeRealm(Realm realm) {
         if (realm != null) {
             realm.close();
             realm = null;
