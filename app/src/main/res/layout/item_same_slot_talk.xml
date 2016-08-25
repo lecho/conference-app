@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/SelectableItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <ImageButton
+        android:id="@+id/fab"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_star_border_32"/>
+
+    <TextView
+        android:id="@+id/text_title"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fab"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-light"
+        android:text="Projektowanie aplikacji iOS - wzorce i triki które każdy programista znać powinien"
+        android:textColor="@color/primary"/>
+
+    <TextView
+        android:id="@+id/text_language"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/text_title"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="4dp"
+        android:text="(EN)"/>
+
+    <TextView
+        android:id="@+id/text_speaker"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_title"
+        android:layout_toLeftOf="@id/text_language"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="By Adam Nowakfdsa fas fdas fsda fads dsa fdsa fdsa fasfasd fas fsad fas faf"/>
+
+    <TextView
+        android:id="@+id/text_description"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_speaker"
+        android:layout_marginTop="24dp"
+        android:maxLines="5"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-light"
+        android:text="Programowanie reaktywne jako lekarstwo na ból głowy związany z kodem asynchronicznym. W czasie mojej prezentacji przedstawię fundamentalne idee stojące za tym paradygmatem oraz zademonstruję od podstaw jak"/>
+
+</RelativeLayout>
