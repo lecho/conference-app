@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -43,8 +45,8 @@ public class SameSlotActivity extends AppCompatActivity implements LoaderManager
     @BindView(R.id.view_pager)
     ViewPager viewPager;
 
-    @BindView(R.id.tab_strip_layout)
-    PagerTabStrip tabStripLayout;
+    @BindView(R.id.tab_layout)
+    TabLayout tabLayout;
 
     public static void startActivity(@NonNull Activity activity, @NonNull String slotKey) {
         Intent intent = new Intent(activity, SameSlotActivity.class);
@@ -67,8 +69,7 @@ public class SameSlotActivity extends AppCompatActivity implements LoaderManager
         slotKey = getIntent().getStringExtra(ARG_SLOT_KEY);
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
 
-        tabStripLayout.setDrawFullUnderline(false);
-        tabStripLayout.setTabIndicatorColor(getResources().getColor(R.color.primary));
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override
@@ -92,6 +93,7 @@ public class SameSlotActivity extends AppCompatActivity implements LoaderManager
     @Override
     public void onLoadFinished(Loader<List<TalkViewModel>> loader, List<TalkViewModel> talkViewModels) {
         if (loader.getId() == LOADER_ID) {
+            //TODO handle situation when there is no talk in a slot(that should not happen)
             pagerAdapter = new SameSlotPagerAdapter(talkViewModels);
             viewPager.setAdapter(pagerAdapter);
         }
