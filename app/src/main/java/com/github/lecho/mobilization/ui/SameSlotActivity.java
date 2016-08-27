@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -18,6 +20,8 @@ import android.view.ViewGroup;
 
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.controller.VenueViewController;
+import com.github.lecho.mobilization.ui.loader.SameSlotLoader;
+import com.github.lecho.mobilization.ui.loader.VenuesViewDataLoader;
 import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.viewmodel.TalkViewModel;
 import com.github.lecho.mobilization.viewmodel.VenueViewModel;
@@ -27,9 +31,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SameSlotActivity extends AppCompatActivity {
+public class SameSlotActivity extends AppCompatActivity implements LoaderManager
+        .LoaderCallbacks<List<TalkViewModel>> {
 
+    public static final String TAG = SameSlotActivity.class.getSimpleName();
     private static final String ARG_SLOT_KEY = "slot-key";
+    private static final int LOADER_ID = 0;
+    private SameSlotPagerAdapter pagerAdapter;
+    private String slotKey;
 
     @BindView(R.id.toolbar)
     Toolbar toolbarView;
@@ -38,7 +47,7 @@ public class SameSlotActivity extends AppCompatActivity {
     ViewPager viewPager;
 
     @BindView(R.id.tab_strip_layout)
-    TabLayout tabStripLayout;
+    PagerTabStrip tabStripLayout;
 
     public static void startActivity(@NonNull Activity activity, @NonNull String slotKey) {
         Intent intent = new Intent(activity, SameSlotActivity.class);
@@ -57,6 +66,9 @@ public class SameSlotActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(null);
         }
+
+        slotKey = getIntent().getStringExtra(ARG_SLOT_KEY);
+        getSupportLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
     @Override
@@ -69,12 +81,32 @@ public class SameSlotActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class SlotPagerAdapter extends PagerAdapter {
+    @Override
+    public Loader<List<TalkViewModel>> onCreateLoader(int id, Bundle args) {
+        if (id == LOADER_ID) {
+            return SameSlotLoader.getLoader(getApplicationContext(), slotKey);
+        }
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<TalkViewModel>> loader, List<TalkViewModel> talkViewModels) {
+        if (loader.getId() == LOADER_ID) {
+            pagerAdapter = new SameSlotPagerAdapter(talkViewModels);
+            viewPager.setAdapter(pagerAdapter);
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<TalkViewModel>> loader) {
+    }
+
+    private class SameSlotPagerAdapter extends PagerAdapter {
 
         private List<TalkViewModel> talks;
         private VenueViewController[] controllers;
 
-        public SlotPagerAdapter(List<TalkViewModel> talks) {
+        public SameSlotPagerAdapter(List<TalkViewModel> talks) {
             this.talks = talks;
             this.controllers = new VenueViewController[talks.size()];
         }
@@ -92,7 +124,7 @@ public class SameSlotActivity extends AppCompatActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             TalkViewModel talkViewModel = talks.get(position);
-            return talkViewModel.venue.getVenueText(SameSlotActivity.this);
+            return talkViewModel.venue.title;
         }
 
         @Override
@@ -103,7 +135,8 @@ public class SameSlotActivity extends AppCompatActivity {
 
         @Override
         public Object instantiateItem(ViewGroup collection, int position) {
-            View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.recycler_view, collection, false);
+            View view = LayoutInflater.from(SameSlotActivity.this).inflate(R.layout.item_same_slot_talk, collection,
+                    false);
 //            VenueViewController controller = new VenueViewController(SameSlotActivity.this, getLoaderManager(), new
 //                    LinearLayoutManager(getApplicationContext()), talks.get(position), view, position);
 //            controller.bindView();

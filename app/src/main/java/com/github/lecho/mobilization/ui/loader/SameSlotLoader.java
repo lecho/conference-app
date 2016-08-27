@@ -23,8 +23,8 @@ public class SameSlotLoader extends BaseRealmLoader<List<TalkViewModel>> {
     private String slotKey;
     private Subscription agendaUpdateSubscription;
 
-    public static SameSlotLoader getLoader(Context context, String talkKey) {
-        return new SameSlotLoader(context, talkKey);
+    public static SameSlotLoader getLoader(Context context, String slotKey) {
+        return new SameSlotLoader(context, slotKey);
     }
 
     private SameSlotLoader(Context context, String slotKey) {

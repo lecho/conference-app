@@ -71,7 +71,6 @@ public class VenuesFragment extends Fragment implements Scrollable, LoaderManage
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        final AppCompatActivity activity = (AppCompatActivity) getActivity();
         getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
