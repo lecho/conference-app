@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.view.PagerAdapter;
@@ -12,6 +11,7 @@ import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -21,10 +21,7 @@ import android.view.ViewGroup;
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.controller.VenueViewController;
 import com.github.lecho.mobilization.ui.loader.SameSlotLoader;
-import com.github.lecho.mobilization.ui.loader.VenuesViewDataLoader;
-import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.viewmodel.TalkViewModel;
-import com.github.lecho.mobilization.viewmodel.VenueViewModel;
 
 import java.util.List;
 
@@ -69,6 +66,9 @@ public class SameSlotActivity extends AppCompatActivity implements LoaderManager
 
         slotKey = getIntent().getStringExtra(ARG_SLOT_KEY);
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
+
+        tabStripLayout.setDrawFullUnderline(false);
+        tabStripLayout.setTabIndicatorColor(getResources().getColor(R.color.primary));
     }
 
     @Override
@@ -108,7 +108,6 @@ public class SameSlotActivity extends AppCompatActivity implements LoaderManager
 
         public SameSlotPagerAdapter(List<TalkViewModel> talks) {
             this.talks = talks;
-            this.controllers = new VenueViewController[talks.size()];
         }
 
         @Override
@@ -130,7 +129,6 @@ public class SameSlotActivity extends AppCompatActivity implements LoaderManager
         @Override
         public void destroyItem(ViewGroup collection, int position, Object view) {
             collection.removeView((View) view);
-            controllers[position] = null;
         }
 
         @Override
@@ -140,13 +138,16 @@ public class SameSlotActivity extends AppCompatActivity implements LoaderManager
 //            VenueViewController controller = new VenueViewController(SameSlotActivity.this, getLoaderManager(), new
 //                    LinearLayoutManager(getApplicationContext()), talks.get(position), view, position);
 //            controller.bindView();
-//            collection.addView(view);
+            CardView c = (CardView)view.findViewById(R.id.card_view);
+            c.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+            collection.addView(view);
 //            controllers[position] = controller;
             return view;
-        }
-
-        public Optional<VenueViewController> getVenueViewController(int position) {
-            return Optional.of(controllers[position]);
         }
     }
 }
