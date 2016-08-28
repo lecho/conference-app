@@ -72,12 +72,12 @@
                 app:tabSelectedTextColor="@color/primary"
                 app:tabTextAppearance="@style/VenueTab"/>
 
-            <android.support.v4.view.ViewPager
+            <com.github.lecho.mobilization.ui.view.MeasuredViewPager
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
-                android:layout_height="320dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/tab_layout">
-            </android.support.v4.view.ViewPager>
+            </com.github.lecho.mobilization.ui.view.MeasuredViewPager>
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 

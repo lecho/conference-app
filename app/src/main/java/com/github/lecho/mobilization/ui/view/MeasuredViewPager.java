@@ -8,9 +8,13 @@ import android.view.View;
 /**
  * Created by Leszek on 27.08.2016.
  */
-public class CustomViewPager extends ViewPager {
+public class MeasuredViewPager extends ViewPager {
 
-    public CustomViewPager(Context context, AttributeSet attrs) {
+    public MeasuredViewPager(Context context) {
+        super(context);
+    }
+
+    public MeasuredViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -20,12 +24,10 @@ public class CustomViewPager extends ViewPager {
 
         int pagerHeight = 0;
         for (int i = 0; i < getChildCount(); i++) {
-            final View child = getChildAt(i);
+            View child = getChildAt(i);
             child.measure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
             int childHeight = child.getMeasuredHeight();
-            if (childHeight > pagerHeight) {
-                pagerHeight = childHeight;
-            }
+            pagerHeight = Math.max(pagerHeight, childHeight);
         }
         heightMeasureSpec = MeasureSpec.makeMeasureSpec(pagerHeight, MeasureSpec.EXACTLY);
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
