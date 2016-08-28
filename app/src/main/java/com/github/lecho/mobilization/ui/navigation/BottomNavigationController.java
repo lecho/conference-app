@@ -39,12 +39,16 @@ public class BottomNavigationController implements NavigationController {
         AHBottomNavigationAdapter navigationAdapter = new AHBottomNavigationAdapter(activity, R.menu.menu_bottom_bar);
         navigationAdapter.setupWithBottomNavigation(bottomNavigation, null);
         final int accentColor;
+        final int backgroundColor;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             accentColor = activity.getResources().getColor(R.color.primary, null);
+            backgroundColor = activity.getResources().getColor(R.color.bottom_nav_background, null);
         } else {
-            //noinspection deprecation
             accentColor = activity.getResources().getColor(R.color.primary);
+            backgroundColor = activity.getResources().getColor(R.color.bottom_nav_background);
         }
+        bottomNavigation.setColored(false);
+        bottomNavigation.setDefaultBackgroundColor(backgroundColor);
         bottomNavigation.setBehaviorTranslationEnabled(false);
         bottomNavigation.setAccentColor(accentColor);
         bottomNavigation.setOnTabSelectedListener(new BottomNavigationItemListener());

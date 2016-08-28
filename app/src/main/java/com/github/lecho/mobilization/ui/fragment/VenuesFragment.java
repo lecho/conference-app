@@ -12,6 +12,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,6 +97,10 @@ public class VenuesFragment extends Fragment implements Scrollable, LoaderManage
 
     @Override
     public void scrollToTop() {
+        if (viewPager == null || pagerAdapter == null) {
+            Log.w(TAG, "scrollToTop: viewPager or adapter is not yet initialized");
+            return;
+        }
         final int currentPosition = viewPager.getCurrentItem();
         final Optional<VenueViewController> venueViewController = pagerAdapter.getVenueViewController(currentPosition);
         if (venueViewController.isPresent()) {
