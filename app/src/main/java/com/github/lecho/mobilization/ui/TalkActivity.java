@@ -2,6 +2,7 @@ package com.github.lecho.mobilization.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -183,14 +184,18 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
     protected class DescriptionController {
 
         @BindView(R.id.text_description)
-        TextView talkDescriptionView;
+        TextView descriptionView;
 
         public DescriptionController(View view) {
             ButterKnife.bind(this, view);
         }
 
         public void bind(TalkViewModel talkViewModel) {
-            talkDescriptionView.setText(Html.fromHtml(talkViewModel.description));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                descriptionView.setText(Html.fromHtml(talkViewModel.description, Html.FROM_HTML_MODE_COMPACT));
+            } else {
+                descriptionView.setText(Html.fromHtml(talkViewModel.description));
+            }
         }
     }
 
