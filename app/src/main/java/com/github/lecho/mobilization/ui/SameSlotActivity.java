@@ -2,6 +2,7 @@ package com.github.lecho.mobilization.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -14,15 +15,16 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.async.TalkAsyncHelper;
-import com.github.lecho.mobilization.ui.controller.VenueViewController;
 import com.github.lecho.mobilization.ui.loader.SameSlotLoader;
 import com.github.lecho.mobilization.util.Utils;
 import com.github.lecho.mobilization.viewmodel.TalkViewModel;
@@ -136,7 +138,6 @@ public class SameSlotActivity extends AppCompatActivity implements LoaderManager
     private class SameSlotPagerAdapter extends PagerAdapter {
 
         private List<TalkViewModel> talks;
-        private VenueViewController[] controllers;
 
         public SameSlotPagerAdapter(List<TalkViewModel> talks) {
             this.talks = talks;
@@ -167,23 +168,47 @@ public class SameSlotActivity extends AppCompatActivity implements LoaderManager
         public Object instantiateItem(ViewGroup collection, int position) {
             View view = LayoutInflater.from(SameSlotActivity.this).inflate(R.layout.item_same_slot_talk, collection,
                     false);
-//            VenueViewController controller = new VenueViewController(SameSlotActivity.this, getLoaderManager(), new
-//                    LinearLayoutManager(getApplicationContext()), talks.get(position), view, position);
-//            controller.bindView();
-            CardView c = (CardView) view.findViewById(R.id.card_view);
-            c.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                }
-            });
+            new TalkItemController(view).bind(talks.get(position));
             collection.addView(view);
-//            controllers[position] = controller;
             return view;
         }
 
         public TalkViewModel getTalkViewModel(int position) {
             return talks.get(position);
+        }
+    }
+
+    protected class TalkItemController {
+
+        @BindView(R.id.card_view)
+        CardView cardView;
+
+        @BindView(R.id.text_title)
+        TextView titleView;
+
+        @BindView(R.id.text_speaker)
+        TextView speakerView;
+
+        @BindView(R.id.text_language)
+        TextView languageView;
+
+        @BindView(R.id.text_description)
+        TextView descriptionView;
+
+        public TalkItemController(View view) {
+            ButterKnife.bind(this, view);
+        }
+
+        public void bind(TalkViewModel talkViewModel) {
+            cardView.setOnClickListener(null);
+            titleView.setText(talkViewModel.title);
+            speakerView.setText(talkViewModel.getSpeakersText(SameSlotActivity.this));
+            languageView.setText(talkViewModel.getLanguageInBrackets());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                descriptionView.setText(Html.fromHtml(talkViewModel.description, Html.FROM_HTML_MODE_COMPACT));
+            } else {
+                descriptionView.setText(Html.fromHtml(talkViewModel.description));
+            }
         }
     }
 
@@ -207,6 +232,7 @@ public class SameSlotActivity extends AppCompatActivity implements LoaderManager
         }
     }
 
+    //TODO: Get rid of duplicated code - the same listener is implemented in TalkActivity.java
     private class FabClickListener implements View.OnClickListener {
 
         private TalkViewModel talkViewModel;
@@ -224,7 +250,7 @@ public class SameSlotActivity extends AppCompatActivity implements LoaderManager
                 TalkAsyncHelper.removeTalk(talkViewModel.key);
             } else {
                 //TODO use optimistic result and move checking slot conflict off main thread, then use RxBus to trigger
-                //T dialog if necessary.
+                //TODO dialog if necessary.
                 if (Utils.checkSlotConflict(SameSlotActivity.this, talkViewModel.key)) {
                     Log.d(TAG, "Slot conflict for talk with key: " + talkViewModel.key);
                     return;

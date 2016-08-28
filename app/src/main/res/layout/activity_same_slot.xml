@@ -77,7 +77,6 @@
 
             <com.github.lecho.mobilization.ui.view.MeasuredViewPager
                 android:id="@+id/view_pager"
-                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tab_layout">
