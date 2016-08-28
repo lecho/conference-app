@@ -27,6 +27,7 @@ import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.async.TalkAsyncHelper;
 import com.github.lecho.mobilization.ui.loader.SameSlotLoader;
 import com.github.lecho.mobilization.util.Utils;
+import com.github.lecho.mobilization.viewmodel.SlotViewModel.SlotInTimeZone;
 import com.github.lecho.mobilization.viewmodel.TalkViewModel;
 
 import java.util.List;
@@ -56,6 +57,9 @@ public class SameSlotActivity extends AppCompatActivity implements LoaderManager
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
 
+    @BindView(R.id.text_time_slot)
+    TextView slotView;
+
     public static void startActivity(@NonNull Activity activity, @NonNull String slotKey) {
         Intent intent = new Intent(activity, SameSlotActivity.class);
         intent.putExtra(ARG_SLOT_KEY, slotKey);
@@ -73,29 +77,13 @@ public class SameSlotActivity extends AppCompatActivity implements LoaderManager
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(null);
         }
+
+        tabLayout.setupWithViewPager(viewPager);
+        viewPager.addOnPageChangeListener(new SlotPageChangeListener());
         fabController = new FABController(mainContainer);
 
         slotKey = getIntent().getStringExtra(ARG_SLOT_KEY);
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
-
-        tabLayout.setupWithViewPager(viewPager);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                fabController.bind(pagerAdapter.getTalkViewModel(position));
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
     }
 
     @Override
@@ -120,6 +108,14 @@ public class SameSlotActivity extends AppCompatActivity implements LoaderManager
     public void onLoadFinished(Loader<List<TalkViewModel>> loader, List<TalkViewModel> talkViewModels) {
         if (loader.getId() == LOADER_ID) {
             //TODO handle situation when there is no talk in a slot(that should not happen)
+            if (talkViewModels.size() == 0) {
+                Log.d(TAG, "No talks for slot with key: " + slotKey);
+                return;
+            }
+            final TalkViewModel talkViewModel = talkViewModels.get(0);
+            SlotInTimeZone slotInTimeZone = SlotInTimeZone.getSlotInTimezone(talkViewModel
+                    .slot);
+            slotView.setText(slotInTimeZone.getTimeSlotText());
             int lastPageIndex = viewPager.getCurrentItem();
             if (lastPageIndex >= talkViewModels.size()) {
                 lastPageIndex = 0;
@@ -200,7 +196,7 @@ public class SameSlotActivity extends AppCompatActivity implements LoaderManager
         }
 
         public void bind(TalkViewModel talkViewModel) {
-            cardView.setOnClickListener(null);
+            cardView.setOnClickListener(new CardClickListener(talkViewModel));
             titleView.setText(talkViewModel.title);
             speakerView.setText(talkViewModel.getSpeakersText(SameSlotActivity.this));
             languageView.setText(talkViewModel.getLanguageInBrackets());
@@ -208,6 +204,20 @@ public class SameSlotActivity extends AppCompatActivity implements LoaderManager
                 descriptionView.setText(Html.fromHtml(talkViewModel.description, Html.FROM_HTML_MODE_COMPACT));
             } else {
                 descriptionView.setText(Html.fromHtml(talkViewModel.description));
+            }
+        }
+
+        private class CardClickListener implements View.OnClickListener {
+
+            private TalkViewModel talkViewModel;
+
+            public CardClickListener(TalkViewModel talkViewModel) {
+                this.talkViewModel = talkViewModel;
+            }
+
+            @Override
+            public void onClick(View view) {
+                TalkActivity.startActivity(SameSlotActivity.this, talkViewModel.key);
             }
         }
     }
@@ -259,6 +269,25 @@ public class SameSlotActivity extends AppCompatActivity implements LoaderManager
                 talkViewModel.isInMyAgenda = true;
                 TalkAsyncHelper.addTalk(talkViewModel.key);
             }
+        }
+    }
+
+    private class SlotPageChangeListener implements ViewPager.OnPageChangeListener {
+
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            fabController.bind(pagerAdapter.getTalkViewModel(position));
+
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
         }
     }
 }
