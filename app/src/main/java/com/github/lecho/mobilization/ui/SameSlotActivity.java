@@ -118,10 +118,14 @@ public class SameSlotActivity extends AppCompatActivity implements LoaderManager
     public void onLoadFinished(Loader<List<TalkViewModel>> loader, List<TalkViewModel> talkViewModels) {
         if (loader.getId() == LOADER_ID) {
             //TODO handle situation when there is no talk in a slot(that should not happen)
+            int lastPageIndex = viewPager.getCurrentItem();
+            if (lastPageIndex >= talkViewModels.size()) {
+                lastPageIndex = 0;
+            }
             pagerAdapter = new SameSlotPagerAdapter(talkViewModels);
             viewPager.setAdapter(pagerAdapter);
-            final int position = viewPager.getCurrentItem();
-            fabController.bind(pagerAdapter.getTalkViewModel(position));
+            viewPager.setCurrentItem(lastPageIndex);
+            fabController.bind(pagerAdapter.getTalkViewModel(viewPager.getCurrentItem()));
         }
     }
 
