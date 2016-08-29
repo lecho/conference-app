@@ -67,6 +67,17 @@
                 android:maxLines="6"
                 android:text="Prograndamentalne idee stojące za tymProgramowanie reaktywne jako lekarstwo na ból głowy związany z kodem asynchronicznym. W czasie mojej prezentacji przedstawię fundamentalne idee stojące za tymProgramowanie reaktywne jako lekarstwo na ból głowy związany z kodem asynchronicznym. W czasie mojej prezentacji przedstawię fundamentalne idee stojące za tymProgramowanie reaktywne jako lekarstwo na ból głowy związany z kodem asynchronicznym. W czasie mojej prezentacji przedstawię fundamentalne idee stojące za tymProgramowanie reaktywne jako lekarstwo na ból głowy związany z kodem asynchronicznym. W czasie mojej prezentacji przedstawię fundamentalne idee stojące za tymProgramowanie reaktywne jako lekarstwo na ból głowy związany z kodem asynchronicznym. W czasie mojej prezentacji przedstawię fundamentalne idee stojące za tym paradygmatem oraz zademonstruję od podstaw jak"/>
 
+            <TextView
+                android:id="@+id/text_more"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_description"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/primary"
+                android:layout_alignParentRight="true"
+                android:text="@string/more"/>
+
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 </FrameLayout>
