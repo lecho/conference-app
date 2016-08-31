@@ -7,12 +7,16 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.IntentCompat;
 import android.support.v4.content.Loader;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -37,12 +41,14 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final String TAG = TalkActivity.class.getSimpleName();
     private static final String ARG_TALK_KEY = "talk-key";
     private static final int LOADER_ID = 0;
+    private static final String SHARE_INTENT_TYPE = "text/plain";
     private String talkKey;
     private FABController fabController;
     private HeaderController headerController;
     private DescriptionController descriptionController;
     private SpeakersController speakersController;
     private SnackbarForTalkHelper snackbarForTalkHelper;
+    private TalkViewModel talkViewModel;
 
     @BindView(R.id.main_container)
     View mainContainerView;
@@ -92,13 +98,32 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_talk, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 return true;
+            case R.id.action_share:
+                shareTalk();
+                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void shareTalk() {
+        if (talkViewModel != null) {
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_SEND);
+            intent.putExtra(Intent.EXTRA_TEXT, talkViewModel.title);
+            intent.setType(SHARE_INTENT_TYPE);
+            startActivity(Intent.createChooser(intent, getString(R.string.share)));
+        }
     }
 
     @Override
@@ -118,7 +143,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
                 Log.w(TAG, "Talk data is null for talk-key: " + talkKey);
                 return;
             }
-            TalkViewModel talkViewModel = data.get();
+            talkViewModel = data.get();
             fabController.bind(talkViewModel);
             headerController.bind(talkViewModel);
             descriptionController.bind(talkViewModel);
@@ -211,7 +236,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
         public void bind(TalkViewModel talkViewModel) {
             speakersLayout.removeAllViews();
             for (SpeakerViewModel speakerViewModel : talkViewModel.speakers) {
-                SpeakerSimpleLayout speakerSimpleLayout = SpeakerSimpleLayout.getLayoutForSingleSpeaker(TalkActivity.this,
+                SpeakerSimpleLayout speakerSimpleLayout = new SpeakerSimpleLayout(TalkActivity.this,
                         speakerViewModel);
                 speakerSimpleLayout.bind();
                 speakersLayout.addView(speakerSimpleLayout);

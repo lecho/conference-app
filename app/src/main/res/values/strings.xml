@@ -49,12 +49,9 @@
     <string name="website">website</string>
     <string name="twitter">twitter</string>
     <string name="github">github</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="action_settings">Settings</string>
     <string name="event_name">Mobilization</string>
     <string name="event_version">VI</string>
     <string name="map">Map</string>
     <string name="more">More</string>
+    <string name="share">Share</string>
 </resources>
