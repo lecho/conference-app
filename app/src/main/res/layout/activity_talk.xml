@@ -96,23 +96,33 @@
                 android:text="Projektowanie aplikacji iOS - wzorce i triki które każdy programista znać powinien dasf af fdasf asd f"
                 android:textColor="@color/primary"/>
 
-            <LinearLayout
-                android:id="@+id/speakers_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_below="@id/text_title"
-                android:orientation="vertical"/>
-
             <TextView
                 android:id="@+id/text_description"
                 style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/speakers_layout"
+                android:layout_below="@id/text_title"
                 android:layout_marginTop="16dp"
                 android:fontFamily="sans-serif-light"
                 android:text="Programowanie reaktywne jako lekarstwo na ból głowy związany z kodem asynchronicznym. W czasie mojej prezentacji przedstawię fundamentalne idee stojące za tym paradygmatem oraz zademonstruję od podstaw jak"/>
+
+            <TextView
+                android:id="@+id/text_speaker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/text_description"
+                android:text="@string/text_speakers_layout"/>
+
+            <LinearLayout
+                android:id="@+id/speakers_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_speaker"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"/>
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 
