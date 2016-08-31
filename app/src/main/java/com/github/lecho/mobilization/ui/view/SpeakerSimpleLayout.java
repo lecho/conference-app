@@ -20,7 +20,7 @@ import butterknife.OnClick;
 /**
  * Displays speaker's name and avatar. Use this class only from code.
  */
-public class SpeakerForTalkLayout extends FrameLayout {
+public class SpeakerSimpleLayout extends FrameLayout {
 
     private final SpeakerViewModel speakerViewModel;
 
@@ -35,7 +35,7 @@ public class SpeakerForTalkLayout extends FrameLayout {
         SpeakerActivity.startActivity(getActivity(), speakerViewModel.key);
     }
 
-    public SpeakerForTalkLayout(Context context, SpeakerViewModel speakerViewModel) {
+    public SpeakerSimpleLayout(Context context, SpeakerViewModel speakerViewModel) {
         super(context);
         LayoutInflater inflater = LayoutInflater.from(context);
         inflater.inflate(R.layout.include_speaker, this, true);
@@ -52,9 +52,9 @@ public class SpeakerForTalkLayout extends FrameLayout {
         Context context = getContext();
         while (context instanceof ContextWrapper) {
             if (context instanceof Activity) {
-                return (Activity)context;
+                return (Activity) context;
             }
-            context = ((ContextWrapper)context).getBaseContext();
+            context = ((ContextWrapper) context).getBaseContext();
         }
         return null;
     }

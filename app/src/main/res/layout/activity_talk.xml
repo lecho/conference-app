@@ -96,36 +96,23 @@
                 android:text="Projektowanie aplikacji iOS - wzorce i triki które każdy programista znać powinien dasf af fdasf asd f"
                 android:textColor="@color/primary"/>
 
+            <LinearLayout
+                android:id="@+id/speakers_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/text_title"
+                android:orientation="vertical"/>
+
             <TextView
                 android:id="@+id/text_description"
                 style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/text_title"
-                android:layout_marginTop="24dp"
+                android:layout_below="@id/speakers_layout"
+                android:layout_marginTop="16dp"
                 android:fontFamily="sans-serif-light"
                 android:text="Programowanie reaktywne jako lekarstwo na ból głowy związany z kodem asynchronicznym. W czasie mojej prezentacji przedstawię fundamentalne idee stojące za tym paradygmatem oraz zademonstruję od podstaw jak"/>
-
-            <TextView
-                android:id="@+id/text_speaker"
-                style="@style/TextAppearance.AppCompat.Medium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/text_description"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="24dp"
-                android:text="@string/speakers_layout_title"/>
-
-            <LinearLayout
-                android:id="@+id/speakers_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/text_speaker"
-                android:divider="@drawable/divider_recycler_view"
-                android:orientation="vertical"
-                android:showDividers="middle|beginning|end">
-            </LinearLayout>
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 

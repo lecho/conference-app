@@ -22,7 +22,7 @@ import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.async.TalkAsyncHelper;
 import com.github.lecho.mobilization.ui.loader.TalkLoader;
 import com.github.lecho.mobilization.ui.snackbar.SnackbarForTalkHelper;
-import com.github.lecho.mobilization.ui.view.SpeakerForTalkLayout;
+import com.github.lecho.mobilization.ui.view.SpeakerSimpleLayout;
 import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.util.Utils;
 import com.github.lecho.mobilization.viewmodel.SlotViewModel;
@@ -211,9 +211,10 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
         public void bind(TalkViewModel talkViewModel) {
             speakersLayout.removeAllViews();
             for (SpeakerViewModel speakerViewModel : talkViewModel.speakers) {
-                SpeakerForTalkLayout speakerForTalkLayout = new SpeakerForTalkLayout(TalkActivity.this, speakerViewModel);
-                speakerForTalkLayout.bind();
-                speakersLayout.addView(speakerForTalkLayout);
+                SpeakerSimpleLayout speakerSimpleLayout = SpeakerSimpleLayout.getLayoutForSingleSpeaker(TalkActivity.this,
+                        speakerViewModel);
+                speakerSimpleLayout.bind();
+                speakersLayout.addView(speakerSimpleLayout);
             }
         }
     }

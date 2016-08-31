@@ -1,28 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/SelectableItem"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingBottom="8dp"
-    android:paddingTop="8dp">
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                                    style="@style/SelectableCardView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    app:cardUseCompatPadding="true">
 
-    <ImageView
-        android:id="@+id/image_avatar"
-        android:layout_width="@dimen/speaker_avatar_small_size"
-        android:layout_height="@dimen/speaker_avatar_small_size"
-        android:layout_alignParentRight="true"/>
+    <RelativeLayout
 
-    <TextView
-        android:id="@+id/text_speaker_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@id/image_avatar"
-        android:ellipsize="end"
-        android:fontFamily="sans-serif-light"
-        android:maxLines="1"
-        android:text="Jan Nowak"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-</RelativeLayout>
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/image_avatar"
+            android:layout_width="@dimen/speaker_avatar_small_size"
+            android:layout_height="@dimen/speaker_avatar_small_size"
+            android:layout_alignParentRight="true"/>
+
+        <TextView
+            android:id="@+id/text_speaker_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/image_avatar"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-light"
+            android:maxLines="1"
+            android:text="Jan Nowak"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
