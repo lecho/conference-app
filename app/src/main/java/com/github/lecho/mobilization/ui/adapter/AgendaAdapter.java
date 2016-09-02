@@ -54,10 +54,10 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
      * @param position
      */
     public void removeTalk(int position) {
-        notifyItemRemoved(position);
         AgendaItemViewModel item = data.get(position);
         item.type = AgendaItemViewModel.AgendaItemType.SLOT;
-        notifyItemInserted(position);
+        item.talk = null;
+        notifyItemChanged(position);
     }
 
     @Override
