@@ -2,7 +2,6 @@ package com.github.lecho.mobilization.ui.controller;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -22,13 +21,7 @@ import com.github.lecho.mobilization.viewmodel.AgendaItemViewModel;
 import com.github.lecho.mobilization.viewmodel.AgendaViewModel;
 import com.github.lecho.mobilization.viewmodel.TalkViewModel;
 import com.github.lecho.mobilization.viewmodel.VenueViewModel;
-import com.karumi.dividers.DividerBuilder;
-import com.karumi.dividers.DividerItemDecoration;
-import com.karumi.dividers.Layer;
-import com.karumi.dividers.LayersBuilder;
-import com.karumi.dividers.selector.AllItemsSelector;
 
-import java.util.Collection;
 import java.util.Collections;
 
 import butterknife.BindView;
@@ -59,16 +52,6 @@ public class VenueViewController implements Scrollable {
         adapter = new AgendaAdapter(activity, new StarTalkClickListener(), null);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
-        setUpDivider();
-    }
-
-    private void setUpDivider() {
-        Drawable exampleDrawable = activity.getResources().getDrawable(R.drawable.divider_recycler_view);
-        Collection<Layer> layers = LayersBuilder.with(
-                new Layer(new AllItemsSelector(), DividerBuilder.get().with(exampleDrawable).build()))
-                .build();
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(layers);
-        recyclerView.addItemDecoration(itemDecoration);
     }
 
     public void bindView() {

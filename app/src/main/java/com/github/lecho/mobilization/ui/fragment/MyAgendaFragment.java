@@ -1,7 +1,6 @@
 package com.github.lecho.mobilization.ui.fragment;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,13 +23,7 @@ import com.github.lecho.mobilization.ui.loader.AgendaLoader;
 import com.github.lecho.mobilization.viewmodel.AgendaItemViewModel;
 import com.github.lecho.mobilization.viewmodel.AgendaViewModel;
 import com.github.lecho.mobilization.viewmodel.TalkViewModel;
-import com.karumi.dividers.DividerBuilder;
-import com.karumi.dividers.DividerItemDecoration;
-import com.karumi.dividers.Layer;
-import com.karumi.dividers.LayersBuilder;
-import com.karumi.dividers.selector.AllItemsSelector;
 
-import java.util.Collection;
 import java.util.Collections;
 
 import butterknife.BindView;
@@ -71,19 +64,9 @@ public class MyAgendaFragment extends Fragment implements Scrollable, LoaderMana
         adapter = new MyAgendaAdapter((AppCompatActivity) getActivity(), new StarTalkClickListener(),
                 new EmptySlotClickListener());
         recyclerView.setAdapter(adapter);
-        setUpDivider();
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new AgendaItemTouchCallback());
         itemTouchHelper.attachToRecyclerView(recyclerView);
         return rootView;
-    }
-
-    private void setUpDivider() {
-        Drawable exampleDrawable = getResources().getDrawable(R.drawable.divider_recycler_view);
-        Collection<Layer> layers = LayersBuilder.with(
-                new Layer(new AllItemsSelector(), DividerBuilder.get().with(exampleDrawable).build()))
-                .build();
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(layers);
-        recyclerView.addItemDecoration(itemDecoration);
     }
 
     @Override
