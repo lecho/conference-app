@@ -15,8 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:fontFamily="sans-serif-light"
-        android:text="9:00 - 10:00"
-        android:textColor="@color/black_alpha"/>
+        android:text="9:00 - 10:00"/>
 
     <ImageView
         android:id="@+id/current_item_indicator"
@@ -37,6 +36,5 @@
         android:ellipsize="end"
         android:fontFamily="sans-serif-light"
         android:singleLine="true"
-        android:text="Lunch break"
-        android:textColor="@color/black_alpha"/>
+        android:text="Lunch break"/>
 </RelativeLayout>
