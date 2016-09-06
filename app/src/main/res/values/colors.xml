@@ -8,8 +8,8 @@
     <color name="accent_ripple">#DCE775</color>
 
     <color name="window_background">#FFFFFFFF</color>
-    <color name="bottom_nav_background">#EFEBE9</color>
-    <color name="recycler_view_background">#FAFAFA</color>
+    <color name="bottom_nav_background">#EEEEEE</color>
+    <color name="recycler_view_background">#F5F5F5</color>
     <color name="white">#FFFFFF</color>
     <color name="white_70alpha">#B3FFFFFF</color>
     <color name="darker_gray">#CCCCCC</color>

@@ -4,17 +4,13 @@
     android:id="@+id/card_view"
     style="@style/SelectableCardView"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-    android:layout_marginRight="@dimen/activity_horizontal_margin"
-    android:layout_marginTop="8dp">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         style="@style/SelectableItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/text_time_slot"
