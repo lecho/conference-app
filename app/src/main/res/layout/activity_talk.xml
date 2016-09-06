@@ -111,6 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
                 style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/text_description"
@@ -121,7 +122,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_speaker"
-                android:layout_marginTop="8dp"
                 android:orientation="vertical"/>
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
