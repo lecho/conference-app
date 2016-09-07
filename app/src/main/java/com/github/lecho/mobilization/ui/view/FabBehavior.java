@@ -53,18 +53,18 @@ public class FabBehavior extends CoordinatorLayout.Behavior<FloatingActionButton
     }
 
     @Override
-    public boolean onLayoutChild(CoordinatorLayout parent, FloatingActionButton child,
+    public boolean onLayoutChild(CoordinatorLayout parent, FloatingActionButton fab,
                                  int layoutDirection) {
         // First, let's make sure that the visibility of the FAB is consistent
-        final List<View> dependencies = parent.getDependencies(child);
+        final List<View> dependencies = parent.getDependencies(fab);
         for (int i = 0, count = dependencies.size(); i < count; i++) {
             final View dependency = dependencies.get(i);
-            if (updateFabVisibility(parent, child, dependency)) {
+            if (updateFabVisibility(parent, fab, dependency)) {
                 break;
             }
         }
         // Now let the CoordinatorLayout lay out the FAB
-        parent.onLayoutChild(child, layoutDirection);
+        parent.onLayoutChild(fab, layoutDirection);
         return true;
     }
 }

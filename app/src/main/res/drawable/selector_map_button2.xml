@@ -8,11 +8,11 @@
                 </shape>
             </item>
             <item
-                android:bottom="8dp"
+                android:bottom="16dp"
                 android:drawable="@drawable/ic_map"
-                android:left="8dp"
-                android:right="8dp"
-                android:top="8dp"/>
+                android:left="16dp"
+                android:right="16dp"
+                android:top="16dp"/>
         </layer-list>
     </item>
     <item>
@@ -23,11 +23,11 @@
                 </shape>
             </item>
             <item
-                android:bottom="8dp"
+                android:bottom="16dp"
                 android:drawable="@drawable/ic_map"
-                android:left="8dp"
-                android:right="8dp"
-                android:top="8dp"/>
+                android:left="16dp"
+                android:right="16dp"
+                android:top="16dp"/>
         </layer-list>
     </item>
 </selector>
