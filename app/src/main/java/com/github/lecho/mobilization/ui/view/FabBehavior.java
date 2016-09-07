@@ -24,18 +24,12 @@ public class FabBehavior extends CoordinatorLayout.Behavior<FloatingActionButton
     }
 
     @Override
-    public boolean onDependentViewChanged(CoordinatorLayout parent, FloatingActionButton child, View dependency) {
-        updateFabVisibility(parent, dependency, child);
-        return false;
+    public boolean onDependentViewChanged(CoordinatorLayout parent, FloatingActionButton fab, View dependency) {
+        return updateFabVisibility(parent, fab, dependency);
     }
 
-    private boolean updateFabVisibility(CoordinatorLayout parent,
-                                        View dependency, FloatingActionButton child) {
-        final CoordinatorLayout.LayoutParams lp =
-                (CoordinatorLayout.LayoutParams) child.getLayoutParams();
-        if (lp.getAnchorId() != dependency.getId()) {
-            return false;
-        }
+    private boolean updateFabVisibility(CoordinatorLayout parent, FloatingActionButton fab, View dependency) {
+        final CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
 
         if (tmpRect == null) {
             tmpRect = new Rect();
@@ -50,10 +44,10 @@ public class FabBehavior extends CoordinatorLayout.Behavior<FloatingActionButton
         parent.offsetDescendantRectToMyCoords(dependency, rect);
         rect.offset(dependency.getScrollX(), dependency.getScrollY());
 
-        if (rect.top <= child.getHeight() / 2) {
-            child.hide();
+        if (rect.top <= fab.getHeight() / 2) {
+            fab.hide();
         } else {
-            child.show();
+            fab.show();
         }
         return true;
     }
@@ -65,7 +59,7 @@ public class FabBehavior extends CoordinatorLayout.Behavior<FloatingActionButton
         final List<View> dependencies = parent.getDependencies(child);
         for (int i = 0, count = dependencies.size(); i < count; i++) {
             final View dependency = dependencies.get(i);
-            if (updateFabVisibility(parent, dependency, child)) {
+            if (updateFabVisibility(parent, child, dependency)) {
                 break;
             }
         }
