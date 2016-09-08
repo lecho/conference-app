@@ -24,6 +24,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_marginBottom="8dp"
+                android:maxLines="2"
+                android:ellipsize="end"
                 android:fontFamily="sans-serif-light"
                 android:text="Projektowanie aplikacji iOS - wzorce i triki które każdy programista znać powinien"
                 android:textColor="@color/primary"/>
@@ -59,7 +61,7 @@
                 android:layout_marginTop="24dp"
                 android:ellipsize="end"
                 android:fontFamily="sans-serif-light"
-                android:maxLines="6"
+                android:maxLines="5"
                 android:text="Prograndamentalne idee stojące za tymProgramowanie reaktywne jako lekarstwo na ból głowy związany z kodem asynchronicznym. W czasie mojej prezentacji przedstawię fundamentalne idee stojące za tymProgramowanie reaktywne jako lekarstwo na ból głowy związany z kodem asynchronicznym. W czasie mojej prezentacji przedstawię fundamentalne idee stojące za tymProgramowanie reaktywne jako lekarstwo na ból głowy związany z kodem asynchronicznym. W czasie mojej prezentacji przedstawię fundamentalne idee stojące za tymProgramowanie reaktywne jako lekarstwo na ból głowy związany z kodem asynchronicznym. W czasie mojej prezentacji przedstawię fundamentalne idee stojące za tymProgramowanie reaktywne jako lekarstwo na ból głowy związany z kodem asynchronicznym. W czasie mojej prezentacji przedstawię fundamentalne idee stojące za tym paradygmatem oraz zademonstruję od podstaw jak"/>
 
             <TextView
