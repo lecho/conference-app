@@ -23,7 +23,6 @@ public class BottomNavigationController implements NavigationController {
 
     private final FragmentActivity activity;
     private final NavigationItemListener navigationItemListener;
-    private int checkedNavItemId;
 
     @BindView(R.id.bottom_navigation)
     AHBottomNavigation bottomNavigation;

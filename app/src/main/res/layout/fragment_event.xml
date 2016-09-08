@@ -61,8 +61,8 @@
         <ImageButton
             android:id="@+id/button_map"
             style="@style/MapButton"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_below="@id/text_event_place"

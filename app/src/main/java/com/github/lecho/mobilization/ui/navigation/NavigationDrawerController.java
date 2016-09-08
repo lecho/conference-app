@@ -8,9 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -67,7 +64,7 @@ public class NavigationDrawerController implements NavigationController,
     }
 
     @Override
-    public void show(){
+    public void show() {
     }
 
     @Override
@@ -116,13 +113,10 @@ public class NavigationDrawerController implements NavigationController,
 
     static class NavHeaderController {
 
-        private static final String NAVIGATION_HEADER_IMAGE = "navigation_header.jpg";
+        private static final String NAVIGATION_HEADER_IMAGE = "map.jpg";
 
-        @BindView(R.id.navigation_header_image)
+        @BindView(R.id.image_map)
         ImageView headerView;
-
-        @BindView(R.id.text_event_title)
-        TextView eventTitleView;
 
         @BindView(R.id.text_event_date)
         TextView eventDateView;
@@ -130,18 +124,18 @@ public class NavigationDrawerController implements NavigationController,
         @BindView(R.id.text_event_place)
         TextView eventPlaceView;
 
-        @BindView(R.id.map_button)
+        @BindView(R.id.button_map)
         ImageButton mapButton;
 
         public NavHeaderController(@NonNull NavigationView navigationView) {
             ButterKnife.bind(this, navigationView.getHeaderView(0));
         }
 
-        public void bind(@NonNull Context context, @NonNull EventViewModel eventViewModel) {
-            eventTitleView.setText(eventViewModel.title);
-            eventDateView.setText(eventViewModel.getDate());
-            eventPlaceView.setText(eventViewModel.getPlace());
-            mapButton.setOnClickListener(new MapButtonClickListener(context, eventViewModel));
+        public void bind(@NonNull Context context, @NonNull EventViewModel event) {
+            eventDateView.setText(event.getDate());
+            eventPlaceView.setText(event.getPlace());
+            mapButton.setOnClickListener(view -> Utils.launchGMaps(context, event.latitude, event
+                    .longitude, event.getAddress()));
         }
 
         public void bindHeaderImage(@NonNull Context context) {
@@ -188,22 +182,6 @@ public class NavigationDrawerController implements NavigationController,
                     return true;
                 }
             });
-        }
-    }
-
-    private static class MapButtonClickListener implements View.OnClickListener {
-
-        private final Context context;
-        private final EventViewModel eventViewModel;
-
-        public MapButtonClickListener(Context context, EventViewModel eventViewModel) {
-            this.context = context;
-            this.eventViewModel = eventViewModel;
-        }
-
-        @Override
-        public void onClick(View v) {
-            Utils.launchGMaps(context, eventViewModel.latitude, eventViewModel.longitude, eventViewModel.getAddress());
         }
     }
 }
