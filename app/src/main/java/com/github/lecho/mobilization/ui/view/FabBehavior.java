@@ -30,6 +30,9 @@ public class FabBehavior extends CoordinatorLayout.Behavior<FloatingActionButton
 
     private boolean updateFabVisibility(CoordinatorLayout parent, FloatingActionButton fab, View dependency) {
         final CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
+        if (lp.getAnchorId() != dependency.getId()) {
+            return false;
+        }
 
         if (tmpRect == null) {
             tmpRect = new Rect();
