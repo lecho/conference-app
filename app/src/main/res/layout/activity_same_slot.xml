@@ -49,8 +49,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="48dp"
-                android:fontFamily="sans-serif-light"
-                android:text="9:00 - 10:00"/>
+                android:fontFamily="sans-serif-light"/>
 
             <View
                 android:id="@+id/fab_anchor"

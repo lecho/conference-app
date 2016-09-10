@@ -17,8 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:fontFamily="sans-serif-light"
-            android:text="9:00 - 10:00"/>
+            android:fontFamily="sans-serif-light"/>
 
         <ImageView
             android:id="@+id/current_item_indicator"

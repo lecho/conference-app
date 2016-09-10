@@ -26,8 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="4dp"
-            android:layout_toRightOf="@id/sponsor_color"
-            android:text="GOLD SPONSOR"/>
+            android:layout_toRightOf="@id/sponsor_color"/>
 
         <ImageView
             android:id="@+id/sponsor_logo"
@@ -50,8 +49,7 @@
             android:layout_toLeftOf="@id/sponsor_logo"
             android:ellipsize="end"
             android:fontFamily="sans-serif-light"
-            android:maxLines="1"
-            android:text="Allegro"/>
+            android:maxLines="1"/>
 
         <TextView
             android:id="@+id/text_web_page"
@@ -62,8 +60,7 @@
             android:layout_below="@id/text_name"
             android:layout_toLeftOf="@id/sponsor_logo"
             android:ellipsize="end"
-            android:maxLines="1"
-            android:text="www.allegro.pl"/>
+            android:maxLines="1"/>
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>

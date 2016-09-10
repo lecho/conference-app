@@ -28,7 +28,6 @@
             android:ellipsize="end"
             android:fontFamily="sans-serif-light"
             android:maxLines="1"
-            android:text="Jan Nowak"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
     </RelativeLayout>
 </android.support.v7.widget.CardView>
