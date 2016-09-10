@@ -22,6 +22,7 @@
 
         <TextView
             android:id="@+id/text_event_title"
+            style="@style/TextAppearance.AppCompat.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -29,47 +30,46 @@
             android:layout_marginTop="72dp"
             android:fontFamily="sans-serif-light"
             android:text="@string/event_name"
-            style="@style/TextAppearance.AppCompat.Large"
             android:textSize="32sp"/>
+
         <TextView
             android:id="@+id/text_event_title_part2"
+            style="@style/TextAppearance.AppCompat.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/text_event_title"
             android:layout_alignTop="@id/text_event_title"
+            android:layout_toRightOf="@id/text_event_title"
             android:text="@string/event_version"
-            style="@style/TextAppearance.AppCompat.Large"
             android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/text_event_date"
+            style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/text_event_title"
-            android:layout_centerHorizontal="true"
-            style="@style/TextAppearance.AppCompat.Small"/>
+            android:layout_centerHorizontal="true"/>
 
         <TextView
             android:id="@+id/text_event_place"
+            style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/text_event_date"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="16dp"
-            style="@style/TextAppearance.AppCompat.Small"/>
+            android:layout_marginBottom="16dp"/>
 
         <ImageButton
             android:id="@+id/button_map"
             style="@style/MapButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_below="@id/text_event_place"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="16dp"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:elevation="4dp"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
         <Button
             android:id="@+id/button_sponsors"

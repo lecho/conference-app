@@ -54,7 +54,7 @@
     </style>
 
     <style name="MapButton">
-        <item name="android:background">@drawable/selector_map_button2</item>
+        <item name="android:background">@drawable/selector_map_button</item>
     </style>
 
     <style name="SpeakerButton" parent="LightButton">

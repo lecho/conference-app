@@ -60,6 +60,5 @@
         android:layout_below="@id/text_event_place"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:elevation="4dp"/>
+        android:layout_marginRight="16dp"/>
 </RelativeLayout>
