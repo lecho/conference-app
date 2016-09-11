@@ -14,13 +14,13 @@ public class ConferenceApplication extends Application {
      * Always increment schema version.
      */
     private static final int SCHEMA_VERSION = 8;
+    private static final String REALM_NAME = "conference.realm";
 
     @Override
     public void onCreate() {
         super.onCreate();
-        //LeakCanary.install(this);
         RealmConfiguration config = new RealmConfiguration.Builder(getApplicationContext())
-                .name("conference.realm")
+                .name(REALM_NAME)
                 .schemaVersion(SCHEMA_VERSION)
                 .deleteRealmIfMigrationNeeded()
                 .build();
