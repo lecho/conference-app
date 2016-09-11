@@ -9,6 +9,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.DimenRes;
@@ -149,6 +150,7 @@ public class Utils {
     public static void loadHeaderImage(Context context, String fileName, ImageView imageView) {
         Picasso.with(context.getApplicationContext())
                 .load(ASSETS_HEADERS_IMAGES + fileName)
+                .config(Bitmap.Config.RGB_565)
                 .fit()
                 .centerCrop()
                 .into(imageView);

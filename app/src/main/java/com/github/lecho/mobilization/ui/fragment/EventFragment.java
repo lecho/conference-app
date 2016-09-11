@@ -92,7 +92,7 @@ public class EventFragment extends Fragment implements Scrollable, LoaderManager
         getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
-    private void startActivity(Class activityClass){
+    private void startActivity(Class activityClass) {
         Intent intent = new Intent(getActivity(), activityClass);
         startActivity(intent);
     }
@@ -108,7 +108,7 @@ public class EventFragment extends Fragment implements Scrollable, LoaderManager
     @Override
     public void onLoadFinished(Loader<Optional<EventViewModel>> loader, Optional<EventViewModel> data) {
         if (loader.getId() == LOADER_ID) {
-            if(data.isPresent()) {
+            if (data.isPresent()) {
                 EventViewModel event = data.get();
                 eventDateView.setText(event.getDate());
                 eventPlaceView.setText(event.getPlace());
