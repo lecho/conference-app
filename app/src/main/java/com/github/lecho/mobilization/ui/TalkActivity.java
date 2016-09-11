@@ -169,7 +169,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
                 fab.setImageResource(R.drawable.ic_star_border_24);
             }
             fab.setOnClickListener(new FabClickListener(talkViewModel));
-            fab.show();
+//            fab.show();
         }
     }
 

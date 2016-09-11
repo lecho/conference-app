@@ -24,22 +24,37 @@ public class FabBehavior extends CoordinatorLayout.Behavior<FloatingActionButton
     }
 
     @Override
+    public void onDependentViewRemoved(CoordinatorLayout parent, FloatingActionButton fab, View dependency) {
+        updateFabVisibility(parent, fab, dependency);
+    }
+
+    @Override
     public boolean onDependentViewChanged(CoordinatorLayout parent, FloatingActionButton fab, View dependency) {
         return updateFabVisibility(parent, fab, dependency);
     }
 
-    private boolean updateFabVisibility(CoordinatorLayout parent, FloatingActionButton fab, View dependency) {
-        final CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
-        if (lp.getAnchorId() != dependency.getId()) {
-            return false;
-        }
-
+    private boolean updateFabVisibility(CoordinatorLayout parent, FloatingActionButton child, View dependency) {
         if (tmpRect == null) {
             tmpRect = new Rect();
         }
-
-        // First, let's get the visible rect of the dependency
         final Rect rect = tmpRect;
+
+        final CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) child.getLayoutParams();
+        if (lp.getAnchorId() != dependency.getId()) {
+            //Workaround for FAB behaviour on orientation change:(
+            final View anchor = dependency.findViewById(lp.getAnchorId());
+            if (anchor == null) {
+                return false;
+            }
+            dependency = anchor;
+        }
+
+        calculateDependencyRect(parent, dependency, rect);
+        setChildVisibility(child, rect);
+        return true;
+    }
+
+    private void calculateDependencyRect(CoordinatorLayout parent, View dependency, Rect rect) {
         // View#offsetDescendantRectToMyCoords includes scroll offsets of the last child.
         // We need to reverse it here so that we get the rect of the view itself rather
         // than its content.
@@ -47,12 +62,14 @@ public class FabBehavior extends CoordinatorLayout.Behavior<FloatingActionButton
         parent.offsetDescendantRectToMyCoords(dependency, rect);
         rect.offset(dependency.getScrollX(), dependency.getScrollY());
 
-        if (rect.top <= fab.getHeight() / 2) {
-            fab.hide();
+    }
+
+    private void setChildVisibility(FloatingActionButton child, Rect rect) {
+        if (rect.top <= child.getHeight() / 2) {
+            child.hide();
         } else {
-            fab.show();
+            child.show();
         }
-        return true;
     }
 
     @Override

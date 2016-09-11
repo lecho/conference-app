@@ -131,6 +131,7 @@
         android:layout_marginRight="@dimen/fab_compat_margin_right"
         app:backgroundTint="@color/primary"
         app:elevation="4dp"
+        app:borderWidth="0dp"
         app:layout_anchor="@id/fab_anchor"
         app:layout_anchorGravity="center_vertical|right|end"
         app:layout_behavior="com.github.lecho.mobilization.ui.view.FabBehavior"
