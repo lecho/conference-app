@@ -169,13 +169,10 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
                 fab.setImageResource(R.drawable.ic_star_border_24);
             }
             fab.setOnClickListener(new FabClickListener(talkViewModel));
-//            fab.show();
         }
     }
 
     protected class HeaderController {
-
-        private static final String TALK_HEADER_IMAGE = "talk_header.jpg";
 
         @BindView(R.id.text_time_slot)
         TextView timeSlotView;
