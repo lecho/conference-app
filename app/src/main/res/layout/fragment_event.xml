@@ -72,29 +72,30 @@
             android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
         <Button
-            android:id="@+id/button_sponsors"
+            android:id="@+id/button_speakers"
             style="@style/StandardButton"
             android:layout_width="180dp"
             android:layout_height="56dp"
             android:layout_below="@id/button_map"
             android:layout_centerHorizontal="true"
-            android:text="@string/title_activity_sponsors"/>
+            android:text="@string/title_activity_speakers"/>
+
 
         <Button
-            android:id="@+id/button_speakers"
+            android:id="@+id/button_sponsors"
             style="@style/StandardButton"
             android:layout_width="180dp"
             android:layout_height="56dp"
-            android:layout_below="@id/button_sponsors"
+            android:layout_below="@id/button_speakers"
             android:layout_centerHorizontal="true"
-            android:text="@string/title_activity_speakers"/>
+            android:text="@string/title_activity_sponsors"/>
 
         <Button
             android:id="@+id/button_mobile_app"
             style="@style/StandardButton"
             android:layout_width="180dp"
             android:layout_height="56dp"
-            android:layout_below="@id/button_speakers"
+            android:layout_below="@id/button_sponsors"
             android:layout_centerHorizontal="true"
             android:text="@string/title_activity_about"/>
     </RelativeLayout>

@@ -47,11 +47,11 @@ public class EventFragment extends Fragment implements Scrollable, LoaderManager
     @BindView(R.id.text_event_place)
     TextView eventPlaceView;
 
-    @BindView(R.id.button_sponsors)
-    Button sponsorsButton;
-
     @BindView(R.id.button_speakers)
     Button speakersButton;
+
+    @BindView(R.id.button_sponsors)
+    Button sponsorsButton;
 
     @BindView(R.id.button_mobile_app)
     Button aboutAppButton;
@@ -73,8 +73,8 @@ public class EventFragment extends Fragment implements Scrollable, LoaderManager
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_event, container, false);
         unbinder = ButterKnife.bind(this, rootView);
-        sponsorsButton.setOnClickListener(view -> startActivity(SponsorsActivity.class));
         speakersButton.setOnClickListener(view -> startActivity(SpeakersActivity.class));
+        sponsorsButton.setOnClickListener(view -> startActivity(SponsorsActivity.class));
         aboutAppButton.setOnClickListener(view -> startActivity(AboutAppActivity.class));
         Utils.loadHeaderImage(getContext(), Utils.MAP_IMAGE, mapImage);
         return rootView;

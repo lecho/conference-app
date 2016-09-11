@@ -7,12 +7,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.content.IntentCompat;
 import android.support.v4.content.Loader;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
@@ -26,7 +23,7 @@ import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.async.TalkAsyncHelper;
 import com.github.lecho.mobilization.ui.loader.TalkLoader;
 import com.github.lecho.mobilization.ui.snackbar.SnackbarForTalkHelper;
-import com.github.lecho.mobilization.ui.view.SpeakerSimpleLayout;
+import com.github.lecho.mobilization.ui.view.SpeakerSmallLayout;
 import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.util.Utils;
 import com.github.lecho.mobilization.viewmodel.SlotViewModel;
@@ -236,7 +233,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
         public void bind(TalkViewModel talkViewModel) {
             speakersLayout.removeAllViews();
             for (SpeakerViewModel speakerViewModel : talkViewModel.speakers) {
-                SpeakerSimpleLayout speakerSimpleLayout = new SpeakerSimpleLayout(TalkActivity.this,
+                SpeakerSmallLayout speakerSimpleLayout = new SpeakerSmallLayout(TalkActivity.this,
                         speakerViewModel);
                 speakerSimpleLayout.bind();
                 speakersLayout.addView(speakerSimpleLayout);
