@@ -60,17 +60,6 @@ public class MainActivity extends AppCompatActivity {
         navigationController.onSaveInstanceState(outState);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case android.R.id.home:
-                navigationController.show();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     public void replaceFragment(@NonNull Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
