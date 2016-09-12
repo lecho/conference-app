@@ -53,13 +53,13 @@
 
             <View
                 android:id="@+id/fab_anchor"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignTop="@id/text_time_slot"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"/>
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tab_layout"
@@ -78,7 +78,9 @@
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tab_layout">
+                android:layout_below="@id/tab_layout"
+                android:layout_marginLeft="@dimen/same_slot_pager_horizontal_margin"
+                android:layout_marginRight="@dimen/same_slot_pager_horizontal_margin">
             </com.github.lecho.mobilization.ui.view.MeasuredViewPager>
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
@@ -90,10 +92,10 @@
         android:layout_marginEnd="@dimen/fab_compat_margin_right"
         android:layout_marginRight="@dimen/fab_compat_margin_right"
         app:backgroundTint="@color/primary"
-        app:elevation="4dp"
         app:borderWidth="0dp"
+        app:elevation="4dp"
         app:layout_anchor="@id/fab_anchor"
-        app:layout_anchorGravity="center_vertical|right|end"
+        app:layout_anchorGravity="center_vertical|center_horizontal"
         app:layout_behavior="com.github.lecho.mobilization.ui.view.FabBehavior"
         app:pressedTranslationZ="8dp"
         app:rippleColor="@color/primary_ripple"/>
