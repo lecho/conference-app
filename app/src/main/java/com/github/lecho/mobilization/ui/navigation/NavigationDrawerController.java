@@ -21,9 +21,11 @@ import com.github.lecho.mobilization.ui.fragment.SpeakersFragment;
 import com.github.lecho.mobilization.ui.fragment.SponsorsFragment;
 import com.github.lecho.mobilization.ui.fragment.VenuesFragment;
 import com.github.lecho.mobilization.ui.loader.EventViewDataLoader;
+import com.github.lecho.mobilization.util.AnalyticsReporter;
 import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.util.Utils;
 import com.github.lecho.mobilization.viewmodel.EventViewModel;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +42,7 @@ public class NavigationDrawerController implements NavigationController,
     private int checkedNavItemId;
     private final NavHeaderController navHeaderController;
     private final NavMenuController navMenuController;
+    private final FirebaseAnalytics firebaseAnalytics;
 
     @BindView(R.id.navigation_view)
     NavigationView navigationView;
@@ -47,8 +50,9 @@ public class NavigationDrawerController implements NavigationController,
     public NavigationDrawerController(FragmentActivity activity, View mainContainer, NavigationItemListener navigationItemListener) {
         ButterKnife.bind(this, mainContainer);
         this.activity = activity;
+        this.firebaseAnalytics = FirebaseAnalytics.getInstance(activity.getApplicationContext());
         this.navHeaderController = new NavHeaderController(navigationView);
-        this.navMenuController = new NavMenuController(navigationView, navigationItemListener);
+        this.navMenuController = new NavMenuController(navigationView, navigationItemListener, firebaseAnalytics);
     }
 
     @Override
@@ -147,17 +151,19 @@ public class NavigationDrawerController implements NavigationController,
 
         private final NavigationView navigationView;
         private final NavigationItemListener listener;
+        private final FirebaseAnalytics firebaseAnalytics;
 
-        public NavMenuController(@NonNull NavigationView navigationView, @NonNull NavigationItemListener listener) {
+        public NavMenuController(@NonNull NavigationView navigationView, @NonNull NavigationItemListener listener,
+                                 @NonNull FirebaseAnalytics firebaseAnalytics) {
             this.navigationView = navigationView;
             this.listener = listener;
+            this.firebaseAnalytics = firebaseAnalytics;
         }
 
         public void bind() {
             navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(MenuItem item) {
-
                     final Fragment fragment;
                     switch (item.getItemId()) {
                         case R.id.nav_my_agenda:
@@ -179,6 +185,7 @@ public class NavigationDrawerController implements NavigationController,
                             throw new IllegalArgumentException("Invalid navigation item: " + item);
                     }
                     listener.onItemClick(item.getItemId(), fragment);
+                    AnalyticsReporter.logNavigationEvent(firebaseAnalytics, item.getTitle().toString());
                     return true;
                 }
             });

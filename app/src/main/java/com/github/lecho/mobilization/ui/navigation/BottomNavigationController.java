@@ -12,6 +12,8 @@ import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.fragment.EventFragment;
 import com.github.lecho.mobilization.ui.fragment.MyAgendaFragment;
 import com.github.lecho.mobilization.ui.fragment.VenuesFragment;
+import com.github.lecho.mobilization.util.AnalyticsReporter;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +25,7 @@ public class BottomNavigationController implements NavigationController {
 
     private final FragmentActivity activity;
     private final NavigationItemListener navigationItemListener;
+    private final FirebaseAnalytics firebaseAnalytics;
 
     @BindView(R.id.bottom_navigation)
     AHBottomNavigation bottomNavigation;
@@ -31,6 +34,7 @@ public class BottomNavigationController implements NavigationController {
         ButterKnife.bind(this, mainContainer);
         this.activity = activity;
         this.navigationItemListener = navigationItemListener;
+        this.firebaseAnalytics = FirebaseAnalytics.getInstance(activity.getApplicationContext());
     }
 
     @Override
@@ -96,6 +100,25 @@ public class BottomNavigationController implements NavigationController {
                     throw new IllegalArgumentException("Invalid navigation item position: " + position);
             }
             navigationItemListener.onItemClick(position, fragment);
+            AnalyticsReporter.logNavigationEvent(firebaseAnalytics, getItemTitle(position));
+        }
+
+        private String getItemTitle(int position) {
+            final String title;
+            switch (position) {
+                case 0:
+                    title = "MyAgenda";
+                    break;
+                case 1:
+                    title = "Tracks";
+                    break;
+                case 2:
+                    title = "Event";
+                    break;
+                default:
+                    throw new IllegalArgumentException("Invalid navigation item position: " + position);
+            }
+            return title;
         }
 
         private void reselectTab(int position) {
