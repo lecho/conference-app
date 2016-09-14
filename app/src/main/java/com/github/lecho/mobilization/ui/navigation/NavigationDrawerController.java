@@ -185,7 +185,8 @@ public class NavigationDrawerController implements NavigationController,
                             throw new IllegalArgumentException("Invalid navigation item: " + item);
                     }
                     listener.onItemClick(item.getItemId(), fragment);
-                    AnalyticsReporter.logNavigationEvent(firebaseAnalytics, item.getTitle().toString());
+                    AnalyticsReporter.logNavigationEvent(firebaseAnalytics, String.valueOf(item.getItemId()), item
+                            .getTitle().toString());
                     return true;
                 }
             });

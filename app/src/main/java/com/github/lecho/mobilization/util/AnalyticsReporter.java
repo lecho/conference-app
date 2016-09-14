@@ -16,10 +16,13 @@ public class AnalyticsReporter {
      * Logs event related to navigation
      * @param firebaseAnalytics - instance of firebase
      * @param itemId - navigation item unique id
+     * @param itemName - item name
      */
-    public static void logNavigationEvent(@NonNull FirebaseAnalytics firebaseAnalytics, String itemId) {
+    public static void logNavigationEvent(@NonNull FirebaseAnalytics firebaseAnalytics, String itemId, String
+            itemName) {
         Bundle bundle = new Bundle();
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, itemId);
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, itemName);
         bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, CONTENT_TYPE_NAVIGATION);
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }

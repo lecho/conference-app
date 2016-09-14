@@ -100,7 +100,7 @@ public class BottomNavigationController implements NavigationController {
                     throw new IllegalArgumentException("Invalid navigation item position: " + position);
             }
             navigationItemListener.onItemClick(position, fragment);
-            AnalyticsReporter.logNavigationEvent(firebaseAnalytics, getItemTitle(position));
+            AnalyticsReporter.logNavigationEvent(firebaseAnalytics, String.valueOf(position), getItemTitle(position));
         }
 
         private String getItemTitle(int position) {
