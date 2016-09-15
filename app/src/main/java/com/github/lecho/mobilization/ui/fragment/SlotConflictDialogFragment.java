@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.async.TalkAsyncHelper;
+import com.github.lecho.mobilization.util.AnalyticsReporter;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +31,7 @@ public class SlotConflictDialogFragment extends AppCompatDialogFragment {
     private String newTalkKey;
     private String oldTalkTitle;
     private Unbinder unbinder;
+    private FirebaseAnalytics firebaseAnalytics;
 
     @BindView(R.id.text_slot_conflict_old_talk_title)
     TextView oldTalkTitleView;
@@ -53,6 +56,7 @@ public class SlotConflictDialogFragment extends AppCompatDialogFragment {
         oldTalkKey = getArguments().getString(ARG_OLD_TALK_KEY);
         oldTalkTitle = getArguments().getString(ARG_OLD_TALK_TITLE);
         newTalkKey = getArguments().getString(ARG_NEW_TALK_KEY);
+        firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
     }
 
     @Override
@@ -80,6 +84,8 @@ public class SlotConflictDialogFragment extends AppCompatDialogFragment {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             TalkAsyncHelper.replaceTalk(oldTalkKey, newTalkKey);
+            AnalyticsReporter.logTalkAdded(firebaseAnalytics, newTalkKey, newTalkKey);
+            AnalyticsReporter.logTalkRemoved(firebaseAnalytics, oldTalkKey, oldTalkKey);
         }
     }
 

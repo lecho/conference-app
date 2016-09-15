@@ -201,7 +201,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
             } else {
                 addToMyAgendaButton.setImageResource(R.drawable.ic_star_border_32);
             }
-            addToMyAgendaButton.setOnClickListener(new StartTalkClickListener(getLayoutPosition(), agendaItem));
+            addToMyAgendaButton.setOnClickListener(new StarTalkClickListener(getLayoutPosition(), agendaItem));
         }
     }
 
@@ -227,12 +227,12 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
     /**
      * Listener for star/unstar talk button
      */
-    protected class StartTalkClickListener implements View.OnClickListener {
+    protected class StarTalkClickListener implements View.OnClickListener {
 
         private final AgendaItemViewModel agendaItem;
         private final int position;
 
-        public StartTalkClickListener(int position, AgendaItemViewModel agendaItem) {
+        public StarTalkClickListener(int position, AgendaItemViewModel agendaItem) {
             this.position = position;
             this.agendaItem = agendaItem;
         }

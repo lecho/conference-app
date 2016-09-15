@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.async.TalkAsyncHelper;
 import com.github.lecho.mobilization.ui.loader.SameSlotLoader;
+import com.github.lecho.mobilization.util.AnalyticsReporter;
 import com.github.lecho.mobilization.util.Utils;
 import com.github.lecho.mobilization.viewmodel.SlotViewModel.SlotInTimeZone;
 import com.github.lecho.mobilization.viewmodel.TalkViewModel;
@@ -258,6 +259,7 @@ public class SameSlotActivity extends AppCompatActivity implements LoaderManager
                 floatingActionButton.setImageResource(R.drawable.ic_star_border_24);
                 talkViewModel.isInMyAgenda = false;
                 TalkAsyncHelper.removeTalk(talkViewModel.key);
+                AnalyticsReporter.logTalkRemoved(firebaseAnalytics, talkViewModel.key, talkViewModel.key);
             } else {
                 //TODO use optimistic result and move checking slot conflict off main thread, then use RxBus to trigger
                 //TODO dialog if necessary.
@@ -268,6 +270,7 @@ public class SameSlotActivity extends AppCompatActivity implements LoaderManager
                 floatingActionButton.setImageResource(R.drawable.ic_star_24);
                 talkViewModel.isInMyAgenda = true;
                 TalkAsyncHelper.addTalk(talkViewModel.key);
+                AnalyticsReporter.logTalkAdded(firebaseAnalytics, talkViewModel.key, talkViewModel.key);
             }
         }
     }

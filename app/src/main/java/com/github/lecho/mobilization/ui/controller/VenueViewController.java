@@ -16,6 +16,7 @@ import com.github.lecho.mobilization.ui.adapter.AgendaAdapter;
 import com.github.lecho.mobilization.ui.fragment.Scrollable;
 import com.github.lecho.mobilization.ui.fragment.VenuesFragment;
 import com.github.lecho.mobilization.ui.loader.AgendaLoader;
+import com.github.lecho.mobilization.util.AnalyticsReporter;
 import com.github.lecho.mobilization.util.Utils;
 import com.github.lecho.mobilization.viewmodel.AgendaItemViewModel;
 import com.github.lecho.mobilization.viewmodel.AgendaViewModel;
@@ -108,6 +109,7 @@ public class VenueViewController implements Scrollable {
             if (talkViewModel.isInMyAgenda) {
                 talkViewModel.isInMyAgenda = false;
                 TalkAsyncHelper.removeTalk(talkViewModel.key);
+                AnalyticsReporter.logTalkRemoved(firebaseAnalytics, talkViewModel.key, talkViewModel.key);
             } else {
                 //TODO use optimistic result and move checking slot conflict off main thread, then use RxBus to trigger
                 //T dialog if necessary.
@@ -117,6 +119,7 @@ public class VenueViewController implements Scrollable {
                 }
                 talkViewModel.isInMyAgenda = true;
                 TalkAsyncHelper.addTalk(talkViewModel.key);
+                AnalyticsReporter.logTalkAdded(firebaseAnalytics, talkViewModel.key, talkViewModel.key);
             }
             adapter.notifyDataSetChanged();
         }

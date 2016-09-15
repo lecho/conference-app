@@ -24,11 +24,13 @@ import com.github.lecho.mobilization.async.TalkAsyncHelper;
 import com.github.lecho.mobilization.ui.loader.TalkLoader;
 import com.github.lecho.mobilization.ui.snackbar.SnackbarForTalkHelper;
 import com.github.lecho.mobilization.ui.view.SpeakerSmallLayout;
+import com.github.lecho.mobilization.util.AnalyticsReporter;
 import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.util.Utils;
 import com.github.lecho.mobilization.viewmodel.SlotViewModel;
 import com.github.lecho.mobilization.viewmodel.SpeakerViewModel;
 import com.github.lecho.mobilization.viewmodel.TalkViewModel;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +48,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
     private SpeakersController speakersController;
     private SnackbarForTalkHelper snackbarForTalkHelper;
     private TalkViewModel talkViewModel;
+    private FirebaseAnalytics firebaseAnalytics;
 
     @BindView(R.id.main_container)
     View mainContainerView;
@@ -70,6 +73,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
         descriptionController = new DescriptionController(mainContainerView);
         speakersController = new SpeakersController(mainContainerView);
         snackbarForTalkHelper = new SnackbarForTalkHelper(getApplicationContext(), toolbarView);
+        firebaseAnalytics = FirebaseAnalytics.getInstance(getApplicationContext());
 
         setSupportActionBar(toolbarView);
         ActionBar actionBar = getSupportActionBar();
@@ -253,6 +257,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
                 floatingActionButton.setImageResource(R.drawable.ic_star_border_24);
                 talkViewModel.isInMyAgenda = false;
                 TalkAsyncHelper.removeTalk(talkViewModel.key);
+                AnalyticsReporter.logTalkRemoved(firebaseAnalytics, talkViewModel.key, talkViewModel.key);
             } else {
                 //TODO use optimistic result and move checking slot conflict off main thread, then use RxBus to trigger
                 //T dialog if necessary.
@@ -263,6 +268,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
                 floatingActionButton.setImageResource(R.drawable.ic_star_24);
                 talkViewModel.isInMyAgenda = true;
                 TalkAsyncHelper.addTalk(talkViewModel.key);
+                AnalyticsReporter.logTalkAdded(firebaseAnalytics, talkViewModel.key, talkViewModel.key);
             }
         }
     }

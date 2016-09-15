@@ -20,6 +20,7 @@ import com.github.lecho.mobilization.ui.SameSlotActivity;
 import com.github.lecho.mobilization.ui.adapter.AgendaAdapter;
 import com.github.lecho.mobilization.ui.adapter.MyAgendaAdapter;
 import com.github.lecho.mobilization.ui.loader.AgendaLoader;
+import com.github.lecho.mobilization.util.AnalyticsReporter;
 import com.github.lecho.mobilization.viewmodel.AgendaItemViewModel;
 import com.github.lecho.mobilization.viewmodel.AgendaViewModel;
 import com.github.lecho.mobilization.viewmodel.TalkViewModel;
@@ -162,6 +163,7 @@ public class MyAgendaFragment extends Fragment implements Scrollable, LoaderMana
             if (talkViewModel.isInMyAgenda) {
                 talkViewModel.isInMyAgenda = false;
                 removeTalk(position);
+                AnalyticsReporter.logTalkRemoved(firebaseAnalytics, talkViewModel.key, talkViewModel.key);
             }
         }
     }
