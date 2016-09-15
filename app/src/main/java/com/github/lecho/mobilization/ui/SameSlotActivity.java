@@ -30,6 +30,7 @@ import com.github.lecho.mobilization.util.AnalyticsReporter;
 import com.github.lecho.mobilization.util.Utils;
 import com.github.lecho.mobilization.viewmodel.SlotViewModel.SlotInTimeZone;
 import com.github.lecho.mobilization.viewmodel.TalkViewModel;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.List;
 
@@ -45,6 +46,7 @@ public class SameSlotActivity extends AppCompatActivity implements LoaderManager
     private SameSlotPagerAdapter pagerAdapter;
     private String slotKey;
     private FABController fabController;
+    private FirebaseAnalytics firebaseAnalytics;
 
     @BindView(R.id.main_container)
     View mainContainer;
@@ -82,6 +84,7 @@ public class SameSlotActivity extends AppCompatActivity implements LoaderManager
         tabLayout.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(new SlotPageChangeListener());
         fabController = new FABController(mainContainer);
+        firebaseAnalytics = FirebaseAnalytics.getInstance(getApplicationContext());
 
         slotKey = getIntent().getStringExtra(ARG_SLOT_KEY);
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);

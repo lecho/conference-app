@@ -22,6 +22,7 @@ import com.github.lecho.mobilization.viewmodel.AgendaItemViewModel;
 import com.github.lecho.mobilization.viewmodel.AgendaViewModel;
 import com.github.lecho.mobilization.viewmodel.TalkViewModel;
 import com.github.lecho.mobilization.viewmodel.VenueViewModel;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.Collections;
 
@@ -39,6 +40,7 @@ public class VenueViewController implements Scrollable {
     private final LoaderManager loaderManager;
     private final AgendaAdapter adapter;
     private final int position;
+    private final FirebaseAnalytics firebaseAnalytics;
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -47,6 +49,7 @@ public class VenueViewController implements Scrollable {
             layoutManager, VenueViewModel venueViewModel, View view, int position) {
         ButterKnife.bind(this, view);
         this.activity = activity;
+        this.firebaseAnalytics = FirebaseAnalytics.getInstance(activity.getApplicationContext());
         this.loaderManager = loaderManager;
         this.venueViewModel = venueViewModel;
         this.position = position;

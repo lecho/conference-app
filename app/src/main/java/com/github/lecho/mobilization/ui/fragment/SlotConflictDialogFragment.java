@@ -53,10 +53,10 @@ public class SlotConflictDialogFragment extends AppCompatDialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
         oldTalkKey = getArguments().getString(ARG_OLD_TALK_KEY);
         oldTalkTitle = getArguments().getString(ARG_OLD_TALK_TITLE);
         newTalkKey = getArguments().getString(ARG_NEW_TALK_KEY);
-        firebaseAnalytics = FirebaseAnalytics.getInstance(getContext());
     }
 
     @Override

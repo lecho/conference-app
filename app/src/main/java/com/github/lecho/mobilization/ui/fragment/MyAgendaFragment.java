@@ -24,6 +24,7 @@ import com.github.lecho.mobilization.util.AnalyticsReporter;
 import com.github.lecho.mobilization.viewmodel.AgendaItemViewModel;
 import com.github.lecho.mobilization.viewmodel.AgendaViewModel;
 import com.github.lecho.mobilization.viewmodel.TalkViewModel;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.Collections;
 
@@ -40,6 +41,7 @@ public class MyAgendaFragment extends Fragment implements Scrollable, LoaderMana
     private static final int LOADER_ID = 0;
     private AgendaAdapter adapter;
     private Unbinder unbinder;
+    private FirebaseAnalytics firebaseAnalytics;
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -58,6 +60,7 @@ public class MyAgendaFragment extends Fragment implements Scrollable, LoaderMana
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        firebaseAnalytics = FirebaseAnalytics.getInstance(getActivity().getApplicationContext());
         View rootView = inflater.inflate(R.layout.recycler_view, container, false);
         unbinder = ButterKnife.bind(this, rootView);
         //TODO Grid for tablet layout, adjust margins and paddings in layout

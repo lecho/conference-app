@@ -67,13 +67,12 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_talk);
         ButterKnife.bind(this);
-
+        firebaseAnalytics = FirebaseAnalytics.getInstance(getApplicationContext());
         fabController = new FABController(mainContainerView);
         headerController = new HeaderController(mainContainerView);
         descriptionController = new DescriptionController(mainContainerView);
         speakersController = new SpeakersController(mainContainerView);
         snackbarForTalkHelper = new SnackbarForTalkHelper(getApplicationContext(), toolbarView);
-        firebaseAnalytics = FirebaseAnalytics.getInstance(getApplicationContext());
 
         setSupportActionBar(toolbarView);
         ActionBar actionBar = getSupportActionBar();
