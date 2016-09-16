@@ -150,7 +150,6 @@ public class Utils {
     public static void loadHeaderImage(Context context, String fileName, ImageView imageView) {
         Picasso.with(context.getApplicationContext())
                 .load(ASSETS_HEADERS_IMAGES + fileName)
-                .config(Bitmap.Config.RGB_565)
                 .fit()
                 .centerCrop()
                 .into(imageView);
