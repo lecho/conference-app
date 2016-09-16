@@ -138,10 +138,9 @@ public class MyAgendaFragment extends Fragment implements Scrollable, LoaderMana
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
             //Remove swiped item from list and notify the RecyclerView
             final int position = viewHolder.getAdapterPosition();
-            removeTalk(position);
-            adapter.getItem(position);
-            AgendaItemViewModel agendaItemViewModel = adapter.getItem(position);
+            final AgendaItemViewModel agendaItemViewModel = adapter.getItem(position);
             AnalyticsReporter.logTalkRemoved(firebaseAnalytics, agendaItemViewModel.talk.key);
+            removeTalk(position);
         }
 
         @Override
