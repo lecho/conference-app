@@ -256,7 +256,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
                 floatingActionButton.setImageResource(R.drawable.ic_star_border_24);
                 talkViewModel.isInMyAgenda = false;
                 TalkAsyncHelper.removeTalk(talkViewModel.key);
-                AnalyticsReporter.logTalkRemoved(firebaseAnalytics, talkViewModel.key, talkViewModel.key);
+                AnalyticsReporter.logTalkRemoved(firebaseAnalytics, talkViewModel.key);
             } else {
                 //TODO use optimistic result and move checking slot conflict off main thread, then use RxBus to trigger
                 //T dialog if necessary.
@@ -267,7 +267,7 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
                 floatingActionButton.setImageResource(R.drawable.ic_star_24);
                 talkViewModel.isInMyAgenda = true;
                 TalkAsyncHelper.addTalk(talkViewModel.key);
-                AnalyticsReporter.logTalkAdded(firebaseAnalytics, talkViewModel.key, talkViewModel.key);
+                AnalyticsReporter.logTalkAdded(firebaseAnalytics, talkViewModel.key);
             }
         }
     }

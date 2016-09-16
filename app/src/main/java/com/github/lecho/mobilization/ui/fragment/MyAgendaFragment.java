@@ -139,6 +139,9 @@ public class MyAgendaFragment extends Fragment implements Scrollable, LoaderMana
             //Remove swiped item from list and notify the RecyclerView
             final int position = viewHolder.getAdapterPosition();
             removeTalk(position);
+            adapter.getItem(position);
+            AgendaItemViewModel agendaItemViewModel = adapter.getItem(position);
+            AnalyticsReporter.logTalkRemoved(firebaseAnalytics, agendaItemViewModel.talk.key);
         }
 
         @Override
@@ -166,7 +169,7 @@ public class MyAgendaFragment extends Fragment implements Scrollable, LoaderMana
             if (talkViewModel.isInMyAgenda) {
                 talkViewModel.isInMyAgenda = false;
                 removeTalk(position);
-                AnalyticsReporter.logTalkRemoved(firebaseAnalytics, talkViewModel.key, talkViewModel.key);
+                AnalyticsReporter.logTalkRemoved(firebaseAnalytics, talkViewModel.key);
             }
         }
     }

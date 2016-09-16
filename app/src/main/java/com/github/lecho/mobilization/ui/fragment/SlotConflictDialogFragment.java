@@ -84,8 +84,8 @@ public class SlotConflictDialogFragment extends AppCompatDialogFragment {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             TalkAsyncHelper.replaceTalk(oldTalkKey, newTalkKey);
-            AnalyticsReporter.logTalkAdded(firebaseAnalytics, newTalkKey, newTalkKey);
-            AnalyticsReporter.logTalkRemoved(firebaseAnalytics, oldTalkKey, oldTalkKey);
+            AnalyticsReporter.logTalkAdded(firebaseAnalytics, newTalkKey);
+            AnalyticsReporter.logTalkRemoved(firebaseAnalytics, oldTalkKey);
         }
     }
 

@@ -15,39 +15,33 @@ public class AnalyticsReporter {
     private static final String EVENT_REMOVE_TALK = "remove_talk_from_agenda";
 
     private static final String CONTENT_TYPE_NAVIGATION = "navigation";
-    private static final String CONTENT_TYPE_TALK = "talk";
+    private static final String CONTENT_TYPE_ADD_TALK = "add_talk_to_agenda";
+    private static final String CONTENT_TYPE_REMOVE_TALK = "remove_talk_from_agenda";
 
     /**
      * Logs event related to navigation
      *
      * @param firebaseAnalytics - instance of firebase
      * @param id                - navigation item unique id
-     * @param name              - item name
      */
-    public static void logNavigationEvent(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String id,
-                                          @NonNull String name) {
+    public static void logNavigationEvent(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String id) {
         Bundle bundle = new EventBuilder()
                 .withCotentType(CONTENT_TYPE_NAVIGATION)
-                .withItemId(id)
-                .withItemName(name).build();
+                .withItemId(id).build();
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
     }
 
-    public static void logTalkAdded(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String id,
-                                    @NonNull String name) {
+    public static void logTalkAdded(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String id) {
         Bundle bundle = new EventBuilder()
-                .withCotentType(CONTENT_TYPE_TALK)
-                .withItemId(id)
-                .withItemName(name).build();
+                .withCotentType(CONTENT_TYPE_ADD_TALK)
+                .withItemId(id).build();
         firebaseAnalytics.logEvent(EVENT_ADD_TALK, bundle);
     }
 
-    public static void logTalkRemoved(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String id,
-                                      @NonNull String name) {
+    public static void logTalkRemoved(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String id) {
         Bundle bundle = new EventBuilder()
-                .withCotentType(CONTENT_TYPE_TALK)
-                .withItemId(id)
-                .withItemName(name).build();
+                .withCotentType(CONTENT_TYPE_REMOVE_TALK)
+                .withItemId(id).build();
         firebaseAnalytics.logEvent(EVENT_REMOVE_TALK, bundle);
     }
 

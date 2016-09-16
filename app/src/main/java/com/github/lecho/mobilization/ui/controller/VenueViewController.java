@@ -112,7 +112,7 @@ public class VenueViewController implements Scrollable {
             if (talkViewModel.isInMyAgenda) {
                 talkViewModel.isInMyAgenda = false;
                 TalkAsyncHelper.removeTalk(talkViewModel.key);
-                AnalyticsReporter.logTalkRemoved(firebaseAnalytics, talkViewModel.key, talkViewModel.key);
+                AnalyticsReporter.logTalkRemoved(firebaseAnalytics, talkViewModel.key);
             } else {
                 //TODO use optimistic result and move checking slot conflict off main thread, then use RxBus to trigger
                 //T dialog if necessary.
@@ -122,7 +122,7 @@ public class VenueViewController implements Scrollable {
                 }
                 talkViewModel.isInMyAgenda = true;
                 TalkAsyncHelper.addTalk(talkViewModel.key);
-                AnalyticsReporter.logTalkAdded(firebaseAnalytics, talkViewModel.key, talkViewModel.key);
+                AnalyticsReporter.logTalkAdded(firebaseAnalytics, talkViewModel.key);
             }
             adapter.notifyDataSetChanged();
         }
