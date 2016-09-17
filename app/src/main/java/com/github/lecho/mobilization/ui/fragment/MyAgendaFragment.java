@@ -65,8 +65,7 @@ public class MyAgendaFragment extends Fragment implements Scrollable, LoaderMana
         unbinder = ButterKnife.bind(this, rootView);
         //TODO Grid for tablet layout, adjust margins and paddings in layout
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new MyAgendaAdapter((AppCompatActivity) getActivity(), new StarTalkClickListener(),
-                new EmptySlotClickListener());
+        adapter = new MyAgendaAdapter((AppCompatActivity) getActivity(), new StarTalkClickListener());
         recyclerView.setAdapter(adapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new AgendaItemTouchCallback());
         itemTouchHelper.attachToRecyclerView(recyclerView);
@@ -149,14 +148,6 @@ public class MyAgendaFragment extends Fragment implements Scrollable, LoaderMana
                 return super.getSwipeDirs(recyclerView, viewHolder);
             }
             return 0;
-        }
-    }
-
-    private class EmptySlotClickListener implements AgendaAdapter.AgendaItemClickListener {
-
-        @Override
-        public void onItemClick(int position, AgendaItemViewModel agendaItem, View view) {
-            SameSlotActivity.startActivity(getActivity(), agendaItem.slot.key);
         }
     }
 

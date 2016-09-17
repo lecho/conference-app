@@ -53,7 +53,7 @@ public class VenueViewController implements Scrollable {
         this.loaderManager = loaderManager;
         this.venueViewModel = venueViewModel;
         this.position = position;
-        adapter = new AgendaAdapter(activity, new StarTalkClickListener(), null);
+        adapter = new AgendaAdapter(activity, new StarTalkClickListener());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
     }

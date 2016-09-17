@@ -222,6 +222,7 @@ public class SameSlotActivity extends AppCompatActivity implements LoaderManager
             @Override
             public void onClick(View view) {
                 TalkActivity.startActivity(SameSlotActivity.this, talkViewModel.key);
+                AnalyticsReporter.logTalkSelected(firebaseAnalytics, talkViewModel.key);
             }
         }
     }
@@ -242,7 +243,6 @@ public class SameSlotActivity extends AppCompatActivity implements LoaderManager
                 fab.setImageResource(R.drawable.ic_star_border_24);
             }
             fab.setOnClickListener(new FabClickListener(talkViewModel));
-            fab.show();
         }
     }
 

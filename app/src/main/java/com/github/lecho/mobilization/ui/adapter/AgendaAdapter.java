@@ -11,10 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.lecho.mobilization.R;
+import com.github.lecho.mobilization.ui.SameSlotActivity;
 import com.github.lecho.mobilization.ui.TalkActivity;
+import com.github.lecho.mobilization.util.AnalyticsReporter;
 import com.github.lecho.mobilization.viewmodel.AgendaItemViewModel;
 import com.github.lecho.mobilization.viewmodel.SlotViewModel;
 import com.github.lecho.mobilization.viewmodel.TalkViewModel;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +25,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+//TODO Consider extracting slot and talk listeners outside this adapter
 public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHolder> {
 
     public static final int ITEM_TYPE_BREAK = 0;
@@ -30,13 +34,12 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
     protected List<AgendaItemViewModel> data = new ArrayList<>();
     protected final Activity activity;
     protected final AgendaItemClickListener starTalkListener;
-    protected final AgendaItemClickListener emptySlotListener;
+    protected final FirebaseAnalytics firebaseAnalytics;
 
-    public AgendaAdapter(Activity activity, AgendaItemClickListener starTalkListener,
-                         AgendaItemClickListener emptySlotListener) {
+    public AgendaAdapter(Activity activity, AgendaItemClickListener starTalkListener) {
         this.activity = activity;
         this.starTalkListener = starTalkListener;
-        this.emptySlotListener = emptySlotListener;
+        this.firebaseAnalytics = FirebaseAnalytics.getInstance(activity.getApplicationContext());
     }
 
     public void setData(@NonNull List<AgendaItemViewModel> data) {
@@ -51,7 +54,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
     /**
      * Visually remove talk item and replace it with empty slot item. This method doesn't modify data in database.
      *
-     * @param position
+     * @param position talk position in adapter
      */
     public void removeTalk(int position) {
         AgendaItemViewModel item = data.get(position);
@@ -148,7 +151,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
         @Override
         public void bindView(AgendaItemViewModel agendaItem) {
             super.bindView(agendaItem);
-            itemView.setOnClickListener(new EmptySlotClickListener(getLayoutPosition(), agendaItem));
+            itemView.setOnClickListener(new EmptySlotClickListener(activity, agendaItem.slot.key, firebaseAnalytics));
         }
     }
 
@@ -192,7 +195,7 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
         public void bindView(AgendaItemViewModel agendaItem) {
             super.bindView(agendaItem);
             TalkViewModel talkViewModel = agendaItem.talk;
-            itemView.setOnClickListener(new TalkItemClickListener(activity, talkViewModel.key));
+            itemView.setOnClickListener(new TalkItemClickListener(activity, talkViewModel.key, firebaseAnalytics));
             titleView.setText(talkViewModel.title);
             languageView.setText(talkViewModel.getLanguageInBrackets());
             speakersView.setText(talkViewModel.getSpeakersText(activity));
@@ -212,15 +215,18 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
 
         private final String talkKey;
         private final Activity activity;
+        private final FirebaseAnalytics firebaseAnalytics;
 
-        public TalkItemClickListener(Activity activity, String talkKey) {
+        public TalkItemClickListener(Activity activity, String talkKey, FirebaseAnalytics firebaseAnalytics) {
             this.talkKey = talkKey;
             this.activity = activity;
+            this.firebaseAnalytics = firebaseAnalytics;
         }
 
         @Override
         public void onClick(View v) {
             TalkActivity.startActivity(activity, talkKey);
+            AnalyticsReporter.logTalkSelected(firebaseAnalytics, talkKey);
         }
     }
 
@@ -248,21 +254,22 @@ public class AgendaAdapter extends RecyclerView.Adapter<AgendaAdapter.BaseViewHo
     /**
      * Empty slot click listener
      */
-    public class EmptySlotClickListener implements View.OnClickListener {
+    public static class EmptySlotClickListener implements View.OnClickListener {
 
-        private final AgendaItemViewModel agendaItem;
-        private final int position;
+        private final Activity activity;
+        private final String slotKey;
+        private final FirebaseAnalytics firebaseAnalytics;
 
-        public EmptySlotClickListener(int position, AgendaItemViewModel agendaItem) {
-            this.position = position;
-            this.agendaItem = agendaItem;
+        public EmptySlotClickListener(Activity activity, String slotKey, FirebaseAnalytics firebaseAnalytics) {
+            this.slotKey = slotKey;
+            this.activity = activity;
+            this.firebaseAnalytics = firebaseAnalytics;
         }
 
         @Override
         public void onClick(View v) {
-            if (emptySlotListener != null) {
-                emptySlotListener.onItemClick(position, agendaItem, v);
-            }
+            SameSlotActivity.startActivity(activity, slotKey);
+            AnalyticsReporter.logEmptySlotSelected(firebaseAnalytics, slotKey);
         }
     }
 

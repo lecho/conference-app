@@ -11,8 +11,10 @@ import android.widget.TextView;
 
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.ui.SpeakerActivity;
+import com.github.lecho.mobilization.util.AnalyticsReporter;
 import com.github.lecho.mobilization.util.Utils;
 import com.github.lecho.mobilization.viewmodel.SpeakerViewModel;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +25,12 @@ import butterknife.ButterKnife;
 public class SpeakersAdapter extends RecyclerView.Adapter<SpeakersAdapter.SpeakerViewHolder> {
 
     private final Activity activity;
+    private final FirebaseAnalytics firebaseAnalytics;
     private List<SpeakerViewModel> data = new ArrayList<>();
 
     public SpeakersAdapter(Activity activity) {
         this.activity = activity;
+        this.firebaseAnalytics = FirebaseAnalytics.getInstance(activity.getApplicationContext());
     }
 
     public void setData(@NonNull List<SpeakerViewModel> data) {
@@ -71,7 +75,8 @@ public class SpeakersAdapter extends RecyclerView.Adapter<SpeakersAdapter.Speake
 
         public void bindView(SpeakerViewModel speakerViewModel) {
             speakerNameView.setText(speakerViewModel.getSpeakerNameText());
-            itemView.setOnClickListener(new SpeakerItemClickListener(activity, speakerViewModel.key));
+            itemView.setOnClickListener(new SpeakerItemClickListener(activity, speakerViewModel.key,
+                    firebaseAnalytics));
             Utils.loadSpeakerImageMedium(activity.getApplicationContext(), speakerViewModel.photo, avatarView);
         }
     }
@@ -80,15 +85,18 @@ public class SpeakersAdapter extends RecyclerView.Adapter<SpeakersAdapter.Speake
 
         private final Activity activity;
         private final String speakerKey;
+        private final FirebaseAnalytics firebaseAnalytics;
 
-        public SpeakerItemClickListener(Activity activity, String speakerKey) {
+        public SpeakerItemClickListener(Activity activity, String speakerKey, FirebaseAnalytics firebaseAnalytics) {
             this.activity = activity;
             this.speakerKey = speakerKey;
+            this.firebaseAnalytics = firebaseAnalytics;
         }
 
         @Override
         public void onClick(View v) {
             SpeakerActivity.startActivity(activity, speakerKey);
+            AnalyticsReporter.logSpeakerSelected(firebaseAnalytics, speakerKey);
         }
     }
 }

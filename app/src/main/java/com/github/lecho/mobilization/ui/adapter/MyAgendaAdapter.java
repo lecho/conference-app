@@ -15,9 +15,8 @@ import butterknife.BindView;
 
 public class MyAgendaAdapter extends AgendaAdapter {
 
-    public MyAgendaAdapter(AppCompatActivity activity, AgendaItemClickListener starTalkListener,
-                           AgendaItemClickListener emptySlotListener) {
-        super(activity, starTalkListener, emptySlotListener);
+    public MyAgendaAdapter(AppCompatActivity activity, AgendaItemClickListener starTalkListener) {
+        super(activity, starTalkListener);
     }
 
     @Override

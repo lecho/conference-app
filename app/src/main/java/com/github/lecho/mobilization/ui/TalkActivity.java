@@ -148,7 +148,6 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
             headerController.bind(talkViewModel);
             descriptionController.bind(talkViewModel);
             speakersController.bind(talkViewModel);
-
         }
     }
 
@@ -237,6 +236,10 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
                         speakerViewModel);
                 speakerSimpleLayout.bind();
                 speakersLayout.addView(speakerSimpleLayout);
+                speakerSimpleLayout.setOnClickListener(view -> {
+                    SpeakerActivity.startActivity(TalkActivity.this, speakerViewModel.key);
+                    AnalyticsReporter.logSpeakerSelected(firebaseAnalytics, speakerViewModel.key);
+                });
             }
         }
     }

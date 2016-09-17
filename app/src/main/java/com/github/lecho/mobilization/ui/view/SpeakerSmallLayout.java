@@ -30,11 +30,6 @@ public class SpeakerSmallLayout extends FrameLayout {
     @BindView(R.id.text_speaker_name)
     TextView speakerNameView;
 
-    @OnClick
-    public void onClick() {
-        SpeakerActivity.startActivity(getActivity(), speakerViewModel.key);
-    }
-
     public SpeakerSmallLayout(Context context, SpeakerViewModel speakerViewModel) {
         super(context);
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -46,16 +41,5 @@ public class SpeakerSmallLayout extends FrameLayout {
     public void bind() {
         Utils.loadSpeakerImageSmall(getContext().getApplicationContext(), speakerViewModel.photo, avatarView);
         speakerNameView.setText(speakerViewModel.getSpeakerNameText());
-    }
-
-    private Activity getActivity() {
-        Context context = getContext();
-        while (context instanceof ContextWrapper) {
-            if (context instanceof Activity) {
-                return (Activity) context;
-            }
-            context = ((ContextWrapper) context).getBaseContext();
-        }
-        return null;
     }
 }
