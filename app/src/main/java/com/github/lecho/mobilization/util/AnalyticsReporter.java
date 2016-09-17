@@ -10,14 +10,14 @@ import com.google.firebase.analytics.FirebaseAnalytics;
  */
 public class AnalyticsReporter {
 
-    private static final int MAX_VALUE_LENGHT = 32;
+    private static final int MAX_VALUE_LENGTH = 32;
     private static final String CONTENT_TYPE_NAVIGATION = "navigation";
-    private static final String CONTENT_TYPE_ADD_TALK = "add_talk_to_agenda";
-    private static final String CONTENT_TYPE_REMOVE_TALK = "remove_talk_from_agenda";
+    private static final String CONTENT_TYPE_ADD_TALK = "add_talk";
+    private static final String CONTENT_TYPE_REMOVE_TALK = "remove_talk";
 
-    private static final String ITEM_CATEGORY_TALK = "talk";
-    private static final String ITEM_CATEGORY_SLOT = "slot";
-    private static final String ITEM_CATEGORY_SPEAKER = "speaker";
+    private static final String CONTENT_TYPE_SELECT_TALK = "select_talk";
+    private static final String CONTENT_TYPE_SELECT_SLOT = "select_slot";
+    private static final String CONTENT_TYPE_SELECT_SPEAKER = "select_speaker";
 
     /**
      * Logs event related to navigation
@@ -25,49 +25,36 @@ public class AnalyticsReporter {
      * @param firebaseAnalytics - instance of firebase
      * @param id                - navigation item unique id
      */
-    public static void logNavigationEvent(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String id) {
+    public static void logNavigationEvent(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String itemId) {
+        logSelectContent(firebaseAnalytics, itemId, CONTENT_TYPE_NAVIGATION);
+    }
+
+    public static void logTalkAdded(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String itemId) {
+        logSelectContent(firebaseAnalytics, itemId, CONTENT_TYPE_ADD_TALK);
+    }
+
+    public static void logTalkRemoved(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String itemId) {
+        logSelectContent(firebaseAnalytics, itemId, CONTENT_TYPE_REMOVE_TALK);
+    }
+
+    public static void logTalkSelected(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String itemId) {
+        logSelectContent(firebaseAnalytics, itemId, CONTENT_TYPE_SELECT_TALK);
+    }
+
+    public static void logEmptySlotSelected(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String itemId) {
+        logSelectContent(firebaseAnalytics, itemId, CONTENT_TYPE_SELECT_SLOT);
+    }
+
+    public static void logSpeakerSelected(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String itemId) {
+        logSelectContent(firebaseAnalytics, itemId, CONTENT_TYPE_SELECT_SPEAKER);
+    }
+
+    private static void logSelectContent(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String itemId,
+                                         @NonNull String contentType) {
         Bundle bundle = new EventBuilder()
-                .withCotentType(CONTENT_TYPE_NAVIGATION)
-                .withItemId(id).build();
+                .withContentType(contentType)
+                .withItemId(itemId).build();
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-    }
-
-    public static void logTalkAdded(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String id) {
-        Bundle bundle = new EventBuilder()
-                .withCotentType(CONTENT_TYPE_ADD_TALK)
-                .withItemId(id).build();
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-    }
-
-    public static void logTalkRemoved(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String id) {
-        Bundle bundle = new EventBuilder()
-                .withCotentType(CONTENT_TYPE_REMOVE_TALK)
-                .withItemId(id).build();
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-    }
-
-    public static void logTalkSelected(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String id) {
-        Bundle bundle = new EventBuilder()
-                .withItemCategory(ITEM_CATEGORY_TALK)
-                .withItemName(id)
-                .withItemId(id).build();
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
-    }
-
-    public static void logEmptySlotSelected(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String id) {
-        Bundle bundle = new EventBuilder()
-                .withItemCategory(ITEM_CATEGORY_SLOT)
-                .withItemName(id)
-                .withItemId(id).build();
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
-    }
-
-    public static void logSpeakerSelected(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String id) {
-        Bundle bundle = new EventBuilder()
-                .withItemCategory(ITEM_CATEGORY_SPEAKER)
-                .withItemName(id)
-                .withItemId(id).build();
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.VIEW_ITEM, bundle);
     }
 
     private static class EventBuilder {
@@ -77,23 +64,13 @@ public class AnalyticsReporter {
             bundle = new Bundle();
         }
 
-        public EventBuilder withCotentType(@NonNull String contentType) {
+        public EventBuilder withContentType(@NonNull String contentType) {
             bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, contentType);
             return this;
         }
 
         public EventBuilder withItemId(@NonNull String itemId) {
-            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, substringTo24Chars(itemId));
-            return this;
-        }
-
-        public EventBuilder withItemName(@NonNull String itemName) {
-            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, substringTo24Chars(itemName));
-            return this;
-        }
-
-        public EventBuilder withItemCategory(@NonNull String itemCategory) {
-            bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, substringTo24Chars(itemCategory));
+            bundle.putString(FirebaseAnalytics.Param.ITEM_ID, substringTo32Chars(itemId));
             return this;
         }
 
@@ -101,9 +78,9 @@ public class AnalyticsReporter {
             return bundle;
         }
 
-        private static String substringTo24Chars(@NonNull String value) {
-            if (value.length() > MAX_VALUE_LENGHT) {
-                return value.substring(0, MAX_VALUE_LENGHT);
+        private static String substringTo32Chars(@NonNull String value) {
+            if (value.length() > MAX_VALUE_LENGTH) {
+                return value.substring(0, MAX_VALUE_LENGTH);
             }
             return value;
         }
