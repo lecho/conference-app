@@ -11,42 +11,40 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 public class AnalyticsReporter {
 
     private static final int MAX_VALUE_LENGTH = 32;
-    private static final String CONTENT_TYPE_NAVIGATION = "navigation";
-    private static final String CONTENT_TYPE_ADD_TALK = "add_talk";
-    private static final String CONTENT_TYPE_REMOVE_TALK = "remove_talk";
+    private static final String TYPE_NAVIGATION = "navigation";
+    private static final String TYPE_ADD_TALK = "add_talk";
+    private static final String TYPE_REMOVE_TALK = "remove_talk";
+    private static final String TYPE_SELECT_TALK = "select_talk";
+    private static final String TYPE_SELECT_SLOT = "select_slot";
+    private static final String TYPE_SELECT_SPEAKER = "select_speaker";
 
-    private static final String CONTENT_TYPE_SELECT_TALK = "select_talk";
-    private static final String CONTENT_TYPE_SELECT_SLOT = "select_slot";
-    private static final String CONTENT_TYPE_SELECT_SPEAKER = "select_speaker";
-
-    /**
-     * Logs event related to navigation
-     *
-     * @param firebaseAnalytics - instance of firebase
-     * @param id                - navigation item unique id
-     */
     public static void logNavigationEvent(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String itemId) {
-        logSelectContent(firebaseAnalytics, itemId, CONTENT_TYPE_NAVIGATION);
+        logSelectContent(firebaseAnalytics, itemId, TYPE_NAVIGATION);
     }
 
     public static void logTalkAdded(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String itemId) {
-        logSelectContent(firebaseAnalytics, itemId, CONTENT_TYPE_ADD_TALK);
+        logSelectContent(firebaseAnalytics, itemId, TYPE_ADD_TALK);
+        logCustomEvent(firebaseAnalytics, TYPE_ADD_TALK, itemId);
     }
 
     public static void logTalkRemoved(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String itemId) {
-        logSelectContent(firebaseAnalytics, itemId, CONTENT_TYPE_REMOVE_TALK);
+        logSelectContent(firebaseAnalytics, itemId, TYPE_REMOVE_TALK);
+        logCustomEvent(firebaseAnalytics, TYPE_REMOVE_TALK, itemId);
     }
 
     public static void logTalkSelected(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String itemId) {
-        logSelectContent(firebaseAnalytics, itemId, CONTENT_TYPE_SELECT_TALK);
+        logSelectContent(firebaseAnalytics, itemId, TYPE_SELECT_TALK);
+        logCustomEvent(firebaseAnalytics, TYPE_SELECT_TALK, itemId);
     }
 
     public static void logEmptySlotSelected(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String itemId) {
-        logSelectContent(firebaseAnalytics, itemId, CONTENT_TYPE_SELECT_SLOT);
+        logSelectContent(firebaseAnalytics, itemId, TYPE_SELECT_SLOT);
+        logCustomEvent(firebaseAnalytics, TYPE_SELECT_SLOT, itemId);
     }
 
     public static void logSpeakerSelected(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String itemId) {
-        logSelectContent(firebaseAnalytics, itemId, CONTENT_TYPE_SELECT_SPEAKER);
+        logSelectContent(firebaseAnalytics, itemId, TYPE_SELECT_SPEAKER);
+        logCustomEvent(firebaseAnalytics, TYPE_SELECT_SPEAKER, itemId);
     }
 
     private static void logSelectContent(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String itemId,
@@ -55,6 +53,13 @@ public class AnalyticsReporter {
                 .withContentType(contentType)
                 .withItemId(itemId).build();
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+    }
+
+    private static void logCustomEvent(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String eventType,
+                                       @NonNull String itemId) {
+        Bundle bundle = new EventBuilder()
+                .withItemId(itemId).build();
+        firebaseAnalytics.logEvent(eventType, bundle);
     }
 
     private static class EventBuilder {
@@ -71,6 +76,11 @@ public class AnalyticsReporter {
 
         public EventBuilder withItemId(@NonNull String itemId) {
             bundle.putString(FirebaseAnalytics.Param.ITEM_ID, substringTo32Chars(itemId));
+            return this;
+        }
+
+        public EventBuilder withValue(@NonNull double value) {
+            bundle.putDouble(FirebaseAnalytics.Param.VALUE, value);
             return this;
         }
 
