@@ -22,12 +22,6 @@
         </activity>
         <activity android:name=".ui.SpeakerActivity">
         </activity>
-
-        <service
-            android:name=".async.ContentUpdateService"
-            android:exported="false">
-        </service>
-
         <activity
             android:name=".ui.SpeakersActivity"
             android:label="@string/title_activity_speakers"
@@ -45,6 +39,17 @@
         </activity>
         <activity android:name=".ui.SameSlotActivity">
         </activity>
+
+
+        <service
+            android:name=".async.DatabaseUpdateService"
+            android:exported="false">
+        </service>
+
+        <service
+            android:name=".async.JsonDownloadService"
+            android:exported="false">
+        </service>
     </application>
 
 </manifest>

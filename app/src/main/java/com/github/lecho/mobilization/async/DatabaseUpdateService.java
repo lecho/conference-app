@@ -10,11 +10,11 @@ import com.github.lecho.mobilization.realmmodel.RealmFacade;
 /**
  * Created by Leszek on 2015-09-01.
  */
-public class ContentUpdateService extends IntentService {
+public class DatabaseUpdateService extends IntentService {
 
-    private static final String TAG = ContentUpdateService.class.getSimpleName();
+    private static final String TAG = DatabaseUpdateService.class.getSimpleName();
 
-    public ContentUpdateService() {
+    public DatabaseUpdateService() {
         super(TAG);
     }
 

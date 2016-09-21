@@ -9,7 +9,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.DimenRes;
@@ -22,7 +21,7 @@ import android.util.Pair;
 import android.widget.ImageView;
 
 import com.github.lecho.mobilization.R;
-import com.github.lecho.mobilization.async.ContentUpdateService;
+import com.github.lecho.mobilization.async.DatabaseUpdateService;
 import com.github.lecho.mobilization.realmmodel.RealmFacade;
 import com.github.lecho.mobilization.ui.fragment.SlotConflictDialogFragment;
 import com.github.lecho.mobilization.viewmodel.TalkViewModel;
@@ -93,7 +92,7 @@ public class Utils {
     public static void upgradeSchema(Context context) {
         if (Utils.checkIfSchemaUpgradeNeeded(context)) {
             Log.i(TAG, "Upgrading schema");
-            Intent serviceIntent = new Intent(context, ContentUpdateService.class);
+            Intent serviceIntent = new Intent(context, DatabaseUpdateService.class);
             context.startService(serviceIntent);
         }
     }
