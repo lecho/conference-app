@@ -1,5 +1,6 @@
 package com.github.lecho.mobilization.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.github.lecho.mobilization.R;
+import com.github.lecho.mobilization.async.JsonDownloadService;
 import com.github.lecho.mobilization.ui.fragment.MyAgendaFragment;
 import com.github.lecho.mobilization.ui.fragment.Scrollable;
 import com.github.lecho.mobilization.ui.navigation.BottomNavigationController;
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
             Utils.upgradeSchema(getApplicationContext());
         }
 
+        Intent serviceIntent2 = new Intent(this, JsonDownloadService.class);
+        this.startService(serviceIntent2);
         setUpNavigation(savedInstanceState);
     }
 

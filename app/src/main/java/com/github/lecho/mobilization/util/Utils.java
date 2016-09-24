@@ -22,6 +22,7 @@ import android.widget.ImageView;
 
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.async.DatabaseUpdateService;
+import com.github.lecho.mobilization.async.JsonDownloadService;
 import com.github.lecho.mobilization.realmmodel.RealmFacade;
 import com.github.lecho.mobilization.ui.fragment.SlotConflictDialogFragment;
 import com.github.lecho.mobilization.viewmodel.TalkViewModel;
@@ -55,8 +56,8 @@ public class Utils {
     private static final String TWITTER_WWW = "https://twitter.com/";
     private static final String TWITTER_PACKAGE = "com.twitter.android";
     private static final String TWITTER_URI = "twitter://user?screen_name=";
-    public static final String PREFS_FILE_NAME = "conference-shared-prefs";
-    public static final String PREFS_SCHEMA_VERSION = "schema-version";
+    private static final String PREFS_FILE_NAME = "conference-shared-prefs";
+    private static final String PREFS_SCHEMA_VERSION = "schema-version";
 
     public static final String MAP_IMAGE = "map.jpg";
 
