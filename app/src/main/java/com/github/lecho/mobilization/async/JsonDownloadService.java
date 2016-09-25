@@ -38,20 +38,24 @@ public class JsonDownloadService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        // TODO: 21.09.2016 validate dirs creation
+        Log.d(TAG, "Downloading json data");
+        //// TODO: 25.09.2016 handle exceptions etc
         File assets = new File(getFilesDir(), ASSETS);
-        if(!assets.mkdir()){
-            Log.w(TAG, "Could not create ASSETS folder");
-            return;
+        if (!assets.exists()) {
+            if (!assets.mkdir()) {
+                Log.w(TAG, "Could not create ASSETS folder");
+                return;
+            }
         }
         File json = new File(assets, JSON);
-        if(!json.mkdir()) {
-            Log.w(TAG, "Could not create JSON folder");
-            return;
+        if (!json.exists()) {
+            if (!json.mkdir()) {
+                Log.w(TAG, "Could not create JSON folder");
+                return;
+            }
         }
 
         List<FileDownloadTask> tasks = new ArrayList<>();
-
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         StorageReference jsonRef = firebaseStorage.getReference().child(ASSETS).child(JSON);
 
@@ -91,10 +95,9 @@ public class JsonDownloadService extends IntentService {
             // block until all tasks are completed
             Task task = Tasks.whenAll(tasks);
             Tasks.await(task);
-        } catch (ExecutionException e) {
-            Log.e(TAG, "onHandleIntent ", e);
-        } catch (InterruptedException e) {
-            Log.e(TAG, "onHandleIntent: ", e);
+            Log.d(TAG, "Downloaded json data");
+        } catch (ExecutionException | InterruptedException e) {
+            Log.e(TAG, "Could not download json data: ", e);
         }
     }
 }
