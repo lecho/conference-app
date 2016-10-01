@@ -2,6 +2,7 @@ package com.github.lecho.mobilization.async;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.tasks.Task;
@@ -59,45 +60,30 @@ public class JsonDownloadService extends IntentService {
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         StorageReference jsonRef = firebaseStorage.getReference().child(ASSETS).child(JSON);
 
-        File schedule = new File(json, SCHEDULE_JSON_FILE);
-        StorageReference scheduleRef = jsonRef.child(SCHEDULE_JSON_FILE);
-        tasks.add(scheduleRef.getFile(schedule));
-
-        File event = new File(json, EVENT_JSON_FILE);
-        StorageReference eventRef = jsonRef.child(EVENT_JSON_FILE);
-        tasks.add(eventRef.getFile(event));
-
-        File breaks = new File(json, BREAKS_JSON_FILE);
-        StorageReference breaksRef = jsonRef.child(BREAKS_JSON_FILE);
-        tasks.add(breaksRef.getFile(breaks));
-
-        File slots = new File(json, SLOTS_JSON_FILE);
-        StorageReference slotsRef = jsonRef.child(SLOTS_JSON_FILE);
-        tasks.add(slotsRef.getFile(slots));
-
-        File speakers = new File(json, SPEAKERS_JSON_FILE);
-        StorageReference speakersRef = jsonRef.child(SPEAKERS_JSON_FILE);
-        tasks.add(speakersRef.getFile(speakers));
-
-        File sponsors = new File(json, SPONSORS_JSON_FILE);
-        StorageReference sponsorsRef = jsonRef.child(SPONSORS_JSON_FILE);
-        tasks.add(sponsorsRef.getFile(sponsors));
-
-        File talks = new File(json, TALKS_JSON_FILE);
-        StorageReference talksRef = jsonRef.child(TALKS_JSON_FILE);
-        tasks.add(talksRef.getFile(talks));
-
-        File venues = new File(json, VENUES_JSON_FILE);
-        StorageReference venuesRef = jsonRef.child(VENUES_JSON_FILE);
-        tasks.add(venuesRef.getFile(venues));
+        tasks.add(startDownloadTask(jsonRef, json, SCHEDULE_JSON_FILE));
+        tasks.add(startDownloadTask(jsonRef, json, EVENT_JSON_FILE));
+        tasks.add(startDownloadTask(jsonRef, json, BREAKS_JSON_FILE));
+        tasks.add(startDownloadTask(jsonRef, json, SLOTS_JSON_FILE));
+        tasks.add(startDownloadTask(jsonRef, json, SPEAKERS_JSON_FILE));
+        tasks.add(startDownloadTask(jsonRef, json, SPONSORS_JSON_FILE));
+        tasks.add(startDownloadTask(jsonRef, json, TALKS_JSON_FILE));
+        tasks.add(startDownloadTask(jsonRef, json, VENUES_JSON_FILE));
 
         try {
+            // TODO: 01.10.2016 show notification with progressbar
             // block until all tasks are completed
             Task task = Tasks.whenAll(tasks);
             Tasks.await(task);
-            Log.d(TAG, "Downloaded json data");
+            Log.d(TAG, "Downloaded json data - success!");
         } catch (ExecutionException | InterruptedException e) {
             Log.e(TAG, "Could not download json data: ", e);
         }
+    }
+
+    private FileDownloadTask startDownloadTask(@NonNull StorageReference remoteDir, @NonNull File localDir,
+                                               @NonNull String fileName) {
+        File schedule = new File(localDir, fileName);
+        StorageReference scheduleRef = remoteDir.child(fileName);
+        return scheduleRef.getFile(schedule);
     }
 }
