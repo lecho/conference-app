@@ -2,19 +2,29 @@ package com.github.lecho.mobilization.async;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.github.lecho.mobilization.R;
+import com.github.lecho.mobilization.util.FileUtils;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
+import java.util.Map;
+
+import okhttp3.ResponseBody;
+import retrofit2.Retrofit;
 
 /**
  * Created by Leszek on 2015-09-01.
@@ -22,6 +32,7 @@ import java.util.concurrent.ExecutionException;
 public class JsonDownloadService extends IntentService {
 
     private static final String TAG = JsonDownloadService.class.getSimpleName();
+    private static final int NOTIFICATION_ID = R.drawable.ic_download;
     private static final String ASSETS = "assets";
     private static final String JSON = "json";
     private static final String SCHEDULE_JSON_FILE = "schedule.json";
@@ -32,6 +43,10 @@ public class JsonDownloadService extends IntentService {
     private static final String SPONSORS_JSON_FILE = "sponsors.json";
     private static final String TALKS_JSON_FILE = "talks.json";
     private static final String VENUES_JSON_FILE = "venues.json";
+    private static final String FIREBASE_STORAGE_URL = "https://firebasestorage.googleapis.com";
+
+    private JsonStorage jsonStorage;
+    private Map<String, Uri> urlsMap = new HashMap<>();
 
     public JsonDownloadService() {
         super(TAG);
@@ -40,6 +55,11 @@ public class JsonDownloadService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Log.d(TAG, "Downloading json data");
+        startForeground();
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(FIREBASE_STORAGE_URL).build();
+        jsonStorage = retrofit.create(JsonStorage.class);
+
         //// TODO: 25.09.2016 handle exceptions etc
         File assets = new File(getFilesDir(), ASSETS);
         if (!assets.exists()) {
@@ -56,34 +76,79 @@ public class JsonDownloadService extends IntentService {
             }
         }
 
-        List<FileDownloadTask> tasks = new ArrayList<>();
-        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-        StorageReference jsonRef = firebaseStorage.getReference().child(ASSETS).child(JSON);
-
-        tasks.add(startDownloadTask(jsonRef, json, SCHEDULE_JSON_FILE));
-        tasks.add(startDownloadTask(jsonRef, json, EVENT_JSON_FILE));
-        tasks.add(startDownloadTask(jsonRef, json, BREAKS_JSON_FILE));
-        tasks.add(startDownloadTask(jsonRef, json, SLOTS_JSON_FILE));
-        tasks.add(startDownloadTask(jsonRef, json, SPEAKERS_JSON_FILE));
-        tasks.add(startDownloadTask(jsonRef, json, SPONSORS_JSON_FILE));
-        tasks.add(startDownloadTask(jsonRef, json, TALKS_JSON_FILE));
-        tasks.add(startDownloadTask(jsonRef, json, VENUES_JSON_FILE));
-
         try {
-            // TODO: 01.10.2016 show notification with progressbar
-            // block until all tasks are completed
+            FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+            StorageReference jsonRef = firebaseStorage.getReference().child(ASSETS).child(JSON);
+
+            List<Task<Uri>> tasks = new ArrayList<>();
+            tasks.add(getDownloadUrl(jsonRef, SCHEDULE_JSON_FILE));
+            tasks.add(getDownloadUrl(jsonRef, EVENT_JSON_FILE));
+            tasks.add(getDownloadUrl(jsonRef, BREAKS_JSON_FILE));
+            tasks.add(getDownloadUrl(jsonRef, SLOTS_JSON_FILE));
+            tasks.add(getDownloadUrl(jsonRef, SPEAKERS_JSON_FILE));
+            tasks.add(getDownloadUrl(jsonRef, SPONSORS_JSON_FILE));
+            tasks.add(getDownloadUrl(jsonRef, TALKS_JSON_FILE));
+            tasks.add(getDownloadUrl(jsonRef, VENUES_JSON_FILE));
+
+            //block until all tasks are completed
             Task task = Tasks.whenAll(tasks);
             Tasks.await(task);
-            Log.d(TAG, "Downloaded json data - success!");
-        } catch (ExecutionException | InterruptedException e) {
+
+            //download synchronously
+            boolean result = downloadFile(urlsMap.get(SCHEDULE_JSON_FILE), new File(json, SCHEDULE_JSON_FILE));
+            result &= downloadFile(urlsMap.get(EVENT_JSON_FILE), new File(json, EVENT_JSON_FILE));
+            result &= downloadFile(urlsMap.get(BREAKS_JSON_FILE), new File(json, BREAKS_JSON_FILE));
+            result &= downloadFile(urlsMap.get(SLOTS_JSON_FILE), new File(json, SLOTS_JSON_FILE));
+            result &= downloadFile(urlsMap.get(SPEAKERS_JSON_FILE), new File(json, SPEAKERS_JSON_FILE));
+            result &= downloadFile(urlsMap.get(SPONSORS_JSON_FILE), new File(json, SPONSORS_JSON_FILE));
+            result &= downloadFile(urlsMap.get(TALKS_JSON_FILE), new File(json, TALKS_JSON_FILE));
+            result &= downloadFile(urlsMap.get(VENUES_JSON_FILE), new File(json, VENUES_JSON_FILE));
+
+            if (result) {
+                Log.d(TAG, "Downloaded json data - success!");
+                // TODO: 02.10.2016 start DatabaseUpdateService
+            } else {
+                Log.e(TAG, "Could not download json data");
+            }
+        } catch (Exception e) {
             Log.e(TAG, "Could not download json data: ", e);
         }
     }
 
-    private FileDownloadTask startDownloadTask(@NonNull StorageReference remoteDir, @NonNull File localDir,
-                                               @NonNull String fileName) {
-        File schedule = new File(localDir, fileName);
+    @NonNull
+    private Task<Uri> getDownloadUrl(@NonNull StorageReference remoteDir, @NonNull String fileName) {
         StorageReference scheduleRef = remoteDir.child(fileName);
-        return scheduleRef.getFile(schedule);
+        return scheduleRef.getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Log.d(TAG, "Retrieved file url for file " + fileName + ": " + uri);
+                        urlsMap.put(fileName, uri);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "Could not retrieve uri for file " + fileName, e);
+                    }
+                });
     }
+
+    private boolean downloadFile(Uri uri, @NonNull File destinationFile) throws IOException {
+        if (uri == null) {
+            Log.e(TAG, "Null uri for file " + destinationFile.getName());
+            return false;
+        }
+        Log.d(TAG, "Downloading file: " + uri);
+        ResponseBody body = jsonStorage.getFile(uri.toString()).execute().body();
+        return FileUtils.saveStreamToFile(body.byteStream(), destinationFile);
+    }
+
+    private void startForeground() {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_download)
+                .setContentTitle("Updating agenda")
+                .setContentText("Downloading new agenda data");
+        startForeground(NOTIFICATION_ID, builder.build());
+    }
+
 }
