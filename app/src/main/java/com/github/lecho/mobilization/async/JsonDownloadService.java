@@ -94,6 +94,7 @@ public class JsonDownloadService extends IntentService {
             Task task = Tasks.whenAll(tasks);
             Tasks.await(task);
 
+            // TODO: 04.10.2016 download asyncronously, try to use storageRef.getStream if getFile doesn't work
             //download synchronously
             boolean result = downloadFile(urlsMap.get(SCHEDULE_JSON_FILE), new File(json, SCHEDULE_JSON_FILE));
             result &= downloadFile(urlsMap.get(EVENT_JSON_FILE), new File(json, EVENT_JSON_FILE));
