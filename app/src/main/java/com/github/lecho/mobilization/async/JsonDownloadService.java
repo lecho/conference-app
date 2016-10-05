@@ -107,7 +107,7 @@ public class JsonDownloadService extends IntentService {
 
             if (result) {
                 Log.d(TAG, "Downloaded json data - success!");
-                // TODO: 02.10.2016 start DatabaseUpdateService
+                DatabaseUpdateService.updateFromInternalMemory(getApplicationContext());
             } else {
                 Log.e(TAG, "Could not download json data");
             }

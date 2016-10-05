@@ -27,15 +27,24 @@ public class ApiFacade {
     }
 
     public ApiData parseJsonFilesFromAssets(Context context) {
-        final String jsonFolder = Utils.getJsonFolder();
-        String eventJson = Utils.readFileFromAssets(context, jsonFolder, EVENT_JSON_FILE);
-        String agendaJson = Utils.readFileFromAssets(context, jsonFolder, SCHEDULE_JSON_FILE);
-        String slotJson = Utils.readFileFromAssets(context, jsonFolder, SLOTS_JSON_FILE);
-        String breaksJson = Utils.readFileFromAssets(context, jsonFolder, BREAKS_JSON_FILE);
-        String venuesJson = Utils.readFileFromAssets(context, jsonFolder, VENUES_JSON_FILE);
-        String talkJson = Utils.readFileFromAssets(context, jsonFolder, TALKS_JSON_FILE);
-        String speakersJson = Utils.readFileFromAssets(context, jsonFolder, SPEAKERS_JSON_FILE);
-        String sponsorJson = Utils.readFileFromAssets(context, jsonFolder, SPONSORS_JSON_FILE);
+        final String jsonFolder = Utils.getJsonAssetsFolder();
+        return parseJsonFiles(context, new AssetsJsonFileReader(), jsonFolder);
+    }
+
+    public ApiData parseJsonFromInternalMemory(Context context) {
+        final String jsonFolder = Utils.getJsonInternalMemoryFolder(context);
+        return parseJsonFiles(context, new InternalMemoryJsonFileReader(), jsonFolder);
+    }
+
+    private ApiData parseJsonFiles(Context context, JsonFileReader jsonFileReader, String folderName) {
+        String eventJson = jsonFileReader.readJsonFile(context, folderName, EVENT_JSON_FILE);
+        String agendaJson = jsonFileReader.readJsonFile(context, folderName, SCHEDULE_JSON_FILE);
+        String slotJson = jsonFileReader.readJsonFile(context, folderName, SLOTS_JSON_FILE);
+        String breaksJson = jsonFileReader.readJsonFile(context, folderName, BREAKS_JSON_FILE);
+        String venuesJson = jsonFileReader.readJsonFile(context, folderName, VENUES_JSON_FILE);
+        String talkJson = jsonFileReader.readJsonFile(context, folderName, TALKS_JSON_FILE);
+        String speakersJson = jsonFileReader.readJsonFile(context, folderName, SPEAKERS_JSON_FILE);
+        String sponsorJson = jsonFileReader.readJsonFile(context, folderName, SPONSORS_JSON_FILE);
 
         Map<ApiDtoType, String> jsonsMap = new HashMap<>();
         jsonsMap.put(ApiDtoType.EVENT, eventJson);
@@ -50,7 +59,7 @@ public class ApiFacade {
         return parseJsons(jsonsMap);
     }
 
-    public ApiData parseJsons(Map<ApiDtoType, String> jsonsMap) {
+    private ApiData parseJsons(Map<ApiDtoType, String> jsonsMap) {
         ApiData apiData = new ApiData();
         for (Map.Entry<ApiDtoType, String> entry : jsonsMap.entrySet()) {
             apiData = assignParsedData(apiData, entry.getKey(), entry.getValue());
@@ -86,5 +95,25 @@ public class ApiFacade {
                 break;
         }
         return apiData;
+    }
+
+    private interface JsonFileReader {
+        public String readJsonFile(Context context, String folderName, String fileName);
+    }
+
+    private class AssetsJsonFileReader implements JsonFileReader {
+
+        @Override
+        public String readJsonFile(Context context, String folderName, String fileName) {
+            return Utils.readFileFromAssets(context, folderName, fileName);
+        }
+    }
+
+    private class InternalMemoryJsonFileReader implements JsonFileReader {
+
+        @Override
+        public String readJsonFile(Context context, String folderName, String fileName) {
+            return Utils.readFileFromInternalStorage(context, folderName, fileName);
+        }
     }
 }

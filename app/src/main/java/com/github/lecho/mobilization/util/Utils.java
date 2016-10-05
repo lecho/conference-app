@@ -22,7 +22,6 @@ import android.widget.ImageView;
 
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.async.DatabaseUpdateService;
-import com.github.lecho.mobilization.async.JsonDownloadService;
 import com.github.lecho.mobilization.realmmodel.RealmFacade;
 import com.github.lecho.mobilization.ui.fragment.SlotConflictDialogFragment;
 import com.github.lecho.mobilization.viewmodel.TalkViewModel;
@@ -31,9 +30,12 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import io.realm.Realm;
 
@@ -51,6 +53,8 @@ public class Utils {
     private static final String ASSETS_SPEAKERS_IMAGES = "file:///android_asset/images/speakers/";
     private static final String ASSETS_SPONSORS_IMAGES = "file:///android_asset/images/sponsors/";
     private static final String ASSETS_HEADERS_IMAGES = "file:///android_asset/images/headers/";
+
+    private static final String JSON_FOLDER = "assets/json";
 
     private static final String GOOGLE_MAPS_PACKAGE = "com.google.android.apps.maps";
     private static final String TWITTER_WWW = "https://twitter.com/";
@@ -93,8 +97,7 @@ public class Utils {
     public static void upgradeSchema(Context context) {
         if (Utils.checkIfSchemaUpgradeNeeded(context)) {
             Log.i(TAG, "Upgrading schema");
-            Intent serviceIntent = new Intent(context, DatabaseUpdateService.class);
-            context.startService(serviceIntent);
+            DatabaseUpdateService.updateFromAssets(context);
         }
     }
 
@@ -111,8 +114,12 @@ public class Utils {
         return false;
     }
 
-    public static String getJsonFolder() {
+    public static String getJsonAssetsFolder() {
         return ASSETS_JSON_FOLDER;
+    }
+
+    public static String getJsonInternalMemoryFolder(Context context) {
+        return context.getFilesDir() + File.separator + JSON_FOLDER;
     }
 
     public static void loadSpeakerImageBig(Context context, String fileName, ImageView imageView) {
@@ -266,7 +273,6 @@ public class Utils {
     }
 
     public static String readFileFromAssets(Context context, String folderName, String fileName) {
-        String jsonString = "";
         BufferedInputStream bufferedInputStream = null;
         try {
             File jsonFile = new File(folderName, fileName);
@@ -274,7 +280,7 @@ public class Utils {
             bufferedInputStream = new BufferedInputStream(inputStream);
             byte[] buffer = new byte[bufferedInputStream.available()];
             bufferedInputStream.read(buffer);
-            jsonString = new String(buffer);
+            return new String(buffer);
         } catch (IOException e) {
             Log.e(TAG, "Could not read file from assets", e);
         } finally {
@@ -286,7 +292,33 @@ public class Utils {
                 }
             }
         }
-        return jsonString;
+        return "";
+    }
+
+    public static String readFileFromInternalStorage(Context context, String folderName, String fileName) {
+        BufferedReader bufferedReader = null;
+        try {
+            FileInputStream inputStream = new FileInputStream(new File(folderName, fileName));
+            InputStreamReader reader = new InputStreamReader(inputStream);
+            bufferedReader = new BufferedReader(reader);
+            StringBuilder stringBuilder = new StringBuilder();
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+            return stringBuilder.toString();
+        } catch (IOException e) {
+            Log.e(TAG, "Could not read file from internal memory", e);
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException e) {
+                    Log.e(TAG, "Could not close output stream", e);
+                }
+            }
+        }
+        return "";
     }
 
     public static int dp2px(Context context, int dp) {
