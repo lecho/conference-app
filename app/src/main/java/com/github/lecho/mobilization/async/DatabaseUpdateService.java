@@ -51,6 +51,7 @@ public class DatabaseUpdateService extends IntentService {
                 throw new IllegalArgumentException("Unknown json source " + source.name());
         }
         RealmFacade realmFacade = new RealmFacade();
+        realmFacade.deleteAll();
         realmFacade.saveData(apiData);
     }
 
