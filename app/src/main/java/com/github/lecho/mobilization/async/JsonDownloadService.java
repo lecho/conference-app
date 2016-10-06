@@ -1,6 +1,7 @@
 package com.github.lecho.mobilization.async;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -47,6 +48,11 @@ public class JsonDownloadService extends IntentService {
 
     private JsonStorage jsonStorage;
     private Map<String, Uri> urlsMap = new HashMap<>();
+
+    public static void startDownload(Context context) {
+        Intent serviceIntent = new Intent(context, JsonDownloadService.class);
+        context.startService(serviceIntent);
+    }
 
     public JsonDownloadService() {
         super(TAG);

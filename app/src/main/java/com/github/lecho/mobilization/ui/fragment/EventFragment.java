@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.lecho.mobilization.R;
+import com.github.lecho.mobilization.async.JsonDownloadService;
 import com.github.lecho.mobilization.ui.AboutAppActivity;
 import com.github.lecho.mobilization.ui.SpeakersActivity;
 import com.github.lecho.mobilization.ui.SponsorsActivity;
@@ -37,6 +38,9 @@ public class EventFragment extends Fragment implements Scrollable, LoaderManager
 
     @BindView(R.id.image_map)
     ImageView mapImage;
+
+    @BindView(R.id.button_sync)
+    ImageButton syncButton;
 
     @BindView(R.id.button_map)
     ImageButton mapButton;
@@ -114,6 +118,7 @@ public class EventFragment extends Fragment implements Scrollable, LoaderManager
                 eventPlaceView.setText(event.getPlace());
                 mapButton.setOnClickListener(view -> Utils.launchGMaps(getActivity(), event.latitude, event
                         .longitude, event.getAddress()));
+                syncButton.setOnClickListener(view -> JsonDownloadService.startDownload(getContext().getApplicationContext()));
             }
         }
     }
