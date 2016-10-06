@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.lecho.mobilization.R;
+import com.github.lecho.mobilization.async.JsonDownloadService;
 import com.github.lecho.mobilization.ui.fragment.AboutFragment;
 import com.github.lecho.mobilization.ui.fragment.MyAgendaFragment;
 import com.github.lecho.mobilization.ui.fragment.SpeakersFragment;
@@ -131,6 +132,9 @@ public class NavigationDrawerController implements NavigationController,
         @BindView(R.id.button_map)
         ImageButton mapButton;
 
+        @BindView(R.id.button_sync)
+        ImageButton syncButton;
+
         public NavHeaderController(@NonNull NavigationView navigationView) {
             ButterKnife.bind(this, navigationView.getHeaderView(0));
         }
@@ -140,6 +144,7 @@ public class NavigationDrawerController implements NavigationController,
             eventPlaceView.setText(event.getPlace());
             mapButton.setOnClickListener(view -> Utils.launchGMaps(context, event.latitude, event
                     .longitude, event.getAddress()));
+            syncButton.setOnClickListener(view -> JsonDownloadService.startDownload(context.getApplicationContext()));
         }
 
         public void bindHeaderImage(@NonNull Context context) {
