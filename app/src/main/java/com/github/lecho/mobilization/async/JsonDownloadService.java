@@ -9,11 +9,13 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.github.lecho.mobilization.R;
+import com.github.lecho.mobilization.util.AnalyticsReporter;
 import com.github.lecho.mobilization.util.FileUtils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -63,6 +65,7 @@ public class JsonDownloadService extends IntentService {
         Log.d(TAG, "Downloading json data");
         startForeground();
 
+        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(getApplicationContext());
         Retrofit retrofit = new Retrofit.Builder().baseUrl(FIREBASE_STORAGE_URL).build();
         jsonStorage = retrofit.create(JsonStorage.class);
 
@@ -113,12 +116,15 @@ public class JsonDownloadService extends IntentService {
 
             if (result) {
                 Log.d(TAG, "Downloaded json data - success!");
+                AnalyticsReporter.logJsonDownloaded(firebaseAnalytics, "");
                 DatabaseUpdateService.updateFromInternalMemory(getApplicationContext());
             } else {
                 Log.e(TAG, "Could not download json data");
+                AnalyticsReporter.logJsonDownloadFailed(firebaseAnalytics, "");
             }
         } catch (Exception e) {
             Log.e(TAG, "Could not download json data: ", e);
+            AnalyticsReporter.logJsonDownloadFailed(firebaseAnalytics, "");
         }
     }
 

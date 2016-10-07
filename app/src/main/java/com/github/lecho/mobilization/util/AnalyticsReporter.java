@@ -17,6 +17,8 @@ public class AnalyticsReporter {
     private static final String TYPE_SELECT_TALK = "select_talk";
     private static final String TYPE_SELECT_SLOT = "select_slot";
     private static final String TYPE_SELECT_SPEAKER = "select_speaker";
+    private static final String TYPE_JSON_DATA_DOWNLOADED = "json_downloaded";
+    private static final String TYPE_JSON_DATA_FAILED = "json_data_failed";
 
     public static void logNavigationEvent(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String itemId) {
         logSelectContent(firebaseAnalytics, itemId, TYPE_NAVIGATION);
@@ -53,6 +55,14 @@ public class AnalyticsReporter {
                 .withContentType(contentType)
                 .withItemId(itemId).build();
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+    }
+
+    public static void logJsonDownloaded(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String itemId) {
+        logCustomEvent(firebaseAnalytics, TYPE_JSON_DATA_DOWNLOADED, itemId);
+    }
+
+    public static void logJsonDownloadFailed(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String itemId) {
+        logCustomEvent(firebaseAnalytics, TYPE_JSON_DATA_FAILED, itemId);
     }
 
     private static void logCustomEvent(@NonNull FirebaseAnalytics firebaseAnalytics, @NonNull String eventType,
