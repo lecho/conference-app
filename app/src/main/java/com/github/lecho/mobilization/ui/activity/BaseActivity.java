@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.github.lecho.mobilization.async.JsonDataVersion;
 import com.github.lecho.mobilization.ui.dialog.JsonUpdateDialogFragment;
+import com.github.lecho.mobilization.util.Utils;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -48,7 +49,9 @@ public class BaseActivity extends AppCompatActivity {
             }
             Log.d(TAG, "JsonDataVersion changed to version: " + jsonDataVersion.version);
             // TODO: 08.10.2016 download new data
-            JsonUpdateDialogFragment.show(BaseActivity.this);
+            if(Utils.checkIfJsonUpdateNeeded(getApplicationContext(), jsonDataVersion.version)){
+                JsonUpdateDialogFragment.show(BaseActivity.this);
+            }
         }
 
         @Override

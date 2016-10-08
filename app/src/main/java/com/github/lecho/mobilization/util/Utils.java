@@ -8,14 +8,10 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.DimenRes;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.Pair;
 import android.widget.ImageView;
@@ -48,6 +44,7 @@ public class Utils {
 
     private static final int SMALLEST_WIDTH_DP_FOR_TABLET_LAYOUT = 600;
     private static final int SPAN_COUNT_FOR_TABLET_LAYOUT = 2;
+    private static final int DEFAULT_JSON_DATA_VERSION = 1;
 
     private static final String ASSETS_JSON_FOLDER = "json";
     private static final String ASSETS_SPEAKERS_IMAGES = "file:///android_asset/images/speakers/";
@@ -62,6 +59,7 @@ public class Utils {
     private static final String TWITTER_URI = "twitter://user?screen_name=";
     private static final String PREFS_FILE_NAME = "conference-shared-prefs";
     private static final String PREFS_SCHEMA_VERSION = "schema-version";
+    private static final String PREFS_JSON_DATA_VERSION = "json-data-version";
 
     public static final String MAP_IMAGE = "map.jpg";
 
@@ -85,15 +83,6 @@ public class Utils {
         return PICASSO_CIRCLE_TRANSFORMATION;
     }
 
-    public static RecyclerView.LayoutManager getLayoutManager(Context context) {
-        Configuration configuration = context.getResources().getConfiguration();
-        if (configuration.smallestScreenWidthDp < Utils.SMALLEST_WIDTH_DP_FOR_TABLET_LAYOUT) {
-            return new LinearLayoutManager(context);
-        } else {
-            return new GridLayoutManager(context, SPAN_COUNT_FOR_TABLET_LAYOUT);
-        }
-    }
-
     public static void upgradeSchema(Context context) {
         if (Utils.checkIfSchemaUpgradeNeeded(context)) {
             Log.i(TAG, "Upgrading schema");
@@ -109,6 +98,18 @@ public class Utils {
             SharedPreferences.Editor editor = context.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE)
                     .edit();
             editor.putLong(PREFS_SCHEMA_VERSION, currentSchemaVersion).apply();
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean checkIfJsonUpdateNeeded(Context context, long currentVersion) {
+        final long previousVersion = context.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE).getLong
+                (PREFS_JSON_DATA_VERSION, DEFAULT_JSON_DATA_VERSION);
+        if (previousVersion != currentVersion) {
+            SharedPreferences.Editor editor = context.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE)
+                    .edit();
+            editor.putLong(PREFS_JSON_DATA_VERSION, currentVersion).apply();
             return true;
         }
         return false;
