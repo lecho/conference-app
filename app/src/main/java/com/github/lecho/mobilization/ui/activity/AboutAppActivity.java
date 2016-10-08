@@ -14,7 +14,7 @@ import com.github.lecho.mobilization.ui.fragment.AboutFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AboutAppActivity extends AppCompatActivity {
+public class AboutAppActivity extends BaseActivity {
 
     private static final String TAG = AboutAppActivity.class.getSimpleName();
 

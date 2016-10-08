@@ -22,7 +22,6 @@ import android.widget.TextView;
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.async.TalkAsyncHelper;
 import com.github.lecho.mobilization.ui.loader.TalkLoader;
-import com.github.lecho.mobilization.ui.snackbar.SnackbarForTalkHelper;
 import com.github.lecho.mobilization.ui.view.SpeakerSmallLayout;
 import com.github.lecho.mobilization.util.AnalyticsReporter;
 import com.github.lecho.mobilization.util.Optional;
@@ -35,7 +34,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TalkActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Optional<TalkViewModel>> {
+public class TalkActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Optional<TalkViewModel>> {
 
     private static final String TAG = TalkActivity.class.getSimpleName();
     private static final String ARG_TALK_KEY = "talk-key";
@@ -46,7 +45,6 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
     private HeaderController headerController;
     private DescriptionController descriptionController;
     private SpeakersController speakersController;
-    private SnackbarForTalkHelper snackbarForTalkHelper;
     private TalkViewModel talkViewModel;
     private FirebaseAnalytics firebaseAnalytics;
 
@@ -72,7 +70,6 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
         headerController = new HeaderController(mainContainerView);
         descriptionController = new DescriptionController(mainContainerView);
         speakersController = new SpeakersController(mainContainerView);
-        snackbarForTalkHelper = new SnackbarForTalkHelper(getApplicationContext(), toolbarView);
 
         setSupportActionBar(toolbarView);
         ActionBar actionBar = getSupportActionBar();
@@ -83,18 +80,6 @@ public class TalkActivity extends AppCompatActivity implements LoaderManager.Loa
 
         talkKey = getIntent().getStringExtra(ARG_TALK_KEY);
         getSupportLoaderManager().initLoader(LOADER_ID, null, this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        snackbarForTalkHelper.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        snackbarForTalkHelper.onResume();
     }
 
     @Override

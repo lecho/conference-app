@@ -37,7 +37,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SameSlotActivity extends AppCompatActivity implements LoaderManager
+public class SameSlotActivity extends BaseActivity implements LoaderManager
         .LoaderCallbacks<List<TalkViewModel>> {
 
     public static final String TAG = SameSlotActivity.class.getSimpleName();

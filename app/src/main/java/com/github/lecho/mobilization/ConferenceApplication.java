@@ -2,6 +2,9 @@ package com.github.lecho.mobilization;
 
 import android.app.Application;
 
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Logger;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -25,5 +28,9 @@ public class ConferenceApplication extends Application {
                 .deleteRealmIfMigrationNeeded()
                 .build();
         Realm.setDefaultConfiguration(config);
+
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseDatabase.setPersistenceEnabled(true);
+        firebaseDatabase.setLogLevel(Logger.Level.DEBUG);
     }
 }

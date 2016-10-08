@@ -21,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private NavigationController navigationController;

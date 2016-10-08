@@ -7,7 +7,8 @@ import com.google.firebase.database.IgnoreExtraProperties;
  */
 
 @IgnoreExtraProperties
-public class JsonData {
+public class JsonDataVersion {
 
+    public static final String JSON_NODE = "json_data";
     public long version;
 }
