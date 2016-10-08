@@ -6,7 +6,7 @@
     android:id="@+id/main_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.github.lecho.mobilization.ui.SameSlotActivity">
+    tools:context="com.github.lecho.mobilization.ui.activity.SameSlotActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"

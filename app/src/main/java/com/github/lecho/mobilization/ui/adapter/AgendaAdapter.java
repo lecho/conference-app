@@ -11,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.lecho.mobilization.R;
-import com.github.lecho.mobilization.ui.SameSlotActivity;
-import com.github.lecho.mobilization.ui.TalkActivity;
+import com.github.lecho.mobilization.ui.activity.SameSlotActivity;
+import com.github.lecho.mobilization.ui.activity.TalkActivity;
 import com.github.lecho.mobilization.util.AnalyticsReporter;
 import com.github.lecho.mobilization.viewmodel.AgendaItemViewModel;
 import com.github.lecho.mobilization.viewmodel.SlotViewModel;

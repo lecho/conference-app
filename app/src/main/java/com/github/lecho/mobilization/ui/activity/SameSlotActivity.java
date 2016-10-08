@@ -1,4 +1,4 @@
-package com.github.lecho.mobilization.ui;
+package com.github.lecho.mobilization.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;

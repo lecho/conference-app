@@ -1,21 +1,17 @@
 package com.github.lecho.mobilization.ui.view;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.lecho.mobilization.R;
-import com.github.lecho.mobilization.ui.SpeakerActivity;
 import com.github.lecho.mobilization.util.Utils;
 import com.github.lecho.mobilization.viewmodel.SpeakerViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Displays speaker's name and avatar. Use this class only from code.

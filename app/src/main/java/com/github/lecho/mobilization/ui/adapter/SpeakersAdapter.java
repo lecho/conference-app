@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.lecho.mobilization.R;
-import com.github.lecho.mobilization.ui.SpeakerActivity;
+import com.github.lecho.mobilization.ui.activity.SpeakerActivity;
 import com.github.lecho.mobilization.util.AnalyticsReporter;
 import com.github.lecho.mobilization.util.Utils;
 import com.github.lecho.mobilization.viewmodel.SpeakerViewModel;

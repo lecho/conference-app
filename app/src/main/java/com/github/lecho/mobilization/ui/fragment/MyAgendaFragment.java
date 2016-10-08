@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.async.TalkAsyncHelper;
-import com.github.lecho.mobilization.ui.SameSlotActivity;
 import com.github.lecho.mobilization.ui.adapter.AgendaAdapter;
 import com.github.lecho.mobilization.ui.adapter.MyAgendaAdapter;
 import com.github.lecho.mobilization.ui.loader.AgendaLoader;

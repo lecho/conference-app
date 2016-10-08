@@ -17,9 +17,9 @@ import android.widget.TextView;
 
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.async.JsonDownloadService;
-import com.github.lecho.mobilization.ui.AboutAppActivity;
-import com.github.lecho.mobilization.ui.SpeakersActivity;
-import com.github.lecho.mobilization.ui.SponsorsActivity;
+import com.github.lecho.mobilization.ui.activity.AboutAppActivity;
+import com.github.lecho.mobilization.ui.activity.SpeakersActivity;
+import com.github.lecho.mobilization.ui.activity.SponsorsActivity;
 import com.github.lecho.mobilization.ui.loader.EventViewDataLoader;
 import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.util.Utils;

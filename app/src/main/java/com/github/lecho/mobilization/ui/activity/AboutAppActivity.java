@@ -1,4 +1,4 @@
-package com.github.lecho.mobilization.ui;
+package com.github.lecho.mobilization.ui.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,12 +9,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.github.lecho.mobilization.R;
-import com.github.lecho.mobilization.ui.fragment.SpeakersFragment;
+import com.github.lecho.mobilization.ui.fragment.AboutFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SpeakersActivity extends AppCompatActivity {
+public class AboutAppActivity extends AppCompatActivity {
+
+    private static final String TAG = AboutAppActivity.class.getSimpleName();
 
     @BindView(R.id.toolbar)
     Toolbar toolbarView;
@@ -22,7 +24,7 @@ public class SpeakersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_speakers);
+        setContentView(R.layout.activity_about_app);
         ButterKnife.bind(this);
         setSupportActionBar(toolbarView);
         ActionBar actionBar = getSupportActionBar();
@@ -32,7 +34,7 @@ public class SpeakersActivity extends AppCompatActivity {
         }
 
         if (savedInstanceState == null) {
-            final Fragment fragment = SpeakersFragment.newInstance();
+            final Fragment fragment = AboutFragment.newInstance();
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_container, fragment).commit();
         }
@@ -42,7 +44,7 @@ public class SpeakersActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                supportFinishAfterTransition();
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -1,4 +1,4 @@
-package com.github.lecho.mobilization.ui;
+package com.github.lecho.mobilization.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

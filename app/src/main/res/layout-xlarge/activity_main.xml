@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    tools:context="com.github.lecho.mobilization.ui.MainActivity">
+    tools:context="com.github.lecho.mobilization.ui.activity.MainActivity">
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"
