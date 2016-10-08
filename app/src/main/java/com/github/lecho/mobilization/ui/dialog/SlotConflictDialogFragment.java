@@ -1,4 +1,4 @@
-package com.github.lecho.mobilization.ui.fragment;
+package com.github.lecho.mobilization.ui.dialog;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -68,8 +68,8 @@ public class SlotConflictDialogFragment extends AppCompatDialogFragment {
         return new AlertDialog.Builder(activity)
                 .setView(view)
                 .setTitle(R.string.dialog_slot_conflict_title)
-                .setPositiveButton(R.string.dialog_slot_conflict_button_positive, new PositiveClickListener())
-                .setNegativeButton(R.string.dialog_slot_conflict_button_negative, new NegativeClickListener())
+                .setPositiveButton(R.string.dialog_button_positive, new PositiveClickListener())
+                .setNegativeButton(R.string.dialog_button_negative, new NegativeClickListener())
                 .create();
     }
 

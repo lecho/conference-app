@@ -23,7 +23,7 @@ import android.widget.ImageView;
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.async.DatabaseUpdateService;
 import com.github.lecho.mobilization.realmmodel.RealmFacade;
-import com.github.lecho.mobilization.ui.fragment.SlotConflictDialogFragment;
+import com.github.lecho.mobilization.ui.dialog.SlotConflictDialogFragment;
 import com.github.lecho.mobilization.viewmodel.TalkViewModel;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;

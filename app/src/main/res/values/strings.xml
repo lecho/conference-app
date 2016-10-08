@@ -36,8 +36,12 @@
     <string name="dialog_slot_conflict_title">Slot conflict</string>
     <string name="dialog_slot_conflict_message_part1">"You have another talk in the same slot:"</string>
     <string name="dialog_slot_conflict_message_part2">"Do you want to replace it?"</string>
-    <string name="dialog_slot_conflict_button_positive">Yes</string>
-    <string name="dialog_slot_conflict_button_negative">No</string>
+    <string name="dialog_button_positive">Yes</string>
+    <string name="dialog_button_negative">No</string>
+    <string name="dialog_json_data_update">Agenda update</string>
+    <string name="dialog_json_data_update_message_part1">There is new version of agenda available. Do you want to
+        download update?</string>
+    <string name="dialog_json_data_update_message_part2">Note: this will delete your current agenda:(</string>
     <string name="text_empty_slot">Empty slot - browse sessions…</string>
     <string name="about_author_label">Author</string>
     <string name="about_author_name">Leszek Wach</string>
