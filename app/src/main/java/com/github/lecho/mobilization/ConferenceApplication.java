@@ -2,6 +2,8 @@ package com.github.lecho.mobilization;
 
 import android.app.Application;
 
+import com.github.lecho.mobilization.async.JsonDataVersion;
+import com.github.lecho.mobilization.util.Utils;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Logger;
 
@@ -28,6 +30,9 @@ public class ConferenceApplication extends Application {
                 .deleteRealmIfMigrationNeeded()
                 .build();
         Realm.setDefaultConfiguration(config);
+
+        Utils.saveCurrentJsonDataVersion(getApplicationContext(), JsonDataVersion.DEFAULT_VERSION);
+        Utils.saveNextJsonDataVersion(getApplicationContext(), JsonDataVersion.DEFAULT_VERSION);
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseDatabase.setPersistenceEnabled(true);

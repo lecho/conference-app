@@ -48,8 +48,8 @@ public class BaseActivity extends AppCompatActivity {
                 return;
             }
             Log.d(TAG, "JsonDataVersion changed to version: " + jsonDataVersion.version);
-            // TODO: 08.10.2016 download new data
-            if(Utils.checkIfJsonUpdateNeeded(getApplicationContext(), jsonDataVersion.version)){
+            Utils.saveNextJsonDataVersion(getApplicationContext(), jsonDataVersion.version);
+            if (Utils.checkIfJsonUpdateNeeded(getApplicationContext())) {
                 JsonUpdateDialogFragment.show(BaseActivity.this);
             }
         }

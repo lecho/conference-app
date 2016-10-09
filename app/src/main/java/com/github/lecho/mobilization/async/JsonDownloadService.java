@@ -11,6 +11,7 @@ import android.util.Log;
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.util.AnalyticsReporter;
 import com.github.lecho.mobilization.util.FileUtils;
+import com.github.lecho.mobilization.util.Utils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -118,6 +119,8 @@ public class JsonDownloadService extends IntentService {
                 Log.d(TAG, "Downloaded json data - success!");
                 AnalyticsReporter.logJsonDownloaded(firebaseAnalytics, "");
                 DatabaseUpdateService.updateFromInternalMemory(getApplicationContext());
+                Utils.saveCurrentJsonDataVersion(getApplicationContext(), Utils.getNextJsonDataVersion
+                        (getApplicationContext()));
             } else {
                 Log.e(TAG, "Could not download json data");
                 AnalyticsReporter.logJsonDownloadFailed(firebaseAnalytics, "");

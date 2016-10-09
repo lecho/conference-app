@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.lecho.mobilization.R;
-import com.github.lecho.mobilization.async.JsonDownloadService;
 import com.github.lecho.mobilization.ui.activity.AboutAppActivity;
 import com.github.lecho.mobilization.ui.activity.SpeakersActivity;
 import com.github.lecho.mobilization.ui.activity.SponsorsActivity;
+import com.github.lecho.mobilization.ui.dialog.JsonUpdateDialogFragment;
 import com.github.lecho.mobilization.ui.loader.EventViewDataLoader;
 import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.util.Utils;
@@ -118,7 +119,11 @@ public class EventFragment extends Fragment implements Scrollable, LoaderManager
                 eventPlaceView.setText(event.getPlace());
                 mapButton.setOnClickListener(view -> Utils.launchGMaps(getActivity(), event.latitude, event
                         .longitude, event.getAddress()));
-                syncButton.setOnClickListener(view -> JsonDownloadService.startDownload(getContext().getApplicationContext()));
+                syncButton.setOnClickListener(view -> {
+                    if (Utils.checkIfJsonUpdateNeeded(getActivity().getApplicationContext())) {
+                        JsonUpdateDialogFragment.show((AppCompatActivity) getActivity());
+                    }
+                });
             }
         }
     }

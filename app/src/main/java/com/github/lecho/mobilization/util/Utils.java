@@ -18,6 +18,7 @@ import android.widget.ImageView;
 
 import com.github.lecho.mobilization.R;
 import com.github.lecho.mobilization.async.DatabaseUpdateService;
+import com.github.lecho.mobilization.async.JsonDataVersion;
 import com.github.lecho.mobilization.realmmodel.RealmFacade;
 import com.github.lecho.mobilization.ui.dialog.SlotConflictDialogFragment;
 import com.github.lecho.mobilization.viewmodel.TalkViewModel;
@@ -41,9 +42,6 @@ import io.realm.Realm;
 public class Utils {
 
     private static final String TAG = Utils.class.getSimpleName();
-
-    private static final int SMALLEST_WIDTH_DP_FOR_TABLET_LAYOUT = 600;
-    private static final int SPAN_COUNT_FOR_TABLET_LAYOUT = 2;
     private static final int DEFAULT_JSON_DATA_VERSION = 1;
 
     private static final String ASSETS_JSON_FOLDER = "json";
@@ -59,7 +57,8 @@ public class Utils {
     private static final String TWITTER_URI = "twitter://user?screen_name=";
     private static final String PREFS_FILE_NAME = "conference-shared-prefs";
     private static final String PREFS_SCHEMA_VERSION = "schema-version";
-    private static final String PREFS_JSON_DATA_VERSION = "json-data-version";
+    private static final String PREFS_JSON_DATA_CURRENT_VERSION = "json-data-current-version";
+    private static final String PREFS_JSON_DATA_NEXT_VERSION = "json-data-next-version";
 
     public static final String MAP_IMAGE = "map.jpg";
 
@@ -91,28 +90,48 @@ public class Utils {
     }
 
     private static boolean checkIfSchemaUpgradeNeeded(Context context) {
-        final long previousSchemaVersion = context.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE).getLong
+        final long currentSchemaVersion = context.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE).getLong
                 (PREFS_SCHEMA_VERSION, 0);
-        final long currentSchemaVersion = Realm.getDefaultInstance().getConfiguration().getSchemaVersion();
-        if (currentSchemaVersion != previousSchemaVersion) {
+        final long newSchemaVersion = Realm.getDefaultInstance().getConfiguration().getSchemaVersion();
+        if (currentSchemaVersion < newSchemaVersion) {
             SharedPreferences.Editor editor = context.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE)
                     .edit();
-            editor.putLong(PREFS_SCHEMA_VERSION, currentSchemaVersion).apply();
+            editor.putLong(PREFS_SCHEMA_VERSION, newSchemaVersion).apply();
             return true;
         }
         return false;
     }
 
-    public static boolean checkIfJsonUpdateNeeded(Context context, long currentVersion) {
-        final long previousVersion = context.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE).getLong
-                (PREFS_JSON_DATA_VERSION, DEFAULT_JSON_DATA_VERSION);
-        if (previousVersion != currentVersion) {
-            SharedPreferences.Editor editor = context.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE)
-                    .edit();
-            editor.putLong(PREFS_JSON_DATA_VERSION, currentVersion).apply();
-            return true;
+    public static boolean checkIfJsonUpdateNeeded(Context context) {
+        final long currentVersion = getCurrentJsonDataVersion(context);
+        final long nextVersion = getNextJsonDataVersion(context);
+        return currentVersion < nextVersion;
+    }
+
+    public static void saveCurrentJsonDataVersion(Context context, long currentVersion) {
+        if(currentVersion < JsonDataVersion.DEFAULT_VERSION){
+            return;
         }
-        return false;
+        SharedPreferences.Editor editor = context.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE).edit();
+        editor.putLong(PREFS_JSON_DATA_CURRENT_VERSION, currentVersion).apply();
+    }
+
+    public static long getCurrentJsonDataVersion(Context context) {
+        return context.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE).getLong
+                (PREFS_JSON_DATA_CURRENT_VERSION, DEFAULT_JSON_DATA_VERSION);
+    }
+
+    public static void saveNextJsonDataVersion(Context context, long nextVersion) {
+        if(nextVersion < JsonDataVersion.DEFAULT_VERSION){
+            return;
+        }
+        SharedPreferences.Editor editor = context.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE).edit();
+        editor.putLong(PREFS_JSON_DATA_NEXT_VERSION, nextVersion).apply();
+    }
+
+    public static long getNextJsonDataVersion(Context context) {
+        return context.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE).getLong
+                (PREFS_JSON_DATA_NEXT_VERSION, DEFAULT_JSON_DATA_VERSION);
     }
 
     public static String getJsonAssetsFolder() {

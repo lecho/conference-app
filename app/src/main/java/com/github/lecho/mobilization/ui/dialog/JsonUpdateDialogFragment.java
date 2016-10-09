@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatDialogFragment;
 import android.view.View;
 
 import com.github.lecho.mobilization.R;
+import com.github.lecho.mobilization.async.JsonDownloadService;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 /**
@@ -57,7 +58,7 @@ public class JsonUpdateDialogFragment extends AppCompatDialogFragment {
 
         @Override
         public void onClick(DialogInterface dialog, int which) {
-            // TODO: 08.10.2016 trigger json download
+            JsonDownloadService.startDownload(getContext().getApplicationContext());
         }
     }
 
