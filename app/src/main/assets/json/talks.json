@@ -1,227 +1,270 @@
 {
-	"talk-clean-architecture": {
-		"title": "Przejrzysty i testowalny kod na Androidzie? Spróbujmy z Clean Architecture",
-		"description_html": "Pisanie dobrego oprogramowania na platformę Android jest trudnym zadaniem. Jednym z dużych problemów, zwłaszcza w przypadku sporych aplikacji, może być podział logiki aplikacji tak, aby nasze Activity czy Fragmenty nie były nią przeładowane oraz aplikacja była podatna na testowanie jednostkowe. Szukając pomysłu na architekturę aplikacji, która będzie dobrze się skalowała wraz z rozwojem projektu, natknąłem się na Clean Architecture zaproponowaną przez Boba C. Martina. Podczas prezentacji zobaczymy czy i jak CA sprawdza się w przypadku aplikacji mobilnych na Androida i na co pozwala jej zastosowanie. Oczywiście nie pominiemy takich kluczowych kwestii jak pogodzenie tego wszystkiego z wszechobecną na Androidzie asynchronicznością.",
-		"speakers_keys": ["speaker-michal-charmas"],
-		"language": "PL"
+	"talk-modularizing-your-apps-framework-oriented-programming": {
+		"title": "Modularizing your apps: Framework Oriented Programming",
+		"description_html": "Have you ever tried to reuse code from your mobile apps and you haven't been able to? Did you start using frameworks only when Apple suggested it for Watch Extensions? With more platforms coming out, there's a clear need of bundling logic that can be reused and shared in multiple platforms. Frameworks will help us with that and will benefit our application code bases in many ways. Learn how to do it, with or without dependency manager involved, recommendations and some caveats you must keep in mind. Start building your own Foundation frameworks, reusable, well designed, and with single responsibilities.",
+		"speakers_keys": [
+			"speaker-pedro-buendia"
+		],
+		"language": "EN"
 	},
-	"talk-swift-and-objective-c-interoperability": {
-		"title": "Swift and Objective-C interoperability",
+	"talk-reactive-programming-for-ios-with-interstellar-2": {
+		"title": "Reactive Programming for iOS with Interstellar 2",
 		"description_html": "Have a look at how to make Swift and Objective-C interoperability seamless. Basics of including Swift code in your new or existing Objective-C based projects and helping yourself when you want to deliver some parts of Swift-based application using Objective-C code.",
-		"speakers_keys": ["speaker-tomasz-grynfelder"],
+		"speakers_keys": [
+			"speaker-jens-ravens"
+		],
 		"language": "EN"
 	},
-	"talk-espressive-functional-testing-with-espresso": {
-		"title": "Espressive functional testing with Espresso",
-		"description_html": "Testing mobile apps is not easy. If you wanted to test \"Hello World\" app with a button and text label, that wouldn't be really hard. But our apps do a lot more. They are calling RESTful services, checking on user's GPS location or using Facebook or Google+ login buttons, which connect to network themselves. How do you test that? I want to show you my approach to functional testing with Espresso and a bit of dependency inversion magic. Do you have a feeling testing network error conditions is hard or cumbersome when done manually. Turns out it's even easier to automatically test it than \"the happy path\". You will see real code from production app, so remember to drink a shot of espresso before joining this session.",
-		"speakers_keys": ["speaker-maciej-gorski"],
+	"talk-taming-node-modules-at-facebook": {
+		"title": "Taming node_modules at Facebook",
+		"description_html": "Managing Node.js dependencies is a common problem for anyone who does JavaScript development these days. Should you check in node_modules into github or should you rely on shrinkwrap.json? The path of taming node_modules is long for Facebook Engineering, I will talk about a solution that satisfied multiple parties: source control team, engineers who manage dependencies, security team and app developers.",
+		"speakers_keys": [
+			"speaker-konstantin-raev"
+		],
 		"language": "EN"
 	},
-	"talk-kotlin-for-android": {
-		"title": "Kotlin for Android",
-		"description_html": "Wprowadzenie do Kotlina na Androida. Omówienie składni języka oraz jego kluczowych aspektów umożliwiających znacznie szybsze pisanie aplikacji na platformę Android. Porównanie Kotlina z alternatywnymi językami JVM. Zakończone sesją Q&A.",
-		"speakers_keys": ["speaker-pawel-gajda"],
-		"language": "PL"
-	},
-	"talk-reaktywne-programowanie-z-rxjava": {
-		"title": "Reaktywne programowanie z RxJava",
-		"description_html": "Programowanie reaktywne jako lekarstwo na ból głowy związany z kodem asynchronicznym. W czasie mojej prezentacji przedstawię fundamentalne idee stojące za tym paradygmatem oraz zademonstruję od podstaw jak tworzyć reaktywne rozwiązania. Wszystko to na przykładzie biblioteki RxJava na platformie Android.",
-		"speakers_keys": ["speaker-piotr-krystyniak"],
-		"language": "PL"
-	},
-	"talk-hipster-oriented-programming": {
-		"title": "Hipster Oriented Programming",
-		"description_html": "Not sure if you should order a burrito or a monad for lunch? Get a quick overview of Object Oriented, Functional and Protocol Oriented programming in Swift 2 and learn what all that fuss is about and why you should care.",
-		"speakers_keys": ["speaker-jens-ravens"],
+	"talk-the-2016-android-developer-toolbox": {
+		"title": "The 2016 Android Developer Toolbox",
+		"description_html": "Whether your native Android app is a pet project or has millions of users, you probably need the right tools, during the development, to help you modify persisted data in real time, simulate an slow/unstable HTTP(s) connection, detect bugs as fast as possible, or create mock servers to anticipate the development of a feature. We'll make a demonstration of all the tools we use, in 2016, to write maintainable code and improve our productivity.",
+		"speakers_keys": [
+			"speaker-gautier-mechling"
+		],
 		"language": "EN"
 	},
-	"talk-behavior-driven-development": {
-		"title": "Behavior Driven Development",
-		"description_html": "Building apps is hard. But making sure that apps don't break in the process of adding new functionality is even harder. Your code is constantly changing. If you're lucky your requirements aren't changing that much, but you probably live in the world of constant change. And that change poses a certain risk. Things sometimes might go missing. Pieces of code, pieces of behavior that should be there. But are not. In this talk you'll learn how you can avoid falling into this trap by leveraging behavior driven development. You'll find out how to write tests for iOS and what technologies you can use to keep your code safe and sound. ",
-		"speakers_keys": ["speaker-pawel-dudek"],
+	"talk-break-the-monolith-with-b-viper-modules": {
+		"title": "Break the monolith with (B)VIPER Modules. Or how do I start modularising my code for a better (engineering) life.",
+		"description_html": "In the software engineering business there is no one fits all solution but when design patterns arise in the community it is important to understand the reasons why they were originated and how to tweak them for our purposes. This talk will explore the VIPER design with top-down approach, deriving the design decisions from quality attributes of a software system including modularity, reusability, testability, single responsibility and more. You will learn the reasons why the design was initially conceived (Clean Architecture by Uncle Bob) then formalised for mobile (by Mutual Mobile) and how to revise it to fit your purposes. Eventually a modified version of the design, friendly called (B)VIPER, will be discussed as improvement for better reuse of modules among different teams.",
+		"speakers_keys": [
+			"speaker-nicola-zaghini"
+		],
 		"language": "EN"
 	},
-	"talk-dagger-2-dependency-injection-w-kodzie-produkcyjnym": {
-		"title": "Dagger 2 - Dependency Injection w kodzie produkcyjnym",
-		"description_html": "Dagger 2 to pierwszy framework do Dependency Injection, który można uznać za Android friendly. Nie korzysta z refleksji, jest tak szybki jak ręcznie pisany kod, nie wymaga dodatkowej konfiguracji Proguarda. W związku z tym, że wartość Dependency Injection wzrasta wraz ze złożonością projektu, na prezentacji pokazane zostaną przykłady użycia Daggera w kodzie produkcyjnym. Zobaczymy co dają nam Scope'y, jak Dagger 2 pomaga w różnych typach testów, jak unikać wycieków pamięci oraz jak Dagger 2 pomaga w pracy zespołowej.",
-		"speakers_keys": ["speaker-miroslaw-stanek"],
-		"language": "PL"
-	},
-	"talk-watch-out-for-the-watch": {
-		"title": "Watch out for the watch",
-		"description_html": "Apple Watch might be the most polarising, controversial and innovative product added to Apple's portfolio in the last few years. Let's take a brief look to see if it's worth it, and first and foremost how to bring our apps to people's wrists.",
-		"speakers_keys": ["speaker-peter-tuszynski"],
+	"talk-green-dao-3-and-beyond": {
+		"title": "greenDAO 3 and beyond",
+		"description_html": "greenDAO is the fastest ORM for Android. greenDAO 3 brings annotations and prepares the way for further enhancements like RX support. The author of greenDAO gives deep insights about how to best use ORM to make app development productive and fun.",
+		"speakers_keys": [
+			"speaker-markus-junginger"
+		],
 		"language": "EN"
 	},
-	"talk-app-indexing-i-deep-linking-w-aplikacjach-androidowych": {
-		"title": "App Indexing i Deep linking w aplikacjach Androidowych",
-		"description_html": "Podczas prelekcji dowiesz się w jaki sposób wzbogacić aplikację o wsparcie dla App Indexingu, pozwoli to zwiększyć zaangażowanie obecnych użytkowników oraz przyciągnąć nowych. Zobaczysz na jakie problemy można natknąć się podczas implementacji, jak można sobie z nimi poradzić, a także poznasz kilka sztuczek ułatwiających wdrożenie App Indexingu.",
-		"speakers_keys": ["speaker-krzysztof-kocel"],
-		"language": "PL"
-	},
-	"talk-qtquick-spotyka-html": {
-		"title": "QtQuick spotyka HTML",
-		"description_html": "Celem prezentacji jest pokazanie w jaki sposób połączyć ze sobą dwa światy -- oferowany przez Qt wydajny i prosty w użyciu mechanizm QtQuick/QML oraz niezwykle popularny HTML. Zademonstrowane zostanie, jak osadzić w scenie QtQuickowej treść HTML i jak komunikować ze sobą skrypt QML i JavaScript na stronie.",
-		"speakers_keys": ["speaker-witold-wysota"],
-		"language": "PL"
-	},
-	"talk-dobry-zwyczaj-nie-odziedziczaj": {
-		"title": "Dobry zwyczaj: nie odziedziczaj",
-		"description_html": "Swift zainspirował środowisko programistów OSX/iOS do poszukiwań w miejscach, w które się dotąd nie zapuszczali. Na przykład w rejony programowania funkcyjnego. My też się tam wybierzemy, żeby przejrzeć kilka prostych koncepcji i technik gotowych do natychmiastowego wykorzystania w aplikacjach mobilnych. W podróż zabierze nas rollercoster emocji: radość na widok znajomych problemów, przed którymi programowanie funkcyjne nas chroni, oraz smutek na widok nowych, które wprowadza.",
-		"speakers_keys": ["speaker-krzysztof-siejkowski"],
-		"language": "PL"
-	},
-	"talk-reactive-ui-on-adroid-with-scala": {
-		"title": "Reactive UI on Android with Scala",
-		"description_html": "Reactive programming can bring many benefits to mobile application development, especially when implementing UI. User interfaces developed this way are naturally responsive and code tends to be much more concise, which leads to easier development and less bugs. Reactive Extensions is became quite popular among Android developers recently, unfortunately creating UI with this library tends to be very unnatural, partially due to Java language limitations. Using Scala and techniques borrowed from Functional Reactive Programming we can achieve much better results. This talk is not going to be about Scala itself, nor about using Scala on Android. This talk is going to show how we can use Scala to implement UI in reactive fashion, achieving better results, with less code. There will be quite a lot of Scala code, but it should be accessible for Java developers.",
-		"speakers_keys": ["speaker-zbigniew-szymanski"],
+	"talk-bonjour-android-it-is-zeroconf": {
+		"title": "Bonjour Android, it's ZeroConf",
+		"description_html": "ZeroConf is a protocol that helps us advertising a service or discovering the available services in our networks. This is how Chromecast works, but why don't we go deeper? We will dive into the definition of ZeroConf and why the protocol is needed, how it works and what libraries will help us implementing it on Android.",
+		"speakers_keys": [
+			"speaker-roberto-orgiu"
+		],
 		"language": "EN"
 	},
-	"talk-ionic-io-services-for-hybrid-mobile-applications": {
-		"title": "ionic.io - services for hybrid mobile applications",
-		"description_html": "ionic.io - usługi dla hybrydowych aplikacji mobilnych W prezentacji przedstawię możliwości platformy ionic.io oraz ich wykorzystanie w hybrydowej aplikacji mobilnej. Podzielę się także nowościami ze świata Ionic i powiem parę słów o inicjatywie Ionic Poland. ionic.io - services for hybrid mobile applications In the presentation I will introduce service of the ionic.io platform and show how to use it in hybrid mobile applications. I'm going to share news from the ionic world and introduce Ionic Poland.",
-		"speakers_keys": ["speaker-lukasz-olejarczuk"],
-		"language": "PL"
-	},
-	"talk-angular-js-i-cordova-tworzenie-hybrydowych-aplikacji-mobilnych": {
-		"title": "AngularJS i Cordova - tworzenie hybrydowych aplikacji mobilnych",
-		"description_html": "Prelekcja dotycząca programowania urządzeń mobilnych z wykorzystaniem AngularJS na systemy iOS, Android i Windows Phone z wykorzystaniem Cordova / Phonegap. Poruszone będą następujące tematy: wstęp do tworzenia hybrydowych aplikacji mobilnych, wykorzystanie AngularJS w budowie aplikacji webowych, zwiększanie wydajności aplikacji hybrydowych, zalecane narzędzia i biblioteki, typowe i nietypowe pułapki i sposoby ich rozwiązywania. Na koniec wystąpienia przewidziana dyskusja z uczestnikami.",
-		"speakers_keys": ["speaker-krzysztof-scira"],
-		"language": "PL"
-	},
-	"talk-titanium-develop-native-mobile-apps-with-javascript": {
-		"title": "Titanium: Develop Native Mobile Apps with JavaScript",
-		"description_html": "Forget about the whole Mobile Web versus Native Apps debate; if you already (truly) know JavaScript then you can use those Web skills to create Native Apps! Titanium is a cross-platform proxy between JavaScript and the iOS, Android and Windows Native API's. Unlike some other solutions this allows you not only to access potentially any system API like that for Geolocation, but also use Native UI Components to build truly Native Interfaces. You wil be introduced to Titanium and see how easy it is to get started via actual code samples and live cross-platform demos. Bring your JavaScript skills and you will leave this presentation as a Native Mobile App Developer!",
-		"speakers_keys": ["speaker-fokke-zandbergen"],
+	"talk-functional-on-android-lambdas-rx-and-streams-in-your-app": {
+		"title": "Functional on Android: lambdas, Rx and streams in your app",
+		"description_html": "On Android, more and more developers are attracted to the functional programming-style concept of declarative data manipulation using lambdas. Java 8 has a new steams API, but it's limited to Android N. Backports exist, but it's RxJava that's all the rage, with its elegant threading solution. How do we use lambdas, streams and Rx effectively on Android? Orientation changes and background tasks? I propose to stop worrying about the lifecycle and cache your way into a blissful user experience.",
+		"speakers_keys": [
+			"speaker-eric-kok"
+		],
 		"language": "EN"
 	},
-	"talk-modern-ios-app-architecture": {
-		"title": "Modern iOS App Architecture",
-		"description_html": "Programowanie aplikacji na iOS zmieniają się z roku na roku wraz z rozwojem języka Objective-C, wprowadzenia nowego języka Swift jak i niezliczonych ulepszeń bibliotek wchodzących w skład iOS SDK. Prezentacja pokaże najlepsze praktyki jakie współczesne aplikacje powinny wykorzystywać.",
-		"speakers_keys": ["speaker-michal-tuszynski"],
-		"language": "PL"
-	},
-	"talk-what-s-in-it-for-us-after-the-indiepocalipse": {
-		"title": "What’s in it for us after the Indiepocalipse?",
-		"description_html": "We’re an indie iOS studi of two. We released our first iPhone app for iOS 3.1 and we kept putting out small fun apps for the next five years. Times were good and we thought it’s always gonna be like this in the App Store. Apple isn’t into indies anymore and the App Store is a slaughterhouse. Tons of developers are in a kind of limbo - why is this happening and what to do after the Indiepocalipse is over? What is the next logical step - try harder on the App Store, pivot, change platforms? But now that the Indiepocalipse is upon us. Or is it?",
-		"speakers_keys": ["speaker-marin-todorov"],
+	"talk-appium-automation-for-apps": {
+		"title": "Appium: Automation for Apps",
+		"description_html": "Basic introduction to automating mobile apps with Appium.",
+		"speakers_keys": [
+			"speaker-dan-cuellar"
+		],
 		"language": "EN"
 	},
-	"talk-developing-software-for-dedicated-devices-using-agile": {
-		"title": "Developing Software for Dedicated Devices using Agile",
-		"description_html": "Agile methodologies like SCRUM, DaD and SAFe help us to effectively develop software products. But when developing software for dedicated devices for the consumer market such as navigation devices, watches and multimedia systems you need some adaptation to make it work. I’ll guide you through the world of software engineering using the principles of the SAFe framework (with some adaptations), starting from running Android on your device till having a final product in she shops. And of course some do’s – don’ts, tools that you could use and much more.",
-		"speakers_keys": ["speaker-edwin-adriaansen"],
+	"talk-interacting-with-your-app-through-command-line": {
+		"title": "Interacting with your app through command line",
+		"description_html": "Android command line is a very powerful tool. During this talk, we'll briefly review what Android shell commands can be useful for development, testing, and automation. We'll concentrate on how your application can interact with the command line considering 2 approaches. The first one is based on Android framework tools and the second is the core of Facebook Stetho tool.",
+		"speakers_keys": [
+			"speaker-roman-mazur"
+		],
 		"language": "EN"
 	},
-	"talk-dont-reinvent-the-wheel-use-libraries-modern-android-stack": {
-		"title": "Don't reinvent the wheel, use libraries: Modern Android Stack",
-		"description_html": "Use of libraries gives you speed and smaller error rate than writing everything by yourself. In this talk you gonna learn about how to use modern libraries that make your developer life easier. From Timber through Picasso, ButterKnife to RoboSpice, Dagger2 and few other libs you gonna learn about modern approach to build Android apps that make your customers happy.",
-		"speakers_keys": ["speaker-pawel-junak"],
+	"talk-how-jrebel-for-android-does-performance-testing": {
+		"title": "How JRebel for Android Does Performance Testing",
+		"description_html": "As developers we often employ unit- and integration testing to catch bugs early during development. But how to detect regressions in performance? Sometimes a small slowdown can go unnoticed for weeks or months until the app becomes unbearably slow and a profiler gets attached. In this talk, we'll take an in-the-trenches look at how we set up a performance testing suite for JRebel for Android. We'll talk about challenges we faced when running the tests on our CI servers. We'll also cover how we pinpoint regressions to a single commit with the help of Elasticsearch and Kibana.",
+		"speakers_keys": [
+			"speaker-madis-pink"
+		],
 		"language": "EN"
 	},
-	"talk-unit-testy-w-androidzie-z-uzyciem-biblioteki-spock": {
-		"title": "Unit Testy w Androidzie z użyciem biblioteki Spock",
-		"description_html": "Chciałbym pokazać jak w łatwy, prosty i przyjemny sposób można pisać Unit Testy na platformę Android z użyciem biblioteki Spock. Mój wykład pokazuję w jaki sposób konfigurować a potem tworzyć test w groovy-m dla Androidowego projektu.",
-		"speakers_keys": ["speaker-konrad-krakowiak"],
-		"language": "PL"
-	},
-	"talk-android-data-binding-nie-tylko-w-teorii": {
-		"title": "Android Data Binding nie tylko w teorii",
-		"description_html": "Data Binding na Androidzie - zalety, wady, przykłady użycia. Demonstracja biblioteki ułatwiającej (u)życie.",
-		"speakers_keys": ["speaker-sebastian-kacprzak"],
-		"language": "PL"
-	},
-	"talk-xamarin-dla-nie-tylko-deweloperow-androida": {
-		"title": "Xamarin dla (nie tylko) deweloperów Androida",
-		"description_html": "W ramach moich przygotowań do warsztatu o Xamarinie na codepot.pl 2015 powstała prezentacja o tym czym właściwie ta platforma jest. Często, mylnie, mówi się że Xamarin to kolejna hybrydowa technologia, zupełnie jak, fuj, cordova.W ramach prezentacji dowiemy się:<br/>- co to właściwie jest Xamarin<br/>- czy to druga, równie kiepska, technologia co Cordova<br/>- co właściwie jest natywne (platform-specific) a co można współdzielić między projektami<br/>- jakie natywne komponenty są dostępne (UIKit dla iOS, RecycleView czy Support Library dla Androida)<br/>- czy to jest wreszcie to rozwiąznie gdzie piszemy raz a działa wszędzieBędę szczęśliwy jeśli w czasie prezentacji iOS-owcy pomyślą sobie \"o fajnie, normalnie mam tam UIKit i moge nawet pisać kawałki w Objective-C\", a Androidowcy westchną \"o super, jest wspierana najnowsza wersja Support Library, już tydzień po wydaniu\".",
-		"speakers_keys": ["speaker-aleksander-piotrowski"],
-		"language": "PL"
-	},
-	"talk-material-design-with-android-design-library": {
-		"title": "Material design with Android Design Library",
-		"description_html": "At Google I/O 2015 the Material Design Support Library was announced, and with it creating material apps suddenly got a lot easier. With a little help from the new Android Design Support Library, we are getting a number of important material design components to all developers and to all Android 2.1 or higher devices. In this talk I will show most important components of design library from developer point of view. I will show how to start and what may be unintuitive in the begining.",
-		"speakers_keys": ["speaker-karol-kowalski"],
-		"language": "PL"
-	},
-	"talk-optymalizacja-hierarchii-widokow-na-platformie-android": {
-		"title": "Optymalizacja hierarchii widoków na platformie Android",
-		"description_html": "Optymalizacja hierarchii widoków na przykładzie aplikacji \"Stereoscopic Image Calculator\". Zrozumienie sposobu renderowania widoków jako podstawa do opracowywania wydajnych aplikacji na platformę Android. Agenda prezentacji: <ol><li>Motywacja (aplikacja \"Stereoscopic Image Calculator\", która na poszczególnych ekranach wyświetlała bardzo dużo danych)</li> <li>Szczegóły techniczne dotyczące renderowania widoków: Co się dzieje, jeżeli zostanie wywołana metoda \"requestLayout()\"?<br/>Jakie kluczowe metody i w którym momencie są wywoływane podczas renderowania widoków na ekranie? Na co zwracać szczególną uwagę przy tworzeniu widoków?</li> <li>Pisanie własnych \"ViewGroup\"</li> <li>Narzędzie \"HierarchyViewer\"</li> <li>Pomiary i wnioski</li></ol>",
-		"speakers_keys": ["speaker-michal-wlodarczyk"],
-		"language": "PL"
-	},
-	"talk-potrzeby-biznesowe-a-technologia-w-mobdev-na-przykladzie-seqr": {
-		"title": "Biznes a technologia w mobdev SEQR case study",
-		"description_html": "Specjaliści z dziedziny rozwoju produktu, użyteczności i technologii opowiedzą:- W jaki sposób warto planować rozwój ekosystemu usług płatniczych w sytuacji, gdy potrzeba jak najszybciej adaptować się do zmieniającego się rynku, potrzeb użytkowników i działań konkurencji.<br/>- Jak skalujemy SCRUM by dobrze koordynować pracę wielu zespołów.<br/>- Dlaczego stawiamy na jak najszybsze zmiany (i ewentualne niepowodzenia) i jak się to nam udaje.<br/>- Dotychczasowa implementacja Lean Startup - doświadczone pętle zwrotne między strategią biznesową, UX, a zastosowaną technologią.<br/>- Dlaczego User Experience jest tak ważny - jaką wartość biznesową daje w przypadku SEQR.",
-		"speakers_keys": ["speaker-daniel-rurarz",
-		"speaker-lukasz-szadkowski",
-		"speaker-michal-majcherski"],
-		"language": "PL"
-	},
-	"talk-czy-nastala-era-continuous-everything": {
-		"title": "Czy nastała era \"continuous everything\"? Przewodnik po bezustannym procesie tworzenia aplikacji mobilnych na przykładzie Matrix42 Mobile [case study]",
-		"description_html": "Przedstawienie idei medotologii \"continiuous\", skupiając się na aspektach: integration, development, delivery, testing i wszystich pozostałych, wykorzystywanych w tworzeniu aplikacji mobilnych na przykładzie Matrix42 Mobile, wdrażanej na platformy Android oraz iOS. Kilka słów wprowadzających w połączeniu z przykładami wykorzystania w procesie developmentu - przybliżenie narzędzi oraz sposobu ich wykorzystania w codziennej pracy. Dodatkowo kilka zdań na tematy pokrewne niezwykle ważne dla użytkownika końcowego, czyli \"BYOD - Private Devices, Company Content\" oraz \"Mobile Management\".Link <a href='https://play.google.com/store/apps/details?id=com.matrix42.m42mobileLink'>Android</a>,<a href='https://itunes.apple.com/pl/app/m42mobile/id430536897?mt=8'>iOS</a>",
-		"speakers_keys": ["speaker-pawel-wojdera"],
-		"language": "PL"
-	},
-	"talk-html5-goes-for-a-ride-czyli-wyzwania-dla-technologii-webowych-w-przemysle-automotive": {
-		"title": "HTML5 goes for a ride - Czyli wyzwania dla technologii webowych w przemyśle automotive",
-		"description_html": "Biorąc pod uwagę fakt, że samochody należą do konstrukcji dość mobilnych było jedynie kwestią czasu kiedy trafi tam HTML5. Tradycyjne środowisko tej technologii dawno przestało przestało być jedynym.Jak jednak wygląda tworzenie aplikacji typu IVI (In-vehicle infotainment)? Czym ekran w aucie różni się od tabletu?Opowiem o wyzwaniach jakie stawia przed HTML5 rynek automotive oraz innych doświadczeniach specyficznych dla tej platformy. W części praktycznej zaprezentuje różnice w działaniu demonstracyjnej aplikacji, na zbliżonym do docelowego sprzęcie, w porównaniu z urządzeniami mobilnymi i PC.",
-		"speakers_keys": ["speaker-lena-rodziewicz"],
-		"language": "PL"
-	},
-	"talk-hacking-bluetooth-smart": {
-		"title": "Hacking Bluetooth Smart",
-		"description_html": "Rozłożymy na czynniki pierwsze bezpieczeństwo jednej z najpopularniejszych, a zarazem najbliższej aplikacjom mobilnym technologii związanej z Internet of Things: Bluetooth Smart. Jak zwykle z pomocą niezawodnej publiczności Mobilization, na rzeczywistych przykładach krok po kroku wspólnie zaatakujemy kolejne urządzenia: m.in. beacony, opaskę sportową, samochód. Analizując warunki i skutki ataków ustalimy wpływ na ryzyko konkretnych podatności, i zastanowimy się w jakich przypadkach bezpieczeństwo będzie naprawdę istotne. Uczestnicy wyniosą spojrzenie intruza na nową technologię oraz jej ograniczenia, co pozwoli projektować bezpieczniejsze rozwiązania.",
-		"speakers_keys": ["speaker-slawomir-jasek"],
-		"language": "PL"
-	},
-	"talk-hunt-me-od-kuchni-jak-powstal-innowacyjny-sposob-na-szukanie-pracy": {
-		"title": "Hunt Me od kuchni - jak powstał innowacyjny sposób na szukanie pracy",
-		"description_html": "Podczas prelekcji opowiemy jak powstał projekt angażujący 3 niezależne zespoły developerskie.Tematami na których się skupimy będzie organizacja pracy nad aplikacją powstającą w 3 różnych miejscach i z wykorzystaniem 3 różnych platform, oraz część wspólna dla wszystkich obsługiwanych platform, czyli API po stronie serwera. Przy jego tworzeniu z powodzeniem integrowaliśmy różnorodne technologie (WebAPI, OAuth), korzystaliśmy z istniejących bibliotek zewnętrznych (Ninject, EF) i stworzonych w Grupie Pracuj (GP.Juno, EndpointSwitcher). Opowiemy też o tym co niewidoczne - czyli architekturze, WebAPI jako rozbudowanym proxy i funkcjonowaniu na w rozproszonym środowisku. Zapraszamy!",
-		"speakers_keys": ["speaker-maciej-chwiloc",
-		"speaker-cezary-kapicki"],
-		"language": "PL"
-	},
-	"talk-android-auto": {
-		"title": "Android Auto",
-		"description_html": "Aplikacja Android Auto stworzona została, aby umożliwić dostęp do głównych funkcji smartphona przy zachowaniu maksimum bezpieczeństwa w trakcie jazdy. Kontrolowanie nawigacji, odtwarzacza audio, telefonu i wiadomości bezpośrednio z wbudowanego ekranu przy użyciu głosu i przycisków na kierownicy pozwala skupić się na drodze i zminimalizować niebezpieczeństwo związane z obsługą smartphona.Podczas prezentacji pokażemy działającą implementację Android Auto wraz z krótkim omówieniem funkcjonalności, a także przeprowadzimy Państwa przez proces tworzenia aplikacji umożliwiającej komunikację z kierowcą w trakcie jazdy.",
-		"speakers_keys": ["speaker-anton-miniailo",
-		"speaker-jacek-rondio"],
-		"language": "PL"
-	},
-	"talk-co-kryje-pianka-czyli-o-nowej-wersji-androida": {
-		"title": "Co kryje Pianka, czyli o nowej wersji Androida.",
-		"description_html": "Pewnie każdy fan i developer Androida oglądał Google I/O, podczas którego usłyszał o zmianach M-ki. Nowy sposób zarządzania permission'ami oraz doze mode to tylko nieliczne zmiany, które nowa wersja wprowadza. Poznaj jakie zmiany powinieneś(aś)  zrobić, by Twoja aplikacja  nadal poprawnie działała na Androidzie 6.0 (Marshmallow) .  Ta prelekcja uwzględnia wiele nowości i zmian o których Google nie wspomina, nie daj się zaskoczyć ... przyjdź.",
-		"speakers_keys": ["speaker-michal-szczepanik"],
-		"language": "PL"
-	},
-	"talk-no-platformy-natywne": {
-		"title": "Porzuć platformy natywne! Czyli czemu HTML5 jest lepszy.",
-		"description_html": "Skoro to czytasz, to znaczy że tytuł zadziałał. Tak na prawdę nie twierdzę że HTML5 jest lepszy. On jest inny, a to można wykorzystać w naszej pracy, jaką jest dostarczanie gotowych, działających rozwiązań klientom.Podczas prezentacji chcę poruszyć temat zalet, wad i różnic w programowaniu aplikacji klienckich na platformy natywne i webowe. Przedstawię powody czemu moim zdaniem większość MVP można wykonywać przy użyciu HTML5 zamiast technologii natywnych.Dla uwiarygodnienia mojej tezy planuję wykonać odrobinę live-codingu.",
-		"speakers_keys": ["speaker-tomasz-netczuk"],
-		"language": "PL"
-	},
-	"talk-ux-pitfalls-in-multi-os-apps": {
-		"title": "UX pitfalls in multi-os apps",
-		"description_html": "In this session we will answer simple but demanding questions: </br>- Is UX really device agnostic? </br>- What should be our approach when designing a multi-OS or multi-platform apps? </br>- Is the philosophy “design once – run anywhere” still alive? </br> We will take you on a short journey from a simple idea to the mockup realization. Be prepared for silly ideas, tricky questions and unconventional approach to challenges awaiting you in the design process.",
-		"speakers_keys": ["speaker-rafal-szpoton",
-		"speaker-sebastian-gos",
-		"speaker-lech-migdal"],
+	"talk-elegant-unit-testing": {
+		"title": "Elegant?? Unit Testing",
+		"description_html": "In this session we will learn the basics of Unit Testing and its importance. We will define what a Unit Test is, what type of Unit Tests there are and then talk about Test Doubles. Finally, we will focus on how to write new tests and improve existing ones by reviewing some Android Github projects. Can you sleep soundly without writing tests? Really???",
+		"speakers_keys": [
+			"speaker-pablo-guardiola"
+		],
 		"language": "EN"
 	},
-	"talk-kiedy-zespol-scrumowy-nie-kocha-swojego-produktu-mobilnego": {
-		"title": "Kiedy zespół Scrumowy nie kocha swojego produktu mobilnego",
-		"description_html": "Celem prezentacji jest przedstawienie różnych technik (w tym metod Agile UX), które mogą sprawić, że zespół Scrumowy bardziej zaangażuje się w produkt i nie skupi tylko na realizacji oczekiwań Product Ownera w określonych odcinkach czasu. Jak sprawić, żeby członkowie zespołu scrumowego utożsamiali się z produktem, który tworzą, co jest szczególnie trudne w dużych organizacjach? Prezentacja oparta na doświadczeniach i eksperymentach przeprowadzonych w kilku zespołach Scrumowych, pracujących nad takimi projektami, jak aplikacja mobilna czy strona responsywna.",
-		"speakers_keys": ["speaker-michal-aleksander"],
+	"talk-custom-annotation-processors-for-your-production-code": {
+		"title": "Custom Annotation processors for your production code",
+		"description_html": "The annotation processing tool (APT) was released into the JDK 5, but we did not paid enough attention to it in order to exploit its potential. Today, annotation processors are part of many well known libraries that we use everyday in our professional code. On this talk we will learn how to code our custom annotation processor and to start looking at it as a very useful tool to reduce overhead in our production code. Because many recurrent problems could get solved using annotation processors!",
+		"speakers_keys": [
+			"speaker-jorge-castillo"
+		],
+		"language": "EN"
+	},
+	"talk-espresso-beyond-the-basics": {
+		"title": "Espresso, beyond the basics",
+		"description_html": "More than the typical onView example Espresso offers a complete framework to interact with your UI. Once you start developing your tests you find common issues, in this talk learn tips and tricks on how to deal with the framework and avoid problems like synchronization, permissions, environment test scenarios and much more. ",
+		"speakers_keys": [
+			"speaker-inaki-villar"
+		],
+		"language": "EN"
+	},
+	"talk-android-high-performance": {
+		"title": "Android High Performance",
+		"description_html": "Performant applications are one of the key drivers of success in the mobile world. Users may abandon an app if it runs slowly. Learning how to build applications that balance speed and performance with functionality and UX can be a challenge; however, it's now more important than ever to get that balance right. This session will show you how to wring the most from any hardware your app is installed on, so you can increase your reach and engagement. An introduction to state-of-the-art Android techniques and the importance of performance in an Android application will be introduced, and later we will slowly walk through the Android SDK tools regularly used to debug and profile Android applications, learn about some advanced topics such as building layouts, multithreading, networking, security and battery life ( one of the biggest bottleneck in applications).",
+		"speakers_keys": [
+			"speaker-enrique-manas"
+		],
+		"language": "EN"
+	},
+	"talk-rx-java-for-the-rest-of-us": {
+		"title": "RxJava for the rest of us",
+		"description_html": "The Reactive Extensions for the JVM, better known as RxJava, have become a popular tool in Android development over the past years. Many new and existing libraries added support for Rx and reactive solutions to existing problems popped up over time. RxJava is both known for its power and its steep learning curve, so if you aren't using RxJava already, what are you missing out on? Should you even be using RxJava? In this talk we'll go over what RxJava is and how you can use it to solve problems in your Android apps, one step at a time. We will discuss how you can prevent shooting yourself in the foot by looking at common mistakes you may make when using RxJava and discussing tips and tricks for keeping your reactive app manageable.",
+		"speakers_keys": [
+			"speaker-hugo-visser"
+		],
+		"language": "EN"
+	},
+	"talk-getting-down-to-business-with-firebase": {
+		"title": "Getting down to business with Firebase",
+		"description_html": "Firebase goes beyond being just an alternative to building a serverless application. It is a complete solution to control and monitor several aspects of both your product and business. We will discuss how easy is to integrate Firebase with your current application and how it can be used to improve your experience towards your users from a technical standpoint.",
+		"speakers_keys": [
+			"speaker-saul-diaz"
+		],
+		"language": "EN"
+	},
+	"talk-revisiting-types-in-kotlin": {
+		"title": "Revisiting types in Kotlin",
+		"description_html": "With a domain driven approach, this talk will go through several coding examples and how they can be improved by leveraging the powerful type system in Kotlin with function objects, sealed classes, tuples, and the core collections. We'll review the way your application communicates across layers, and how you can improve your APIs with explicit types.",
+		"speakers_keys": [
+			"speaker-francisco-estevez"
+		],
+		"language": "EN"
+	},
+	"talk-security-at-your-fingertips": {
+		"title": "Security at your Fingertips - A dive into M&N's new Fingerprint and Keystore APIs.",
+		"description_html": "Android Marshmallow (and most recently Android Nougat) have introduced a lot of fresh features and the new permission system is by far not the only new security enhancement. Most of you already use their finger to unlock the smartphone and may have heard about this new fingerprint API - but have you ever played with it? And once were there: Do you know about the newly introduced improvements in the Keystore API? No? Then this talk is definitely for you! Still hesitating? Just remember that security and a good user experience is something we cannot know enough about. With just a few simple steps you can learn how to increase the security of your app, making authentication easier and your users happier - all at once. And to be honest: in the end that's all we want, right?",
+		"speakers_keys": [
+			"speaker-frederik-schweiger"
+		],
+		"language": "EN"
+	},
+	"talk-the-objective-c-runtime-and-swift-dynamism-a-2016-perspective": {
+		"title": "The Objective C runtime and Swift dynamism - a 2016 perspective",
+		"description_html": "A new talk introducing advanced techniques with the Objective C runtime and assessing their relevance in an increasingly Swifty world. ",
+		"speakers_keys": [
+			"speaker-roy-marmelstein"
+		],
+		"language": "EN"
+	},
+	"talk-hacking-siri-kit": {
+		"title": "Hacking SiriKit",
+		"description_html": "iOS talk detailing the benefits that SiriKit exposes and how can developers would greatly benefit from Apple actually opening it up for other users. <ul><li>Introduction to SiriKit<li>How to implement it<li>Pro and Cons of th current implementation<li>Hacking it to overuse or abuse it to communicate without TravisCi",
+		"speakers_keys": [
+			"speaker-esteban-torres"
+		],
+		"language": "EN"
+	},
+	"talk-swift-revolution": {
+		"title": "Swift rEvolution",
+		"description_html": "Swift have huge impact and on how we develop software these days. In thin talk I will explain why everyone needs to learn Swift regardless if you are  iOS, android, backend or any software developer. I will cover why Swift is so powerful and popular, how huge impact it has on whole Software development, what you need to do to stay competitive and productive developer and how you can shape Swift they way you want",
+		"speakers_keys": [
+			"speaker-kostiantyn-koval"
+		],
+		"language": "EN"
+	},
+	"talk-crafting-reactive-apps-with-realm": {
+		"title": "Crafting Reactive Apps with Realm",
+		"description_html": "Realm is a popular database for mobile used already in thousands of apps in the app stores and deployed on over a billion devices. This talk will show you how you can craft reactive applications, especially if you embrace persistence and state as a central part of your application architecture, by using the unique features of this database.",
+		"speakers_keys": [
+			"speaker-marius-rackwitz"
+		],
+		"language": "EN"
+	},
+	"talk-swift-at-scale": {
+		"title": "Swift at scale",
+		"description_html": "Is Swift ready for large scale business apps?  We would like to share our experience on writing one of the most popular mobile banking apps in Poland. The mBank app, that is entirely written in Swift. The problems we faced, lessons learnt, pitfalls and benefits",
+		"speakers_keys": [
+			"speaker-tomasz-gebarowski",
+			"speaker-wojciech-lukaszuk"
+		],
+		"language": "EN"
+	},
+	"talk-mobile-and-application-security-based-on-man-in-the-middle-MITM-vectors": {
+		"title": "Mobile and application security based on Man-in-the-middle (MITM) vectors",
+		"description_html": "We have that good feeling that if we have AV and Firewall, we are safe and secure in cyber space. Nothing more misleading. If you are targeted, then every access vector will be tailored to compromise your security. These days every kid knows how to bypass wireless network security to get a free internet access. What could happen if a real attacker broke into your network and targeted his payloads into your sensitive data? What about gathering sensitive data from around 50? 100? 500? Mobiles, laptop devices at once? From penetration testing, reverse engineering to intercepting mobile application traffic. How to craft attacks and how to avoid them? Theory and practice.",
+		"speakers_keys": [
+			"speaker-michal-kucharski"
+		],
+		"language": "EN"
+	},
+	"talk-design-that-breaks-down-barriers": {
+		"title": "Design that breaks down barriers",
+		"description_html": "While having an opportunity to start an enterprise from scratch, humans tend to try out new processes, tools or technology. It is with that state of mind that we embraced accessibility. Indeed, as one of the hottest emerging topic in UX Design, accessibility methodology was to be integrated in the development of our latest project. Considering both designer's and developer's point of view, we will talk about how we approached accessibility while making Shuttle - a mobile app for Android and iOS. We will describe step by step our full working process related to accessibility, with a strong focus on the importance of interdisciplinary collaboration and end user testing",
+		"speakers_keys": [
+			"speaker-agnieszka-czyzak",
+			"speaker-rafal-tulwin"
+		],
+		"language": "EN"
+	},
+	"talk-mvvm-with-coordinators-and-rx-swift": {
+		"title": "MVVM with Coordinators & RxSwift",
+		"description_html": "Every application needs good architecture. In my talk I will try to show you our architecture that we use in our iOS projects: MVVM with Coordinators & RxSwift. Not only I will talk about basics, but we will quickly start writing the code live, describing what belongs where, controlling the flow using Coordinators, testing everything using Quick/Nimble, and make network requests using Moya",
+		"speakers_keys": [
+			"speaker-lukasz-mroz"
+		],
+		"language": "EN"
+	},
+	"talk-how-to-design-your-app-and-not-to-be-damned-by-maitenance-team": {
+		"title": "How to design your app and not be damned by maintenance team",
+		"description_html": "How to deal with complexity, technical debt and not to fall into depression. Let's discuss the ways, architecture patterns and common mistakes and let's try to find the \"silver bullet\" of architecture, or at least let's find requirements for it",
+		"speakers_keys": [
+			"speaker-anton-minashkin"
+		],
+		"language": "EN"
+	},
+	"talk-master-coder-final": {
+		"title": "MASTERCODER VOL. 3 - NATIONAL PROGRAMMING CONTEST FINALS",
+		"description_html": "MasterCoder is a national programming contest organized by Cybercom Poland. It is a competition created by programmers for programmers. This year over 300 participants from Poland joined the unique coding challenge. The challenge includes accomplishing ten different tasks in ten days. It fosters creativity, innovation and enables participants to test their ability to perform under pressure. During the finals we will see 10 best ranked coders who will fight for MasterCoder title and Samsung Galaxy S6, Samsung Gear VR, AirWheel X3, GoPro Hero Session Full HD! The semi-final will include a variety of tasks such as live programming. Join the audience and become a part of real programming battle !!!",
+		"speakers_keys": [
+			"speaker-cybercom-mastercorder"
+		],
+		"language": "EN"
+	},
+	"talk-master-coder-eliminations": {
+		"title": "MASTERCODER VOL. 3 - NATIONAL PROGRAMMING CONTEST ELIMINATIONS",
+		"description_html": "MasterCoder is a national programming contest organized by Cybercom Poland. It is a competition created by programmers for programmers. This year over 300 participants from Poland joined the unique coding challenge. The challenge includes accomplishing ten different tasks in ten days. It fosters creativity, innovation and enables participants to test their ability to perform under pressure. During the finals we will see 10 best ranked coders who will fight for MasterCoder title and Samsung Galaxy S6, Samsung Gear VR, AirWheel X3, GoPro Hero Session Full HD! The semi-final will include a variety of tasks such as live programming. Join the audience and become a part of real programming battle !!!",
+		"speakers_keys": [
+			"speaker-cybercom-mastercorder"
+		],
+		"language": "EN"
+	},
+	"talk-flying-services-using-mobile-phone-paired-with-drone": {
+		"title": "Flying services using mobile phone paired with drone",
+		"description_html": "Android mobile phone, a drone, strong passion and a lot of patience. These are all the ingredients you need to start your adventure in the emerging world of flying services. During this presentation we will show you how we started ours. Hovewer funny and amusing, this will be a presentation about serious, high-level technology, unpredictable ideas and insistent scientific struggle to make all the algorithmic meat work on a mobile phone communicating with the flying machine. If you are planning to start a remote post office on the Moon, you cannot miss this presentation.",
+		"speakers_keys": [
+			"speaker-krzysztof-kudrynski",
+			"speaker-blazej-kubiak"
+		],
+		"language": "EN"
+	},
+	"talk-prawdziwe-bezpieczenstwo-w-aplikacjach-mobilnych": {
+		"title": "Prawdziwe bezpieczeństwo w aplikacjach mobilnych",
+		"description_html": "Najbardziej popularne zabezpieczenie to szyfrowanie danych na telefonie, ale czy to jest bezpieczne? Tak, o ile ustawisz bardzo długie hasło, ale czy długie hasło jest praktyczne? Nie, bo normalny uĹźytkownik nie będzie go w stanie zapamiętać. Więc jak dostarczyć prawdzie bezpieczeństwo? Trzeba skorzystać z embedded secure elementu (eSE) lub eUICC. W ramach prezentacji dowiesz się czym jest eSE, czym różni się od eUICC (następcy karty SIM). Dowiesz się również jak wygląda ekosystem zarządzania eUICC/eSE (live demo) i bezpiecznymi aplikacji. A jak starczy czasu, to dowiesz się jak zacząć przygodę z secure elementem i Androidem.",
+		"speakers_keys": [
+			"speaker-pawel-karpinski"
+		],
 		"language": "PL"
 	},
-	"talk-zwinna-lodz-przedstawia-panel": {
-		"title": "Jeden zespół czy zespół per platforma?",
-		"description_html": "Panel dyskusyjny oparty na konkretnych case studies organizowany przez grupę Zwinna Łódź.<br>Czy interdyscyplinarność w jednym zespole ma dobry wpływ na tworzenie nowych funkcjonalności? Jak wygodnie synchronizować pracę, gdy kilka zespołów różnych platform tworzy jeden produkt? Zalety i wady, czyli które podejście jest bardziej korzystne?",
-		"speakers_keys": ["speaker-pawel-urban",
-		"speaker-lukasz-krupa",
-		"speaker-pawel-wojdera",
-		"speaker-filip-miloszewski"],
-		"language": "PL"
+	"talk-make-your-mobile-more-mobile": {
+		"title": "Make your mobile more mobile",
+		"description_html": "How car became a rich accessory for the mobile. We will present the wide range of possibilities that arose with the development of technologically advanced head units. From Bluetooth hands-free to advanced companion applications. All based on Mercedes S-class example.",
+		"speakers_keys": [
+			"speaker-jacek-rondio",
+			"speaker-krzysztof-sasiak"
+		],
+		"language": "EN"
 	}
 }

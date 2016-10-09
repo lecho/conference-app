@@ -1,17 +1,17 @@
 {
-	"venue-seamless": {
-		"title": "Seamless"
+	"venue-rndity": {
+		"title": "Rndity"
 	},
-	"venue-tomtom": {
-		"title": "TomTom"
+	"venue-ericpol": {
+		"title": "Ericpol"
 	},
 	"venue-mobica": {
 		"title": "Mobica"
 	},
-	"venue-harman": {
-		"title": "Harman"
+	"venue-seqr": {
+		"title": "SEQR"
 	},
-	"venue-hp": {
-		"title": "HP"
+	"venue-tomtom": {
+		"title": "TomTom"
 	}
 }
