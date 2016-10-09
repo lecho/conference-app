@@ -17,7 +17,7 @@
     "www": "http://www.ppinera.es/",
     "github": "https://github.com/pepibumur",
     "twitter": "https://twitter.com/pepibumur",
-    "photo_url": "/images/speakers/pedro-buendia.jpeg"
+    "photo_url": "/images/speakers/pedro-buendia.jpg"
   },
   "speaker-konstantin-raev": {
     "firstname": "Konstantin",
@@ -28,7 +28,7 @@
     "linkedin": "https://uk.linkedin.com/in/koraev",
     "twitter": "https://twitter.com/bestander_nz",
     "medium": "https://medium.com/@bestander_nz",
-    "photo_url": "/images/speakers/konstantin-raev.jpeg"
+    "photo_url": "/images/speakers/konstantin-raev.jpg"
   },
   "speaker-gautier-mechling": {
     "firstname": "Gautier",
@@ -37,7 +37,7 @@
     "wwww": "http://nilhcem.com",
     "github": "https://github.com/Nilhcem",
     "twitter": "https://twitter.com/Nilhcem",
-    "photo_url": "/images/speakers/gautier-mechling.jpeg"
+    "photo_url": "/images/speakers/gautier-mechling.jpg"
   },
   "speaker-nicola-zaghini": {
     "firstname": "Nicola",
@@ -45,7 +45,7 @@
     "bio_html": "Nicola Zaghini is a software architect at Mobile Travel Technologies. He has been developing mobile apps since the first iOS SDK was released, from indie game development to major airlines and travel companies. Prior to that, he enjoyed Java development as professional and researcher in academia. He is currently in charge of mobile architecture in MTT and helps teams deliver amazing apps.",
     "www": "",
     "twitter": "https://twitter.com/nzaghini",
-    "photo_url": "/images/speakers/nicola-zaghini.jpeg"
+    "photo_url": "/images/speakers/nicola-zaghini.jpg"
   },
   "speaker-roberto-orgiu": {
     "firstname": "Roberto",
@@ -53,7 +53,7 @@
     "bio_html": "Android developer and enthusiastic, DroidCon and community fan, I love the Android environment and pushing the limits of the platform.",
     "www": "",
     "twitter": "https://github.com/tiwiz",
-    "photo_url": "/images/speakers/roberto-orgiu.jpeg"
+    "photo_url": "/images/speakers/roberto-orgiu.jpg"
   },
   "speaker-eric-kok": {
     "firstname": "Eric",
@@ -61,7 +61,7 @@
     "bio_html": "Hi, I'm Eric. I currently work as a contractor at KBC Bank in Belgium creating the next mobile banking app. But if you know me, it is through my open-source work published under the 2312 development name. I build apps, such as RateBeer, and libraries, such as RxCupboard. I love brewing and drinking craft beer, chatting about Android and building with Legos with my son.",
     "www": "",
     "twitter": "https://twitter.com/erickoknl",
-    "photo_url": "/images/speakers/eric-kok.jpeg"
+    "photo_url": "/images/speakers/eric-kok.jpg"
   },
   "speaker-dan-cuellar": {
     "firstname": "Dan",
@@ -71,7 +71,7 @@
     "linkedin": "https://uk.linkedin.com/in/dacuellar",
     "www": "",
     "twitter": "https://twitter.com/thedancuellar",
-    "photo_url": "/images/speakers/dan-cuellar.jpeg"
+    "photo_url": "/images/speakers/dan-cuellar.jpg"
   },
   "speaker-roman-mazur": {
     "firstname": "Roman",
