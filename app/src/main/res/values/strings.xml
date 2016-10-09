@@ -41,7 +41,8 @@
     <string name="dialog_json_data_update">Agenda update</string>
     <string name="dialog_json_data_update_message_part1">There is a new version of an agenda available. Do you want to
         download it now?</string>
-    <string name="dialog_json_data_update_message_part2">Note: this will delete your current agenda:(</string>
+    <string name="dialog_json_data_update_message_part2">Note: this will delete your current agenda:(\nYou can
+    do it later using sync button on \"Event\" tab.</string>
     <string name="text_empty_slot">Empty slot - browse sessions…</string>
     <string name="about_author_label">Author</string>
     <string name="about_author_name">Leszek Wach</string>
