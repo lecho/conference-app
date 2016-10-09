@@ -15,6 +15,7 @@ import com.github.lecho.mobilization.ui.navigation.BottomNavigationController;
 import com.github.lecho.mobilization.ui.navigation.NavigationController;
 import com.github.lecho.mobilization.ui.navigation.NavigationDrawerController;
 import com.github.lecho.mobilization.ui.navigation.NavigationItemListener;
+import com.github.lecho.mobilization.ui.snackbar.SnackbarHelper;
 import com.github.lecho.mobilization.util.Utils;
 
 import butterknife.BindView;
@@ -25,15 +26,20 @@ public class MainActivity extends BaseActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private NavigationController navigationController;
+    private SnackbarHelper snackbarHelper;
 
     @BindView(R.id.main_container)
     View mainContainer;
+
+    @BindView(R.id.snackbar_coordinator_layout)
+    View snackbarParentView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        snackbarHelper = new SnackbarHelper(this, snackbarParentView);
 
         if (savedInstanceState == null) {
             replaceFragment(MyAgendaFragment.newInstance());
@@ -63,6 +69,17 @@ public class MainActivity extends BaseActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
         transaction.replace(R.id.content_container, fragment).commit();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     private class MainActivityNavItemListener implements NavigationItemListener {
