@@ -163,7 +163,8 @@ public class JsonDownloadService extends IntentService {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_download)
                 .setContentTitle("Updating agenda")
-                .setContentText("Downloading new agenda data");
+                .setContentText("Downloading new agenda data")
+                .setProgress(0, 0, true);
         startForeground(NOTIFICATION_ID, builder.build());
     }
 
