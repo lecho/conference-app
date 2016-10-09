@@ -8,6 +8,9 @@ import android.view.View;
 
 import com.github.lecho.mobilization.rx.RxBus;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import rx.Subscription;
 
 /**
@@ -17,7 +20,7 @@ public class SnackbarHelper {
 
     private final Context context;
     private final View parentView;
-    private Subscription subscription;
+    private Map<Class, Subscription> subscriptions = new HashMap<>();
 
     public SnackbarHelper(Context context, View parentView) {
         this.context = context;
@@ -32,17 +35,21 @@ public class SnackbarHelper {
         Snackbar.make(parentView, text, Snackbar.LENGTH_SHORT).setAction(actionText, listener).show();
     }
 
-    public void onResume(@NonNull SnackbarEvent event, @StringRes int text) {
-        subscription = RxBus.subscribe(event.getClass(), e -> showSnackbar(text));
+    public void subscribe(@NonNull Class<?> clazz, @StringRes int textRes) {
+        subscriptions.put(clazz, RxBus.subscribe(clazz, e -> showSnackbar(textRes)));
     }
 
-    public void onResume(@NonNull SnackbarEvent event, @StringRes int text, @StringRes int actionText,
-                         @NonNull View.OnClickListener listener) {
-        subscription = RxBus.subscribe(event.getClass(), e -> showSnackbar(text, actionText, listener));
+    public void subscribe(@NonNull Class clazz, @StringRes int textRes, @StringRes int actionText,
+                          @NonNull View.OnClickListener listener) {
+        subscriptions.put(clazz, RxBus.subscribe(clazz, e -> showSnackbar(textRes, actionText, listener)));
     }
 
-    public void onPause() {
-        subscription.unsubscribe();
+    public void unsubscribe(@NonNull Class clazz) {
+        Subscription subscription = subscriptions.get(clazz);
+        if (subscription != null) {
+            subscription.unsubscribe();
+            subscriptions.put(clazz, null);
+        }
     }
 
 }

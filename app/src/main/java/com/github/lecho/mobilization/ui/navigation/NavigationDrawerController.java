@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -15,13 +16,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.lecho.mobilization.R;
-import com.github.lecho.mobilization.async.JsonDownloadService;
+import com.github.lecho.mobilization.rx.RxBus;
+import com.github.lecho.mobilization.ui.dialog.JsonUpdateDialogFragment;
 import com.github.lecho.mobilization.ui.fragment.AboutFragment;
 import com.github.lecho.mobilization.ui.fragment.MyAgendaFragment;
 import com.github.lecho.mobilization.ui.fragment.SpeakersFragment;
 import com.github.lecho.mobilization.ui.fragment.SponsorsFragment;
 import com.github.lecho.mobilization.ui.fragment.VenuesFragment;
 import com.github.lecho.mobilization.ui.loader.EventViewDataLoader;
+import com.github.lecho.mobilization.ui.snackbar.SnackbarOfflineEvent;
 import com.github.lecho.mobilization.util.AnalyticsReporter;
 import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.util.Utils;
@@ -144,7 +147,15 @@ public class NavigationDrawerController implements NavigationController,
             eventPlaceView.setText(event.getPlace());
             mapButton.setOnClickListener(view -> Utils.launchGMaps(context, event.latitude, event
                     .longitude, event.getAddress()));
-            syncButton.setOnClickListener(view -> JsonDownloadService.startDownload(context.getApplicationContext()));
+            syncButton.setOnClickListener(view -> {
+                if (!Utils.isOnline(context.getApplicationContext())) {
+                    RxBus.post(new SnackbarOfflineEvent());
+                    return;
+                }
+                if (Utils.checkIfJsonUpdateNeeded(context.getApplicationContext())) {
+                    JsonUpdateDialogFragment.show((AppCompatActivity) context);
+                }
+            });
         }
 
         public void bindHeaderImage(@NonNull Context context) {

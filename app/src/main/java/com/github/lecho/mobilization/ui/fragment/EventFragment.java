@@ -17,11 +17,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.lecho.mobilization.R;
+import com.github.lecho.mobilization.rx.RxBus;
 import com.github.lecho.mobilization.ui.activity.AboutAppActivity;
 import com.github.lecho.mobilization.ui.activity.SpeakersActivity;
 import com.github.lecho.mobilization.ui.activity.SponsorsActivity;
 import com.github.lecho.mobilization.ui.dialog.JsonUpdateDialogFragment;
 import com.github.lecho.mobilization.ui.loader.EventViewDataLoader;
+import com.github.lecho.mobilization.ui.snackbar.SnackbarOfflineEvent;
 import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.util.Utils;
 import com.github.lecho.mobilization.viewmodel.EventViewModel;
@@ -120,6 +122,10 @@ public class EventFragment extends Fragment implements Scrollable, LoaderManager
                 mapButton.setOnClickListener(view -> Utils.launchGMaps(getActivity(), event.latitude, event
                         .longitude, event.getAddress()));
                 syncButton.setOnClickListener(view -> {
+                    if (!Utils.isOnline(getActivity().getApplicationContext())) {
+                        RxBus.post(new SnackbarOfflineEvent());
+                        return;
+                    }
                     if (Utils.checkIfJsonUpdateNeeded(getActivity().getApplicationContext())) {
                         JsonUpdateDialogFragment.show((AppCompatActivity) getActivity());
                     }
