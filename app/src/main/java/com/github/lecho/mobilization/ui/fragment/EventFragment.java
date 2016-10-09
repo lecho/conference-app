@@ -24,6 +24,7 @@ import com.github.lecho.mobilization.ui.activity.SponsorsActivity;
 import com.github.lecho.mobilization.ui.dialog.JsonUpdateDialogFragment;
 import com.github.lecho.mobilization.ui.loader.EventViewDataLoader;
 import com.github.lecho.mobilization.ui.snackbar.SnackbarOfflineEvent;
+import com.github.lecho.mobilization.ui.snackbar.SnackbarUpToDate;
 import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.util.Utils;
 import com.github.lecho.mobilization.viewmodel.EventViewModel;
@@ -128,6 +129,8 @@ public class EventFragment extends Fragment implements Scrollable, LoaderManager
                     }
                     if (Utils.checkIfJsonUpdateNeeded(getActivity().getApplicationContext())) {
                         JsonUpdateDialogFragment.show((AppCompatActivity) getActivity());
+                    } else {
+                        RxBus.post(new SnackbarUpToDate());
                     }
                 });
             }

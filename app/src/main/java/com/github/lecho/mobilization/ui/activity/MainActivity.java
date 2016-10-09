@@ -17,6 +17,7 @@ import com.github.lecho.mobilization.ui.navigation.NavigationDrawerController;
 import com.github.lecho.mobilization.ui.navigation.NavigationItemListener;
 import com.github.lecho.mobilization.ui.snackbar.SnackbarHelper;
 import com.github.lecho.mobilization.ui.snackbar.SnackbarOfflineEvent;
+import com.github.lecho.mobilization.ui.snackbar.SnackbarUpToDate;
 import com.github.lecho.mobilization.util.Utils;
 
 import butterknife.BindView;
@@ -76,6 +77,7 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         snackbarHelper.subscribe(SnackbarOfflineEvent.class, R.string.text_offline);
+        snackbarHelper.subscribe(SnackbarUpToDate.class, R.string.text_up_to_date);
     }
 
 
@@ -83,6 +85,7 @@ public class MainActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
         snackbarHelper.unsubscribe(SnackbarOfflineEvent.class);
+        snackbarHelper.unsubscribe(SnackbarUpToDate.class);
     }
 
     private class MainActivityNavItemListener implements NavigationItemListener {

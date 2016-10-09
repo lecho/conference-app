@@ -25,6 +25,7 @@ import com.github.lecho.mobilization.ui.fragment.SponsorsFragment;
 import com.github.lecho.mobilization.ui.fragment.VenuesFragment;
 import com.github.lecho.mobilization.ui.loader.EventViewDataLoader;
 import com.github.lecho.mobilization.ui.snackbar.SnackbarOfflineEvent;
+import com.github.lecho.mobilization.ui.snackbar.SnackbarUpToDate;
 import com.github.lecho.mobilization.util.AnalyticsReporter;
 import com.github.lecho.mobilization.util.Optional;
 import com.github.lecho.mobilization.util.Utils;
@@ -154,6 +155,8 @@ public class NavigationDrawerController implements NavigationController,
                 }
                 if (Utils.checkIfJsonUpdateNeeded(context.getApplicationContext())) {
                     JsonUpdateDialogFragment.show((AppCompatActivity) context);
+                } else {
+                    RxBus.post(new SnackbarUpToDate());
                 }
             });
         }

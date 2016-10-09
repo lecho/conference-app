@@ -60,5 +60,6 @@
     <string name="more">More</string>
     <string name="share">Share</string>
     <string name="text_speakers_layout">Speakers</string>
-    <string name="text_offline">You are offline...</string>
+    <string name="text_offline">You are offline:(</string>
+    <string name="text_up_to_date">You are up to date:)</string>
 </resources>
