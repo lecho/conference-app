@@ -96,7 +96,7 @@ public class SpeakerRealm extends RealmObject {
             speakerRealm.setBiography(apiDto.bioHtml);
             speakerRealm.setFirstName(apiDto.firstname);
             speakerRealm.setLastName(apiDto.lastname);
-            speakerRealm.setPhoto(Uri.parse(apiDto.photoUrl).getLastPathSegment());
+            speakerRealm.setPhoto(apiDto.photoUrl);
             speakerRealm.setTwitter(apiDto.twitter);
             speakerRealm.setGithub(apiDto.github);
             speakerRealm.setWebsite(apiDto.www);
@@ -113,7 +113,7 @@ public class SpeakerRealm extends RealmObject {
             speakerViewModel.firstName = realmObject.getFirstName();
             speakerViewModel.lastName = realmObject.getLastName();
             speakerViewModel.biography = realmObject.getBiography();
-            speakerViewModel.photo = realmObject.getPhoto();
+            speakerViewModel.photo = Uri.parse(realmObject.getPhoto()).getLastPathSegment();
             speakerViewModel.twitter = realmObject.getTwitter();
             speakerViewModel.github = realmObject.getGithub();
             speakerViewModel.website = realmObject.getWebsite();

@@ -155,7 +155,7 @@ public class SpeakerActivity extends BaseActivity implements
                 githubButton.setVisibility(View.GONE);
             } else {
                 final String githubUser = getUserLoginFromUrl(githubUrl, getString(R.string.github));
-                twitterButton.setText(githubUser);
+                githubButton.setText(githubUser);
                 githubButton.setVisibility(View.VISIBLE);
                 githubButton.setOnClickListener(v -> Utils.openWebBrowser(getApplicationContext(), githubUrl));
             }
