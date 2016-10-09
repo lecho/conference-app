@@ -28,8 +28,8 @@ public class SnackbarHelper {
         Snackbar.make(parentView, text, Snackbar.LENGTH_SHORT).show();
     }
 
-    public void showSnackbar(@StringRes int text, @StringRes int actionText, @NonNull View.OnClickListener litener) {
-        Snackbar.make(parentView, text, Snackbar.LENGTH_SHORT).setAction(actionText, litener).show();
+    public void showSnackbar(@StringRes int text, @StringRes int actionText, @NonNull View.OnClickListener listener) {
+        Snackbar.make(parentView, text, Snackbar.LENGTH_SHORT).setAction(actionText, listener).show();
     }
 
     public void onResume(@NonNull SnackbarEvent event, @StringRes int text) {
@@ -37,8 +37,8 @@ public class SnackbarHelper {
     }
 
     public void onResume(@NonNull SnackbarEvent event, @StringRes int text, @StringRes int actionText,
-                         @NonNull View.OnClickListener litener) {
-        subscription = RxBus.subscribe(event.getClass(), e -> showSnackbar(text, actionText, litener));
+                         @NonNull View.OnClickListener listener) {
+        subscription = RxBus.subscribe(event.getClass(), e -> showSnackbar(text, actionText, listener));
     }
 
     public void onPause() {
