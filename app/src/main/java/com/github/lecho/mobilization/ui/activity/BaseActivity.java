@@ -52,9 +52,12 @@ public class BaseActivity extends AppCompatActivity {
                 Log.w(TAG, "JsonDataVersion may have changed but it is now null");
                 return;
             }
-            Log.d(TAG, "JsonDataVersion changed to version: " + jsonDataVersion.version);
+            if (Utils.checkIfEventShouldBeSkipped(getApplicationContext(), jsonDataVersion.version)) {
+                return;
+            }
             Utils.saveNextJsonDataVersion(getApplicationContext(), jsonDataVersion.version);
             if (Utils.checkIfJsonUpdateNeeded(getApplicationContext())) {
+                Log.d(TAG, "JsonDataVersion changed to version: " + jsonDataVersion.version);
                 JsonUpdateDialogFragment.show(BaseActivity.this);
             }
         }

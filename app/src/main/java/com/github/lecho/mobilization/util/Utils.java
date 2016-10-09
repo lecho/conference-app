@@ -59,6 +59,7 @@ public class Utils {
     private static final String PREFS_SCHEMA_VERSION = "schema-version";
     private static final String PREFS_JSON_DATA_CURRENT_VERSION = "json-data-current-version";
     private static final String PREFS_JSON_DATA_NEXT_VERSION = "json-data-next-version";
+    private static final String PREFS_JSON_UPDATE_DIALOG_WAS_SHOWN = "json-update-dialog-was-shown";
 
     public static final String MAP_IMAGE = "map.jpg";
 
@@ -90,8 +91,8 @@ public class Utils {
     }
 
     private static boolean checkIfSchemaUpgradeNeeded(Context context) {
-        final long currentSchemaVersion = context.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE).getLong
-                (PREFS_SCHEMA_VERSION, 0);
+        final long currentSchemaVersion = context.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE)
+                .getLong(PREFS_SCHEMA_VERSION, 0);
         final long newSchemaVersion = Realm.getDefaultInstance().getConfiguration().getSchemaVersion();
         if (currentSchemaVersion < newSchemaVersion) {
             SharedPreferences.Editor editor = context.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE)
@@ -102,14 +103,28 @@ public class Utils {
         return false;
     }
 
+    // TODO: 09.10.2016 Move to separated class for example PrefsHelper
     public static boolean checkIfJsonUpdateNeeded(Context context) {
         final long currentVersion = getCurrentJsonDataVersion(context);
         final long nextVersion = getNextJsonDataVersion(context);
         return currentVersion < nextVersion;
     }
 
+    /**
+     * Check if update event should be skipped. Event should be skipped when nextVersion from update is the same as
+     * nextVersion from shared preferences.
+     *
+     * @param context
+     * @param versionFromUpdate
+     * @return
+     */
+    public static boolean checkIfEventShouldBeSkipped(Context context, long versionFromUpdate) {
+        final long nextVersion = getNextJsonDataVersion(context);
+        return nextVersion == versionFromUpdate;
+    }
+
     public static void saveCurrentJsonDataVersion(Context context, long currentVersion) {
-        if(currentVersion < JsonDataVersion.DEFAULT_VERSION){
+        if (currentVersion < JsonDataVersion.DEFAULT_VERSION) {
             return;
         }
         SharedPreferences.Editor editor = context.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE).edit();
@@ -122,7 +137,7 @@ public class Utils {
     }
 
     public static void saveNextJsonDataVersion(Context context, long nextVersion) {
-        if(nextVersion < JsonDataVersion.DEFAULT_VERSION){
+        if (nextVersion < JsonDataVersion.DEFAULT_VERSION) {
             return;
         }
         SharedPreferences.Editor editor = context.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE).edit();
