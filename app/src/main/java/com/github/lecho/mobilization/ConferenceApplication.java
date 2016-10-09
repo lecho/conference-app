@@ -31,9 +31,6 @@ public class ConferenceApplication extends Application {
                 .build();
         Realm.setDefaultConfiguration(config);
 
-        Utils.saveCurrentJsonDataVersion(getApplicationContext(), JsonDataVersion.DEFAULT_VERSION);
-        Utils.saveNextJsonDataVersion(getApplicationContext(), JsonDataVersion.DEFAULT_VERSION);
-
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseDatabase.setPersistenceEnabled(true);
         firebaseDatabase.setLogLevel(Logger.Level.DEBUG);
