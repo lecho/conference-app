@@ -26,15 +26,20 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         jsonDataRef = firebaseDatabase.getReference().child(JsonDataVersion.JSON_NODE);
         jsonDataChangeListener = new JsonDataChangeListener();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         jsonDataRef.addValueEventListener(jsonDataChangeListener);
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onPause() {
+        super.onPause();
         jsonDataRef.removeEventListener(jsonDataChangeListener);
     }
 
