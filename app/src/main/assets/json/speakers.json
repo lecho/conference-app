@@ -80,7 +80,7 @@
     "www": "https://www.stanfy.com/",
     "github": "https://github.com/roman-mazur",
     "twitter": "https://twitter.com/roman_mazur",
-    "photo_url": "/images/speakers/roman-mazur.jpeg"
+    "photo_url": "/images/speakers/roman-mazur.jpg"
   },
   "speaker-markus-junginger": {
     "firstname": "Markus",
@@ -88,7 +88,7 @@
     "bio_html": "Markus Junginger is an Android enthusiast and developer since the first SDK release in 2007. His mobile software company greenrobot focuses on high quality Android apps and open source libraries, which are widely used by many popular apps. Markus has 15+ years experience with Java and did his first mobile software project in 2001. He regularly speaks and writes about Android, gives Android trainings, and develops for Android.",
     "www": "",
     "twitter": "https://twitter.com/greenrobot_de",
-    "photo_url": "/images/speakers/markus-junginger.jpeg"
+    "photo_url": "/images/speakers/markus-junginger.jpg"
   },
   "speaker-madis-pink": {
     "firstname": "Madis",
@@ -97,7 +97,7 @@
     "www": "",
     "github": "https://github.com/madisp",
     "twitter": "https://twitter.com/madisp",
-    "photo_url": "/images/speakers/madis-pink.jpeg"
+    "photo_url": "/images/speakers/madis-pink.jpg"
   },
   "speaker-pablo-guardiola": {
     "firstname": "Pablo",
@@ -106,7 +106,7 @@
     "www": "http://pguardiola.com/",
     "github": "https://github.com/Guardiola31337",
     "twitter": "https://twitter.com/guardiola31337",
-    "photo_url": "/images/speakers/pablo-guardiola.jpeg"
+    "photo_url": "/images/speakers/pablo-guardiola.jpg"
   },
   "speaker-jorge-castillo": {
     "firstname": "Jorge",
@@ -115,7 +115,7 @@
     "www": "http://jorgecastillo.xyz/",
     "twitter": "https://twitter.com/JorgeCastilloPr",
     "github": "https://github.com/JorgeCastilloPrz/",
-    "photo_url": "/images/speakers/jorge-castillo.jpeg"
+    "photo_url": "/images/speakers/jorge-castillo.jpg"
   },
   "speaker-inaki-villar": {
     "firstname": "Inaki",
@@ -124,7 +124,7 @@
     "www": "",
     "github": "https://github.com/cdsap",
     "twitter": "https://twitter.com/inyaki_mwc",
-    "photo_url": "/images/speakers/inaki-villar.jpeg"
+    "photo_url": "/images/speakers/inaki-villar.jpg"
   },
   "speaker-enrique-manas": {
     "firstname": "Enrique",
@@ -133,7 +133,7 @@
     "www": "http://www.lopez-manas.com/",
     "github": "https://github.com/kikoso",
     "twitter": "https://twitter.com/eenriquelopez",
-    "photo_url": "/images/speakers/enrique-manas.jpeg"
+    "photo_url": "/images/speakers/enrique-manas.jpg"
   },
   "speaker-hugo-visser": {
     "firstname": "Hugo",
@@ -142,7 +142,7 @@
     "www": "http://littlerobots.nl/",
     "github": "https://github.com/hvisser",
     "twitter": "https://twitter.com/botteaap",
-    "photo_url": "/images/speakers/hugo-visser.jpeg"
+    "photo_url": "/images/speakers/hugo-visser.jpg"
   },
   "speaker-saul-diaz": {
     "firstname": "Saúl",
@@ -150,7 +150,7 @@
     "bio_html": "Saúl Díaz has been developing Android since 2010. Currently he is working on Chicisimo, and Android app selected as one of the best of 2015 on Spain, and featured on Google Play by the Google Play Team. Previously he has worked as Android Lead on Fever and Android Developer on Tuenti, two renowned companies of Spain. He is an active member of the Spanish Android Development community and regularly participates in events and conferences.",
     "www": "",
     "twitter": "https://twitter.com/sefford",
-    "photo_url": "/images/speakers/saul-diaz.jpeg"
+    "photo_url": "/images/speakers/saul-diaz.jpg"
   },
   "speaker-francisco-estevez": {
     "firstname": "Francisco",
@@ -159,7 +159,7 @@
     "www": "http://www.pacoworks.com",
     "twitter": "",
     "github": "https://github.com/pakoito",
-    "photo_url": "/images/speakers/francisco-estevez.jpeg"
+    "photo_url": "/images/speakers/francisco-estevez.jpg"
   },
   "speaker-frederik-schweiger": {
     "firstname": "Frederik",
@@ -167,7 +167,7 @@
     "bio_html": "Frederik is a young computer science student from Germany who's chief interest is creating and inventing new stuff. He currently works as an Android Developer at trivago. Besides writing code he loves jumping out of airplanes and to go skiing.",
     "www": "",
     "twitter": "",
-    "photo_url": "/images/speakers/frederik-schweiger.jpeg"
+    "photo_url": "/images/speakers/frederik-schweiger.jpg"
   },
   "speaker-roy-marmelstein": {
     "firstname": "Roy",
@@ -176,7 +176,7 @@
     "www": "http://marmelroy.github.io/",
     "github": "https://github.com/marmelroy",
     "twitter": "https://twitter.com/marmelroy",
-    "photo_url": "/images/speakers/roy-marmelstein.jpeg"
+    "photo_url": "/images/speakers/roy-marmelstein.jpg"
   },
   "speaker-esteban-torres": {
     "firstname": "Esteban",
@@ -185,7 +185,7 @@
     "www": "http://estebantorr.es",
     "github": "https://github.com/esttorhe",
     "twitter": "https://twitter.com/esttorhe",
-    "photo_url": "/images/speakers/esteban-torres.png"
+    "photo_url": "/images/speakers/esteban-torres.jpg"
   },
   "speaker-kostiantyn-koval": {
     "firstname": "Kostiantyn",
@@ -194,7 +194,7 @@
     "www": "http://kostiakoval.github.io/",
     "github": "https://github.com/kostiakoval",
     "twitter": "https://twitter.com/KostiaKoval",
-    "photo_url": "/images/speakers/kostiantyn-koval.png"
+    "photo_url": "/images/speakers/kostiantyn-koval.jpg"
   },
   "speaker-marius-rackwitz": {
     "firstname": "Marius",
@@ -202,13 +202,13 @@
     "bio_html": "Marius has been developing mobile & web applications ever since he graduated from university. In more recent years, he's shifted his focus towards mobile development, especially iOS and Objective-C, and since it came out a growing portion of Swift. With his work on the CocoaPods team, he hasn't forgotten about Ruby either.",
     "github": "https://github.com/mrackwitz",
     "twitter": "https://twitter.com/mrackwitz",
-    "photo_url": "/images/speakers/marius-rackwitz.png"
+    "photo_url": "/images/speakers/marius-rackwitz.jpg"
   },
   "speaker-tomasz-gebarowski": {
     "firstname": "Tomasz",
     "lastname": "Gebarowski",
     "bio_html": "Software Engineer, currently working as an iOS Developer at mBank. Working full time in Swift. Switched to Mobile apps development after +4 years of C/C++ and writing distributed VoIP servers. Experienced in maintaining large and long term projects.",
-    "photo_url": "/images/speakers/tomasz-gebarowski.png"
+    "photo_url": "/images/speakers/tomasz-gebarowski.jpg"
   },
   "speaker-wojciech-lukaszuk": {
     "firstname": "Wojciech",
@@ -216,72 +216,72 @@
     "bio_html": "Software engineer at mBank. Lifelong learner. Can't stand workarounds and spaghetti code.",
     "twitter": "https://twitter.com/wojteklu",
     "www": "http://wojteklu.com/",
-    "photo_url": "/images/speakers/wojciech-lukaszuk.png"
+    "photo_url": "/images/speakers/wojciech-lukaszuk.jpg"
   },
   "speaker-michal-kucharski": {
     "firstname": "Michał",
     "lastname": "Kucharski",
     "bio_html": "Fan of technological solutions that makes life easier. From own proof-of-concept hardware, to designed IoT devices or ConnectedCar solution. Carpenter with love and passion, claiming that the best way to relax is a chisel, plane and a piece of wood. With testing and security connected from childhood - Everything can be breached and everything can be automated :)",
-    "photo_url": "/images/speakers/mobilization-soldier.png"
+    "photo_url": "/images/speakers/mobilization-soldier.jpg"
   },
   "speaker-agnieszka-czyzak": {
     "firstname": "Agnieszka",
     "lastname": "Czyżak",
     "bio_html": "Agnieszka is currently working as a UI Designer at Polidea. She graduated from the Warsaw Academy of Arts in 2016. Her bottomless passion for humans beings developed her constant question-asking attitude, and her love for design and design thinking lead her career path toward Service and Experience Design. It is during a Summer School at the Copenhagen Institute of Interactive Design that she polished her skills in user research, prototyping, design thinking, basic programming, workability and teamwork",
-    "photo_url": "/images/speakers/agnieszka-czyzak.png"
+    "photo_url": "/images/speakers/agnieszka-czyzak.jpg"
   },
   "speaker-rafal-tulwin": {
     "firstname": "Rafał",
     "lastname": "Tulwin",
     "bio_html": "For the past 4 years Rafał has been involved in mobile app development. He is Currently working at Polidea as a senior iOS developer. Passionate programmer and triathlete he is constantly looking for new thrills both in app development and in sports",
-    "photo_url": "/images/speakers/rafal-tulwin.png"
+    "photo_url": "/images/speakers/rafal-tulwin.jpg"
   },
   "speaker-lukasz-mroz": {
     "firstname": "Łukasz",
     "lastname": "Mróz",
     "bio_html": "Started as a back-end web developer, quickly found a new home in iOS. In U+2665 with Swift, learning and everything that's being reactive. Endorsed on LinkedIn for coffee skills.",
-    "photo_url": "/images/speakers/lukasz-mroz.png"
+    "photo_url": "/images/speakers/lukasz-mroz.jpg"
   },
   "speaker-anton-minashkin": {
     "firstname": "Anton",
     "lastname": "Minashkin",
     "bio_html": "Lead Android developer, speaker, GDG Lviv organizer and co-founder of GDG Kremenchuk, currently works at EPAM. Have experience in both server and mobile side development. All my free time I spend on the endless search of silver bullets, perfect architectures and holy wars",
-    "photo_url": "/images/speakers/anton-minashkin.png"
+    "photo_url": "/images/speakers/anton-minashkin.jpg"
   },
   "speaker-cybercom-mastercorder": {
     "firstname": "Master",
     "lastname": "Coder",
     "bio_html": "MasterCoder is a national programming contest organized by Cybercom Poland. It is a competition created by programmers for programmers. This year over 300 participants from Poland joined the unique coding challenge. The challenge includes accomplishing ten different tasks in ten days. It fosters creativity, innovation and enables participants to test their ability to perform under pressure. During the finals we will see 10 best ranked coders who will fight for MasterCoder title and Samsung Galaxy S6, Samsung Gear VR, AirWheel X3, GoPro Hero Session Full HD! The semi-final will include a variety of tasks such as live programming. Join the audience and become a part of real programming battle !!!",
-    "photo_url": "/images/speakers/master-coder.png"
+    "photo_url": "/images/speakers/master-coder.jpg"
   },
   "speaker-krzysztof-kudrynski": {
     "firstname": "Krzysztof",
     "lastname": "Kudryński",
     "bio_html": "Passionate problem solver with experience in algorithms prototyping, software design and optimization for mobile platforms. Perfectionist in public presentations. On a daily basis working for Tomtom, trying to squeeze the self-driving-car's imagination within an SD card, and the cars' eyes and ears within the tip of a side mirror",
-    "photo_url": "/images/speakers/krzysztof-kudrynski.png"
+    "photo_url": "/images/speakers/krzysztof-kudrynski.jpg"
   },
   "speaker-blazej-kubiak": {
     "firstname": "Błażej",
     "lastname": "Kubiak",
     "bio_html": "An enthusiast of all aspects of big data processing and all technologies that bring this enthusiasm from dream into reality. Blazej has been working in Tele Atlas and TomTom for eight years and has been involved in many challenging projects related to image and laser data processing. Blazej is one of the authors of automated traffic signs detection systems and bird-eye image mosaic creation tools. Currently he works as Expert Software Engineer in areas of Deep Neural Networks for object detection and recognition.",
-    "photo_url": "/images/speakers/blazej-kubiak.png"
+    "photo_url": "/images/speakers/blazej-kubiak.jpg"
   },
   "speaker-pawel-karpinski": {
     "firstname": "Paweł",
     "lastname": "Karpiński",
     "bio_html": "9+ lat w zawodzie, w przeszłości zajmowałem się dostarczeniem aplikacji bankowoźci internetowej (stack JEE). Obecnie od prawie 2 lat zajmuję się dostarczeniem aplikacji dla sektora telekomunikacji, gdzie bezpieczeństwo jest priorytetem numer 1.",
-    "photo_url": "/images/speakers/pawel-karpinski.png"
+    "photo_url": "/images/speakers/pawel-karpinski.jpg"
   },
   "speaker-jacek-rondio": {
     "firstname": "Jacek",
     "lastname": "Rondio",
     "bio_html": "A software engineer currently working at HARMAN Connected Services mainly focused on Android applications development, however not afraid of deeper layers of the system. Team leader in the project dedicated to advanced head unit software development for Mercedes cars.",
-    "photo_url": "/images/speakers/jacek-rondio.png"
+    "photo_url": "/images/speakers/jacek-rondio.jpg"
   },
   "speaker-krzysztof-sasiak": {
     "firstname": "Krzysztof",
     "lastname": "Sasiak",
     "bio_html": "A software engineer, Linux enthusiast. Currently working at Harman Connected Services, assumed a role of Bluetooth and Telephony architect in one of the projects. Doesn't like Facebook and Twitter, likes to build things and getting his hands dirty. Afterwards, he always washes his hands.",
-    "photo_url": "/images/speakers/krzysztof-sasiak.png"
+    "photo_url": "/images/speakers/krzysztof-sasiak.jpg"
   }
 }
