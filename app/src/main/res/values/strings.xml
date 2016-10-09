@@ -62,4 +62,7 @@
     <string name="text_speakers_layout">Speakers</string>
     <string name="text_offline">You are offline:(</string>
     <string name="text_up_to_date">You are up to date:)</string>
+
+    <string name="play_services_missing">Google Play Services are missing - this devices is not supported</string>
+    <string name="play_services_recovery_canceled">Google Play Services are outdated - restart application</string>
 </resources>

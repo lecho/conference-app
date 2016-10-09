@@ -2,13 +2,16 @@ package com.github.lecho.mobilization.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.github.lecho.mobilization.R;
+import com.github.lecho.mobilization.ui.dialog.PlayServicesErrorDialogFragment;
 import com.github.lecho.mobilization.ui.fragment.MyAgendaFragment;
 import com.github.lecho.mobilization.ui.fragment.Scrollable;
 import com.github.lecho.mobilization.ui.navigation.BottomNavigationController;
@@ -19,6 +22,8 @@ import com.github.lecho.mobilization.ui.snackbar.SnackbarHelper;
 import com.github.lecho.mobilization.ui.snackbar.SnackbarOfflineEvent;
 import com.github.lecho.mobilization.ui.snackbar.SnackbarUpToDate;
 import com.github.lecho.mobilization.util.Utils;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +32,7 @@ import butterknife.ButterKnife;
 public class MainActivity extends BaseActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1;
     private NavigationController navigationController;
     private SnackbarHelper snackbarHelper;
 
@@ -44,6 +50,7 @@ public class MainActivity extends BaseActivity {
         snackbarHelper = new SnackbarHelper(this, snackbarParentView);
 
         if (savedInstanceState == null) {
+            checkIfPlayServicesAvailable();
             replaceFragment(MyAgendaFragment.newInstance());
             Utils.upgradeSchema(getApplicationContext());
         }
@@ -71,6 +78,28 @@ public class MainActivity extends BaseActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
         transaction.replace(R.id.content_container, fragment).commit();
+    }
+
+    private void checkIfPlayServicesAvailable() {
+        final GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+        final int playServicesStatus = googleApiAvailability.isGooglePlayServicesAvailable(getApplicationContext());
+        if (playServicesStatus == ConnectionResult.SUCCESS) {
+            Log.d(TAG, "Play Services status SUCCESS");
+            return;
+        }
+
+        Log.w(TAG, "Play Services status ERROR: " + playServicesStatus);
+        if (googleApiAvailability.isUserResolvableError(playServicesStatus)) {
+            Log.d(TAG, "Play Services user recoverable - proceed by calling error dialog");
+            DialogFragment dialog = PlayServicesErrorDialogFragment.newInstance(playServicesStatus,
+                    REQUEST_CODE_RECOVER_PLAY_SERVICES);
+            FragmentManager fm = getSupportFragmentManager();
+            dialog.show(fm, "play-services-dialog");
+        } else {
+            Log.w(TAG, "Play Services not user recoverable - finishing app");
+            Toast.makeText(getApplicationContext(), R.string.play_services_missing, Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     @Override
