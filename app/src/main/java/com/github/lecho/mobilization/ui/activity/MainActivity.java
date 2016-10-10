@@ -107,7 +107,7 @@ public class MainActivity extends BaseMainActivity {
         super.onResume();
         snackbarHelper.subscribe(SnackbarOfflineEvent.class, R.string.text_offline);
         snackbarHelper.subscribe(SnackbarUpToDate.class, R.string.text_up_to_date);
-        snackbarHelper.subscribe(DatabaseUpdatedEvent.class, R.string.text_offline);
+        snackbarHelper.subscribe(DatabaseUpdatedEvent.class, R.string.text_agenda_updated);
     }
 
 
