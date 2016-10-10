@@ -18,7 +18,7 @@ import com.github.lecho.mobilization.ui.fragment.SponsorsFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SponsorsActivity extends BaseActivity {
+public class SponsorsActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbarView;

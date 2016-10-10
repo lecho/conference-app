@@ -17,9 +17,9 @@ import com.google.firebase.database.ValueEventListener;
  * Created by Leszek on 08.10.2016.
  */
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseMainActivity extends AppCompatActivity {
 
-    private static final String TAG = BaseActivity.class.getSimpleName();
+    private static final String TAG = BaseMainActivity.class.getSimpleName();
     private DatabaseReference jsonDataRef;
     private JsonDataChangeListener jsonDataChangeListener;
 
@@ -58,7 +58,7 @@ public class BaseActivity extends AppCompatActivity {
             Utils.saveNextJsonDataVersion(getApplicationContext(), jsonDataVersion.version);
             if (Utils.checkIfJsonUpdateNeeded(getApplicationContext())) {
                 Log.d(TAG, "JsonDataVersion changed to version: " + jsonDataVersion.version);
-                JsonUpdateDialogFragment.show(BaseActivity.this);
+                JsonUpdateDialogFragment.show(BaseMainActivity.this);
             }
         }
 

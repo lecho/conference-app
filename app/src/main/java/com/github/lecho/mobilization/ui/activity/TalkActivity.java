@@ -34,7 +34,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TalkActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Optional<TalkViewModel>> {
+public class TalkActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Optional<TalkViewModel>> {
 
     private static final String TAG = TalkActivity.class.getSimpleName();
     private static final String ARG_TALK_KEY = "talk-key";

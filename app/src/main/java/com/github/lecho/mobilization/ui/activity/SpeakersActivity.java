@@ -14,7 +14,7 @@ import com.github.lecho.mobilization.ui.fragment.SpeakersFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SpeakersActivity extends BaseActivity {
+public class SpeakersActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbarView;

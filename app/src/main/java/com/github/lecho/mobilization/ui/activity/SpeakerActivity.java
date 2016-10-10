@@ -30,7 +30,7 @@ import com.github.lecho.mobilization.viewmodel.SpeakerViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SpeakerActivity extends BaseActivity implements
+public class SpeakerActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Optional<SpeakerViewModel>> {
 
     private static final String TAG = SpeakerActivity.class.getSimpleName();

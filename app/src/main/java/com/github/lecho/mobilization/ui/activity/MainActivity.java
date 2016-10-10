@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.github.lecho.mobilization.R;
+import com.github.lecho.mobilization.rx.DatabaseUpdatedEvent;
 import com.github.lecho.mobilization.ui.dialog.PlayServicesErrorDialogFragment;
 import com.github.lecho.mobilization.ui.fragment.MyAgendaFragment;
 import com.github.lecho.mobilization.ui.fragment.Scrollable;
@@ -29,7 +30,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseMainActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     static final int REQUEST_CODE_RECOVER_PLAY_SERVICES = 1;
@@ -106,6 +107,7 @@ public class MainActivity extends BaseActivity {
         super.onResume();
         snackbarHelper.subscribe(SnackbarOfflineEvent.class, R.string.text_offline);
         snackbarHelper.subscribe(SnackbarUpToDate.class, R.string.text_up_to_date);
+        snackbarHelper.subscribe(DatabaseUpdatedEvent.class, R.string.text_offline);
     }
 
 
@@ -114,6 +116,7 @@ public class MainActivity extends BaseActivity {
         super.onPause();
         snackbarHelper.unsubscribe(SnackbarOfflineEvent.class);
         snackbarHelper.unsubscribe(SnackbarUpToDate.class);
+        snackbarHelper.unsubscribe(DatabaseUpdatedEvent.class);
     }
 
     private class MainActivityNavItemListener implements NavigationItemListener {
