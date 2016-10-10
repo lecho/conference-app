@@ -1,11 +1,6 @@
-# conference-app-demo
-Demo conference(agenda) app for Android
+# Mobilization 2016 - Mobile App
+Mobile app for Mobilization 2016 conference: http://2016.mobilization.pl/
 
 [**Google Play Link**](https://play.google.com/store/apps/details?id=com.github.lecho.mobilization)
 
-Demonstrates simple usage of:
-- View injection with [Butter Knife](http://jakewharton.github.io/butterknife/)
-- Loading images with [Picasso](http://square.github.io/picasso/)
-- Persistence storage with [Realm.io](https://realm.io/)
-- Some material design elements: [Material Design Library](http://android-developers.blogspot.com/2015/05/android-design-support-library.html)
-- Parsing JSON with Gson
+This app uses assets form mobilization website [repository](https://github.com/Mobilization/2016.mobilization.pl)
