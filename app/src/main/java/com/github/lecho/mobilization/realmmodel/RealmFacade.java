@@ -47,30 +47,13 @@ public class RealmFacade {
     public RealmFacade() {
     }
 
-    public void deleteAll() {
-        Realm realm = null;
-        try {
-            realm = Realm.getDefaultInstance();
-            realm.beginTransaction();
-            realm.deleteAll();
-            realm.commitTransaction();
-            RxBus.post(new DatabaseUpdatedEvent());
-        } catch (Exception e) {
-            if (realm != null) {
-                realm.cancelTransaction();
-            }
-            Log.e(TAG, "Could not delete all data from realm", e);
-        } finally {
-            closeRealm(realm);
-        }
-    }
-
     public void saveData(final ApiData apiData) {
         convertApiDataToRealm(apiData);
         Realm realm = null;
         try {
             realm = Realm.getDefaultInstance();
             realm.beginTransaction();
+            realm.deleteAll();
             realm.copyToRealmOrUpdate(eventRealmsMap.values());
             realm.copyToRealmOrUpdate(slotRealmsMap.values());
             realm.copyToRealmOrUpdate(breakRealmsMap.values());
