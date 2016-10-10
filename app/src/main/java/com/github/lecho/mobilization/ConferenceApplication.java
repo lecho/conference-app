@@ -33,6 +33,5 @@ public class ConferenceApplication extends Application {
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseDatabase.setPersistenceEnabled(true);
-        firebaseDatabase.setLogLevel(Logger.Level.DEBUG);
     }
 }
