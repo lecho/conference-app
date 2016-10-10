@@ -26,7 +26,7 @@
         android:background="@color/black"/>
 
     <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/snackbar_coordinator_layout"
+        android:id="@+id/coordinator_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/bottom_navigation">

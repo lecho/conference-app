@@ -39,18 +39,18 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.main_container)
     View mainContainer;
 
-    @BindView(R.id.snackbar_coordinator_layout)
-    View snackbarParentView;
+    @BindView(R.id.coordinator_layout)
+    View coordinatorLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        snackbarHelper = new SnackbarHelper(this, snackbarParentView);
+        snackbarHelper = new SnackbarHelper(this, coordinatorLayout);
 
         if (savedInstanceState == null) {
-            checkIfPlayServicesAvailable();
+            checkPlayServices();
             replaceFragment(MyAgendaFragment.newInstance());
             Utils.upgradeSchema(getApplicationContext());
         }
@@ -80,23 +80,22 @@ public class MainActivity extends BaseActivity {
         transaction.replace(R.id.content_container, fragment).commit();
     }
 
-    private void checkIfPlayServicesAvailable() {
+    private void checkPlayServices() {
         final GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
         final int playServicesStatus = googleApiAvailability.isGooglePlayServicesAvailable(getApplicationContext());
         if (playServicesStatus == ConnectionResult.SUCCESS) {
-            Log.d(TAG, "Play Services status SUCCESS");
+            Log.i(TAG, "Play Services status SUCCESS");
             return;
         }
 
-        Log.w(TAG, "Play Services status ERROR: " + playServicesStatus);
         if (googleApiAvailability.isUserResolvableError(playServicesStatus)) {
-            Log.d(TAG, "Play Services user recoverable - proceed by calling error dialog");
+            Log.i(TAG, "Play Services user recoverable - proceed by calling error dialog");
             DialogFragment dialog = PlayServicesErrorDialogFragment.newInstance(playServicesStatus,
                     REQUEST_CODE_RECOVER_PLAY_SERVICES);
             FragmentManager fm = getSupportFragmentManager();
             dialog.show(fm, "play-services-dialog");
         } else {
-            Log.w(TAG, "Play Services not user recoverable - finishing app");
+            Log.i(TAG, "Play Services not user recoverable - finishing app");
             Toast.makeText(getApplicationContext(), R.string.play_services_missing, Toast.LENGTH_SHORT).show();
             finish();
         }
