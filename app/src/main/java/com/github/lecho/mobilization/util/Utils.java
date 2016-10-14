@@ -180,6 +180,7 @@ public class Utils {
                 .load(ASSETS_SPEAKERS_IMAGES + fileName)
                 .resizeDimen(dimen, dimen)
                 .transform(getTransformation(context))
+                .error(R.drawable.ic_person)
                 .into(imageView);
     }
 
@@ -188,6 +189,7 @@ public class Utils {
                 .load(ASSETS_SPONSORS_IMAGES + fileName)
                 .fit()
                 .centerInside()
+                .error(R.drawable.ic_person)
                 .into(imageView);
     }
 
