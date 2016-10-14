@@ -41,7 +41,7 @@
 	},
 	"talk-green-dao-3-and-beyond": {
 		"title": "greenDAO 3 and beyond",
-		"description_html": "greenDAO is the fastest ORM for Android. greenDAO 3 brings annotations and prepares the way for further enhancements like RX support. The author of greenDAO gives deep insights about how to best use ORM to make app development productive and fun.",
+		"description_html": "greenDAO is the fastest ORM for Android. greenDAO 3 brings annotations and prepares the way for further enhancements like RX support. The author of greenDAO gives deep insights about how to best use ORM to make app development productive and fun. But SQL is not your thing? We also have a sneak peek at a new alternative to greenDAO/SQLite.",
 		"speakers_keys": [
 			"speaker-markus-junginger"
 		],
@@ -251,10 +251,11 @@
 		"language": "EN"
 	},
 	"talk-prawdziwe-bezpieczenstwo-w-aplikacjach-mobilnych": {
-		"title": "Prawdziwe bezpieczeństwo w aplikacjach mobilnych",
-		"description_html": "Najbardziej popularne zabezpieczenie to szyfrowanie danych na telefonie, ale czy to jest bezpieczne? Tak, o ile ustawisz bardzo długie hasło, ale czy długie hasło jest praktyczne? Nie, bo normalny uĹźytkownik nie będzie go w stanie zapamiętać. Więc jak dostarczyć prawdzie bezpieczeństwo? Trzeba skorzystać z embedded secure elementu (eSE) lub eUICC. W ramach prezentacji dowiesz się czym jest eSE, czym różni się od eUICC (następcy karty SIM). Dowiesz się również jak wygląda ekosystem zarządzania eUICC/eSE (live demo) i bezpiecznymi aplikacji. A jak starczy czasu, to dowiesz się jak zacząć przygodę z secure elementem i Androidem.",
+		"title": "(Prawdziwe) bezpieczeństwo danych w urządzeniach mobilnych",
+		"description_html": "Bezpieczeństwo to temat-rzeka i choć wiele jego aspektów pomoże rozwiązać Ci wujek Google, stan wiedzy internetu na temat bezpieczeństwa danych w urządzeniach mobilnych uznajemy za niesatysfakcjonujący, przesycony starymi i niekompletnymi informacjami. Dlatego opowiemy Ci o praktycznych problemach, z którymi mierzymy się na co dzień, zapewniając najwyższy możliwy poziom zabezpieczeń w mobilnych zastosowaniach płatniczych oraz uchylimy rąbka tajemnicy o najnowszych rozwiązaniach w tym zakresie. Na prezentacji zapoznasz się z aspektami bezpieczeństwa danych w urządzeniach mobilnych od trzech stron:\nkryptografii – o czym należy pamiętać, jak jej (i jakiej) używać\nbezpieczeństwa transportu – co musisz zapewnić i w jaki sposób\nbezpieczeństwa przechowywania – jakie masz możliwości, jakie są ich wady i zalety",
 		"speakers_keys": [
-			"speaker-pawel-karpinski"
+			"speaker-michal-mela",
+			"speaker-michal-kaminski"
 		],
 		"language": "PL"
 	},
@@ -263,8 +264,28 @@
 		"description_html": "How car became a rich accessory for the mobile. We will present the wide range of possibilities that arose with the development of technologically advanced head units. From Bluetooth hands-free to advanced companion applications. All based on Mercedes S-class example.",
 		"speakers_keys": [
 			"speaker-jacek-rondio",
-			"speaker-krzysztof-sasiak"
+			"speaker-krzysztof-sasiak",
+			"speaker-lukasz-kwiecinski",
+			"speaker-mariusz-kazmierczak"
 		],
 		"language": "EN"
+	},
+	"talk-mvp-business": {
+		"title": "MVP - getting business, design and technology together.",
+		"description_html": "Getting started with new product development we often forget that making it work requires more then just a great idea. Big ideas come with huge responsibilities which we not always know how to handle. The dilemma that weâll be trying to find answer to is how to minimize the risk of the concept overgrowing us?",
+		"speakers_keys": [
+			"speaker-ola-rosinska",
+			"speaker-piotrek-stanislawski"
+		],
+		"language": "EN"
+	},
+	"talk-beacon-idea": {
+		"title": "Z beaconem przez projekt - od pomysłu do klęski, od klęski do wdrożenia",
+		"description_html": "Na podstawie wykonanego i wdroĹźonego projektu przedstawiamy fakty i mity ze świata beaconów. Przekonacie się, że wdrożenie projektu beaconowego wymaga wielu testów, a otrzymywane wyniki mogą Was nie raz zaskoczyć.",
+		"speakers_keys": [
+			"speaker-bartek-swiercz",
+			"speaker-pawel-czapnik"
+		],
+		"language": "PL"
 	}
 }

@@ -266,11 +266,17 @@
     "bio_html": "An enthusiast of all aspects of big data processing and all technologies that bring this enthusiasm from dream into reality. Blazej has been working in Tele Atlas and TomTom for eight years and has been involved in many challenging projects related to image and laser data processing. Blazej is one of the authors of automated traffic signs detection systems and bird-eye image mosaic creation tools. Currently he works as Expert Software Engineer in areas of Deep Neural Networks for object detection and recognition.",
     "photo_url": "/images/speakers/blazej-kubiak.jpg"
   },
-  "speaker-pawel-karpinski": {
-    "firstname": "Paweł",
-    "lastname": "Karpiński",
-    "bio_html": "9+ lat w zawodzie, w przeszłości zajmowałem się dostarczeniem aplikacji bankowoźci internetowej (stack JEE). Obecnie od prawie 2 lat zajmuję się dostarczeniem aplikacji dla sektora telekomunikacji, gdzie bezpieczeństwo jest priorytetem numer 1.",
-    "photo_url": "/images/speakers/pawel-karpinski.jpg"
+  "speaker-michal-mela": {
+    "firstname": "Michał",
+    "lastname": "Mela",
+    "bio_html": "",
+    "photo_url": "/images/speakers/michal-mela.jpg"
+  },
+  "speaker-michal-kaminski": {
+    "firstname": "Michał",
+    "lastname": "Kamiński",
+    "bio_html": "",
+    "photo_url": "/images/speakers/michal-kaminski.jpg"
   },
   "speaker-jacek-rondio": {
     "firstname": "Jacek",
@@ -283,5 +289,49 @@
     "lastname": "Sasiak",
     "bio_html": "A software engineer, Linux enthusiast. Currently working at Harman Connected Services, assumed a role of Bluetooth and Telephony architect in one of the projects. Doesn't like Facebook and Twitter, likes to build things and getting his hands dirty. Afterwards, he always washes his hands.",
     "photo_url": "/images/speakers/krzysztof-sasiak.jpg"
+  },
+  "speaker-ola-rosinska": {
+    "firstname": "Ola",
+    "lastname": "Rosińska",
+    "bio_html": "Handling all aspects of marketing and communications in rndity; Ola balances between creation, strategy and technology to properly verify and develop new business ideas. Restless advocate of empirical studies, not a big fan of \"we already know it all\" kind of chitchats ;-) Believes that there is always something you can learn and explore in any situation.",
+    "linkedin": "https://www.linkedin.com/in/ola-rosi%C5%84ska-87b352104/en",
+    "photo_url": "/images/speakers/ola-rosinska.jpg"
+  },
+  "speaker-piotrek-stanislawski": {
+    "firstname": "Piotrek",
+    "lastname": "Stanisławski",
+    "bio_html": "UX designer with strong believe that in order to carry out the project perfectly you simply need pencil, open mind and aroused empathy. He always combines user needs with clients' business objectives using available UX techniques. Not so secretly addicted to the post-it notes.",
+    "linkedin": "https://www.linkedin.com/in/stanislawskipiotr/en",
+    "photo_url": "/images/speakers/piotrek-stanislawski.jpg"
+  },
+  "speaker-bartek-swiercz": {
+    "firstname": "Bartek",
+    "lastname": "Świercz",
+    "bio_html": "Addicted to speed, challenges and technology, constantly using his passion to design and develop challenging projects. Bartek has been involved in mobile technologies ever since first smartphones, always looking for the best tech mixes that deliver highest performance possible.",
+    "linkedin": "https://www.linkedin.com/in/swierczu",
+    "twitter": "https://twitter.com/BartekSwiercz",
+    "photo_url": "/images/speakers/bartek-swiercz.jpg"
+  },
+  "speaker-pawel-czapnik": {
+    "firstname": "Paweł",
+    "lastname": "Czapnik",
+    "bio_html": " Full time Android developer with still short but pretty solid work background. Paweł has managed to work on couple of most popular mobile apps in Poland. He knows how to point out worst mistakes in the project without making everyone miserable. \"Quiet one\" type of guy ;-)",
+    "photo_url": "/images/speakers/pawel-czapnik.jpg"
+  },
+  "speaker-lukasz-kwiecinski": {
+    "firstname": "Łukasz",
+    "lastname": "Kwieciński",
+    "bio_html": "Software engineer at Harman Connected Services department. Strongly interested in c/c++ programming in Unix-like systems. Works on the project where implements the solutions, which integrate mobile applications together with cars' head units.",
+    "www": "",
+    "twitter": "",
+    "photo_url": "/images/speakers/lukasz-kwiecinski.jpg"
+  },
+  "speaker-mariusz-kazmierczak": {
+    "firstname": "Mariusz",
+    "lastname": "Kaźmierczak",
+    "bio_html": "",
+    "www": "Software engineer working at Harman Connected Services. Strongly interested in c++ programming in Unix-like systems. Works on the project where implements the solutions allowing to integrate mobile applications together with cars' head units.",
+    "twitter": "",
+    "photo_url": "/images/speakers/mariusz-kazmierczak.jpg"
   }
 }
