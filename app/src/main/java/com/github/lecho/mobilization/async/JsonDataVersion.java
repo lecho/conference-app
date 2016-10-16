@@ -10,6 +10,6 @@ import com.google.firebase.database.IgnoreExtraProperties;
 public class JsonDataVersion {
 
     public static final String JSON_NODE = "json_data";
-    public static final long DEFAULT_VERSION = 1;
+    public static final long DEFAULT_VERSION = 3;
     public long version;
 }
