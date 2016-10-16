@@ -2,10 +2,7 @@ package com.github.lecho.mobilization;
 
 import android.app.Application;
 
-import com.github.lecho.mobilization.async.JsonDataVersion;
-import com.github.lecho.mobilization.util.Utils;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Logger;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
