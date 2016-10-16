@@ -18,7 +18,7 @@ public class ConferenceApplication extends Application {
     /**
      * Always increment schema version.
      */
-    private static final int SCHEMA_VERSION = 9;
+    private static final int SCHEMA_VERSION = 10;
     private static final String REALM_NAME = "conference.realm";
 
     @Override
