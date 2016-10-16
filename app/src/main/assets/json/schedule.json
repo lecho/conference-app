@@ -9,6 +9,9 @@
     "venue-rndity": {
       "talk_key": "talk-mvp-business"
     },
+    "venue-ericpol": {
+      "talk_key": "talk-networked-society"
+    },
     "venue-mobica": {
       "talk_key": "talk-mobile-and-application-security-based-on-man-in-the-middle-MITM-vectors"
     },

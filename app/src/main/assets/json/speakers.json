@@ -222,7 +222,7 @@
     "firstname": "Michał",
     "lastname": "Kucharski",
     "bio_html": "Fan of technological solutions that makes life easier. From own proof-of-concept hardware, to designed IoT devices or ConnectedCar solution. Carpenter with love and passion, claiming that the best way to relax is a chisel, plane and a piece of wood. With testing and security connected from childhood - Everything can be breached and everything can be automated :)",
-    "photo_url": "/images/speakers/mobilization-soldier.jpg"
+    "photo_url": "/images/speakers/michal-kucharski.jpg"
   },
   "speaker-agnieszka-czyzak": {
     "firstname": "Agnieszka",
@@ -290,6 +290,18 @@
     "bio_html": "A software engineer, Linux enthusiast. Currently working at Harman Connected Services, assumed a role of Bluetooth and Telephony architect in one of the projects. Doesn't like Facebook and Twitter, likes to build things and getting his hands dirty. Afterwards, he always washes his hands.",
     "photo_url": "/images/speakers/krzysztof-sasiak.jpg"
   },
+  "speaker-lukasz-kwiecinski": {
+    "firstname": "Łukasz",
+    "lastname": "Kwieciński",
+    "bio_html": "Software engineer at Harman Connected Services department. Strongly interested in c/c++ programming in Unix-like systems. Works on the project where implements the solutions, which integrate mobile applications together with cars' head units.",
+    "photo_url": "/images/speakers/lukasz-kwiecinski.jpg"
+  },
+  "speaker-mariusz-kazmierczak": {
+    "firstname": "Mariusz",
+    "lastname": "Kaźmierczak",
+    "bio_html": "Software engineer working at Harman Connected Services. Strongly interested in c++ programming in Unix-like systems. Works on the project where implements the solutions allowing to integrate mobile applications together with cars' head units.",
+    "photo_url": "/images/speakers/mariusz-kazmierczak.jpg"
+  },
   "speaker-ola-rosinska": {
     "firstname": "Ola",
     "lastname": "Rosińska",
@@ -318,20 +330,16 @@
     "bio_html": " Full time Android developer with still short but pretty solid work background. Paweł has managed to work on couple of most popular mobile apps in Poland. He knows how to point out worst mistakes in the project without making everyone miserable. \"Quiet one\" type of guy ;-)",
     "photo_url": "/images/speakers/pawel-czapnik.jpg"
   },
-  "speaker-lukasz-kwiecinski": {
-    "firstname": "Łukasz",
-    "lastname": "Kwieciński",
-    "bio_html": "Software engineer at Harman Connected Services department. Strongly interested in c/c++ programming in Unix-like systems. Works on the project where implements the solutions, which integrate mobile applications together with cars' head units.",
-    "www": "",
-    "twitter": "",
-    "photo_url": "/images/speakers/lukasz-kwiecinski.jpg"
+  "speaker-marek-wyrwicki": {
+    "firstname": "Marek",
+    "lastname": "Wyrwicki",
+    "bio_html": "ERICSSON Managers R&D",
+    "photo_url": "/images/speakers/marek-wyrwicki.jpg"
   },
-  "speaker-mariusz-kazmierczak": {
-    "firstname": "Mariusz",
-    "lastname": "Kaźmierczak",
-    "bio_html": "",
-    "www": "Software engineer working at Harman Connected Services. Strongly interested in c++ programming in Unix-like systems. Works on the project where implements the solutions allowing to integrate mobile applications together with cars' head units.",
-    "twitter": "",
-    "photo_url": "/images/speakers/mariusz-kazmierczak.jpg"
+  "speaker-christer-lindell": {
+    "firstname": "Christer",
+    "lastname": "Lindell",
+    "bio_html": "ERICSSON Managers R&D",
+    "photo_url": "/images/speakers/christer-lindell.jpg"
   }
 }

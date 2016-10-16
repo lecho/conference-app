@@ -287,5 +287,14 @@
 			"speaker-pawel-czapnik"
 		],
 		"language": "PL"
+	},
+	"talk-networked-society": {
+		"title": "Networked Society",
+		"description_html": "Connectivity is the starting point for new ways of innovating, collaborating and socializing. The Networked Society starts with connections, between devices and things but more importantly it is about the big ideas that become possible and will shape benefits to people. The Networked Society, as we see it, is based on four key elements: People: all of us, using connectivity to live, work and play more freely Things: everything that benefits from being connected is connected - from phones and tablets, to cars and containers, to classrooms and clinics Interactivity: the ways that all these people and things communicate with each other, for example through mobile broadband and cloud Big ideas: game-changing innovations and services that connects what people want and need with things and interactivity and create something entirely new and beneficial to people, business and society Seen in that light, the Networked Society is a global movement. It is positive change driven across borders by people, business, governments and NGOs. The shaping of the Networked Society is a constant collaboration where we aspire to take a key role.",
+		"speakers_keys": [
+			"speaker-marek-wyrwicki",
+			"speaker-christer-lindell"
+		],
+		"language": "EN"
 	}
 }
