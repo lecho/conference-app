@@ -44,7 +44,6 @@ import io.realm.Realm;
 public class Utils {
 
     private static final String TAG = Utils.class.getSimpleName();
-    private static final int DEFAULT_JSON_DATA_VERSION = 1;
 
     private static final String ASSETS_JSON_FOLDER = "json";
     private static final String ASSETS_SPEAKERS_IMAGES = "file:///android_asset/images/speakers/";
@@ -135,7 +134,7 @@ public class Utils {
 
     public static long getCurrentJsonDataVersion(Context context) {
         return context.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE).getLong
-                (PREFS_JSON_DATA_CURRENT_VERSION, DEFAULT_JSON_DATA_VERSION);
+                (PREFS_JSON_DATA_CURRENT_VERSION, JsonDataVersion.DEFAULT_VERSION);
     }
 
     public static void saveNextJsonDataVersion(Context context, long nextVersion) {
@@ -148,7 +147,7 @@ public class Utils {
 
     public static long getNextJsonDataVersion(Context context) {
         return context.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE).getLong
-                (PREFS_JSON_DATA_NEXT_VERSION, DEFAULT_JSON_DATA_VERSION);
+                (PREFS_JSON_DATA_NEXT_VERSION, JsonDataVersion.DEFAULT_VERSION);
     }
 
     public static String getJsonAssetsFolder() {
