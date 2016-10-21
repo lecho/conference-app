@@ -1,14 +1,10 @@
 {
-  "speaker-jens-ravens": {
-    "firstname": "Jens",
-    "lastname": "Ravens",
-    "bio_html": "Jens is an iOS, macOS and backend Developer, writing ObjC since 2006. Currently working at nerdgeschoss helping clients to create awesome apps. Organiser of the monthly swift.berlin meetup. Scaring people with functional concepts since 2014.",
-    "www": "http://jensravens.com/",
-    "twitter": "https://twitter.com/jensravens",
-    "facebook": "",
-    "github": "https://github.com/JensRavens",
-    "linkedin": "https://www.linkedin.com/in/jens-ravens-31416251",
-    "photo_url": "/images/speakers/jens-ravens.jpg"
+  "speaker-pawel-byszewski": {
+    "firstname": "Paweł",
+    "lastname": "Byszewski",
+    "bio_html": "Jestem programistą z serwerową przeszłością, którego zafascynowały technologie mobilne. Głęboko wierzę, że bezkompromisowa jakość jest kluczem do długofalowego sukcesu dlatego skupiam się na utrzymaniu wysokiej jakości kodu źródłowego i przejrzystej architektury. Aktywne udzielanie się w społeczności i dzielenie się wiedzą traktuję jako najprzyjemniejszą drogę do ciągłego rozwoju. Zawsze można mnie spotkać na spotkaniach <a href=\"http://mobile-warsaw.pl/\" rel=\"nofollow\">MobileWarsaw</a>, które współorganizuję.</p>",
+    "www": "",
+    "photo_url": "/images/speakers/mobilization-soldier.jpg"
   },
   "speaker-pedro-buendia": {
     "firstname": "Pedro",

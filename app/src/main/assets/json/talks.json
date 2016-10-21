@@ -7,13 +7,13 @@
 		],
 		"language": "EN"
 	},
-	"talk-reactive-programming-for-ios-with-interstellar-2": {
-		"title": "Reactive Programming for iOS with Interstellar 2",
-		"description_html": "Have a look at how to make Swift and Objective-C interoperability seamless. Basics of including Swift code in your new or existing Objective-C based projects and helping yourself when you want to deliver some parts of Swift-based application using Objective-C code.",
+	"talk-kotlin-why": {
+		"title": "Kotlin, why?",
+		"description_html": "Programiści aplikacji Mobilnych na Androida, uwięzieni w czasach Java 1.7 od pewnego czasu eksperymentowali z innymi językami programowania. Żaden nie zdobył do tej pory takiej popularności jak Kotlin. Ale czy faktycznie jest to coś rewolucyjnego? Przecież getery, settery i konstruktory wygenerujemy za pomocą Lomboka. Używając Retrolamby zyskamy wsparcie dla dopełnień. A dodatkowo od niedawna Android ma wsparcie dla Javy 8. Zatem co decyduje o sile Kotlina, które konstrukcje i właściwości języka powodują, że warto zastosować go w swoim projekcie? Jaki wpływ będzie to miało na architekture aplikacji i wydajności? Kotlin jest tylko ciekawostką czy spowoduje, że będziesz kodować efektywniej? Z tej prezentacji wyniesiesz pełen zestaw informacji pozwalający odpowiedzieć na wszystkie te pytania.",
 		"speakers_keys": [
-			"speaker-jens-ravens"
+			"speaker-pawel-byszewski"
 		],
-		"language": "EN"
+		"language": "PL"
 	},
 	"talk-taming-node-modules-at-facebook": {
 		"title": "Taming node_modules at Facebook",
