@@ -1,6 +1,12 @@
 # Mobilization 2016 - Mobile App
 Mobile app for Mobilization 2016 conference: http://2016.mobilization.pl/
 
-[**Google Play Link**](https://play.google.com/store/apps/details?id=com.github.lecho.mobilization)
+![](screens/agenda.png)
 
-This app uses assets form mobilization website [repository](https://github.com/Mobilization/2016.mobilization.pl)
+![](screens/same-slot.png)
+
+![](screens/agenda-tablet.png)
+
+![](screens/event.png)
+
+Content is outdated and the app is not available at Google Play any more:(
